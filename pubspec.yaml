@@ -1,0 +1,46 @@
+name: tack_app
+publish_to: none
+description: A new Flutter project.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.1 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  core:
+    path: ./core
+  navigation:
+    path: ./navigation
+
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: Manrope
+      fonts:
+        - asset: fonts/manrope/Manrope-ExtraLight.ttf
+          weight: 100
+        - asset: fonts/manrope/Manrope-Light.ttf
+          weight: 200
+        - asset: fonts/manrope/Manrope-Regular.ttf
+          weight: 300
+        - asset: fonts/manrope/Manrope-Medium.ttf
+          weight: 400
+        - asset: fonts/manrope/Manrope-SemiBold.ttf
+          weight: 500
+        - asset: fonts/manrope/Manrope-Bold.ttf
+          weight: 600
+        - asset: fonts/manrope/Manrope-ExtraBold.ttf
+          weight: 700
