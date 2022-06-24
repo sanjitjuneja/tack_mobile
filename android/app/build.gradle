@@ -24,6 +24,7 @@ if (flutterVersionName == null) {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion flutter.compileSdkVersion
@@ -43,14 +44,45 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.tack_app"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
+        applicationId "com.tack_app.android"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+    }
+
+    signingConfigs {
+        debug {
+            keyAlias "debug"
+            keyPassword "kk5y0wf4"
+            storeFile file("$rootProject.projectDir/keystores/debug-keystore.jks")
+            storePassword "Qb(Ne{X3Ujwe"
+        }
+        release {
+            keyAlias keystoreProperties["keyAlias"]
+            keyPassword keystoreProperties["keyPassword"]
+            storeFile file(keystoreProperties["storeFile"])
+            storePassword keystoreProperties["storePassword"]
+        }
+    }
+
+    flavorDimensions "flavor-type"
+
+    productFlavors {
+        dev {
+            dimension "flavor-type"
+            resValue "string", "app_name", "Tack Dev"
+            applicationIdSuffix ".dev"
+        }
+        staging {
+            dimension "flavor-type"
+            resValue "string", "app_name", "Tack Satge"
+            applicationIdSuffix ".stage"
+        }
+        production {
+            resValue "string", "app_name", "Tack"
+            dimension "flavor-type"
+        }
     }
 
     buildTypes {
