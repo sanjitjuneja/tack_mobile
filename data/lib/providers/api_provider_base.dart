@@ -98,6 +98,7 @@ class ApiProviderBase {
         }
         return handler.next(options);
       }, onError: (DioError error, ErrorInterceptorHandler handler) async {
+        //TODO: Replace with repository solution
         if (error.response?.statusCode == 401) {
           final String? refreshToken =
               await _accessProvider.getRefreshTokenIfItActual();
