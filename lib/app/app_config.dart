@@ -1,4 +1,4 @@
-import 'package:core/constants/url_constants.dart';
+import 'package:core/constants/base_url_constants.dart';
 
 enum Flavor {
   dev,
@@ -19,13 +19,13 @@ class AppConfig {
     String baseUrl;
     switch (flavor) {
       case Flavor.dev:
-        baseUrl = UrlConstants.developmentUrl;
+        baseUrl = BseUrlConstants.developmentUrl;
         break;
       case Flavor.staging:
-        baseUrl = UrlConstants.stagingUrl;
+        baseUrl = BseUrlConstants.stagingUrl;
         break;
       case Flavor.production:
-        baseUrl = UrlConstants.productionUrl;
+        baseUrl = BseUrlConstants.productionUrl;
         break;
     }
 
