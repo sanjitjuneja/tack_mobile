@@ -1,7 +1,7 @@
 library navigation;
 
 export 'src/app_information_parser.dart';
-export 'src/app_router.dart';
+export 'src/app_router_delegate.dart';
 export 'src/exception/navigation_exception.dart';
 export 'src/message_notifier.dart';
 export 'src/page_completer.dart';

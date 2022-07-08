@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../navigation.dart';
 
-class AppRouter extends RouterDelegate<RouteConfiguration>
+class AppRouterDelegate extends RouterDelegate<RouteConfiguration>
     with
         // ignore: prefer_mixin
         ChangeNotifier,
@@ -15,7 +15,7 @@ class AppRouter extends RouterDelegate<RouteConfiguration>
 
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
-  AppRouter({
+  AppRouterDelegate({
     required this.messageNotifier,
     required this.popNavigationObserver,
   });
@@ -77,5 +77,11 @@ class AppRouter extends RouterDelegate<RouteConfiguration>
     for (int i = 0; i < popCount; i++) {
       pop();
     }
+  }
+}
+
+extension AppRouter on Type {
+  static AppRouterDelegate of(BuildContext context) {
+    return Router.of(context).routerDelegate as AppRouterDelegate;
   }
 }

@@ -10,12 +10,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  animated_toggle_switch: ^0.5.2
+  flutter_html: ^2.2.1
+
   core:
     path: ../core
   domain:
     path: ../domain
 
-  animated_toggle_switch: ^0.5.2
+  # Components
+  app_dialog:
+    path: ../components/app_dialog
+
 
 dev_dependencies:
   flutter_test:

@@ -9,7 +9,7 @@ class AppDI {
     final AppMessageNotifier appMessageNotifier = AppMessageNotifier();
     final PopNavigationObserver popNavigationObserver = PopNavigationObserver();
 
-    final AppRouter appRouter = AppRouter(
+    final AppRouterDelegate appRouter = AppRouterDelegate(
       messageNotifier: appMessageNotifier,
       popNavigationObserver: popNavigationObserver,
     );
@@ -17,7 +17,7 @@ class AppDI {
     appMessageNotifier.appRouter = appRouter;
     popNavigationObserver.appRouter = appRouter;
 
-    appLocator.registerSingleton<AppRouter>(appRouter);
+    appLocator.registerSingleton<AppRouterDelegate>(appRouter);
 
     appLocator.registerSingleton<AppRouteInformationParser>(
       AppRouteInformationParser(),

@@ -6,7 +6,7 @@ import '../di/app_di.dart';
 
 class AppLocalizations {
   final Locale locale;
-  static AppRouter? appRouter;
+  static AppRouterDelegate? appRouter;
 
   AppLocalizations(
     this.locale,
@@ -79,7 +79,7 @@ class AppLocalizations {
   }
 
   static String ofGlobalContext(String key) {
-    appRouter ??= appLocator.get<AppRouter>();
+    appRouter ??= appLocator.get<AppRouterDelegate>();
     final BuildContext context = appRouter!.navigatorKey.currentContext!;
     return AppLocalizations.of(context).value(key);
   }

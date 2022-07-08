@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../navigation.dart';
 
 class AppMessageNotifier extends NavigatorObserver {
-  late AppRouter? appRouter;
+  late AppRouterDelegate? appRouter;
 
   GlobalKey<ScaffoldMessengerState>? _scaffoldKey;
 

@@ -1,4 +1,7 @@
+import 'package:core/core.dart';
+import 'package:core/di/app_di.dart';
 import 'package:flutter/material.dart';
+import 'package:home/change_group/bloc/group_bloc.dart';
 import 'package:navigation/navigation.dart';
 
 import 'home_screen.dart';
@@ -13,7 +16,12 @@ class HomePage extends PageWithScaffoldKey<dynamic> {
       MaterialPageRoute<dynamic>(
         builder: (BuildContext context) => ScaffoldMessenger(
           key: scaffoldKey,
-          child: const HomeScreen(),
+          child: BlocProvider<GroupBloc>(
+            create: (_) => GroupBloc(
+              appRouter: appLocator.get<AppRouterDelegate>(),
+            ),
+            child: const HomeScreen(),
+          ),
         ),
         settings: this,
       );
