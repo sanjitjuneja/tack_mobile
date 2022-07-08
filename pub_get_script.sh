@@ -33,3 +33,21 @@ cd features/home || exit
 flutter clean && flutter clean cache && flutter pub get
 cd ../..
 printf '\n\n'
+
+printf "auth pub get\n"
+cd features/auth || exit
+flutter clean && flutter clean cache && flutter pub get
+cd ../..
+printf '\n\n'
+
+printf "phone_verification pub get\n"
+cd features/phone_verification || exit
+flutter clean && flutter clean cache && flutter pub get
+cd ../..
+printf '\n\n'
+
+printf "user_info_setup pub get\n"
+cd features/user_info_setup || exit
+flutter clean && flutter clean cache && flutter pub get
+cd ../..
+printf '\n\n'
