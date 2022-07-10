@@ -27,7 +27,17 @@ class _TackAppState extends State<TackApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+      localizationsDelegates: <LocalizationsDelegate<dynamic>>[
+        FlutterI18nDelegate(
+          translationLoader: FileTranslationLoader(
+            useCountryCode: false,
+            basePath: 'localization',
+            fallbackFile: 'en',
+            decodeStrategies: <BaseDecodeStrategy>[
+              JsonDecodeStrategy(),
+            ],
+          ),
+        ),
         AppLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate

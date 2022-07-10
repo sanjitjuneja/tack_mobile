@@ -1,4 +1,3 @@
-import 'package:core_ui/src/theme/app_text_theme.dart';
 import 'package:core_ui/src/theme/app_theme.dart';
 import 'package:core_ui/src/widgets/app_button_type.dart';
 import 'package:core_ui/src/widgets/opacity_on_tap_container.dart';
