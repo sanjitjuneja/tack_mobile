@@ -53,10 +53,10 @@ class AppTextTheme {
       );
 
   static TextStyle get manrope11Regular => const TextStyle(
-    fontSize: 11,
-    fontWeight: FontWeight.w400,
-    fontFamily: _manropeFamily,
-  );
+        fontSize: 11,
+        fontWeight: FontWeight.w400,
+        fontFamily: _manropeFamily,
+      );
 
   static TextStyle get manrope14Regular => const TextStyle(
         fontSize: 14,
@@ -78,6 +78,12 @@ class AppTextTheme {
 
   static TextStyle get manrope18Regular => const TextStyle(
         fontSize: 18,
+        fontWeight: FontWeight.w400,
+        fontFamily: _manropeFamily,
+      );
+
+  static TextStyle get manrope20Regular => const TextStyle(
+        fontSize: 20,
         fontWeight: FontWeight.w400,
         fontFamily: _manropeFamily,
       );

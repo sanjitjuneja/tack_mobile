@@ -10,6 +10,9 @@ class AppColors {
   static const Color blackRussian = Color.fromRGBO(29, 31, 37, 1);
   static const Color blackPearl31 = Color.fromRGBO(12, 15, 20, 0.31);
 
+  static const Color midnightExpress = Color.fromRGBO(10, 10, 18, 1);
+  static const Color midnightExpress68 = Color.fromRGBO(10, 10, 18, 0.68);
+
   static const comet = Color.fromRGBO(88, 88, 108, 1);
   static const nevada = Color.fromRGBO(108, 110, 111, 1);
   static const Color midGrey = Color.fromRGBO(91, 92, 101, 1);

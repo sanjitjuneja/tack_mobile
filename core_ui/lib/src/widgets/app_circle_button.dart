@@ -7,6 +7,7 @@ class AppCircleButton extends StatelessWidget {
   final String label;
   final AppButtonType type;
   final bool isDisabled;
+  final EdgeInsets? margin;
   final VoidCallback? onTap;
 
   const AppCircleButton({
@@ -14,6 +15,7 @@ class AppCircleButton extends StatelessWidget {
     required this.label,
     this.type = AppButtonType.primary,
     this.isDisabled = false,
+    this.margin,
     this.onTap,
   });
 
@@ -31,23 +33,27 @@ class AppCircleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OpacityOnTapContainer(
-      onTap: onTap,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(19.0),
-        decoration: BoxDecoration(
-          color: _backgroundColor,
-          border: Border.all(color: _borderColor),
-          borderRadius: BorderRadius.circular(100),
-          shape: BoxShape.rectangle,
-        ),
-        // alignment: Alignment.center,
-        child: Text(
-          label,
-          textAlign: TextAlign.center,
-          style:
-              AppTextTheme.manrope16SemiBold.copyWith(color: _interfaceColor),
+    return Padding(
+      padding: margin ?? EdgeInsets.zero,
+      child: OpacityOnTapContainer(
+        onTap: onTap,
+        disable: isDisabled,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(19.0),
+          decoration: BoxDecoration(
+            color: _backgroundColor,
+            border: Border.all(color: _borderColor),
+            borderRadius: BorderRadius.circular(100),
+            shape: BoxShape.rectangle,
+          ),
+          // alignment: Alignment.center,
+          child: Text(
+            label,
+            textAlign: TextAlign.center,
+            style:
+                AppTextTheme.manrope16SemiBold.copyWith(color: _interfaceColor),
+          ),
         ),
       ),
     );

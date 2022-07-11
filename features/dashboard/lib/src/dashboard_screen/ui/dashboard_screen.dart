@@ -1,8 +1,8 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/src/bloc/dashboard_bloc.dart';
+import 'package:dashboard/src/dashboard_screen/ui/dashboard_form.dart';
 import 'package:dashboard/src/mocked_data/user_data.dart';
-import 'package:dashboard/src/ui/dashboard_form.dart';
 import 'package:flutter/cupertino.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -14,6 +14,7 @@ class DashboardScreen extends StatelessWidget {
       backgroundColor: AppTheme.primaryBackgroundColor,
       navigationBar: AppNavigationBar(
         backgroundColor: AppTheme.primaryBackgroundColor,
+        automaticallyImplyLeading: false,
         middle: BlocBuilder<DashboardBloc, DashboardState>(
           builder: (_, DashboardState state) {
             return Align(

@@ -1,7 +1,7 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/src/bloc/dashboard_bloc.dart';
-import 'package:dashboard/src/ui/widgets/tack_tile.dart';
+import 'package:dashboard/src/widgets/tack_tile.dart';
 import 'package:flutter/cupertino.dart';
 
 class DashboardForm extends StatelessWidget {

@@ -16,6 +16,8 @@ class AppIconsTheme {
   static const String _tacksInactiveKey = '${_navigationPath}tacks_inactive.png';
   ///
 
+  static const String _chevronLeftKey = '${_basePath}chevron_left.png';
+
   static const String _chatKey = '${_basePath}chat.png';
   static const String _notificationKey = '${_basePath}notification.png';
   static const String _menuKey = '${_basePath}menu.png';
@@ -35,6 +37,8 @@ class AppIconsTheme {
   static AppIcon get tacksActive => AppIcon(_tacksActiveKey);
   static AppIcon get tacksInactive => AppIcon(_tacksInactiveKey);
   ///
+
+  static AppIcon get chevronLeft => AppIcon(_chevronLeftKey);
 
   static AppIcon get chat => AppIcon(_chatKey);
   static AppIcon get notification => AppIcon(_notificationKey);

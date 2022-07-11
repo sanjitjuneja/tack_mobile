@@ -43,8 +43,9 @@ class AppButton extends StatelessWidget {
                 ? AppTheme.buttonInterfacePrimaryColor
                 : AppTheme.buttonInterfaceSecondaryColor);
 
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
+    return OpacityOnTapContainer(
+      onTap: onTap,
+      disable: isDisabled,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
         decoration: BoxDecoration(
