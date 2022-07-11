@@ -26,7 +26,8 @@ dependencies:
   # Components
   app_dialog:
     path: ../components/app_dialog
-
+  segment_controller:
+    path: ../components/segment_controller
 
 dev_dependencies:
   flutter_test:
