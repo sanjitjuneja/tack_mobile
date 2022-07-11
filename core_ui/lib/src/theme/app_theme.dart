@@ -23,12 +23,29 @@ class AppTheme {
   static Color get barrierColor => AppColors.blackPearl31;
   static const Color shadowColor = AppColors.black25;
 
+  /// Top Navigation Bar
+  static Color get topNavBarInterfaceColor => AppColors.black;
+  ///
+
   /// Navigation Bar
   static Color get navBarBackgroundColor => AppColors.white;
   static Color get navBarInactiveIconColor => AppColors.aluminium;
   static Color get navBarActiveIconColor => AppColors.fern;
-
   ///
+
+  /// Progress Dialog
+  static Color get progressBarrierColor => AppColors.midnightExpress68;
+  static Color get progressInterfaceColor => AppColors.white;
+  ///
+
+  /// Segment Controller
+  static Color get segmentBackgroundColor => AppColors.white;
+  static Color get segmentActiveBackgroundColor => AppColors.fern;
+  static Color get segmentBorderColor => AppColors.fern;
+  static Color get segmentActiveTabTextColor => AppColors.white;
+  static Color get segmentInactiveTabTextColor => AppColors.fern;
+  ///
+
   static const positiveColor = AppColors.white;
   static const accentColor = AppColors.black;
 
@@ -44,7 +61,7 @@ class AppTheme {
   /// Text
   static Color get textPrimaryColor => AppColors.black;
   static Color get textSecondaryColor => AppColors.fern;
-  static Color get texHintColor => AppColors.waterloo;
+  static Color get textHintColor => AppColors.waterloo;
   static Color get textHeavyHintColor => AppColors.shuttleGray;
 
   static Color get selectedListItemColor => AppColors.fern;

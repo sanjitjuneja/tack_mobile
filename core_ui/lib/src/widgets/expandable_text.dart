@@ -5,11 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:expandable_text/expandable_text.dart' as expand_text;
 
 class ExpandableText extends StatelessWidget {
+  static const Duration _expandDuration = Duration(milliseconds: 350);
+
   final String text;
+  final TextStyle? style;
 
   const ExpandableText({
     super.key,
     required this.text,
+    this.style,
   });
 
   @override
@@ -19,10 +23,10 @@ class ExpandableText extends StatelessWidget {
       expandText: FlutterI18n.translate(context, 'general.more'),
       collapseText: FlutterI18n.translate(context, 'general.less'),
       textAlign: TextAlign.start,
-      style: AppTextTheme.manrope14Medium.copyWith(height: 1.5),
+      style: style,
       maxLines: 1,
       animation: true,
-      animationDuration: const Duration(milliseconds: 500),
+      animationDuration: _expandDuration,
       animationCurve: Curves.easeInOut,
       linkColor: AppTheme.textSecondaryColor,
     );

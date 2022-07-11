@@ -48,10 +48,7 @@ class HomeScreen extends StatelessWidget {
               case _dashboardTabIndex:
                 return CupertinoTabView(
                   builder: (_) {
-                    return const CupertinoPageScaffold(
-                      backgroundColor: AppTheme.backgroundColor,
-                      child: DashboardScreen(),
-                    );
+                    return const DashboardScreen();
                   },
                 );
               case _addTabIndex:

@@ -13,17 +13,21 @@ dependencies:
 
   animated_toggle_switch: ^0.5.2
   flutter_html: ^2.2.1
+  flutter_keyboard_visibility: ^5.3.0
   expandable_text: ^2.3.0
 
   core:
     path: ../core
   domain:
     path: ../domain
+  navigation:
+    path: ../navigation
 
   # Components
   app_dialog:
     path: ../components/app_dialog
-
+  segment_controller:
+    path: ../components/segment_controller
 
 dev_dependencies:
   flutter_test:

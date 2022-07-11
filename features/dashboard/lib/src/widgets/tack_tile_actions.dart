@@ -1,9 +1,12 @@
-import 'package:core/core.dart';
-import 'package:core_ui/core_ui.dart';
-import 'package:flutter/cupertino.dart';
+part of tack_tile;
 
 class TackTileActions extends StatelessWidget {
-  const TackTileActions({super.key});
+  final TackModel tack;
+
+  const TackTileActions({
+    super.key,
+    required this.tack,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +18,10 @@ class TackTileActions extends StatelessWidget {
             label: FlutterI18n.translate(context, 'general.counter'),
             type: ButtonType.secondary,
             withShadow: false,
+            onTap: () {
+              BlocProvider.of<DashboardBloc>(context)
+                  .add(CounterOfferOpen(tack: tack));
+            },
           ),
         ),
         const SizedBox(width: 12),
@@ -23,6 +30,10 @@ class TackTileActions extends StatelessWidget {
           child: AppButton(
             label: FlutterI18n.translate(context, 'general.accept'),
             icon: AppIconsTheme.edit,
+            onTap: () {
+              BlocProvider.of<DashboardBloc>(context)
+                  .add(AcceptTack(tack: tack));
+            },
           ),
         ),
       ],
