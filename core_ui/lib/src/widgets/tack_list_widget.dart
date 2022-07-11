@@ -53,7 +53,7 @@ class TackListWidget extends StatelessWidget {
                     ),
                     const SizedBox(width: 50),
                     Text(
-                      dollarFormat.format(tack.price),
+                      CurrencyUtility.dollarFormat.format(tack.price),
                       style: AppTextTheme.manrope24Bold.copyWith(
                         color: AppTheme.grassColor,
                       ),
@@ -100,22 +100,7 @@ class TackListWidget extends StatelessWidget {
                 ),
                 const Spacer(),
                 AppButton(
-                  text: AppLocalizations.of(context).value('button.accept'),
-                  height: 38,
-                  width: 90,
-                  backgroundColor: AppTheme.grassColor,
-                  borderSide: const BorderSide(
-                    width: 1,
-                    color: AppTheme.positiveColor,
-                  ),
-                  shadows: const [
-                    BoxShadow(
-                      color: AppTheme.shadowColor,
-                      offset: Offset(0, 10),
-                      spreadRadius: -8,
-                      blurRadius: 12,
-                    ),
-                  ],
+                  label: AppLocalizations.of(context).value('button.accept'),
                 )
               ],
             ),

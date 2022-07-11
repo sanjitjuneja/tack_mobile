@@ -1,0 +1,58 @@
+{
+  "time": {
+    "hour-0": "{count} Hours",
+    "hour-1": "{count} Hour",
+    "hour-2": "{count} Hours",
+    "min-0": "{count} min"
+  },
+  "general": {
+    "accept": "Accept",
+    "back": "Back",
+    "view": "View",
+    "track": "Track",
+    "message": "Message",
+    "runOut": "Run Out",
+    "review": "Review",
+    "reviews": "Reviews",
+    "complete": "Complete",
+    "completionTime": "Completion Time",
+    "counter": "Counter",
+    "counterOffer": "Counter Offer",
+    "less": "Less",
+    "more": "More"
+  },
+  "tacks": {
+  },
+  "tacksScreen": {
+    "title": "My Tacks",
+    "description": "Here are your ongoing Tacks (the ones you have created yourself or completing for others)",
+    "tackerTab": "Tacker",
+    "runnerTab": "Runner",
+    "chooseRunnerButton": "Choose Runner",
+    "beginTrackButton": "Begin Track",
+    "editOfferButton": "Edit Offer",
+    "tackerStatus": {
+      "created": "Created",
+      "accepted": "Accepted",
+      "preparing": "Preparing",
+      "completing": "Completing",
+      "finishingUp": "Finishing Up",
+      "complete": "Complete"
+    },
+    "runnerStatus": {
+      "pending": "Pending",
+      "finishingUp": "Finishing Up"
+    }
+  },
+  "groupsScreen": {
+    "title": "Groups",
+    "description": "Create and complete tasks between a select group of people (invite-only or public groups)",
+    "privateTab": "Private",
+    "publicTab": "Public",
+    "searchFieldHint": "Search Groups",
+    "manageGroupButton": "Manage Group",
+    "createNewGroupButton": "Create New Group",
+    "myInvitationsButton": "My Invitations",
+    "unacceptedTacks": "{count} Unaccepted Tacks"
+  }
+}

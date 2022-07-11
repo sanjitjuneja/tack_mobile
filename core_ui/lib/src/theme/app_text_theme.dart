@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of app_theme;
 
 class AppTextTheme {
   static const String _manropeFamily = 'manrope';
@@ -52,6 +52,12 @@ class AppTextTheme {
         fontFamily: _manropeFamily,
       );
 
+  static TextStyle get manrope11Regular => const TextStyle(
+        fontSize: 11,
+        fontWeight: FontWeight.w400,
+        fontFamily: _manropeFamily,
+      );
+
   static TextStyle get manrope14Regular => const TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w400,
@@ -66,6 +72,18 @@ class AppTextTheme {
 
   static TextStyle get manrope16Regular => const TextStyle(
         fontSize: 16,
+        fontWeight: FontWeight.w400,
+        fontFamily: _manropeFamily,
+      );
+
+  static TextStyle get manrope18Regular => const TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w400,
+        fontFamily: _manropeFamily,
+      );
+
+  static TextStyle get manrope20Regular => const TextStyle(
+        fontSize: 20,
         fontWeight: FontWeight.w400,
         fontFamily: _manropeFamily,
       );

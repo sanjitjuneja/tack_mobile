@@ -1,7 +1,5 @@
 library app_selectable_list;
 
-import 'package:core_ui/src/theme/app_image_theme.dart';
-import 'package:core_ui/src/theme/app_text_theme.dart';
 import 'package:core_ui/src/theme/app_theme.dart';
 import 'package:core_ui/src/widgets/app_divider.dart';
 import 'package:core_ui/src/widgets/opacity_on_tap_container.dart';

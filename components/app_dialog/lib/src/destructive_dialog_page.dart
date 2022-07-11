@@ -6,21 +6,22 @@ class DestructiveDialog {
   static Page<dynamic> page(
     DestructiveAlert destructiveAlert, {
     ButtonCallback? onDestructiveActionTap,
-  }) =>
-      DestructiveDialogPage(
-        destructiveAlert: destructiveAlert,
-        onDestructiveActionTap: onDestructiveActionTap,
-      );
+  }) {
+    return _DestructiveDialogPage(
+      destructiveAlert: destructiveAlert,
+      onDestructiveActionTap: onDestructiveActionTap,
+    );
+  }
 }
 
-class DestructiveDialogPage extends Page<bool> {
+class _DestructiveDialogPage extends Page<bool> {
   final DestructiveAlert destructiveAlert;
   final ButtonCallback? onDestructiveActionTap;
 
   @override
   String get name => AppAlertDialog.routeName;
 
-  const DestructiveDialogPage({
+  const _DestructiveDialogPage({
     required this.destructiveAlert,
     this.onDestructiveActionTap,
   });
@@ -30,6 +31,7 @@ class DestructiveDialogPage extends Page<bool> {
     return DialogRoute<bool>(
       settings: this,
       context: context,
+      barrierColor: AppTheme.barrierColor,
       barrierDismissible: true,
       builder: (_) => DestructiveDialogWidget(
         destructiveAlert: destructiveAlert,

@@ -4,12 +4,14 @@ class OpacityOnTapContainer extends StatefulWidget {
   final Widget child;
   final VoidCallback? onTap;
   final double? pressedOpacity;
+  final double disabledOpacity;
   final bool disable;
 
   const OpacityOnTapContainer({
     super.key,
     required this.child,
     this.pressedOpacity = 0.7,
+    this.disabledOpacity = 1,
     this.onTap,
     this.disable = false,
   });
@@ -31,7 +33,6 @@ class _OpacityOnTapContainerState extends State<OpacityOnTapContainer>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      // duration: const Duration(milliseconds: 200),
       value: 0.0,
       vsync: this,
     );
@@ -48,7 +49,12 @@ class _OpacityOnTapContainerState extends State<OpacityOnTapContainer>
   }
 
   void _setTween() {
+    if (widget.disable) {
+      _opacityTween.begin = widget.disabledOpacity;
+    }
     _opacityTween.end = widget.pressedOpacity ?? 1.0;
+
+    _animate();
   }
 
   @override
@@ -84,7 +90,7 @@ class _OpacityOnTapContainerState extends State<OpacityOnTapContainer>
     if (_animationController.isAnimating) return;
 
     final bool wasHeldDown = _buttonHeldDown;
-    final TickerFuture ticker = _buttonHeldDown
+    final TickerFuture ticker = _buttonHeldDown || widget.disable
         ? _animationController.animateTo(
             1.0,
             duration: _fadeOutDuration,
@@ -109,7 +115,7 @@ class _OpacityOnTapContainerState extends State<OpacityOnTapContainer>
       onTapDown: isDisabled ? null : _handleTapDown,
       onTapUp: isDisabled ? null : _handleTapUp,
       onTapCancel: isDisabled ? null : _handleTapCancel,
-      onTap: widget.onTap,
+      onTap: isDisabled ? null : widget.onTap,
       child: Semantics(
         button: true,
         child: FadeTransition(

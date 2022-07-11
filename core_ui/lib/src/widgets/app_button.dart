@@ -1,103 +1,98 @@
 import 'package:core_ui/core_ui.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
+enum ButtonType {
+  primary,
+  secondary;
+
+  bool get isPrimary {
+    return this == ButtonType.primary;
+  }
+}
 
 class AppButton extends StatelessWidget {
-  final String text;
-  final Color backgroundColor;
-
-  final Image? image;
-  final double? width;
-  final double? height;
-  final bool isEnabled;
-  final TextStyle? textStyle;
-  final String? disabledText;
-  final BorderSide? borderSide;
-  final List<BoxShadow>? shadows;
-  final TextStyle? disabledTextStyle;
-  final Color? disabledBackgroundColor;
-  final Color? onPressedBackgroundColor;
-
-  final void Function()? onPressed;
+  final String label;
+  final AppIcon? icon;
+  final ButtonType type;
+  final Color? textColor;
+  final Color? backgroundColor;
+  final Color? borderColor;
+  final bool withShadow;
+  final bool isDisabled;
+  final void Function()? onTap;
 
   const AppButton({
-    required this.text,
-    required this.backgroundColor,
-    this.image,
-    this.width,
-    this.height,
-    this.shadows,
-    this.onPressed,
-    this.textStyle,
-    this.borderSide,
-    this.disabledText,
-    this.isEnabled = true,
-    this.disabledTextStyle,
-    this.disabledBackgroundColor,
-    this.onPressedBackgroundColor,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+    required this.label,
+    this.icon,
+    this.type = ButtonType.primary,
+    this.textColor,
+    this.backgroundColor,
+    this.borderColor,
+    this.withShadow = true,
+    this.isDisabled = false,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        boxShadow: shadows ?? [],
-      ),
-      width: width ?? double.infinity,
-      height: height ?? 55,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          shadowColor: MaterialStateProperty.all(Colors.transparent),
-          overlayColor: MaterialStateProperty.all(Colors.transparent),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              side: borderSide ?? BorderSide.none,
-              borderRadius: BorderRadius.circular(12),
-            ),
+    final Color contentColor = isDisabled
+        ? AppTheme.buttonDisabledColor
+        : textColor ??
+            (type.isPrimary
+                ? AppTheme.buttonInterfacePrimaryColor
+                : AppTheme.buttonInterfaceSecondaryColor);
+
+    return OpacityOnTapContainer(
+      onTap: onTap,
+      disable: isDisabled,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        decoration: BoxDecoration(
+          color: isDisabled
+              ? AppTheme.buttonSecondaryColor
+              : backgroundColor ??
+                  (type.isPrimary
+                      ? AppTheme.buttonPrimaryColor
+                      : AppTheme.buttonSecondaryColor),
+          border: Border.all(
+            color: isDisabled
+                ? AppTheme.buttonDisabledColor
+                : borderColor ??
+                    (type.isPrimary
+                        ? AppTheme.buttonBorderPrimaryColor
+                        : AppTheme.buttonBorderSecondaryColor),
           ),
-          backgroundColor: MaterialStateProperty.resolveWith(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.pressed)) {
-                return isEnabled
-                    ? onPressedBackgroundColor ?? backgroundColor
-                    : disabledBackgroundColor ?? backgroundColor;
-              } else {
-                return isEnabled
-                    ? backgroundColor
-                    : disabledBackgroundColor ?? backgroundColor;
-              }
-            },
-          ),
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: withShadow
+              ? const <BoxShadow>[
+                  BoxShadow(
+                    color: AppTheme.shadowColor,
+                    offset: Offset(0, 4),
+                    blurRadius: 4,
+                  ),
+                ]
+              : null,
         ),
-        onPressed: isEnabled ? onPressed : () {},
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            if (image != null) ...<Widget>{
-              image!,
+            if (icon != null) ...<Widget>[
+              icon!.call(
+                color: contentColor,
+                size: 16,
+              ),
               const SizedBox(width: 10),
-            },
-            isEnabled
-                ? Text(
-                    text,
-                    style: textStyle ??
-                        AppTextTheme.manrope14Medium.copyWith(
-                          color: AppTheme.positiveColor,
-                        ),
-                    overflow: TextOverflow.visible,
-                    textAlign: TextAlign.center,
-                  )
-                : Text(
-                    disabledText ?? text,
-                    style: disabledTextStyle ??
-                        textStyle ??
-                        AppTextTheme.manrope14Medium.copyWith(
-                          color: AppTheme.accentColor,
-                        ),
-                    overflow: TextOverflow.visible,
-                    textAlign: TextAlign.center,
-                  ),
+            ],
+            Flexible(
+              child: Text(
+                label,
+                textAlign: TextAlign.center,
+                style: AppTextTheme.manrope14Medium.copyWith(
+                  color: contentColor,
+                ),
+              ),
+            ),
           ],
         ),
       ),

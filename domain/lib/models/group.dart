@@ -1,18 +1,18 @@
 class Group {
   final int id;
-  final String title;
+  final String name;
   final String? imageUrl;
 
   const Group({
     required this.id,
-    required this.title,
+    required this.name,
     this.imageUrl,
   });
 
   @override
   String toString() {
     return '$runtimeType(id: $id, '
-        'title: $title, '
+        'title: $name, '
         'imageUrl: $imageUrl'
         ')';
   }

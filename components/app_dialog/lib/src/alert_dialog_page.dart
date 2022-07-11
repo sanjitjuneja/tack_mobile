@@ -6,21 +6,22 @@ class AppAlertDialog {
   static Page<dynamic> page(
     Alert alert, {
     ButtonCallback? onButtonTap,
-  }) =>
-      AlertDialogPage(
-        alert: alert,
-        onButtonTap: onButtonTap,
-      );
+  }) {
+    return _AlertDialogPage(
+      alert: alert,
+      onButtonTap: onButtonTap,
+    );
+  }
 }
 
-class AlertDialogPage extends Page<bool> {
+class _AlertDialogPage extends Page<bool> {
   final Alert alert;
   final ButtonCallback? onButtonTap;
 
   @override
   String get name => AppAlertDialog.routeName;
 
-  const AlertDialogPage({
+  const _AlertDialogPage({
     required this.alert,
     this.onButtonTap,
   });
@@ -30,6 +31,7 @@ class AlertDialogPage extends Page<bool> {
     return DialogRoute<bool>(
       settings: this,
       context: context,
+      barrierColor: AppTheme.barrierColor,
       barrierDismissible: true,
       builder: (_) => AppAlertDialogWidget(
         alert: alert,
