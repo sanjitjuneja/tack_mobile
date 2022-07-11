@@ -19,6 +19,11 @@ dependencies:
   navigation:
     path: ../../navigation
 
+
+  # Features
+  dashboard:
+    path: ../dashboard
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

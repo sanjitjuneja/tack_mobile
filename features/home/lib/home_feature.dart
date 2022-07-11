@@ -1,3 +1,6 @@
+import 'package:core/core.dart';
+import 'package:core/di/app_di.dart';
+import 'package:dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 
@@ -13,7 +16,13 @@ class HomePage extends PageWithScaffoldKey<dynamic> {
       MaterialPageRoute<dynamic>(
         builder: (BuildContext context) => ScaffoldMessenger(
           key: scaffoldKey,
-          child: const HomeScreen(),
+          child: BlocProvider<DashboardBloc>(
+            create: (_) => DashboardBloc(
+              appRouter: appLocator.get<AppRouterDelegate>(),
+              groups: getGroups(3),
+            ),
+            child: const HomeScreen(),
+          ),
         ),
         settings: this,
       );

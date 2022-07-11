@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'app_router.dart';
+import 'app_router_delegate.dart';
 
 class PopNavigationObserver extends NavigatorObserver {
-  late AppRouter? appRouter;
+  late AppRouterDelegate? appRouter;
 
   void Function(Route<dynamic> route, Route<dynamic>? previousRoute)? onPopBack;
 

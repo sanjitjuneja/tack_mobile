@@ -2,7 +2,7 @@ class UserModel {
   final String name;
   final String imageUrl;
 
-  UserModel({
+  const UserModel({
     required this.name,
     required this.imageUrl,
   });

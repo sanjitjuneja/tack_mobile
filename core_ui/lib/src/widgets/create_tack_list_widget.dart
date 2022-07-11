@@ -57,7 +57,7 @@ class CreateTackListWidget extends StatelessWidget {
                     ),
                     const SizedBox(width: 11),
                     Text(
-                      dollarFormat.format(tack.price),
+                      CurrencyUtility.dollarFormat.format(tack.price),
                       style: AppTextTheme.manrope24Bold.copyWith(
                         color: AppTheme.grassColor,
                       ),
@@ -91,26 +91,9 @@ class CreateTackListWidget extends StatelessWidget {
                       Flexible(
                         flex: 1,
                         child: AppButton(
-                          text: AppLocalizations.of(context).value(
+                          label: AppLocalizations.of(context).value(
                             'button.remove',
                           ),
-                          height: 40,
-                          backgroundColor: AppTheme.positiveColor,
-                          textStyle: AppTextTheme.manrope14Medium.copyWith(
-                            color: AppTheme.buttonTextSecondaryColor,
-                          ),
-                          borderSide: const BorderSide(
-                            width: 1,
-                            color: AppTheme.lightButtonBorder,
-                          ),
-                          shadows: const [
-                            BoxShadow(
-                              color: Colors.black26,
-                              offset: Offset(0, 10),
-                              spreadRadius: -8,
-                              blurRadius: 12,
-                            ),
-                          ],
                         ),
                       ),
                       const SizedBox(width: 11),
@@ -118,24 +101,9 @@ class CreateTackListWidget extends StatelessWidget {
                     Flexible(
                       flex: 2,
                       child: AppButton(
-                        image: AppImagesTheme.edit,
-                        text: AppLocalizations.of(context).value(
+                        label: AppLocalizations.of(context).value(
                           'button.editAndPublish',
                         ),
-                        height: 40,
-                        backgroundColor: AppTheme.grassColor,
-                        borderSide: const BorderSide(
-                          width: 1,
-                          color: AppTheme.positiveColor,
-                        ),
-                        shadows: const [
-                          BoxShadow(
-                            color: AppTheme.shadowColor,
-                            offset: Offset(0, 10),
-                            spreadRadius: -8,
-                            blurRadius: 12,
-                          ),
-                        ],
                       ),
                     )
                   ],

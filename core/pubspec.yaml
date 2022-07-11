@@ -15,11 +15,13 @@ dependencies:
   navigation:
     path: ../navigation
 
-  intl: ^0.17.0
-  get_it: ^7.2.0
-  jwt_decoder: ^2.0.1
-  flutter_bloc: ^7.3.3
   connectivity: ^3.0.3
+  equatable: ^2.0.3
+  flutter_bloc: ^7.3.3
+  flutter_i18n: ^0.32.4
+  get_it: ^7.2.0
+  intl: ^0.17.0
+  jwt_decoder: ^2.0.1
   shared_preferences: ^2.0.13
 
 dev_dependencies:

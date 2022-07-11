@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+part of app_theme;
 
 class AppTextTheme {
   static const String _manropeFamily = 'manrope';
+  static const String _poppinsFamily = 'poppins';
 
   static TextStyle get manrope9Light => const TextStyle(
         fontSize: 9,
@@ -51,6 +52,42 @@ class AppTextTheme {
         fontFamily: _manropeFamily,
       );
 
+  static TextStyle get manrope11Regular => const TextStyle(
+        fontSize: 11,
+        fontWeight: FontWeight.w400,
+        fontFamily: _manropeFamily,
+      );
+
+  static TextStyle get manrope14Regular => const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        fontFamily: _manropeFamily,
+      );
+
+  static TextStyle get manrope15Regular => const TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.w400,
+        fontFamily: _manropeFamily,
+      );
+
+  static TextStyle get manrope16Regular => const TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        fontFamily: _manropeFamily,
+      );
+
+  static TextStyle get manrope18Regular => const TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w400,
+        fontFamily: _manropeFamily,
+      );
+
+  static TextStyle get manrope20Regular => const TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w400,
+        fontFamily: _manropeFamily,
+      );
+
   static TextStyle get manrope13Medium => const TextStyle(
         fontSize: 13,
         fontWeight: FontWeight.w500,
@@ -58,10 +95,10 @@ class AppTextTheme {
       );
 
   static TextStyle get manrope13SemiBold => const TextStyle(
-    fontSize: 13,
-    fontWeight: FontWeight.w600,
-    fontFamily: _manropeFamily,
-  );
+        fontSize: 13,
+        fontWeight: FontWeight.w600,
+        fontFamily: _manropeFamily,
+      );
 
   static TextStyle get manrope22Light => const TextStyle(
         fontSize: 22,
@@ -166,10 +203,10 @@ class AppTextTheme {
       );
 
   static TextStyle get manrope12Bold => const TextStyle(
-    fontSize: 12,
-    fontWeight: FontWeight.w700,
-    fontFamily: _manropeFamily,
-  );
+        fontSize: 12,
+        fontWeight: FontWeight.w700,
+        fontFamily: _manropeFamily,
+      );
 
   static TextStyle get manrope24Bold => const TextStyle(
         fontSize: 24,
@@ -193,5 +230,11 @@ class AppTextTheme {
         fontSize: 22,
         fontWeight: FontWeight.w700,
         fontFamily: _manropeFamily,
+      );
+
+  static TextStyle get poppins14Medium => const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        fontFamily: _poppinsFamily,
       );
 }
