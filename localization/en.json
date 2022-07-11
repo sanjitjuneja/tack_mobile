@@ -19,9 +19,13 @@
     "counter": "Counter",
     "counterOffer": "Counter Offer",
     "less": "Less",
-    "more": "More"
+    "more": "More",
+    "price": "Price"
   },
-  "tacks": {
+  "counterOfferScreen": {
+    "tackDetails": "Tack Details",
+    "counterofferPrice": "Counteroffer Price",
+    "sendOfferButton": "Send Offer"
   },
   "tacksScreen": {
     "title": "My Tacks",

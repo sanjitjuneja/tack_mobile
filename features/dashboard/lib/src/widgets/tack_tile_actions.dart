@@ -18,10 +18,7 @@ class TackTileActions extends StatelessWidget {
             label: FlutterI18n.translate(context, 'general.counter'),
             type: ButtonType.secondary,
             withShadow: false,
-            onTap: () {
-              BlocProvider.of<DashboardBloc>(context)
-                  .add(CounterOfferOpen(tack: tack));
-            },
+            onTap: () => _onCounterButtonTap(context),
           ),
         ),
         const SizedBox(width: 12),
@@ -30,13 +27,18 @@ class TackTileActions extends StatelessWidget {
           child: AppButton(
             label: FlutterI18n.translate(context, 'general.accept'),
             icon: AppIconsTheme.edit,
-            onTap: () {
-              BlocProvider.of<DashboardBloc>(context)
-                  .add(AcceptTack(tack: tack));
-            },
+            onTap: () => _onAcceptButtonTap(context),
           ),
         ),
       ],
     );
+  }
+
+  void _onCounterButtonTap(BuildContext context) {
+    BlocProvider.of<DashboardBloc>(context).add(CounterOfferOpen(tack: tack));
+  }
+
+  void _onAcceptButtonTap(BuildContext context) {
+    BlocProvider.of<DashboardBloc>(context).add(AcceptTack(tack: tack));
   }
 }
