@@ -38,6 +38,14 @@ class AppTheme {
   static Color get progressInterfaceColor => AppColors.white;
   ///
 
+  /// Segment Controller
+  static Color get segmentBackgroundColor => AppColors.white;
+  static Color get segmentActiveBackgroundColor => AppColors.fern;
+  static Color get segmentBorderColor => AppColors.fern;
+  static Color get segmentActiveTabTextColor => AppColors.white;
+  static Color get segmentInactiveTabTextColor => AppColors.fern;
+  ///
+
   static const positiveColor = AppColors.white;
   static const accentColor = AppColors.black;
 

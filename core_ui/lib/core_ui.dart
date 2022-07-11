@@ -14,6 +14,7 @@ export 'src/widgets/app_circle_button.dart';
 export 'src/widgets/app_divider.dart';
 export 'src/widgets/app_list_view.dart';
 export 'src/widgets/app_navigation_bar.dart';
+export 'src/widgets/app_segment_controller.dart';
 export 'src/widgets/app_text_field.dart';
 
 export 'src/widgets/search_field_widget.dart';
