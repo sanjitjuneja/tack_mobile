@@ -91,7 +91,7 @@ class CreateTackListWidget extends StatelessWidget {
                       Flexible(
                         flex: 1,
                         child: AppButton(
-                          label: AppLocalizations.of(context).value(
+                          labelKey: AppLocalizations.of(context).value(
                             'button.remove',
                           ),
                         ),
@@ -101,7 +101,7 @@ class CreateTackListWidget extends StatelessWidget {
                     Flexible(
                       flex: 2,
                       child: AppButton(
-                        label: AppLocalizations.of(context).value(
+                        labelKey: AppLocalizations.of(context).value(
                           'button.editAndPublish',
                         ),
                       ),

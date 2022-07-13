@@ -13,6 +13,7 @@ class AppTheme {
   static Color get primaryColor => AppColors.white;
 
   static Color get primaryBackgroundColor => AppColors.tranquil;
+  static Color get secondaryBackgroundColor => AppColors.white;
 
   /// System colors
   static Color get successColor => AppColors.fern;
@@ -44,6 +45,11 @@ class AppTheme {
   static Color get segmentBorderColor => AppColors.fern;
   static Color get segmentActiveTabTextColor => AppColors.white;
   static Color get segmentInactiveTabTextColor => AppColors.fern;
+  ///
+
+  /// Text Field
+  static Color get textFieldPrimaryBackgroundColor => AppColors.white;
+  static Color get textFieldSecondaryBackgroundColor => AppColors.solitude;
   ///
 
   static const positiveColor = AppColors.white;

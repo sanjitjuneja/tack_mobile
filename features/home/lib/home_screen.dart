@@ -84,7 +84,7 @@ class HomeScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         AppCircleButton(
-          label: 'Request alert',
+          labelKey: 'Request alert',
           onTap: () {
             appLocator.get<AppRouterDelegate>().push(
                   AppAlertDialog.page(
@@ -101,7 +101,7 @@ class HomeScreen extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         AppCircleButton(
-          label: 'New Group Request alert',
+          labelKey: 'New Group Request alert',
           onTap: () {
             appLocator.get<AppRouterDelegate>().push(
                   AppAlertDialog.page(
@@ -118,7 +118,7 @@ class HomeScreen extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         AppCircleButton(
-          label: 'Cancelled alert',
+          labelKey: 'Cancelled alert',
           onTap: () {
             appLocator.get<AppRouterDelegate>().push(
                   AppAlertDialog.page(
@@ -133,7 +133,7 @@ class HomeScreen extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         AppCircleButton(
-          label: 'Offer accepted alert',
+          labelKey: 'Offer accepted alert',
           onTap: () {
             appLocator.get<AppRouterDelegate>().push(
                   AppAlertDialog.page(
@@ -149,7 +149,7 @@ class HomeScreen extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         AppCircleButton(
-          label: 'You now in group alert',
+          labelKey: 'You now in group alert',
           onTap: () {
             appLocator.get<AppRouterDelegate>().push(
                   AppAlertDialog.page(
@@ -165,7 +165,7 @@ class HomeScreen extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         AppCircleButton(
-          label: 'Destructive dialog without title',
+          labelKey: 'Destructive dialog without title',
           onTap: () {
             appLocator.get<AppRouterDelegate>().push(
                   DestructiveDialog.page(
@@ -180,7 +180,7 @@ class HomeScreen extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         AppCircleButton(
-          label: 'Destructive dialog with title',
+          labelKey: 'Destructive dialog with title',
           onTap: () {
             appLocator.get<AppRouterDelegate>().push(
                   DestructiveDialog.page(
@@ -196,7 +196,7 @@ class HomeScreen extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         AppCircleButton(
-          label: 'Delete account dialog',
+          labelKey: 'Delete account dialog',
           onTap: () {
             appLocator.get<AppRouterDelegate>().push(
                   DestructiveDialog.page(
@@ -211,7 +211,7 @@ class HomeScreen extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         AppCircleButton(
-          label: 'test',
+          labelKey: 'test',
           onTap: () {
             BlocProvider.of<DashboardBloc>(context).add(const ChangeGroup());
           },

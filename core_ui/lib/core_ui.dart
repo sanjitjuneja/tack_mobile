@@ -33,6 +33,7 @@ export 'src/widgets/drawer_accessory_widget.dart';
 export 'src/widgets/opacity_on_tap_container.dart';
 export 'src/widgets/expandable_text.dart';
 export 'src/widgets/keyboard_dismissible.dart';
+export 'src/widgets/keyboard_visibility_widget.dart';
 export 'src/widgets/group_user_header_widget.dart';
 export 'src/widgets/text_with_highlight.dart';
 
