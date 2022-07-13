@@ -37,4 +37,5 @@ export 'src/widgets/group_user_header_widget.dart';
 export 'src/widgets/text_with_highlight.dart';
 
 export 'package:app_dialog/app_dialog.dart';
+export 'package:image_cropper/image_cropper.dart';
 export 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';

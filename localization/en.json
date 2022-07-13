@@ -7,7 +7,9 @@
   },
   "general": {
     "accept": "Accept",
+    "apply": "Apply",
     "back": "Back",
+    "cancel": "Cancel",
     "view": "View",
     "track": "Track",
     "message": "Message",
@@ -58,5 +60,9 @@
     "createNewGroupButton": "Create New Group",
     "myInvitationsButton": "My Invitations",
     "unacceptedTacks": "{count} Unaccepted Tacks"
+  },
+  "imagePickOptionsDrawer" : {
+    "pickPhoto": "Pick photo",
+    "choosePhoto": "Choose photo"
   }
 }

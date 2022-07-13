@@ -11,6 +11,7 @@ List<Group> getGroups(int length) {
       return Group(
         id: index,
         name: groupNames[randomGroupNameIndex],
+        imageUrl: '',
       );
     },
   );
