@@ -1,10 +1,11 @@
+import 'package:core/core.dart';
 import 'package:core_ui/src/theme/app_theme.dart';
 import 'package:core_ui/src/widgets/app_button_type.dart';
 import 'package:core_ui/src/widgets/opacity_on_tap_container.dart';
 import 'package:flutter/cupertino.dart';
 
 class AppCircleButton extends StatelessWidget {
-  final String label;
+  final String labelKey;
   final AppButtonType type;
   final bool isDisabled;
   final EdgeInsets? margin;
@@ -12,7 +13,7 @@ class AppCircleButton extends StatelessWidget {
 
   const AppCircleButton({
     super.key,
-    required this.label,
+    required this.labelKey,
     this.type = AppButtonType.primary,
     this.isDisabled = false,
     this.margin,
@@ -47,9 +48,8 @@ class AppCircleButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(100),
             shape: BoxShape.rectangle,
           ),
-          // alignment: Alignment.center,
           child: Text(
-            label,
+            FlutterI18n.translate(context, labelKey),
             textAlign: TextAlign.center,
             style:
                 AppTextTheme.manrope16SemiBold.copyWith(color: _interfaceColor),

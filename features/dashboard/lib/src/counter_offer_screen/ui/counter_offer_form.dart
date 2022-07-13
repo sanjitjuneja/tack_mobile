@@ -45,10 +45,7 @@ class CounterOfferForm extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
                       AppTextField(
-                        placeholder: FlutterI18n.translate(
-                          context,
-                          'general.price',
-                        ),
+                        placeholder: 'general.price',
                         keyboardType: const TextInputType.numberWithOptions(
                           decimal: true,
                         ),
@@ -62,29 +59,14 @@ class CounterOfferForm extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            KeyboardVisibilityBuilder(
-              builder: (_, bool isKeyboardVisible) {
-                return AnimatedPadding(
-                  padding: EdgeInsets.only(bottom: isKeyboardVisible ? 0 : 40),
-                  duration: const Duration(milliseconds: 250),
-                  child: AnimatedOpacity(
-                    opacity: isKeyboardVisible ? 0 : 1,
-                    duration: const Duration(milliseconds: 400),
-                    curve: isKeyboardVisible
-                        ? Curves.linearToEaseOut
-                        : Curves.fastOutSlowIn,
-                    child: AppCircleButton(
-                      margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                      isDisabled: !state.isOfferValid,
-                      label: FlutterI18n.translate(
-                        context,
-                        'counterOfferScreen.sendOfferButton',
-                      ),
-                      onTap: () => _onCounterOfferSendPress(context),
-                    ),
-                  ),
-                );
-              },
+            KeyboardVisibilityWidget(
+              padding: const EdgeInsets.only(bottom: 40),
+              child: AppCircleButton(
+                margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                isDisabled: !state.isOfferValid,
+                labelKey: 'counterOfferScreen.sendOfferButton',
+                onTap: () => _onCounterOfferSendPress(context),
+              ),
             ),
           ],
         );

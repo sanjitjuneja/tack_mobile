@@ -1,3 +1,4 @@
+import 'package:core/core.dart';
 import 'package:core_ui/src/theme/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -5,15 +6,18 @@ import 'package:flutter/services.dart';
 class AppTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String placeholder;
+  final Color? backgroundColor;
   final bool shouldShowCursor;
   final bool isDisabled;
   final Function()? onTap;
   final bool? forceFocus;
   final bool isInvalid;
   final bool shouldObscure;
-  final bool? hasBorder;
+  final bool hasShadow;
   final bool isRequired;
   final double? height;
+  final int? minLines;
+  final int? maxLines;
   final Widget? suffix;
   final Iterable<String>? autofillHints;
   final void Function(String)? onTextChange;
@@ -26,14 +30,17 @@ class AppTextField extends StatelessWidget {
     super.key,
     required this.placeholder,
     this.controller,
+    this.backgroundColor,
     this.isDisabled = false,
     this.onTap,
     this.forceFocus,
     this.isInvalid = false,
     this.shouldObscure = false,
-    this.hasBorder,
+    this.hasShadow = true,
     bool? isRequired,
     this.height,
+    this.minLines,
+    this.maxLines,
     this.suffix,
     bool shouldShowCursor = true,
     this.autofillHints,
@@ -49,15 +56,17 @@ class AppTextField extends StatelessWidget {
       suffix: suffix,
       textAlignVertical: TextAlignVertical.center,
       decoration: BoxDecoration(
-        color: AppTheme.primaryColor,
+        color: backgroundColor ?? AppTheme.textFieldPrimaryBackgroundColor,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const <BoxShadow>[
-          BoxShadow(
-            color: AppTheme.shadowColor,
-            offset: Offset(0, 4),
-            blurRadius: 4,
-          ),
-        ],
+        boxShadow: hasShadow
+            ? const <BoxShadow>[
+                BoxShadow(
+                  color: AppTheme.shadowColor,
+                  offset: Offset(0, 4),
+                  blurRadius: 4,
+                ),
+              ]
+            : null,
       ),
       obscureText: shouldObscure,
       readOnly: _isReadOnly,
@@ -69,8 +78,11 @@ class AppTextField extends StatelessWidget {
         top: 23,
         bottom: 23,
       ),
-      placeholder: placeholder + (isRequired ? '*' : ''),
+      placeholder:
+          FlutterI18n.translate(context, placeholder) + (isRequired ? '*' : ''),
       scrollPadding: const EdgeInsets.all(30),
+      minLines: minLines,
+      maxLines: maxLines,
       style: isDisabled
           ? AppTextTheme.manrope16Regular
               .copyWith(color: AppTheme.textPrimaryColor)

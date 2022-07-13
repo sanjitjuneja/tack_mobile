@@ -1,3 +1,4 @@
+import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -11,10 +12,12 @@ enum ButtonType {
 }
 
 class AppButton extends StatelessWidget {
-  final String label;
+  final String labelKey;
+  final TextStyle? textStyle;
+  final EdgeInsets? padding;
   final AppIcon? icon;
   final ButtonType type;
-  final Color? textColor;
+  final Color? interfaceColor;
   final Color? backgroundColor;
   final Color? borderColor;
   final bool withShadow;
@@ -23,10 +26,12 @@ class AppButton extends StatelessWidget {
 
   const AppButton({
     super.key,
-    required this.label,
+    required this.labelKey,
+    this.textStyle,
+    this.padding,
     this.icon,
     this.type = ButtonType.primary,
-    this.textColor,
+    this.interfaceColor,
     this.backgroundColor,
     this.borderColor,
     this.withShadow = true,
@@ -38,16 +43,26 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color contentColor = isDisabled
         ? AppTheme.buttonDisabledColor
-        : textColor ??
+        : interfaceColor ??
             (type.isPrimary
                 ? AppTheme.buttonInterfacePrimaryColor
                 : AppTheme.buttonInterfaceSecondaryColor);
+    final TextStyle contentStyle = textStyle?.copyWith(color: contentColor) ??
+        AppTextTheme.manrope14Medium.copyWith(
+          color: contentColor,
+        );
+
+    final Color? resultBorderColor = borderColor ?? interfaceColor;
 
     return OpacityOnTapContainer(
       onTap: onTap,
       disable: isDisabled,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        padding: padding ??
+            const EdgeInsets.symmetric(
+              vertical: 8.0,
+              horizontal: 16.0,
+            ),
         decoration: BoxDecoration(
           color: isDisabled
               ? AppTheme.buttonSecondaryColor
@@ -58,13 +73,13 @@ class AppButton extends StatelessWidget {
           border: Border.all(
             color: isDisabled
                 ? AppTheme.buttonDisabledColor
-                : borderColor ??
+                : resultBorderColor ??
                     (type.isPrimary
                         ? AppTheme.buttonBorderPrimaryColor
                         : AppTheme.buttonBorderSecondaryColor),
           ),
           borderRadius: BorderRadius.circular(12),
-          boxShadow: withShadow
+          boxShadow: withShadow && type.isPrimary
               ? const <BoxShadow>[
                   BoxShadow(
                     color: AppTheme.shadowColor,
@@ -80,17 +95,15 @@ class AppButton extends StatelessWidget {
             if (icon != null) ...<Widget>[
               icon!.call(
                 color: contentColor,
-                size: 16,
+                size: contentStyle.fontSize! * 1.3,
               ),
               const SizedBox(width: 10),
             ],
             Flexible(
               child: Text(
-                label,
+                FlutterI18n.translate(context, labelKey),
                 textAlign: TextAlign.center,
-                style: AppTextTheme.manrope14Medium.copyWith(
-                  color: contentColor,
-                ),
+                style: contentStyle,
               ),
             ),
           ],

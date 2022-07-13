@@ -15,7 +15,7 @@ class TackTileActions extends StatelessWidget {
         Expanded(
           flex: 1,
           child: AppButton(
-            label: FlutterI18n.translate(context, 'general.counter'),
+            labelKey: 'general.counter',
             type: ButtonType.secondary,
             withShadow: false,
             onTap: () => _onCounterButtonTap(context),
@@ -25,7 +25,7 @@ class TackTileActions extends StatelessWidget {
         Expanded(
           flex: 2,
           child: AppButton(
-            label: FlutterI18n.translate(context, 'general.accept'),
+            labelKey: 'general.accept',
             icon: AppIconsTheme.edit,
             onTap: () => _onAcceptButtonTap(context),
           ),

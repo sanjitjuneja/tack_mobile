@@ -28,6 +28,8 @@ class AppIconsTheme {
   static const String _starKey = '${_basePath}star.png';
   static const String _messageKey = '${_basePath}message.png';
   static const String _taskCompleteKey = '${_basePath}task_complete.png';
+  static const String _cameraKey = '${_basePath}camera.png';
+  static const String _trashKey = '${_basePath}trash.png';
 
   /// Bottom Navigation bar
   static AppIcon get dashboardsActive => AppIcon(_dashboardActiveKey);
@@ -50,4 +52,6 @@ class AppIconsTheme {
   static AppIcon get star => AppIcon(_starKey);
   static AppIcon get message => AppIcon(_messageKey);
   static AppIcon get taskComplete => AppIcon(_taskCompleteKey);
+  static AppIcon get camera => AppIcon(_cameraKey);
+  static AppIcon get trash => AppIcon(_trashKey);
 }

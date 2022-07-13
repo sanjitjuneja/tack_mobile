@@ -3,7 +3,7 @@ import 'package:core_ui/src/theme/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
-const double _kNavBarPersistentHeight = 44;
+const double _kNavBarPersistentHeight = 48;
 
 class AppNavigationBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {

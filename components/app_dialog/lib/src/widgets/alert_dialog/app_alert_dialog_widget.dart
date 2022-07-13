@@ -58,7 +58,7 @@ class AppAlertDialogWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 28.0),
             child: AppCircleButton(
-              label: alert.buttonLabel,
+              labelKey: alert.buttonLabel,
               onTap: () => _onButtonTap(context),
             ),
           ),
