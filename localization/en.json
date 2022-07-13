@@ -64,5 +64,26 @@
   "imagePickOptionsDrawer" : {
     "pickPhoto": "Pick photo",
     "choosePhoto": "Choose photo"
+  },
+  "createGroupScreen": {
+    "title": "Create Group",
+    "description": "Enter in the following details to create a group",
+    "createGroupButton": "Create Group",
+    "nameSection": {
+      "title": "Group Name",
+      "placeholder": "Name",
+      "footerText": "Characters Remaining"
+    },
+    "descriptionSection": {
+      "title": "Description",
+      "placeholder": "Type here...",
+      "footerText": "Words Remaining"
+    },
+    "photoSection": {
+      "title": "Group Photo",
+      "uploadPhotoButton": "Upload Photo",
+      "reUploadPhotoButton": "Re-Upload",
+      "deleteButton": "Delete"
+    }
   }
 }

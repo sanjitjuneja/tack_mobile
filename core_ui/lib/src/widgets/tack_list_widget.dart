@@ -100,7 +100,7 @@ class TackListWidget extends StatelessWidget {
                 ),
                 const Spacer(),
                 AppButton(
-                  label: AppLocalizations.of(context).value('button.accept'),
+                  labelKey: AppLocalizations.of(context).value('button.accept'),
                 )
               ],
             ),
