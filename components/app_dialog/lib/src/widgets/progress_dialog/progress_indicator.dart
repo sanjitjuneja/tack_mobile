@@ -1,12 +1,12 @@
 part of app_dialog;
 
 class AppProgressIndicator extends StatelessWidget {
-  final String? message;
+  final String? messageKey;
   final Color? backgroundColor;
 
   const AppProgressIndicator({
     super.key,
-    this.message,
+    this.messageKey,
     this.backgroundColor,
   });
 
@@ -26,12 +26,12 @@ class AppProgressIndicator extends StatelessWidget {
               backStrokeWidth: 0,
               progressColor: AppTheme.progressInterfaceColor,
             ),
-            if (message != null) ...<Widget>[
+            if (messageKey != null) ...<Widget>[
               const SizedBox(height: 28),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Text(
-                  message!,
+                  FlutterI18n.translate(context, messageKey!),
                   textAlign: TextAlign.center,
                   style: AppTextTheme.manrope18Medium
                       .copyWith(color: AppTheme.progressInterfaceColor),

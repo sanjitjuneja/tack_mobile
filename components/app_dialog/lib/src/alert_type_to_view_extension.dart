@@ -6,6 +6,8 @@ extension AlertImage on Alert {
       return AppImagesTheme.alertSuccess;
     } else if (this is RequestAlert) {
       return AppImagesTheme.alertRequest;
+    } else if (this is ErrorAlert) {
+      return AppImagesTheme.alertError;
     } else if (this is DestructiveAlert) {
       return AppImagesTheme.alertError;
     } else {
@@ -18,9 +20,11 @@ extension AlertImage on Alert {
       return AppTheme.successColor;
     } else if (this is RequestAlert) {
       return AppTheme.successColor;
+    } else if (this is ErrorAlert) {
+      return AppTheme.errorColor;
     } else if (this is DestructiveAlert) {
       return AppTheme.errorColor;
-    } else {
+    }else {
       throw ArgumentError('not supported argument');
     }
   }

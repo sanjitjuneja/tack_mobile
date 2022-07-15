@@ -10,6 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   core:
     path: ../../core
   domain:
@@ -18,7 +19,6 @@ dependencies:
     path: ../../core_ui
   navigation:
     path: ../../navigation
-
 
   # Features
   dashboard:

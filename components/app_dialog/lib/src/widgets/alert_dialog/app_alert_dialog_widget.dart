@@ -2,16 +2,28 @@ part of app_dialog;
 
 class AppAlertDialogWidget extends StatelessWidget {
   final Alert alert;
+  final bool shouldUseDefaultContent;
   final ButtonCallback? onTap;
 
   const AppAlertDialogWidget({
     super.key,
     required this.alert,
+    required this.shouldUseDefaultContent,
     this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
+    final _AlertLocalizationMapper mapper = _AlertLocalizationMapper(
+      alert: alert,
+      context: context,
+      useDefaultContent: shouldUseDefaultContent,
+    );
+
+    final String? title = mapper.title;
+    final String? message = mapper.message;
+    final String? buttonLabel = mapper.mainButtonLabel;
+
     return BaseDialogWidget(
       margin: const EdgeInsets.all(20.0),
       child: Column(
@@ -41,13 +53,13 @@ class AppAlertDialogWidget extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                if (alert.title != null) ...<Widget>[
-                  TitleWidget(title: alert.title!),
+                if (title != null && title.isNotEmpty) ...<Widget>[
+                  TitleWidget(title: title),
                   const SizedBox(height: 10),
                 ],
-                if (alert.message != null) ...<Widget>[
+                if (message != null && message.isNotEmpty) ...<Widget>[
                   MessageWidget(
-                    message: alert.message!,
+                    message: message,
                     highlightColor: alert.color,
                   ),
                 ],
@@ -58,7 +70,7 @@ class AppAlertDialogWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 28.0),
             child: AppCircleButton(
-              labelKey: alert.buttonLabel,
+              labelKey: buttonLabel ?? '',
               onTap: () => _onButtonTap(context),
             ),
           ),

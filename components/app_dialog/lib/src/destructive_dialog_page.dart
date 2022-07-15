@@ -5,10 +5,12 @@ class DestructiveDialog {
 
   static Page<dynamic> page(
     DestructiveAlert destructiveAlert, {
+    bool shouldUseDefaultContent = true,
     ButtonCallback? onDestructiveActionTap,
   }) {
     return _DestructiveDialogPage(
       destructiveAlert: destructiveAlert,
+      shouldUseDefaultContent: shouldUseDefaultContent,
       onDestructiveActionTap: onDestructiveActionTap,
     );
   }
@@ -16,6 +18,7 @@ class DestructiveDialog {
 
 class _DestructiveDialogPage extends Page<bool> {
   final DestructiveAlert destructiveAlert;
+  final bool shouldUseDefaultContent;
   final ButtonCallback? onDestructiveActionTap;
 
   @override
@@ -23,6 +26,7 @@ class _DestructiveDialogPage extends Page<bool> {
 
   const _DestructiveDialogPage({
     required this.destructiveAlert,
+    required this.shouldUseDefaultContent,
     this.onDestructiveActionTap,
   });
 
@@ -35,6 +39,7 @@ class _DestructiveDialogPage extends Page<bool> {
       barrierDismissible: true,
       builder: (_) => DestructiveDialogWidget(
         destructiveAlert: destructiveAlert,
+        shouldUseDefaultContent: shouldUseDefaultContent,
         onDestructiveActionTap: onDestructiveActionTap,
       ),
     );

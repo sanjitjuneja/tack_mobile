@@ -2,14 +2,17 @@ part of app_dialog;
 
 class RequestAlert extends Alert {
   RequestAlert({
-    required String contentKey,
-    String? title,
-    String? message,
-    required String buttonLabel,
+    String? contentKey,
+    String? titleKey,
+    String? messageKey,
+    String? buttonLabelKey,
+    TranslationParams? translationParams,
   }) : super(
           contentKey: contentKey,
-          title: title,
-          message: message,
-          buttonLabel: buttonLabel,
+          title: titleKey,
+          message: messageKey,
+          mainButtonLabel: buttonLabelKey,
+          secondaryButtonLabel: null,
+          translationParams: translationParams,
         );
 }

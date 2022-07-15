@@ -1,4 +1,3 @@
-import 'package:core/core.dart';
 import 'package:core/di/app_di.dart';
 import 'package:dashboard/dashboard.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,6 +6,7 @@ import 'package:core_ui/core_ui.dart';
 
 import 'package:home/tack_creator/create_tack_screen.dart';
 import 'package:navigation/navigation.dart';
+import 'package:share_plus/share_plus.dart';
 
 class HomeScreen extends StatelessWidget {
   static const int _dashboardTabIndex = 0;
@@ -89,10 +89,7 @@ class HomeScreen extends StatelessWidget {
             appLocator.get<AppRouterDelegate>().push(
                   AppAlertDialog.page(
                     RequestAlert(
-                      contentKey: 'test',
-                      title: 'Offer Sent',
-                      message: 'We will notify you if the offer is accepted',
-                      buttonLabel: 'View All Offers Sent',
+                      contentKey: 'otherAlert.offerSent',
                     ),
                     onButtonTap: () {},
                   ),
@@ -106,11 +103,7 @@ class HomeScreen extends StatelessWidget {
             appLocator.get<AppRouterDelegate>().push(
                   AppAlertDialog.page(
                     RequestAlert(
-                      contentKey: 'test',
-                      title: 'New Group Requested...',
-                      message:
-                          'We will notify you via text if the new group is accepted (1-2 days)',
-                      buttonLabel: 'Close',
+                      contentKey: 'otherAlert.newGroupRequested',
                     ),
                   ),
                 );
@@ -122,10 +115,8 @@ class HomeScreen extends StatelessWidget {
           onTap: () {
             appLocator.get<AppRouterDelegate>().push(
                   AppAlertDialog.page(
-                    DestructiveAlert(
-                      contentKey: 'test',
-                      title: 'Tack Cancelled',
-                      buttonLabel: 'Close',
+                    ErrorAlert(
+                      contentKey: 'errorAlert.tackCanceled',
                     ),
                   ),
                 );
@@ -138,10 +129,7 @@ class HomeScreen extends StatelessWidget {
             appLocator.get<AppRouterDelegate>().push(
                   AppAlertDialog.page(
                     SuccessAlert(
-                      contentKey: 'test',
-                      title: 'Offer Accepted',
-                      message: 'Need someone to Re-string my Fender Strat',
-                      buttonLabel: 'Begin Tack',
+                      contentKey: 'otherAlert.offerAccepted',
                     ),
                   ),
                 );
@@ -154,10 +142,30 @@ class HomeScreen extends StatelessWidget {
             appLocator.get<AppRouterDelegate>().push(
                   AppAlertDialog.page(
                     SuccessAlert(
-                      contentKey: 'test',
-                      message:
-                          'You are now a member of\n <highlight-colored>Calllaway Group</highlight-colored>',
-                      buttonLabel: 'Close',
+                      contentKey: 'otherAlert.inGroupNow',
+                      translationParams: {
+                        AlertPropertyKey.message: {
+                          'groupName': 'Calllaway Group',
+                        },
+                      },
+                    ),
+                  ),
+                );
+          },
+        ),
+        const SizedBox(height: 6),
+        AppCircleButton(
+          labelKey: 'Group created alert',
+          onTap: () {
+            appLocator.get<AppRouterDelegate>().push(
+                  AppAlertDialog.page(
+                    SuccessAlert(
+                      contentKey: 'otherAlert.groupCreated',
+                      translationParams: {
+                        AlertPropertyKey.message: {
+                          'groupName': 'Calllaway Group',
+                        },
+                      },
                     ),
                   ),
                 );
@@ -170,9 +178,13 @@ class HomeScreen extends StatelessWidget {
             appLocator.get<AppRouterDelegate>().push(
                   DestructiveDialog.page(
                     DestructiveAlert(
-                      contentKey: 'test',
-                      message:
-                          'Are you sure want to <colored>Cancel</colored>\n <highlight>Need Laundry and Dishes...</highlight>',
+                      contentKey: 'destructiveAlert.cancelTack',
+                      titleKey: '',
+                      translationParams: {
+                        AlertPropertyKey.message: {
+                          'tackName': 'Need Laundry and Dishes...'
+                        },
+                      },
                     ),
                   ),
                 );
@@ -185,10 +197,12 @@ class HomeScreen extends StatelessWidget {
             appLocator.get<AppRouterDelegate>().push(
                   DestructiveDialog.page(
                     DestructiveAlert(
-                      contentKey: 'test',
-                      title: 'Your Tack Score Will Decrease',
-                      message:
-                          'Are you sure want to <colored>Cancel</colored>\n <highlight>Need Laundry and Dishes...</highlight>',
+                      contentKey: 'destructiveAlert.cancelTack',
+                      translationParams: {
+                        AlertPropertyKey.message: {
+                          'tackName': 'Need Laundry and Dishes...'
+                        },
+                      },
                     ),
                   ),
                 );
@@ -201,19 +215,10 @@ class HomeScreen extends StatelessWidget {
             appLocator.get<AppRouterDelegate>().push(
                   DestructiveDialog.page(
                     DestructiveAlert(
-                      contentKey: 'test',
-                      message:
-                          'Are you sure you want to \n<colored>Delete Your Account</colored>?',
+                      contentKey: 'destructiveAlert.deleteAccount',
                     ),
                   ),
                 );
-          },
-        ),
-        const SizedBox(height: 10),
-        AppCircleButton(
-          labelKey: 'test',
-          onTap: () {
-            BlocProvider.of<DashboardBloc>(context).add(const ChangeGroup());
           },
         ),
       ],

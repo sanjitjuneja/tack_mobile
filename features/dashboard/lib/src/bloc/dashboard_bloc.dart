@@ -72,11 +72,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     if (answer is String) {
       appRouter.push(
         AppAlertDialog.page(
-          DestructiveAlert(
-            contentKey: 'test',
-            title: 'Offer Not Sent',
-            message: 'Sorry, smth went wrong, try again.',
-            buttonLabel: 'Close',
+          ErrorAlert(
+            contentKey: 'errorAlert.offerSending',
           ),
         ),
       );
@@ -90,10 +87,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       appRouter.push(
         AppAlertDialog.page(
           RequestAlert(
-            contentKey: 'test',
-            title: 'Offer Sent',
-            message: 'We will notify you if the offer is accepted',
-            buttonLabel: 'View All Offers Sent',
+            contentKey: 'otherAlert.offerSent',
           ),
           onButtonTap: () {},
         ),
@@ -101,11 +95,9 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     } else {
       appRouter.push(
         AppAlertDialog.page(
-          DestructiveAlert(
-            contentKey: 'test',
-            title: 'Offer Not Sent',
-            message: 'Sorry, this Tack is no longer available',
-            buttonLabel: 'Close',
+          ErrorAlert(
+            contentKey: 'errorAlert.offerSending',
+            messageKey: 'errors.tackIsNotAvailable',
           ),
         ),
       );
