@@ -1,4 +1,68 @@
 {
+  "errors": {
+    "tackIsNotAvailable": "Sorry, this Tack is no longer available"
+  },
+  "errorAlert": {
+    "defaultAlert": {
+      "title": "Warning",
+      "message": "Sorry, smth went wrong, try again.",
+      "mainButtonLabel": "Close"
+    },
+    "offerSending": {
+      "title": "Offer Not Sent"
+    },
+    "groupCreation": {
+      "title": "Group creation"
+    },
+    "tackCanceled": {
+      "title": "Tack Cancelled",
+      "message": ""
+    }
+  },
+  "destructiveAlert": {
+    "defaultAlert": {
+      "title": "",
+      "message": "",
+      "mainButtonLabel": "Yes",
+      "secondaryButtonLabel": "No"
+    },
+    "cancelTack": {
+      "title": "Your Tack Score Will Decrease",
+      "message": "Are you sure want to <colored>Cancel</colored>\n <highlight>{tackName}</highlight>"
+    },
+    "deleteAccount": {
+      "message": "Are you sure you want to \n<colored>Delete Your Account</colored>?"
+    }
+  },
+  "otherAlert": {
+    "defaultAlert": {
+      "title": "",
+      "message": "",
+      "mainButtonLabel": "Close"
+    },
+    "offerSent": {
+      "title": "Offer Sent",
+      "message": "We will notify you if the offer is accepted",
+      "mainButtonLabel": "View All Offers Sent"
+    },
+    "offerAccepted": {
+      "title": "Offer Accepted",
+      "message": "Need someone to Re-string my Fender Strat...",
+      "mainButtonLabel": "Begin Tack"
+    },
+    "inGroupNow": {
+      "message": "You are now a member of \n <highlight-colored>{groupName}</highlight-colored>"
+    },
+    "groupCreated": {
+      "title": "New Group Created",
+      "message": "Click below to invite members to\n<highlight-colored>{groupName}</highlight-colored>",
+      "mainButtonLabel": "Invite Members"
+    },
+    "newGroupRequested": {
+      "title": "New Group Requested...",
+      "message": "We will notify you via text if the new group is accepted (1-2 days)"
+    }
+  },
   "time": {
     "hour-0": "{count} Hours",
     "hour-1": "{count} Hour",
@@ -61,7 +125,7 @@
     "myInvitationsButton": "My Invitations",
     "unacceptedTacks": "{count} Unaccepted Tacks"
   },
-  "imagePickOptionsDrawer" : {
+  "imagePickOptionsDrawer": {
     "pickPhoto": "Pick photo",
     "choosePhoto": "Choose photo"
   },

@@ -2,12 +2,14 @@ library app_dialog;
 
 import 'dart:math';
 
+import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 part 'src/models/alert.dart';
 part 'src/models/destructive_alert.dart';
+part 'src/models/error_alert.dart';
 part 'src/models/request_alert.dart';
 part 'src/models/success_alert.dart';
 
@@ -26,4 +28,5 @@ part 'src/alert_dialog_page.dart';
 part 'src/alert_type_to_view_extension.dart';
 part 'src/destructive_dialog_page.dart';
 part 'src/progress_dialog_page.dart';
+part 'src/alert_localization_mapper.dart';
 part 'src/typedefs.dart';

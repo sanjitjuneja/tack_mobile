@@ -1,7 +1,7 @@
 part of app_dialog;
 
-class SuccessAlert extends Alert {
-  SuccessAlert({
+class ErrorAlert extends Alert {
+  ErrorAlert({
     String? contentKey,
     String? titleKey,
     String? messageKey,
@@ -15,4 +15,6 @@ class SuccessAlert extends Alert {
           secondaryButtonLabel: null,
           translationParams: translationParams,
         );
+
+// TODO: add method fromServerError.
 }

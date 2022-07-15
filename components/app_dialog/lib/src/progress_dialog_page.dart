@@ -4,22 +4,22 @@ class ProgressDialog {
   static const String routeName = '/progressDialog';
 
   static Page<void> page({
-    String? message,
+    String? messageKey,
   }) {
     return _ProgressDialogPage(
-      message: message,
+      messageKey: messageKey,
     );
   }
 }
 
 class _ProgressDialogPage extends Page<void> {
-  final String? message;
+  final String? messageKey;
 
   @override
   String get name => ProgressDialog.routeName;
 
   const _ProgressDialogPage({
-    this.message,
+    this.messageKey,
   });
 
   @override
@@ -30,7 +30,7 @@ class _ProgressDialogPage extends Page<void> {
       barrierColor: AppTheme.progressBarrierColor,
       barrierDismissible: false,
       builder: (_) => AppProgressIndicator(
-        message: message,
+        messageKey: messageKey,
         backgroundColor: AppTheme.transparentColor,
       ),
     );

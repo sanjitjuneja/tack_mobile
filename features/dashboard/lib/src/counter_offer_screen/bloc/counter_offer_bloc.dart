@@ -46,11 +46,8 @@ class CounterOfferBloc extends Bloc<CounterOfferEvent, CounterOfferState> {
     if (answer is String) {
       appRouter.push(
         AppAlertDialog.page(
-          DestructiveAlert(
-            contentKey: 'test',
-            title: 'Offer Not Sent',
-            message: 'Sorry, smth went wrong, try again.',
-            buttonLabel: 'Close',
+          ErrorAlert(
+            contentKey: 'errorAlert.offerSending',
           ),
         ),
       );

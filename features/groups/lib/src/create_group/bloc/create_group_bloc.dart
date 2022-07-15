@@ -64,10 +64,7 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
       appRouter.push(
         AppAlertDialog.page(
           DestructiveAlert(
-            contentKey: 'test',
-            title: 'Offer Not Sent',
-            message: 'Sorry, smth went wrong, try again.',
-            buttonLabel: 'Close',
+            contentKey: 'errorAlert.groupCreation',
           ),
         ),
       );

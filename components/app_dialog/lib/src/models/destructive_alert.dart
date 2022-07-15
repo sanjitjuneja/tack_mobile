@@ -2,14 +2,18 @@ part of app_dialog;
 
 class DestructiveAlert extends Alert {
   DestructiveAlert({
-    required String contentKey,
-    String? title,
-    String? message,
-    String? buttonLabel,
+    String? contentKey,
+    String? titleKey,
+    String? messageKey,
+    String? mainButtonLabelKey,
+    String? secondaryButtonLabelKey,
+    TranslationParams? translationParams,
   }) : super(
           contentKey: contentKey,
-          title: title,
-          message: message,
-          buttonLabel: buttonLabel ?? '',
+          title: titleKey,
+          message: messageKey,
+          mainButtonLabel: mainButtonLabelKey,
+          secondaryButtonLabel: secondaryButtonLabelKey,
+          translationParams: translationParams,
         );
 }
