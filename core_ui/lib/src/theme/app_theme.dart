@@ -87,4 +87,7 @@ class AppTheme {
   /// Icons
   static Color get iconPrimaryColor => AppColors.midGrey;
   static Color get iconHintColor => AppColors.shuttleGray;
+
+  /// Toast
+  static Color get toastBackgroundColor => AppColors.aluminium;
 }

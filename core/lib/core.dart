@@ -5,6 +5,10 @@ export 'package:core/localization/app_localization.dart';
 export 'package:core/constants/base_url_constants.dart';
 export 'package:core/constants/constants.dart';
 
+export 'package:core/managers/clipboard_manager.dart';
+export 'package:core/managers/share_manager.dart';
+export 'package:core/managers/toast_manager.dart';
+
 export 'package:core/text_input_formatters/currency_formatter.dart';
 export 'package:core/text_input_formatters/words_length_formatter.dart';
 

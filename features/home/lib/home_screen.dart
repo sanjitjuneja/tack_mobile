@@ -6,7 +6,6 @@ import 'package:core_ui/core_ui.dart';
 
 import 'package:home/tack_creator/create_tack_screen.dart';
 import 'package:navigation/navigation.dart';
-import 'package:share_plus/share_plus.dart';
 
 class HomeScreen extends StatelessWidget {
   static const int _dashboardTabIndex = 0;
