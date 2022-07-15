@@ -63,6 +63,9 @@
       "message": "We will notify you via text if the new group is accepted (1-2 days)"
     }
   },
+  "toast": {
+    "copiedToClipboard": "Copied to Clipboard"
+  },
   "time": {
     "hour-0": "{count} Hours",
     "hour-1": "{count} Hour",
@@ -86,7 +89,8 @@
     "counterOffer": "Counter Offer",
     "less": "Less",
     "more": "More",
-    "price": "Price"
+    "price": "Price",
+    "or": "or"
   },
   "counterOfferScreen": {
     "tackDetails": "Tack Details",
@@ -149,5 +153,12 @@
       "reUploadPhotoButton": "Re-Upload",
       "deleteButton": "Delete"
     }
+  },
+  "inviteMembersScreen": {
+    "title": "Invite Link",
+    "description": "Copy or share this link to invite members to group",
+    "copyLinkButtonLabel": "Copy Link",
+    "shareLinkButtonLabel": "Share Link",
+    "doneButtonLabel": "Done"
   }
 }

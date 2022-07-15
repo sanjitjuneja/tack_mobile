@@ -22,3 +22,7 @@ class TextUtility {
     return textPainter.size;
   }
 }
+
+extension PrepareForEllipsis on String {
+  String get toElliptical => replaceAll('', '\u{200B}');
+}
