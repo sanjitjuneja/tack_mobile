@@ -1,13 +1,7 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-import 'package:groups/src/create_group/bloc/create_group_bloc.dart';
-import 'package:groups/src/create_group/ui/widgets/description_section.dart';
-import 'package:groups/src/create_group/ui/widgets/group_photo_section/group_photo_section.dart';
-import 'package:groups/src/create_group/ui/widgets/name_section.dart';
 import 'package:groups/src/invite_members/bloc/invite_members_bloc.dart';
 import 'package:groups/src/invite_members/ui/widgets/invite_members_button.dart';
 import 'package:groups/src/invite_members/ui/widgets/invite_members_divider.dart';

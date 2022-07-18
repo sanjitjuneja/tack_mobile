@@ -1,4 +1,4 @@
-import 'package:core/localization/app_localization.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 
 import '../../core_ui.dart';
@@ -26,17 +26,15 @@ class TackTimeWidget extends StatelessWidget {
             color: AppTheme.secondaryTextColor,
           ),
         ),
-        getSecondaryText(),
+        getSecondaryText(context),
       ],
     );
   }
 
-  Text getSecondaryText() {
+  Text getSecondaryText(BuildContext context) {
     if (timeAgo != null) {
       return Text(
-        '${timeAgo!} ${AppLocalizations.ofGlobalContext(
-          'dashboard.list.ago',
-        )}',
+        '${timeAgo!} ${FlutterI18n.translate(context, 'general.ago')}',
         style: AppTextTheme.manrope12Light.copyWith(
           color: AppTheme.secondaryTextColor,
         ),

@@ -59,10 +59,10 @@ class AppTextField extends StatelessWidget {
         color: backgroundColor ?? AppTheme.textFieldPrimaryBackgroundColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: hasShadow
-            ? const <BoxShadow>[
+            ? <BoxShadow>[
                 BoxShadow(
                   color: AppTheme.shadowColor,
-                  offset: Offset(0, 4),
+                  offset: const Offset(0, 4),
                   blurRadius: 4,
                 ),
               ]
@@ -84,16 +84,19 @@ class AppTextField extends StatelessWidget {
       minLines: minLines,
       maxLines: maxLines,
       style: isDisabled
-          ? AppTextTheme.manrope16Regular
-              .copyWith(color: AppTheme.textPrimaryColor)
-          : AppTextTheme.manrope16Regular
-              .copyWith(color: AppTheme.textPrimaryColor),
-      placeholderStyle:
-          AppTextTheme.manrope16Regular.copyWith(color: AppTheme.textHintColor),
+          ? AppTextTheme.manrope16Light.copyWith(
+              color: AppTheme.textPrimaryColor,
+            )
+          : AppTextTheme.manrope16Light.copyWith(
+              color: AppTheme.textPrimaryColor,
+            ),
       autofillHints: autofillHints,
       onChanged: (String text) => onTextChange?.call(text),
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,
+      placeholderStyle: AppTextTheme.manrope16Light.copyWith(
+        color: AppTheme.textHintColor,
+      ),
     );
   }
 }

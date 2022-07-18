@@ -7,7 +7,9 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 
 part 'tack_general_info_widget.dart';
+
 part 'tack_header_widget.dart';
+
 part 'tack_tile_actions.dart';
 
 class TackTile extends StatelessWidget {
@@ -29,10 +31,10 @@ class TackTile extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppTheme.primaryColor,
         borderRadius: BorderRadius.circular(16.0),
-        boxShadow: const <BoxShadow>[
+        boxShadow: <BoxShadow>[
           BoxShadow(
             color: AppTheme.shadowColor,
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
             blurRadius: 4,
           ),
         ],

@@ -51,8 +51,9 @@ class AppNavigationBar extends StatelessWidget
                   const SizedBox(width: 10),
                   Text(
                     FlutterI18n.translate(context, 'general.back'),
-                    style: AppTextTheme.manrope16Regular
-                        .copyWith(color: AppTheme.topNavBarInterfaceColor),
+                    style: AppTextTheme.manrope16Light.copyWith(
+                      color: AppTheme.topNavBarInterfaceColor,
+                    ),
                   ),
                 ],
               ),

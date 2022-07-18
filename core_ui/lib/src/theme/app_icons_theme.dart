@@ -30,6 +30,7 @@ class AppIconsTheme {
   static const String _taskCompleteKey = '${_basePath}task_complete.png';
   static const String _cameraKey = '${_basePath}camera.png';
   static const String _trashKey = '${_basePath}trash.png';
+  static const String _logoKey = '${_basePath}logo.png';
   static const String _groupKey = '${_basePath}group.png';
   static const String _copyKey = '${_basePath}copy.png';
   static const String _shareKey = '${_basePath}share.png';
@@ -60,4 +61,5 @@ class AppIconsTheme {
   static AppIcon get group => AppIcon(_groupKey);
   static AppIcon get copy => AppIcon(_copyKey);
   static AppIcon get share => AppIcon(_shareKey);
+  static AppIcon get logo => AppIcon(_logoKey);
 }

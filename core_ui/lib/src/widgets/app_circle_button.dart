@@ -44,7 +44,7 @@ class AppCircleButton extends StatelessWidget {
 
     switch (interfaceSize) {
       case AppInterfaceSize.small:
-        return AppTextTheme.manrope14Regular;
+        return AppTextTheme.manrope14Light;
       case AppInterfaceSize.medium:
         return AppTextTheme.manrope16SemiBold;
       case AppInterfaceSize.big:

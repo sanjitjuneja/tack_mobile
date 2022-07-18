@@ -1,6 +1,8 @@
 class Constants {
   static const double kAccessTokenCriticalPartLifeTime = 0.1;
 
+  static const String kPhonePrefix = '+1';
+
   static const String keyAccessToken = 'access_token';
   static const String keyRefreshToken = 'refresh_token';
 

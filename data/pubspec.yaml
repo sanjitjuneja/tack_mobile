@@ -12,6 +12,8 @@ dependencies:
     sdk: flutter
   core:
     path: ../core
+  domain:
+    path: ../domain
 
   dio: ^4.0.6
 

@@ -1,5 +1,4 @@
-import 'package:core/localization/app_localization.dart';
-import 'package:core/utils/currency_utils.dart';
+import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
@@ -21,10 +20,10 @@ class CreateTackListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        boxShadow: const <BoxShadow>[
+        boxShadow: <BoxShadow>[
           BoxShadow(
             color: AppTheme.shadowColor,
-            offset: Offset(0, 7),
+            offset: const Offset(0, 7),
             spreadRadius: -5,
             blurRadius: 6,
           ),
@@ -91,8 +90,9 @@ class CreateTackListWidget extends StatelessWidget {
                       Flexible(
                         flex: 1,
                         child: AppButton(
-                          labelKey: AppLocalizations.of(context).value(
-                            'button.remove',
+                          labelKey: FlutterI18n.translate(
+                            context,
+                            'createTack.removeButton',
                           ),
                         ),
                       ),
@@ -101,8 +101,9 @@ class CreateTackListWidget extends StatelessWidget {
                     Flexible(
                       flex: 2,
                       child: AppButton(
-                        labelKey: AppLocalizations.of(context).value(
-                          'button.editAndPublish',
+                        labelKey: FlutterI18n.translate(
+                          context,
+                          'createTack.editAndPublishButton',
                         ),
                       ),
                     )

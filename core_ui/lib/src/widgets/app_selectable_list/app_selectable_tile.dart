@@ -32,7 +32,7 @@ class AppBaseSelectableTile<T extends AppSelectableItem>
               Container(
                 width: 45,
                 height: 45,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: AppTheme.shadowColor,
                 ),

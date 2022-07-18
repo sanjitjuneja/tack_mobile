@@ -80,10 +80,10 @@ class AppButton extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(12),
           boxShadow: withShadow && type.isPrimary
-              ? const <BoxShadow>[
+              ? <BoxShadow>[
                   BoxShadow(
                     color: AppTheme.shadowColor,
-                    offset: Offset(0, 4),
+                    offset: const Offset(0, 4),
                     blurRadius: 4,
                   ),
                 ]

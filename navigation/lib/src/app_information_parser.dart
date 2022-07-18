@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:home/home_feature.dart';
 import 'package:navigation/src/route_configuration.dart';
+import 'package:splash/splash_feature.dart';
 
 class AppRouteInformationParser
     extends RouteInformationParser<RouteConfiguration> {
@@ -21,11 +22,11 @@ class AppRouteInformationParser
     late Page<dynamic> page;
 
     if (uri == null) {
-      page = HomeFeature.page();
+      page = SplashFeature.page();
     } else {
       final List<String> uriSegments = uri.pathSegments;
       if (uriSegments.isEmpty) {
-        page = HomeFeature.page();
+        page = SplashFeature.page();
       }
       if (uriSegments.length == 1) {
         if (uriSegments[0] == 'home') {

@@ -39,11 +39,11 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
     return Flexible(
       child: Container(
         height: 58,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           boxShadow: <BoxShadow>[
             BoxShadow(
               color: AppTheme.shadowColor,
-              offset: Offset(0, 10),
+              offset: const Offset(0, 10),
               spreadRadius: -5,
               blurRadius: 12,
             ),
@@ -63,19 +63,19 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
             filled: true,
             fillColor: AppTheme.positiveColor,
             border: OutlineInputBorder(
-              borderSide: const BorderSide(
+              borderSide: BorderSide(
                 color: AppTheme.positiveColor,
               ),
               borderRadius: BorderRadius.circular(12),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
+              borderSide: BorderSide(
                 color: AppTheme.positiveColor,
               ),
               borderRadius: BorderRadius.circular(12),
             ),
             enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
+              borderSide: BorderSide(
                 color: AppTheme.positiveColor,
               ),
               borderRadius: BorderRadius.circular(12),

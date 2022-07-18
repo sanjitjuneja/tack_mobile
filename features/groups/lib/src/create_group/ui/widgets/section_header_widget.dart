@@ -14,8 +14,8 @@ class SectionHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle defaultStyle = AppTextTheme.manrope14Regular
-        .copyWith(color: AppTheme.textPrimaryColor);
+    final TextStyle defaultStyle =
+        AppTextTheme.manrope14Light.copyWith(color: AppTheme.textPrimaryColor);
 
     return Align(
       alignment: Alignment.centerLeft,

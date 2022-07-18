@@ -28,20 +28,44 @@ flutter clean && flutter clean cache && flutter pub get
 cd ..
 printf '\n\n'
 
+printf "splash pub get\n"
+cd features/splash || exit
+flutter clean && flutter clean cache && flutter pub get
+cd ../..
+printf '\n\n'
+
+printf "dashboard pub get\n"
+cd features/dashboard || exit
+flutter clean && flutter clean cache && flutter pub get
+cd ../..
+printf '\n\n'
+
+printf "forgot_password pub get\n"
+cd features/forgot_password || exit
+flutter clean && flutter clean cache && flutter pub get
+cd ../..
+printf '\n\n'
+
+printf "groups pub get\n"
+cd features/groups || exit
+flutter clean && flutter clean cache && flutter pub get
+cd ../..
+printf '\n\n'
+
 printf "home pub get\n"
 cd features/home || exit
 flutter clean && flutter clean cache && flutter pub get
 cd ../..
 printf '\n\n'
 
-printf "auth pub get\n"
-cd features/auth || exit
+printf "phone_verification pub get\n"
+cd features/phone_verification || exit
 flutter clean && flutter clean cache && flutter pub get
 cd ../..
 printf '\n\n'
 
-printf "phone_verification pub get\n"
-cd features/phone_verification || exit
+printf "auth pub get\n"
+cd features/auth || exit
 flutter clean && flutter clean cache && flutter pub get
 cd ../..
 printf '\n\n'

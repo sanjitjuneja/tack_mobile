@@ -1,5 +1,4 @@
-import 'package:core/localization/app_localization.dart';
-import 'package:core/utils/currency_utils.dart';
+import 'package:core/core.dart';
 import 'package:domain/models/tack_list_model.dart';
 import 'package:flutter/material.dart';
 
@@ -17,10 +16,10 @@ class TackListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        boxShadow: const <BoxShadow>[
+        boxShadow: <BoxShadow>[
           BoxShadow(
             color: AppTheme.shadowColor,
-            offset: Offset(0, 7),
+            offset: const Offset(0, 7),
             spreadRadius: -5,
             blurRadius: 6,
           ),
@@ -94,13 +93,17 @@ class TackListWidget extends StatelessWidget {
                 TackStatisticWidget(
                   image: AppImagesTheme.message,
                   value: tack.reviewsCount.toString(),
-                  description: AppLocalizations.of(context).value(
-                    'dashboard.list.reviews',
+                  description: FlutterI18n.translate(
+                    context,
+                    'general.reviews',
                   ),
                 ),
                 const Spacer(),
                 AppButton(
-                  labelKey: AppLocalizations.of(context).value('button.accept'),
+                  labelKey: FlutterI18n.translate(
+                    context,
+                    'general.accept',
+                  ),
                 )
               ],
             ),

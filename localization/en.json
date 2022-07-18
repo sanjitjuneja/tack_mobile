@@ -90,7 +90,8 @@
     "less": "Less",
     "more": "More",
     "price": "Price",
-    "or": "or"
+    "or": "or",
+    "ago": "ago"
   },
   "counterOfferScreen": {
     "tackDetails": "Tack Details",
@@ -153,6 +154,48 @@
       "reUploadPhotoButton": "Re-Upload",
       "deleteButton": "Delete"
     }
+  },
+  "signIn": {
+    "buttonSignIn": "Sign In",
+    "passwordHint": "Password",
+    "title": "Welcome Back",
+    "phone": "Phone #",
+    "password": "Password",
+    "forgotPassword": "Forgot Password",
+    "signIn": "Sign In",
+    "passwordConfirm": "Confirm Password"
+  },
+  "signUp": {
+    "title": "Sign Up",
+    "buttonSignUp": "Sign Up",
+    "primaryButton": "Verify",
+    "secondaryButton": "Next"
+  },
+  "thirdParty": {
+    "secDescription": "This is an invite-only beta version of our app. Our official marketplace releases later this Fall. For more details, check out tackmarketplace.com",
+    "description": "We temporarily use Venmo to process payments from both parties. Please connect to your Venmo account in order to recieve payments for completing Tacks or creating Tacks for others to complete. "
+  },
+  "personalInformation": {
+    "buttonText": "Next"
+  },
+  "forgotPassword": {
+    "buttonText": "Submit"
+  },
+  "phoneVerification": {
+    "buttonText": "Verify"
+  },
+  "createTack": {
+    "title": "Create Tack",
+    "description": "Select one of the following templates or create a Tack from scratch",
+    "removeButton": "Remove",
+    "editAndPublishButton": "Edit & Publish"
+  },
+  "searchField": {
+    "createTack": ":Search Templates"
+  },
+  "appToggler": {
+    "public": "Public",
+    "privat": "Privat"
   },
   "inviteMembersScreen": {
     "title": "Invite Link",

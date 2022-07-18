@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  groups:
+    path: ../groups
   core:
     path: ../../core
   domain:

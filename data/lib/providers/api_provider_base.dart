@@ -79,6 +79,10 @@ class ApiProviderBase {
     try {
       return await request();
     } on DioError catch (e) {
+      print('101201010101010101010101010101001010101010101');
+      print(e.error);
+      print(e.response);
+      print('101201010101010101010101010101001010101010101');
       _errorHandler.handleError(e);
     }
   }

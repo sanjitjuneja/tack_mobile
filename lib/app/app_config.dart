@@ -19,13 +19,13 @@ class AppConfig {
     String baseUrl;
     switch (flavor) {
       case Flavor.dev:
-        baseUrl = BseUrlConstants.developmentUrl;
+        baseUrl = BaseUrlConstants.developmentUrl;
         break;
       case Flavor.staging:
-        baseUrl = BseUrlConstants.stagingUrl;
+        baseUrl = BaseUrlConstants.stagingUrl;
         break;
       case Flavor.production:
-        baseUrl = BseUrlConstants.productionUrl;
+        baseUrl = BaseUrlConstants.productionUrl;
         break;
     }
 

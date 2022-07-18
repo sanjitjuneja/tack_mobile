@@ -6,7 +6,9 @@ import 'package:dashboard/src/mocked_data/user_data.dart';
 import 'package:flutter/cupertino.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
+  const DashboardScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,9 @@ class DashboardScreen extends StatelessWidget {
           CupertinoButton(
             padding: const EdgeInsets.symmetric(vertical: 10),
             onPressed: _onMenuTap,
-            child: AppIconsTheme.menu(color: AppTheme.iconPrimaryColor),
+            child: AppIconsTheme.menu(
+              color: AppTheme.iconPrimaryColor,
+            ),
           ),
         ],
       ),
@@ -40,7 +44,9 @@ class DashboardScreen extends StatelessWidget {
   }
 
   void _onHeaderTap(BuildContext context) {
-    BlocProvider.of<DashboardBloc>(context).add(const ChangeGroup());
+    BlocProvider.of<DashboardBloc>(context).add(
+      const ChangeGroup(),
+    );
   }
 
   void _onMenuTap() {

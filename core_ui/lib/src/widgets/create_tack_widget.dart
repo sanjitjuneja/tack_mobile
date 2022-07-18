@@ -1,4 +1,4 @@
-import 'package:core/localization/app_localization.dart';
+import 'package:core/core.dart';
 import 'package:domain/models/create_tack_model.dart';
 import 'package:flutter/material.dart';
 
@@ -29,13 +29,11 @@ class CreateTackWidget extends StatelessWidget {
           children: <Widget>[
             const SizedBox(height: 62),
             PageAppBar(
-              text: AppLocalizations.of(context).value('createTack.title'),
+              text: FlutterI18n.translate(context, 'createTack.title'),
             ),
             const SizedBox(height: 9),
             Text(
-              AppLocalizations.of(context).value(
-                'createTack.description',
-              ),
+              FlutterI18n.translate(context, 'createTack.description'),
               style: AppTextTheme.manrope13Medium.copyWith(
                 color: AppTheme.descriptionTextColor,
               ),
@@ -48,7 +46,8 @@ class CreateTackWidget extends StatelessWidget {
                   onSearch: (String value) {},
                   onCrossPressed: () {},
                   onFilterPressed: () {},
-                  hintText: AppLocalizations.of(context).value(
+                  hintText: FlutterI18n.translate(
+                    context,
                     'searchField.createTack',
                   ),
                 ),
@@ -61,8 +60,8 @@ class CreateTackWidget extends StatelessWidget {
             const SizedBox(height: 20),
             AnimatedToggle(
               values: <String>[
-                AppLocalizations.of(context).value('toggle.public'),
-                AppLocalizations.of(context).value('toggle.privat'),
+                FlutterI18n.translate(context, 'appToggler.public'),
+                FlutterI18n.translate(context, 'appToggler.privat'),
               ],
               onToggleCallback: (value) {
                 onChangeTab();

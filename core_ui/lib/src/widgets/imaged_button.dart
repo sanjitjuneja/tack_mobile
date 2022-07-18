@@ -18,12 +18,12 @@ class ImagedButton extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppTheme.positiveColor,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: const <BoxShadow>[
+        boxShadow: <BoxShadow>[
           BoxShadow(
-            color: AppTheme.shadowColor,
-            offset: Offset(0, 10),
             spreadRadius: -5,
             blurRadius: 12,
+            offset: const Offset(0, 10),
+            color: AppTheme.shadowColor,
           ),
         ],
       ),

@@ -1,6 +1,6 @@
 import 'package:core/core.dart';
 import 'package:core/di/app_di.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:navigation/navigation.dart';
 
@@ -26,7 +26,7 @@ class _TackAppState extends State<TackApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return CupertinoApp.router(
       localizationsDelegates: <LocalizationsDelegate<dynamic>>[
         FlutterI18nDelegate(
           translationLoader: FileTranslationLoader(
@@ -38,20 +38,12 @@ class _TackAppState extends State<TackApp> {
             ],
           ),
         ),
-        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
-      supportedLocales: AppLocalizations.supportedLocales,
-      localeResolutionCallback:
-          (Locale? deviceLocale, Iterable<Locale> supportedLocales) {
-        return AppLocalizations.resolveLocale(
-          deviceLocale!,
-          supportedLocales,
-        );
-      },
-      routeInformationParser: routeInformationParser,
       routerDelegate: appRouter,
+      routeInformationParser: routeInformationParser,
     );
   }
 }

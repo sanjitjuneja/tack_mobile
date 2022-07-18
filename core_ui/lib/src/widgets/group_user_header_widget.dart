@@ -26,7 +26,7 @@ class GroupUserHeaderWidget extends StatelessWidget {
             Container(
               width: 45,
               height: 45,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: AppTheme.shadowColor,
               ),
@@ -37,13 +37,15 @@ class GroupUserHeaderWidget extends StatelessWidget {
               children: <Widget>[
                 Text(
                   user.name,
-                  style: AppTextTheme.manrope18Regular
-                      .copyWith(color: AppTheme.textPrimaryColor),
+                  style: AppTextTheme.manrope18Light.copyWith(
+                    color: AppTheme.textPrimaryColor,
+                  ),
                 ),
                 Text(
                   group.name,
-                  style: AppTextTheme.manrope11Regular
-                      .copyWith(color: AppTheme.textHintColor),
+                  style: AppTextTheme.manrope11Light.copyWith(
+                    color: AppTheme.textHintColor,
+                  ),
                 ),
               ],
             ),

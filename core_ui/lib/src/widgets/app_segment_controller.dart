@@ -87,9 +87,9 @@ class AppSegmentController extends StatelessWidget {
       shape: BoxShape.circle,
       backgroundColor: AppTheme.segmentBackgroundColor,
       indicatorColor: AppTheme.segmentActiveBackgroundColor,
-      shadow: const BoxShadow(
+      shadow: BoxShadow(
         color: AppTheme.shadowColor,
-        offset: Offset(0, 4),
+        offset: const Offset(0, 4),
         blurRadius: 4,
       ),
       border: Border.all(color: AppTheme.segmentBorderColor),
@@ -98,7 +98,7 @@ class AppSegmentController extends StatelessWidget {
       selectedTabTextColor: AppTheme.segmentActiveTabTextColor,
       tabs: List<SegmentTab>.generate(
         tabs.length,
-            (index) => SegmentTab(
+        (index) => SegmentTab(
           label: tabs[index],
         ),
       ),
