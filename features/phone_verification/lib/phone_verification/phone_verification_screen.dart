@@ -135,7 +135,7 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
                           backgroundColor: AppTheme.grassColor,
                           disabledText: 'signUp.secondaryButton',
                           disabledBackgroundColor:
-                              AppTheme.buttonDisabledLightColor,
+                              AppTheme.buttonDisabledColor,
                           borderRadius: BorderRadius.circular(35),
                         ),
                       ),

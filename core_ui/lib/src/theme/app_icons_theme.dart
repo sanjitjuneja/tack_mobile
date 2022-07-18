@@ -6,6 +6,7 @@ class AppIconsTheme {
 
   static const String _basePath = 'assets/icons/';
   static const String _navigationPath = 'assets/navigation/';
+  static const String _svgPath = 'assets/svg/';
 
   /// Bottom Navigation bar
   static const String _dashboardActiveKey = '${_navigationPath}dashboard_active.png';
@@ -35,6 +36,9 @@ class AppIconsTheme {
   static const String _copyKey = '${_basePath}copy.png';
   static const String _shareKey = '${_basePath}share.png';
 
+  /// SVG
+  static const String _tacksListKey = '${_svgPath}tacks_list.svg';
+
   /// Bottom Navigation bar
   static AppIcon get dashboardsActive => AppIcon(_dashboardActiveKey);
   static AppIcon get dashboardInactive => AppIcon(_dashboardInactiveKey);
@@ -62,4 +66,7 @@ class AppIconsTheme {
   static AppIcon get copy => AppIcon(_copyKey);
   static AppIcon get share => AppIcon(_shareKey);
   static AppIcon get logo => AppIcon(_logoKey);
+
+  /// SVG
+  static AppIcon get tacksList => AppIcon(_tacksListKey);
 }

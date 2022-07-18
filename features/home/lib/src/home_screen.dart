@@ -5,15 +5,47 @@ import 'package:flutter/material.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:groups/groups.dart';
 
-import 'package:home/tack_creator/create_tack_screen.dart';
+import 'package:home/src/tack_creator/create_tack_screen.dart';
 import 'package:navigation/navigation.dart';
+import 'package:tacks/tacks.dart';
 
-class HomeScreen extends StatelessWidget {
-  static const int _dashboardTabIndex = 0;
-  static const int _addTabIndex = 1;
-  static const int _tacksTabIndex = 2;
+enum HomeScreenTab {
+  dashboard(tabIndex: dashboardTabIndex),
+  add(tabIndex: addTabIndex),
+  tacks(tabIndex: tacksTabIndex);
 
+  final int tabIndex;
+
+  static const int dashboardTabIndex = 0;
+  static const int addTabIndex = 1;
+  static const int tacksTabIndex = 2;
+
+  const HomeScreenTab({required this.tabIndex});
+}
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => HomeScreenState();
+}
+
+class HomeScreenState extends State<HomeScreen> {
+  late CupertinoTabController _tabController;
+
+  @override
+  void initState() {
+    _tabController = CupertinoTabController(
+      initialIndex: HomeScreenTab.dashboardTabIndex,
+    );
+
+    super.initState();
+  }
+
+  void changeTabIndex(HomeScreenTab tab) {
+    _tabController.index = tab.tabIndex;
+    // setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +54,7 @@ class HomeScreen extends StatelessWidget {
         context: context,
         removeBottom: true,
         child: CupertinoTabScaffold(
+          controller: _tabController,
           tabBar: CupertinoTabBar(
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
@@ -45,13 +78,13 @@ class HomeScreen extends StatelessWidget {
           ),
           tabBuilder: (_, int index) {
             switch (index) {
-              case _dashboardTabIndex:
+              case HomeScreenTab.dashboardTabIndex:
                 return CupertinoTabView(
                   builder: (_) {
                     return const DashboardScreen();
                   },
                 );
-              case _addTabIndex:
+              case HomeScreenTab.addTabIndex:
                 return CupertinoTabView(
                   builder: (_) {
                     return CupertinoPageScaffold(
@@ -60,13 +93,10 @@ class HomeScreen extends StatelessWidget {
                     );
                   },
                 );
-              case _tacksTabIndex:
+              case HomeScreenTab.tacksTabIndex:
                 return CupertinoTabView(
                   builder: (_) {
-                    return CupertinoPageScaffold(
-                      backgroundColor: AppTheme.backgroundColor,
-                      child: _dialogsTest(context),
-                    );
+                    return const TacksScreen();
                   },
                 );
               default:

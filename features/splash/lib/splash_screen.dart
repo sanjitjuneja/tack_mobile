@@ -79,6 +79,8 @@ class _SplashScreenState extends State<SplashScreen>
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.easeIn,
                             );
+                            if(!mounted) return;
+
                             BlocProvider.of<SplashBloc>(context).add(
                               SignIn(),
                             );
@@ -93,13 +95,15 @@ class _SplashScreenState extends State<SplashScreen>
                           ),
                           height: 68,
                           borderRadius: BorderRadius.circular(35),
-                          backgroundColor: AppTheme.buttonDisabledLightColor,
+                          backgroundColor: AppTheme.buttonDisabledColor,
                           onPressed: () async {
                             await _panelController.animateTo(
                               1.0,
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.easeIn,
                             );
+                            if(!mounted) return;
+
                             BlocProvider.of<SplashBloc>(context).add(
                               SignUp(),
                             );

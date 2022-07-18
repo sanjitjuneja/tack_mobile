@@ -25,6 +25,8 @@ dependencies:
   # Features
   dashboard:
     path: ../dashboard
+  tacks:
+    path: ../tacks
 
 dev_dependencies:
   flutter_test:

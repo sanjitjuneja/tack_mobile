@@ -97,7 +97,7 @@ class InvitationDetailsScreen extends StatelessWidget {
                         child: Container(
                           height: 14,
                           width: 2,
-                          color: AppTheme.buttonDisabledLightColor,
+                          color: AppTheme.buttonDisabledColor,
                         ),
                       ),
                       AppIconsTheme.logo.call(),

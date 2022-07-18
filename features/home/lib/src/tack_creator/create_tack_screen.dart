@@ -44,7 +44,7 @@ class CreateTackScreen extends StatelessWidget {
                   Text(
                     'Fill in the following info to create a custom Tack within your group (Callaway Group)',
                     style: AppTextTheme.manrope13Medium.copyWith(
-                      color: AppTheme.descriptionTextColor,
+                      color: AppTheme.textDescriptionColor,
                     ),
                   ),
                   const SizedBox(height: 24),

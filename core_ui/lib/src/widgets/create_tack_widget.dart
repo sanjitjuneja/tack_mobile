@@ -35,7 +35,7 @@ class CreateTackWidget extends StatelessWidget {
             Text(
               FlutterI18n.translate(context, 'createTack.description'),
               style: AppTextTheme.manrope13Medium.copyWith(
-                color: AppTheme.descriptionTextColor,
+                color: AppTheme.textDescriptionColor,
               ),
             ),
             const SizedBox(height: 20),

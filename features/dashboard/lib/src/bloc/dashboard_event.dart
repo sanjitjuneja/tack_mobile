@@ -4,10 +4,6 @@ abstract class DashboardEvent {
   const DashboardEvent();
 }
 
-class ChangeGroup extends DashboardEvent {
-  const ChangeGroup();
-}
-
 class CounterOfferOpen extends DashboardEvent {
   final TackModel tack;
 

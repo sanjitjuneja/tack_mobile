@@ -8,7 +8,6 @@ import 'package:domain/domain.dart';
 import 'package:navigation/navigation.dart';
 
 part 'dashboard_event.dart';
-
 part 'dashboard_state.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
@@ -16,34 +15,15 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   DashboardBloc({
     required this.appRouter,
-    required List<Group> groups,
   }) : super(
           DashboardState(
-            groups: groups,
-            currentGroup: groups.first,
             tacks: tacks,
           ),
         ) {
-    on<ChangeGroup>(_onChangeGroup);
     on<CounterOfferOpen>(_onCounterOfferOpen);
     on<AcceptTack>(_onAcceptTack);
   }
 
-  Future<void> _onChangeGroup(
-    ChangeGroup event,
-    Emitter<DashboardState> emit,
-  ) async {
-    final Group? newGroup = await appRouter.pushForResult(
-      ChangeGroupDrawer.page(
-        state.groups,
-        state.currentGroup,
-      ),
-    );
-
-    emit(
-      state.copyWith(currentGroup: newGroup ?? state.currentGroup),
-    );
-  }
 
   Future<void> _onCounterOfferOpen(
     CounterOfferOpen event,

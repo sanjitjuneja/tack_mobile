@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
-import 'package:home/tack_creator/bloc/create_tack_event.dart';
-import 'package:home/tack_creator/bloc/create_tack_state.dart';
+import 'package:home/src/tack_creator/bloc/create_tack_event.dart';
+import 'package:home/src/tack_creator/bloc/create_tack_state.dart';
 
 import '../mocked_data/create_tack_data.dart';
 

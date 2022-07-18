@@ -135,8 +135,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     RoundedCustomButton(
                       isEnabled: state.isDataValid,
                       backgroundColor: AppTheme.grassColor,
-                      disabledBackgroundColor:
-                          AppTheme.buttonDisabledLightColor,
+                      disabledBackgroundColor: AppTheme.buttonDisabledColor,
                       disabledTextStyle: AppTextTheme.manrope20Medium.copyWith(
                         color: AppTheme.textHeavyHintColor,
                       ),

@@ -64,25 +64,31 @@ class TextWithHighlight extends StatelessWidget {
           ),
         ),
       },
-      customRender: <String, CustomRender>{
-        _highlight: (RenderContext context, _) {
-          return TextSpan(
-            text: context.tree.element!.text,
-            style: context.style.generateTextStyle(),
-          );
-        },
-        _colored: (RenderContext context, _) {
-          return TextSpan(
-            text: context.tree.element!.text,
-            style: context.style.generateTextStyle(),
-          );
-        },
-        _highlightColored: (RenderContext context, _) {
-          return TextSpan(
-            text: context.tree.element!.text,
-            style: context.style.generateTextStyle(),
-          );
-        },
+      customRenders: <CustomRenderMatcher, CustomRender>{
+        _highlightMatcher(): CustomRender.inlineSpan(
+          inlineSpan: (RenderContext context, _) {
+            return TextSpan(
+              text: context.tree.element!.text,
+              style: context.style.generateTextStyle(),
+            );
+          },
+        ),
+        _coloredMatcher(): CustomRender.inlineSpan(
+          inlineSpan: (RenderContext context, _) {
+            return TextSpan(
+              text: context.tree.element!.text,
+              style: context.style.generateTextStyle(),
+            );
+          },
+        ),
+        _highlightColoredMatcher(): CustomRender.inlineSpan(
+          inlineSpan: (RenderContext context, _) {
+            return TextSpan(
+              text: context.tree.element!.text,
+              style: context.style.generateTextStyle(),
+            );
+          },
+        ),
       },
       tagsList: Html.tags
         ..addAll(
@@ -93,5 +99,17 @@ class TextWithHighlight extends StatelessWidget {
           ],
         ),
     );
+  }
+
+  CustomRenderMatcher _highlightMatcher() {
+    return (context) => context.tree.element?.localName == _highlight;
+  }
+
+  CustomRenderMatcher _coloredMatcher() {
+    return (context) => context.tree.element?.localName == _colored;
+  }
+
+  CustomRenderMatcher _highlightColoredMatcher() {
+    return (context) => context.tree.element?.localName == _highlightColored;
   }
 }

@@ -32,7 +32,7 @@ class InvitationsScreen extends StatelessWidget {
                   child: Text(
                     'Here is a list of all Tack groups you have been invited to.',
                     style: AppTextTheme.manrope13Medium.copyWith(
-                      color: AppTheme.descriptionTextColor,
+                      color: AppTheme.textDescriptionColor,
                     ),
                   ),
                 ),
@@ -78,7 +78,7 @@ class InvitationsScreen extends StatelessWidget {
                               child: AppButton(
                                 labelKey: 'View',
                                 type: ButtonType.secondary,
-                                borderColor: AppTheme.lightButtonBorder,
+                                borderColor: AppTheme.buttonLightBorder,
                               ),
                             ),
                           ],
