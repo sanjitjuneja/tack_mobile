@@ -10,8 +10,11 @@ List<Group> getGroups(int length) {
 
       return Group(
         id: index,
+        ownerId: index,
         name: groupNames[randomGroupNameIndex],
+        description: '${groupNames[randomGroupNameIndex]} $index',
         imageUrl: '',
+        isPublic: true,
       );
     },
   );

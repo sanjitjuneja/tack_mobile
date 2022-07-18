@@ -7,4 +7,7 @@ class BaseUrlConstants {
   static const String signUpPath = '/signup/user-by-phone/';
   static const String requestSmsCodePath = 'signup/send-code/';
   static const String verifyPhoneNumberPath = '/verify/sms-code/';
+
+  static const String groupsPath = '/groups/';
+  static const String tacksMePath = '/tacks/me/';
 }

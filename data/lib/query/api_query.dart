@@ -3,17 +3,18 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 
 class ApiQuery {
+  final String endpointPostfix;
   final Map<String, dynamic>? params;
   final Map<String, dynamic>? body;
 
   String get jsonEncodedBody => jsonEncode(body);
 
-  final String endpointPostfix;
+  FormData? get formDataBody => body != null ? FormData.fromMap(body!) : null;
 
   ApiQuery({
     required this.endpointPostfix,
-    required this.params,
     required this.body,
+    required this.params,
   });
 }
 
