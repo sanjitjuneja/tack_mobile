@@ -23,7 +23,7 @@ class TackTimeWidget extends StatelessWidget {
         Text(
           time,
           style: AppTextTheme.manrope12Light.copyWith(
-            color: AppTheme.secondaryTextColor,
+            color: AppTheme.textSecondaryColor,
           ),
         ),
         getSecondaryText(context),
@@ -36,7 +36,7 @@ class TackTimeWidget extends StatelessWidget {
       return Text(
         '${timeAgo!} ${FlutterI18n.translate(context, 'general.ago')}',
         style: AppTextTheme.manrope12Light.copyWith(
-          color: AppTheme.secondaryTextColor,
+          color: AppTheme.textSecondaryColor,
         ),
       );
     } else if (tackerName != null) {

@@ -80,11 +80,11 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
           ),
           labelText: widget.hintText,
           labelStyle: AppTextTheme.manrope24Light.copyWith(
-            color: AppTheme.hintTextColor,
+            color: AppTheme.textHintColor,
           ),
           floatingLabelStyle: AppTextTheme.manrope14Light.copyWith(
             height: 4,
-            color: AppTheme.hintTextColor,
+            color: AppTheme.textHintColor,
           ),
           suffixIcon: widget.suffixIcon ??
               (widget.showObscureButton

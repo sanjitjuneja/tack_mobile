@@ -7,7 +7,7 @@ import 'package:core/errors/form_field_exception.dart';
 import 'package:domain/params_models/sign_in_params.dart';
 import 'package:domain/usecases/sign_in_usecase.dart';
 import 'package:forgot_password/forgot_password_page.dart';
-import 'package:home/home_feature.dart';
+import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {

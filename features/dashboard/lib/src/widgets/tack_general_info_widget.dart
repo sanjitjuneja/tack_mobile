@@ -21,10 +21,12 @@ class TackGeneralInfoWidget extends StatelessWidget {
         ),
         Text(
           // TODO: update logic.
-          FlutterI18n.plural(
+          FlutterI18n.translate(
             context,
-            'time.min',
-            tack.estimatedTime.inMinutes,
+            'time.minuteShort',
+            translationParams: <String, String>{
+              'count': tack.estimatedTime.inMinutes.toString(),
+            },
           ),
           style: AppTextTheme.manrope16Bold
               .copyWith(color: AppTheme.textHeavyHintColor),

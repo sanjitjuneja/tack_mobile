@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:home/home_feature.dart';
+import 'package:home/home.dart';
 import 'package:navigation/src/route_configuration.dart';
 import 'package:splash/splash_feature.dart';
 

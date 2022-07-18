@@ -1,8 +1,7 @@
 import 'package:core/core.dart';
-import 'package:core/di/app_di.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:home/home_feature.dart';
+import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
 
 class ConnectThirdPartyScreen extends StatefulWidget {

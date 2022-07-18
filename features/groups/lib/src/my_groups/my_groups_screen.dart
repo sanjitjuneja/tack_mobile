@@ -1,4 +1,3 @@
-import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +30,7 @@ class MyGroupsScreen extends StatelessWidget {
                 Text(
                   'Select one of the following groups to switch your current app view',
                   style: AppTextTheme.manrope13Medium.copyWith(
-                    color: AppTheme.descriptionTextColor,
+                    color: AppTheme.textDescriptionColor,
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -81,7 +80,7 @@ class MyGroupsScreen extends StatelessWidget {
                                     child: AppButton(
                                       labelKey: 'Group Info',
                                       type: ButtonType.secondary,
-                                      borderColor: AppTheme.lightButtonBorder,
+                                      borderColor: AppTheme.buttonLightBorder,
                                     ),
                                   ),
                                   const SizedBox(width: 5),
@@ -89,7 +88,7 @@ class MyGroupsScreen extends StatelessWidget {
                                     child: AppButton(
                                       labelKey: 'Invite',
                                       type: ButtonType.secondary,
-                                      borderColor: AppTheme.lightButtonBorder,
+                                      borderColor: AppTheme.buttonLightBorder,
                                     ),
                                   ),
                                 ],

@@ -83,14 +83,24 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
     CreateGroupNameChange event,
     Emitter<CreateGroupState> emit,
   ) async {
-    emit(state.copyWith(name: event.name));
+    emit(
+      state.copyWith(
+        name: event.name,
+        groupImage: state.groupPhotoData.imageFile,
+      ),
+    );
   }
 
   Future<void> _onCreateGroupDescriptionChange(
     CreateGroupDescriptionChange event,
     Emitter<CreateGroupState> emit,
   ) async {
-    emit(state.copyWith(description: event.description));
+    emit(
+      state.copyWith(
+        description: event.description,
+        groupImage: state.groupPhotoData.imageFile,
+      ),
+    );
   }
 
   Future<void> _onCreateGroupPickPhoto(

@@ -70,7 +70,8 @@
     "hour-0": "{count} Hours",
     "hour-1": "{count} Hour",
     "hour-2": "{count} Hours",
-    "min-0": "{count} min"
+    "minuteShort": "{count} min",
+    "hourShort": "{count} hr"
   },
   "general": {
     "accept": "Accept",
@@ -104,19 +105,24 @@
     "tackerTab": "Tacker",
     "runnerTab": "Runner",
     "chooseRunnerButton": "Choose Runner",
-    "beginTrackButton": "Begin Track",
-    "editOfferButton": "Edit Offer",
+    "beginTackButton": "Begin Tack",
+    "pendingReview": "Review Pending",
+    "cancelOfferButton": "Cancel Offer",
+    "offerExpiresIn": "Offer Expires In: {time}",
+    "empty": {
+      "tackerTacks": {
+        "description": "Looks like you haven't created any currently ongoing Tacks. Go to the Create Tack page to create your next Tack.",
+        "buttonLabel": "Create Tack"
+      },
+      "runnerTacks": {
+        "description": "Looks like you aren't currently completing any Tacks. Go to the Home Feed to find and accept your next Tack.",
+        "buttonLabel": "Home Feed"
+      }
+    },
     "tackerStatus": {
-      "created": "Created",
-      "accepted": "Accepted",
-      "preparing": "Preparing",
-      "completing": "Completing",
-      "finishingUp": "Finishing Up",
-      "complete": "Complete"
+      "created": "Created"
     },
     "runnerStatus": {
-      "pending": "Pending",
-      "finishingUp": "Finishing Up"
     }
   },
   "groupsScreen": {

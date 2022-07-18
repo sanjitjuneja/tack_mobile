@@ -1,16 +1,12 @@
 library app_theme;
 
-import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 part 'app_colors.dart';
-
 part 'app_icon.dart';
-
 part 'app_icons_theme.dart';
-
 part 'app_image_theme.dart';
-
 part 'app_text_theme.dart';
 
 class AppTheme {
@@ -33,30 +29,31 @@ class AppTheme {
 
   /// System colors
   static Color get successColor => AppColors.fern;
-  static Color get shadowColor => AppColors.black25;
-  static Color get dividerColor => AppColors.solitude;
-  static Color get barrierColor => AppColors.blackPearl31;
-  static Color get drawerAccessoryColor => AppColors.athensGrey;
   static Color get errorColor => AppColors.harleyDavidsonOrange;
+
+  static Color get dividerColor => AppColors.solitude;
+  static Color get drawerAccessoryColor => AppColors.athensGrey;
+  static Color get barrierColor => AppColors.blackPearl31;
+  static Color get shadowColor => AppColors.black25;
 
   /// Top Navigation Bar
   static Color get topNavBarInterfaceColor => AppColors.black;
 
   /// Navigation Bar
-  static Color get navBarActiveIconColor => AppColors.fern;
   static Color get navBarBackgroundColor => AppColors.white;
+  static Color get navBarActiveIconColor => AppColors.fern;
   static Color get navBarInactiveIconColor => AppColors.aluminium;
 
   /// Progress Dialog
-  static Color get progressInterfaceColor => AppColors.white;
   static Color get progressBarrierColor => AppColors.midnightExpress68;
+  static Color get progressInterfaceColor => AppColors.white;
 
   /// Segment Controller
-  static Color get segmentBorderColor => AppColors.fern;
   static Color get segmentBackgroundColor => AppColors.white;
+  static Color get segmentActiveBackgroundColor => AppColors.fern;
+  static Color get segmentBorderColor => AppColors.fern;
   static Color get segmentActiveTabTextColor => AppColors.white;
   static Color get segmentInactiveTabTextColor => AppColors.fern;
-  static Color get segmentActiveBackgroundColor => AppColors.fern;
 
   /// Text Field
   static Color get textFieldDividerColor => AppColors.osloGray;
@@ -64,32 +61,26 @@ class AppTheme {
   static Color get textFieldSecondaryBackgroundColor => AppColors.solitude;
 
   /// Text
-  static Color get textHintColor => AppColors.waterloo;
   static Color get textPrimaryColor => AppColors.black;
-  static Color get hintTextColor => AppColors.osloGray;
   static Color get textSecondaryColor => AppColors.fern;
-  static Color get secondaryTextColor => AppColors.comet;
-  static Color get selectedListItemColor => AppColors.fern;
-  static Color get descriptionTextColor => AppColors.midGrey;
+  static Color get textHintColor => AppColors.waterloo;
   static Color get textHeavyHintColor => AppColors.shuttleGray;
-  static Color get buttonTextSecondaryColor => AppColors.waterloo;
+  static Color get textDescriptionColor => AppColors.midGrey;
+  static Color get textDisabledColor => AppColors.athensGrey;
+
+  static Color get selectedListItemColor => AppColors.fern;
   static Color get unselectedListItemColor => AppColors.blackRussian;
 
   /// Button
   static Color get buttonDisabledColor => AppColors.athensGrey;
-  static Color get buttonDisabledLightColor => AppColors.athensGrey;
-
-  /// Button Border
-  static Color get lightButtonBorder => AppColors.gallery;
-
-  /// Primary
+  static Color get buttonLightBorder => AppColors.gallery;
+  // Primary
   static Color get buttonPrimaryColor => AppColors.fern;
   static Color get buttonBorderPrimaryColor => AppColors.white;
   static Color get buttonInterfacePrimaryColor => AppColors.white;
-
-  /// Secondary
-  static Color get buttonBorderSecondaryColor => AppColors.fern;
+  // Secondary
   static Color get buttonSecondaryColor => AppColors.transparent;
+  static Color get buttonBorderSecondaryColor => AppColors.fern;
   static Color get buttonInterfaceSecondaryColor => AppColors.fern;
 
   /// Icons

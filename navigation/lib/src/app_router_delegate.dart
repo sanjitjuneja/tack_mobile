@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:home/home.dart';
 
 import '../navigation.dart';
 
@@ -14,6 +15,13 @@ class AppRouterDelegate extends RouterDelegate<RouteConfiguration>
   final PopNavigationObserver popNavigationObserver;
 
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+
+  // TODO: refactor;
+  final GlobalKey<State<HomeScreen>> navigationTabKey =
+      GlobalKey<State<HomeScreen>>();
+
+  HomeScreenState get navigationTabState =>
+      navigationTabKey.currentState as HomeScreenState;
 
   AppRouterDelegate({
     required this.messageNotifier,

@@ -1,0 +1,55 @@
+import 'package:domain/domain.dart';
+import 'package:home/home.dart';
+
+List<RunnerTack> runnerTacks = <RunnerTack>[
+  RunnerTack(
+    name: 'Pick Up My Clothes from Dry Cleaning',
+    fee: 15.00,
+    status: RunnerTackStatus.pendingReview,
+    estimatedTime: const Duration(minutes: 15),
+    availableTime: const Duration(minutes: 0),
+    expireAt: DateTime.now(),
+    counterOffer: null,
+    creator: tackCreatorUser,
+  ),
+  RunnerTack(
+    name: 'Avalanche Party Set Up Crew',
+    fee: 15.00,
+    status: RunnerTackStatus.inProgress,
+    estimatedTime: const Duration(hours: 1),
+    availableTime: const Duration(minutes: 0),
+    expireAt: DateTime.now(),
+    counterOffer: null,
+    creator: tackCreatorUser,
+  ),
+  RunnerTack(
+    name: 'Avalanche Party Set Up Crew',
+    fee: 15.00,
+    status: RunnerTackStatus.pendingStart,
+    estimatedTime: const Duration(hours: 1),
+    availableTime: const Duration(minutes: 0),
+    expireAt: DateTime.now(),
+    counterOffer: null,
+    creator: tackCreatorUser,
+  ),
+  RunnerTack(
+    name: 'Need Laundry and Dishes Done (Room 903)',
+    fee: 15.00,
+    status: RunnerTackStatus.pendingAccept,
+    estimatedTime: const Duration(hours: 1),
+    availableTime: const Duration(minutes: 10),
+    expireAt: DateTime.now().add(const Duration(minutes: 8)),
+    counterOffer: null,
+    creator: tackCreatorUser,
+  ),
+  RunnerTack(
+    name: 'Need Laundry and Dishes Done (Room 903)',
+    fee: 15.00,
+    status: RunnerTackStatus.pendingAccept,
+    estimatedTime: const Duration(hours: 1),
+    availableTime: const Duration(minutes: 15),
+    expireAt: DateTime.now().add(const Duration(minutes: 15)),
+    counterOffer: null,
+    creator: tackCreatorUser,
+  ),
+];

@@ -1,6 +1,4 @@
 import 'package:core/core.dart';
-import 'package:core/di/app_di.dart';
-import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:groups/src/invite_members/bloc/invite_members_bloc.dart';
