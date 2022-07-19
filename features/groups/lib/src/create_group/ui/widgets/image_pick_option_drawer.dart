@@ -22,51 +22,55 @@ class _ImagePickOptionDrawerPage extends Page<ImageSource?> {
       settings: this,
       barrierColor: AppTheme.barrierColor,
       barrierDismissible: true,
-      builder: (_) => Material(
-        type: MaterialType.transparency,
-        child: CupertinoActionSheet(
-          actions: <Widget>[
-            CupertinoButton(
-              color: AppTheme.primaryColor,
-              onPressed: () => AppRouter.of(context).popWithResult(
-                ImageSource.camera,
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Text(
-                FlutterI18n.translate(
-                  context,
-                  'imagePickOptionsDrawer.pickPhoto',
-                ),
-                style: AppTextTheme.poppins14Medium.copyWith(
-                  color: AppTheme.textPrimaryColor,
-                ),
-              ),
+      builder: (_) => CupertinoActionSheet(
+        actions: <Widget>[
+          CupertinoButton(
+            color: AppTheme.primaryColor,
+            onPressed: () => AppRouter.of(context).popWithResult(
+              ImageSource.camera,
             ),
-            CupertinoButton(
-              color: AppTheme.primaryColor,
-              onPressed: () => AppRouter.of(context).popWithResult(
-                ImageSource.gallery,
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Text(
-                FlutterI18n.translate(
-                  context,
-                  'imagePickOptionsDrawer.choosePhoto',
-                ),
-                style: AppTextTheme.poppins14Medium.copyWith(
-                  color: AppTheme.textPrimaryColor,
-                ),
-              ),
-            ),
-          ],
-          cancelButton: CupertinoButton(
-            onPressed: () => AppRouter.of(context).popWithResult(null),
             padding: const EdgeInsets.symmetric(vertical: 16),
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(8.0),
+            ),
             child: Text(
-              FlutterI18n.translate(context, 'general.cancel'),
+              FlutterI18n.translate(
+                context,
+                'imagePickOptionsDrawer.pickPhoto',
+              ),
               style: AppTextTheme.poppins14Medium.copyWith(
                 color: AppTheme.textPrimaryColor,
               ),
+            ),
+          ),
+          CupertinoButton(
+            color: AppTheme.primaryColor,
+            onPressed: () => AppRouter.of(context).popWithResult(
+              ImageSource.gallery,
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            borderRadius: const BorderRadius.vertical(
+              bottom: Radius.circular(8.0),
+            ),
+            child: Text(
+              FlutterI18n.translate(
+                context,
+                'imagePickOptionsDrawer.choosePhoto',
+              ),
+              style: AppTextTheme.poppins14Medium.copyWith(
+                color: AppTheme.textPrimaryColor,
+              ),
+            ),
+          ),
+        ],
+        cancelButton: CupertinoButton(
+          color: AppTheme.primaryColor,
+          onPressed: () => AppRouter.of(context).popWithResult(null),
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Text(
+            FlutterI18n.translate(context, 'general.cancel'),
+            style: AppTextTheme.poppins14Medium.copyWith(
+              color: AppTheme.textPrimaryColor,
             ),
           ),
         ),

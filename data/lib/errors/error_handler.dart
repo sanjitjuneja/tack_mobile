@@ -5,7 +5,7 @@ import 'package:core/utils/internet_connectivity_service.dart';
 import 'package:dio/dio.dart';
 
 class ErrorHandler {
-  void handleError(DioError error) async {
+  Future<Never> handleError(DioError error) async {
     final Response<dynamic>? response = error.response;
     if (!await InternetConnectionService.isConnected) {
       throw NoInternetConnection();

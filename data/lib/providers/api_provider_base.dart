@@ -24,24 +24,29 @@ class ApiProviderBase {
     );
   }
 
-  Future<dynamic> get(ApiQuery query) async {
+  Future<T> get<T>(ApiQuery query) async {
     return safeRequest(() async {
-      final Response<dynamic> response = await _dio.get(
+      final Response<T> response = await _dio.get(
         query.endpointPostfix,
         queryParameters: query.params,
       );
-      return response.data;
+
+      return response.data!;
     });
   }
 
-  Future<dynamic> post(ApiQuery query) async {
+  Future<T> post<T>(
+    ApiQuery query, {
+    bool isFormData = false,
+  }) async {
     return safeRequest(() async {
-      final Response<dynamic> response = await _dio.post(
+      final Response<T> response = await _dio.post(
         query.endpointPostfix,
-        data: query.jsonEncodedBody,
+        data: isFormData ? query.formDataBody : query.jsonEncodedBody,
         queryParameters: query.params,
       );
-      return response.data;
+
+      return response.data!;
     });
   }
 
@@ -75,7 +80,7 @@ class ApiProviderBase {
     });
   }
 
-  Future<dynamic> safeRequest(Future<dynamic> Function() request) async {
+  Future<T> safeRequest<T>(Future<T> Function() request) async {
     try {
       return await request();
     } on DioError catch (e) {
@@ -83,7 +88,7 @@ class ApiProviderBase {
       print(e.error);
       print(e.response);
       print('101201010101010101010101010101001010101010101');
-      _errorHandler.handleError(e);
+      return _errorHandler.handleError(e);
     }
   }
 

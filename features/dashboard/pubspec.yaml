@@ -24,6 +24,8 @@ dependencies:
   # Features
   home:
     path: ../home
+  groups:
+    path: ../groups
 
 dev_dependencies:
   flutter_test:

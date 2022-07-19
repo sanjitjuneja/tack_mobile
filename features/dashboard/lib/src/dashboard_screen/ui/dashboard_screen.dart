@@ -1,6 +1,7 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:groups/groups.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
 
@@ -36,7 +37,7 @@ class DashboardScreen extends StatelessWidget {
           actions: <Widget>[
             CupertinoButton(
               padding: const EdgeInsets.symmetric(vertical: 10),
-              onPressed: _onMenuTap,
+              onPressed: () => _onMenuTap(context),
               child: AppIconsTheme.menu(
                 color: AppTheme.iconPrimaryColor,
               ),
@@ -52,7 +53,7 @@ class DashboardScreen extends StatelessWidget {
     BlocProvider.of<GlobalBloc>(context).add(const ChangeGroup());
   }
 
-  void _onMenuTap() {
-    // TODO: add action on menu icon.
+  void _onMenuTap(BuildContext context) {
+    AppRouter.of(context).pushForResult(CreateGroup.page());
   }
 }

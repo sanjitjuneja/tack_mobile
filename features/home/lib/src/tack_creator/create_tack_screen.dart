@@ -1,7 +1,8 @@
+import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:home/home.dart';
 
 class CreateTackScreen extends StatelessWidget {
   const CreateTackScreen({Key? key}) : super(key: key);
@@ -14,16 +15,16 @@ class CreateTackScreen extends StatelessWidget {
         navigationBar: AppNavigationBar(
           backgroundColor: AppTheme.primaryBackgroundColor,
           automaticallyImplyLeading: false,
-          middle: Align(
-            alignment: Alignment.centerLeft,
-            child: GroupUserHeaderWidget(
-              user: const UserModel(
-                imageUrl: '',
-                name: 'Skom-42',
-              ),
-              group: const Group(id: 2, name: 'Callaway Group'),
-              onTap: () => () {},
-            ),
+          middle: BlocBuilder<GlobalBloc, GlobalState>(
+            builder: (_, GlobalState state) {
+              return Align(
+                alignment: Alignment.centerLeft,
+                child: GroupUserHeaderWidget(
+                  user: state.user,
+                  group: state.currentGroup,
+                ),
+              );
+            },
           ),
           actions: <Widget>[
             CupertinoButton(

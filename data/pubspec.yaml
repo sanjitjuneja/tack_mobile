@@ -16,10 +16,15 @@ dependencies:
     path: ../domain
 
   dio: ^4.0.6
+  http_parser: ^4.0.1
+  json_annotation: ^4.6.0
+  path: any
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  build_runner: ^2.2.0
+  json_serializable: ^6.3.1
 
 flutter:

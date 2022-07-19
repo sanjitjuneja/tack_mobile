@@ -28,6 +28,7 @@ class _CreateGroupPage extends Page<Group> {
         create: (_) {
           return CreateGroupBloc(
             appRouter: AppRouter.of(context),
+            createGroupUseCase: appLocator.get<CreateGroupUseCase>(),
           );
         },
         child: const CreateGroupScreen(),

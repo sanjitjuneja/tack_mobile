@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:core/core.dart';
 import 'package:core/utils/file_manager.dart';
@@ -23,9 +22,11 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
   static const int _descriptionMaxWordsLength = 30;
 
   final AppRouterDelegate appRouter;
+  final CreateGroupUseCase createGroupUseCase;
 
   CreateGroupBloc({
     required this.appRouter,
+    required this.createGroupUseCase,
   }) : super(
           const CreateGroupState(
             nameData: NameData(
@@ -53,27 +54,23 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
     Emitter<CreateGroupState> emit,
   ) async {
     appRouter.push(ProgressDialog.page());
-    // API request simulation.
-    await Future.delayed(const Duration(seconds: 1));
-    appRouter.pop();
-
-    const List<dynamic> answers = <dynamic>['some error', false, true];
-    final dynamic answer = answers[Random().nextInt(answers.length)];
-
-    if (answer is String) {
-      appRouter.push(
-        AppAlertDialog.page(
-          DestructiveAlert(
-            contentKey: 'errorAlert.groupCreation',
-          ),
+    try {
+      final Group group = await createGroupUseCase.execute(
+        CreateGroupPayload(
+          name: state.nameData.name,
+          description: state.descriptionData.description,
+          image: state.groupPhotoData.imageFile!,
         ),
       );
-    } else {
-      appRouter.popWithResult(
-        Group(
-          id: 0,
-          name: state.nameData.name,
-          imageUrl: '',
+      appRouter.pop();
+      appRouter.popWithResult(group);
+    } catch (e) {
+      appRouter.replace(
+        AppAlertDialog.page(
+          ErrorAlert(
+            contentKey: 'errorAlert.groupCreation',
+            messageKey: e.toString(),
+          ),
         ),
       );
     }
