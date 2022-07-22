@@ -48,3 +48,23 @@ class DoubleConverter implements JsonConverter<double, String> {
   @override
   String toJson(double json) => json.toString();
 }
+
+class BooleanConverter implements JsonConverter<bool, bool> {
+  const BooleanConverter();
+
+  @override
+  bool fromJson(bool? json) => json ?? false;
+
+  @override
+  bool toJson(bool? json) => json ?? false;
+}
+
+class DurationConverter implements JsonConverter<Duration, int> {
+  const DurationConverter();
+
+  @override
+  Duration fromJson(int? json) => Duration(milliseconds: json ?? 0);
+
+  @override
+  int toJson(Duration json) => json.inMilliseconds;
+}

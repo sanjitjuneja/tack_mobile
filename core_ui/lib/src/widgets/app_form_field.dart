@@ -112,7 +112,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         ),
         cursorColor: AppTheme.accentColor,
         onChanged: widget.onChanged,
-        style: AppTextTheme.manrope20Light.copyWith(
+        style: AppTextTheme.manrope20Regular.copyWith(
           color: AppTheme.accentColor,
         ),
       ),

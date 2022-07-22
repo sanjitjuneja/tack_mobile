@@ -13,6 +13,7 @@ dependencies:
 
   animated_toggle_switch: ^0.5.2
   expandable_text: ^2.3.0
+  grouped_list: ^5.1.2
   flutter_html: ^3.0.0-alpha.5
   flutter_keyboard_visibility: ^5.3.0
   flutter_svg: ^1.1.1+1

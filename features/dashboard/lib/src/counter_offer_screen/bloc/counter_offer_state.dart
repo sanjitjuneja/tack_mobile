@@ -1,7 +1,7 @@
 part of 'counter_offer_bloc.dart';
 
 class CounterOfferState {
-  final TackModel tack;
+  final Tack tack;
   final String? counterOffer;
 
   bool get isOfferValid => counterOffer != null && counterOffer!.isNotEmpty;

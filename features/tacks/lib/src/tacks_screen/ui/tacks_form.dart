@@ -33,7 +33,7 @@ class _TacksFormState extends State<TacksForm> {
                   child: Text(
                     FlutterI18n.translate(context, 'tacksScreen.description'),
                     style: AppTextTheme.manrope13Medium.copyWith(
-                      color: AppTheme.textHintColor,
+                      color: AppTheme.textHeavyHintColor,
                     ),
                   ),
                 ),

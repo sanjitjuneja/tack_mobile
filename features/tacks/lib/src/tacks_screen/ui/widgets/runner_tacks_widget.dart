@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
+
 import 'package:tacks/src/bloc/tacks_bloc.dart';
 import 'package:tacks/src/tacks_screen/ui/widgets/runner_tack/runner_task_widget.dart';
 
@@ -24,15 +25,13 @@ class RunnerTacksWidget extends StatelessWidget {
       );
     }
 
-    return TimeTickerInheritedWidget(
-      child: AppListView(
-        itemBuilder: (_, int index) {
-          return RunnerTackWidget(
-            tack: runnerTacks[index],
-          );
-        },
-        itemCount: runnerTacks.length,
-      ),
+    return AppListView(
+      itemBuilder: (_, int index) {
+        return RunnerTackWidget(
+          runnerTack: runnerTacks[index],
+        );
+      },
+      itemCount: runnerTacks.length,
     );
   }
 

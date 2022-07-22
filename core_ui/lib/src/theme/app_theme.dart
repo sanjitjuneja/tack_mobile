@@ -30,11 +30,13 @@ class AppTheme {
   /// System colors
   static Color get successColor => AppColors.fern;
   static Color get errorColor => AppColors.harleyDavidsonOrange;
+  static Color get warningColor => AppColors.gamboge;
 
   static Color get dividerColor => AppColors.solitude;
   static Color get drawerAccessoryColor => AppColors.athensGrey;
   static Color get barrierColor => AppColors.blackPearl31;
   static Color get shadowColor => AppColors.black25;
+  static Color get lightShadowColor => AppColors.black09;
 
   /// Top Navigation Bar
   static Color get topNavBarInterfaceColor => AppColors.black;

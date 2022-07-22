@@ -26,7 +26,10 @@
       "mainButtonLabel": "Yes",
       "secondaryButtonLabel": "No"
     },
-    "cancelTack": {
+    "cancelTackTacker": {
+      "message": "Are you sure want to <colored>Cancel</colored>\n <highlight>{tackName}</highlight>"
+    },
+    "cancelTackRunner": {
       "title": "Your Tack Score Will Decrease",
       "message": "Are you sure want to <colored>Cancel</colored>\n <highlight>{tackName}</highlight>"
     },
@@ -74,6 +77,9 @@
     "hourShort": "{count} hr"
   },
   "general": {
+    "tack-0": "{count} Tacks",
+    "tack-1": "{count} Tack",
+    "tack-2": "{count} Tacks",
     "accept": "Accept",
     "apply": "Apply",
     "back": "Back",
@@ -109,7 +115,7 @@
     "beginTackButton": "Begin Tack",
     "pendingReview": "Review Pending",
     "cancelOfferButton": "Cancel Offer",
-    "offerExpiresIn": "Offer Expires In: {time}",
+    "offerExpiresIn": "Offer Expires In",
     "empty": {
       "tackerTacks": {
         "description": "Looks like you haven't created any currently ongoing Tacks. Go to the Create Tack page to create your next Tack.",
@@ -243,5 +249,67 @@
     "resendCode": "Resend Code",
     "buttonPrimary": "Verify",
     "buttonSecondary": "Next"
+  },
+  "ongoingTackScreen": {
+    "cancelTackButton": "Cancel Tack",
+    "contactRunnerButton": "Call Runner",
+    "contactTackerButton": "Call Tacker",
+    "estimatedTackTime": "Estimated Tack Time",
+    "tacker": {
+      "created": {
+        "title": "Notifying Runners...",
+        "subtitle": "We will notify you when a Runner accepts your Tack",
+        "button": "Edit Tack",
+        "note": ""
+      },
+      "pendingAccept": {
+        "title": "Choose Runner...",
+        "subtitle": "Each Runner’s offer automatically expires after 15 min",
+        "button": "",
+        "note": ""
+      },
+      "pendingStart": {
+        "title": "Runner is Preparing...",
+        "subtitle": "You will be notified when Runner begins Tack",
+        "button": "",
+        "note": ""
+      },
+      "inProgress": {
+        "title": "Runner is Completing Tack...",
+        "subtitle": "Runner is currently working on your Tack",
+        "button": "",
+        "note": ""
+      },
+      "pendingReview": {
+        "title": "Review Tack...",
+        "subtitle": "Mark Tack as complete to transfer money to Runner",
+        "button": "Send Payment & Complete",
+        "note": "NOTE: Tack is automatically marked as complete and payment is sent after 12 hours"
+      },
+      "offer": {
+        "offer": "Offers",
+        "counterOffer": "Counter Offers"
+      }
+    },
+    "runner": {
+      "pendingStart": {
+        "title": "Tack Pending...",
+        "subtitle": "Click below to begin and mark Tack as in-progress",
+        "button": "Begin Tack",
+        "note": "NOTE: You can only have one in-progress Tack at a time. Please mark your current Tack as complete before beginning."
+      },
+      "inProgress": {
+        "title": "Completing Tack...",
+        "subtitle": "Click below to mark Tack as complete",
+        "button": "Mark Complete",
+        "note": "NOTE: Payment will be sent once Tacker marks Tack as complete. Tack is automatically set to complete after 12 hours."
+      },
+      "pendingReview": {
+        "title": "Pending Review...",
+        "subtitle": "Waiting for Tacker to mark Tack as complete",
+        "button": "",
+        "note": "NOTE: Payment will be sent once Tacker marks Tack as complete. Tack is automatically set to complete after 12 hours. You may complete other Tacks in the meantime."
+      }
+    }
   }
 }

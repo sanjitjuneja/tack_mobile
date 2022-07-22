@@ -38,7 +38,7 @@ class AppAlertDialogWidget extends StatelessWidget {
                 replacement: CupertinoButton(
                   minSize: 24,
                   padding: const EdgeInsets.all(10.0),
-                  onPressed: Navigator.of(context).pop,
+                  onPressed: () => AppRouter.of(context).popWithResult(false),
                   child: AppImagesTheme.alertBack,
                 ),
                 child: const SizedBox(height: 44),
@@ -82,6 +82,6 @@ class AppAlertDialogWidget extends StatelessWidget {
 
   void _onButtonTap(BuildContext context) {
     onTap?.call();
-    Navigator.of(context).pop();
+    AppRouter.of(context).popWithResult(true);
   }
 }

@@ -2,9 +2,11 @@ part of mappers;
 
 class TackMapper implements Mapper<TackEntity, domain.Tack> {
   final TackStatusMapper tackStatusMapper;
+  final TackUserMapper tackUserMapper;
 
   const TackMapper({
     required this.tackStatusMapper,
+    required this.tackUserMapper,
   });
 
   @override
@@ -14,12 +16,11 @@ class TackMapper implements Mapper<TackEntity, domain.Tack> {
       title: entity.title,
       price: entity.price,
       description: entity.description,
-      createdAt: entity.createdTime,
-      expiresAt: entity.expirationTime,
+      estimatedTime: entity.estimationTime,
       allowCounterOffers: entity.allowCounterOffers,
       status: tackStatusMapper.fromEntity(entity.status),
-      tacker: entity.tacker,
-      runner: entity.runner,
+      tacker: tackUserMapper.fromEntity(entity.tacker)!,
+      runner: tackUserMapper.fromEntity(entity.runner),
       completionMessage: entity.completionMessage,
       completionTime: entity.completionTime,
     );
@@ -32,12 +33,11 @@ class TackMapper implements Mapper<TackEntity, domain.Tack> {
       title: item.title,
       price: item.price,
       description: item.description,
-      createdTime: item.createdAt,
-      expirationTime: item.expiresAt,
+      estimationTime: item.estimatedTime,
       allowCounterOffers: item.allowCounterOffers,
       status: tackStatusMapper.toEntity(item.status),
-      tacker: item.tacker,
-      runner: item.runner,
+      tacker: tackUserMapper.toEntity(item.tacker)!,
+      runner: tackUserMapper.toEntity(item.tacker),
       completionMessage: item.completionMessage,
       completionTime: item.completionTime,
     );
