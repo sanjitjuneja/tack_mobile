@@ -1,0 +1,30 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="gradient-t-right" x1="8.79863" y1="9.30118" x2="21.4236" y2="10.9158" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#ACD7A3"/>
+            <stop offset="0.1646" stop-color="#93D0A2"/>
+            <stop offset="0.5147" stop-color="#54BCA0"/>
+            <stop offset="0.9337" stop-color="#00A39E"/>
+        </linearGradient>
+        <linearGradient id="gradient-t-center" x1="8.09608" y1="18.552" x2="14.7588" y2="7.62556" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#ACD7A3"/>
+            <stop offset="0.1646" stop-color="#93D0A2"/>
+            <stop offset="0.5147" stop-color="#54BCA0"/>
+            <stop offset="0.9337" stop-color="#00A39E"/>
+        </linearGradient>
+        <linearGradient id="gradient-t-left" x1="4.18384" y1="8.83716" x2="8.33809" y2="2.02444" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#ACD7A3"/>
+            <stop offset="0.1646" stop-color="#93D0A2"/>
+            <stop offset="0.5147" stop-color="#54BCA0"/>
+            <stop offset="0.9337" stop-color="#00A39E"/>
+        </linearGradient>
+        <clipPath id="clip-path">
+            <rect width="20" height="15" fill="white" transform="translate(2 4)"/>
+        </clipPath>
+    </defs>
+<g clip-path="url(#clip-path)">
+<path d="M19.8491 4L22 6.40821L18.1992 8.81703H14.7653C11.5025 8.81703 8.5294 11.4056 8.12054 14.6023L8.73666 9.78527C9.1453 6.59014 12.1202 4 15.3813 4H19.8491Z" fill="url(#gradient-t-right)"/>
+<path d="M16.7126 8.81702C16.0781 8.83277 15.4697 9.06802 14.9952 9.48113C14.5208 9.89423 14.2108 10.4585 14.1203 11.0741L13.584 15.2675C13.434 16.2853 12.9213 17.2183 12.1368 17.9014C11.3522 18.5845 10.3463 18.9737 9.29705 19V19C9.07659 19.0055 8.8576 18.9633 8.65564 18.8765C8.45369 18.7897 8.27372 18.6604 8.12854 18.4978C7.98335 18.3351 7.87651 18.1432 7.8156 17.9355C7.7547 17.7278 7.74123 17.5096 7.77614 17.2962L8.12069 14.6023C8.52934 11.4072 11.5043 8.81702 14.7655 8.81702H16.7126Z" fill="url(#gradient-t-center)"/>
+<path d="M11.5785 4.00037C9.73629 5.07083 8.38624 6.79594 7.80921 8.81682H4.1504L2 6.40809L5.79932 4.00037H11.5785Z" fill="url(#gradient-t-left)"/>
+</g>
+</svg>

@@ -158,7 +158,7 @@ class CreateTackScreen extends StatelessWidget {
                   RoundedCustomButton(
                     text: 'Create',
                     backgroundColor: AppTheme.grassColor,
-                    textStyle: AppTextTheme.manrope20Light.copyWith(
+                    textStyle: AppTextTheme.manrope20Regular.copyWith(
                       color: AppTheme.positiveColor,
                     ),
                     borderRadius: BorderRadius.circular(35),

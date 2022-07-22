@@ -5,7 +5,7 @@ abstract class DashboardEvent {
 }
 
 class CounterOfferOpen extends DashboardEvent {
-  final TackModel tack;
+  final Tack tack;
 
   const CounterOfferOpen({
     required this.tack,
@@ -13,7 +13,7 @@ class CounterOfferOpen extends DashboardEvent {
 }
 
 class AcceptTack extends DashboardEvent {
-  final TackModel tack;
+  final Tack tack;
 
   const AcceptTack({
     required this.tack,

@@ -9,7 +9,7 @@ class CounterOffer {
   static const String routeName = '/counterOffer';
 
   static Page<bool?> page({
-    required TackModel tack,
+    required Tack tack,
   }) {
     return _CounterOfferPage(
       tack: tack,
@@ -18,7 +18,7 @@ class CounterOffer {
 }
 
 class _CounterOfferPage extends Page<bool?> {
-  final TackModel tack;
+  final Tack tack;
 
   @override
   String get name => CounterOffer.routeName;

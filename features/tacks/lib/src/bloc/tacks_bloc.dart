@@ -45,7 +45,7 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
     if (state.tackerTacks.isNotEmpty) {
       emit(
         state.copyWith(
-          tackerTacks: const <TackerTack>[],
+          tackerTacks: const <Tack>[],
           runnerTacks: const <RunnerTack>[],
         ),
       );
@@ -70,7 +70,7 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
           titleKey: '',
           translationParams: {
             AlertPropertyKey.message: {
-              'tackName': event.name,
+              'tackName': event.tack.title,
             },
           },
         ),

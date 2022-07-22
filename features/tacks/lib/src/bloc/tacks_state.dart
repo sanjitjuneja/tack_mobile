@@ -1,17 +1,17 @@
 part of 'tacks_bloc.dart';
 
 class TacksState {
-  final List<TackerTack> tackerTacks;
+  final List<Tack> tackerTacks;
   final List<RunnerTack> runnerTacks;
 
   const TacksState({
-    List<TackerTack>? tackerTacks,
+    List<Tack>? tackerTacks,
     List<RunnerTack>? runnerTacks,
-  })  : tackerTacks = tackerTacks ?? const <TackerTack>[],
+  })  : tackerTacks = tackerTacks ?? const <Tack>[],
         runnerTacks = runnerTacks ?? const <RunnerTack>[];
 
   TacksState copyWith({
-    List<TackerTack>? tackerTacks,
+    List<Tack>? tackerTacks,
     List<RunnerTack>? runnerTacks,
   }) {
     return TacksState(

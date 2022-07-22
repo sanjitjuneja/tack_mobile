@@ -1,8 +1,7 @@
-
 import 'package:domain/domain.dart';
 
-extension RunnerTackStatusToDescriptionExtension on RunnerTack {
+extension RunnerTackStatusToDescriptionExtension on Tack {
   String get finalDescription {
-    return creator.name;
+    return tacker.fullName;
   }
 }

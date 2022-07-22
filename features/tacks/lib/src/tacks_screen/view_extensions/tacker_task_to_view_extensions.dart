@@ -2,21 +2,21 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 
-extension TackerTackStatusToDescriptionExtension on TackerTack {
+extension TackerTackStatusToDescriptionExtension on Tack {
   String get finalDescription {
     switch (status) {
-      case TackerTackStatus.created:
+      case TackStatus.created:
         return 'tacksScreen.tackerStatus.created';
       default:
-        return creator.name;
+        return tacker.fullName;
     }
   }
 }
 
-extension TackerTackStatusToTextStyleExtension on TackerTack {
+extension TackerTackStatusToTextStyleExtension on Tack {
   TextStyle get descriptionTextStyle {
     switch (status) {
-      case TackerTackStatus.created:
+      case TackStatus.created:
         return AppTextTheme.manrope20Bold
             .copyWith(color: AppTheme.textDisabledColor);
       default:

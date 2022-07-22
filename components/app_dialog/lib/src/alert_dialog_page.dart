@@ -3,7 +3,7 @@ part of app_dialog;
 class AppAlertDialog {
   static const String routeName = '/alertDialog';
 
-  static Page<dynamic> page(
+  static Page<bool> page(
     Alert alert, {
     bool shouldUseDefaultContent = true,
     ButtonCallback? onButtonTap,

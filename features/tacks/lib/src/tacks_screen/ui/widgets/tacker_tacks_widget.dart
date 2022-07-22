@@ -6,7 +6,7 @@ import 'package:tacks/src/bloc/tacks_bloc.dart';
 import 'package:tacks/src/tacks_screen/ui/widgets/tacker_tack/tacker_tack_widget.dart';
 
 class TackerTacksWidget extends StatelessWidget {
-  final List<TackerTack> tackerTacks;
+  final List<Tack> tackerTacks;
 
   const TackerTacksWidget({
     super.key,

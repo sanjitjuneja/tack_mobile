@@ -17,9 +17,9 @@ class LoadTacks extends TacksEvent {
 }
 
 class CancelTackOffer extends TacksEvent {
-  final String name;
+  final Tack tack;
 
   const CancelTackOffer({
-    required this.name,
+    required this.tack,
   });
 }

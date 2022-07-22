@@ -1,7 +1,7 @@
 part of tack_tile;
 
 class TackTileActions extends StatelessWidget {
-  final TackModel tack;
+  final Tack tack;
 
   const TackTileActions({
     super.key,
@@ -12,16 +12,18 @@ class TackTileActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: AppButton(
-            labelKey: 'general.counter',
-            type: ButtonType.secondary,
-            withShadow: false,
-            onTap: () => _onCounterButtonTap(context),
+        if (tack.allowCounterOffers) ...<Widget>[
+          Expanded(
+            flex: 1,
+            child: AppButton(
+              labelKey: 'general.counter',
+              type: ButtonType.secondary,
+              withShadow: false,
+              onTap: () => _onCounterButtonTap(context),
+            ),
           ),
-        ),
-        const SizedBox(width: 12),
+          const SizedBox(width: 12),
+        ],
         Expanded(
           flex: 2,
           child: AppButton(

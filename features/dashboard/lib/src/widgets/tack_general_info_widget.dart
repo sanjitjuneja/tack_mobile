@@ -1,7 +1,7 @@
 part of tack_tile;
 
 class TackGeneralInfoWidget extends StatelessWidget {
-  final TackModel tack;
+  final Tack tack;
 
   const TackGeneralInfoWidget({
     super.key,
@@ -14,7 +14,7 @@ class TackGeneralInfoWidget extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: Text(
-            tack.user.name,
+            tack.tacker.fullName,
             style: AppTextTheme.manrope16Bold
                 .copyWith(color: AppTheme.textHeavyHintColor),
           ),

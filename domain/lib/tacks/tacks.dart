@@ -1,10 +1,15 @@
 library tacks;
 
+import 'package:core/core.dart';
 import 'package:domain/usecases/usecase.dart';
-import 'package:equatable/equatable.dart';
 
+part 'models/offer.dart';
+part 'models/offer_type.dart';
+part 'models/runner_tack.dart';
 part 'models/tack.dart';
 part 'models/tack_status.dart';
+part 'models/tack_user.dart';
+part 'models/tack_user_contacts.dart';
 
 part 'repositories/tacks_repository.dart';
 

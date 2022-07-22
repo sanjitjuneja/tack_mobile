@@ -7,6 +7,7 @@ class AppColors {
 
   static const Color black = Color.fromRGBO(0, 0, 0, 1);
   static const Color black25 = Color.fromRGBO(0, 0, 0, 0.25);
+  static const Color black09 = Color.fromRGBO(0, 0, 0, 0.09);
   static const Color blackRussian = Color.fromRGBO(29, 31, 37, 1);
   static const Color blackPearl31 = Color.fromRGBO(12, 15, 20, 0.31);
 
@@ -37,7 +38,8 @@ class AppColors {
   static const Color gin = Color.fromRGBO(218, 234, 226, 1);
   static const Color gallery = Color.fromRGBO(234, 234, 234, 1);
 
-  static const Color harleyDavidsonOrange = Color.fromRGBO(234, 70, 19, 1);
   static const Color cinnabar = Color.fromRGBO(233, 66, 53, 1);
+  static const Color harleyDavidsonOrange = Color.fromRGBO(234, 70, 19, 1);
+  static const Color gamboge = Color.fromRGBO(231, 182, 11, 1);
   static const Color mischka = Color.fromRGBO(211, 214, 223, 1);
 }

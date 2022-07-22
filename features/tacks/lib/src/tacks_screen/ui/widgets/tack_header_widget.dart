@@ -1,21 +1,15 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:tacks/src/tacks_screen/view_extensions/tacker_task_to_view_extensions.dart';
 
 class TackHeaderWidget extends StatelessWidget {
-  final String name;
-  final double fee;
-  final Duration estimatedTime;
-  final String description;
-  final TextStyle? descriptionStyle;
+  final Tack tack;
 
   const TackHeaderWidget({
     super.key,
-    required this.name,
-    required this.fee,
-    required this.estimatedTime,
-    required this.description,
-    this.descriptionStyle,
+    required this.tack,
   });
 
   @override
@@ -27,7 +21,7 @@ class TackHeaderWidget extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: Text(
-                name,
+                tack.title,
                 style: AppTextTheme.manrope16SemiBold
                     .copyWith(color: AppTheme.textPrimaryColor),
                 maxLines: 2,
@@ -36,7 +30,7 @@ class TackHeaderWidget extends StatelessWidget {
             ),
             const SizedBox(width: 6),
             Text(
-              CurrencyUtility.dollarFormat.format(fee),
+              CurrencyUtility.dollarFormat.format(tack.price),
               style: AppTextTheme.manrope24Bold
                   .copyWith(color: AppTheme.textSecondaryColor),
             ),
@@ -47,17 +41,15 @@ class TackHeaderWidget extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: Text(
-                FlutterI18n.translate(context, description),
-                style: descriptionStyle ??
-                    AppTextTheme.manrope16Bold
-                        .copyWith(color: AppTheme.textHeavyHintColor),
+                FlutterI18n.translate(context, tack.finalDescription),
+                style: tack.descriptionTextStyle,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
             const SizedBox(width: 6),
             Text(
-              DurationUtility.durationFormatString(estimatedTime, context),
+              DurationUtility.durationFormatString(tack.estimatedTime, context),
               style: AppTextTheme.manrope16Bold
                   .copyWith(color: AppTheme.textHeavyHintColor),
             ),

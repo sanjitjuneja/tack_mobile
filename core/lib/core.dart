@@ -18,6 +18,7 @@ export 'package:core/utils/currency_utils.dart';
 export 'package:core/utils/duration_utility.dart';
 export 'package:core/utils/field_validator.dart';
 export 'package:core/utils/internet_connectivity_service.dart';
+export 'package:core/utils/phone_call_utility.dart';
 export 'package:core/utils/text_utility.dart';
 export 'package:core/utils/token_helper.dart';
 
@@ -27,4 +28,5 @@ export 'package:flutter_i18n/flutter_i18n.dart';
 export 'package:flutter_i18n/loaders/decoders/base_decode_strategy.dart';
 export 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
 export 'package:image_picker/image_picker.dart';
+export 'package:rxdart/rxdart.dart';
 export 'package:shared_preferences/shared_preferences.dart';

@@ -100,7 +100,7 @@ class InvitationDetailsScreen extends StatelessWidget {
                           color: AppTheme.buttonDisabledColor,
                         ),
                       ),
-                      AppIconsTheme.logo.call(),
+                      AppIconsTheme.tack.call(),
                       Text('125 Tacks'),
                     ],
                   ),

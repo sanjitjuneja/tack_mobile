@@ -12,7 +12,8 @@ enum ButtonType {
 }
 
 class AppButton extends StatelessWidget {
-  final String labelKey;
+  final String? labelKey;
+  final Widget? labelWidget;
   final TextStyle? textStyle;
   final EdgeInsets? padding;
   final AppIcon? icon;
@@ -22,11 +23,13 @@ class AppButton extends StatelessWidget {
   final Color? borderColor;
   final bool withShadow;
   final bool isDisabled;
+  final bool expanded;
   final void Function()? onTap;
 
   const AppButton({
     super.key,
-    required this.labelKey,
+    this.labelKey,
+    this.labelWidget,
     this.textStyle,
     this.padding,
     this.icon,
@@ -36,8 +39,9 @@ class AppButton extends StatelessWidget {
     this.borderColor,
     this.withShadow = true,
     this.isDisabled = false,
+    this.expanded = true,
     this.onTap,
-  });
+  }) : assert(labelKey != null || labelWidget != null);
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +95,7 @@ class AppButton extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: expanded ? MainAxisSize.max : MainAxisSize.min,
           children: <Widget>[
             if (icon != null) ...<Widget>[
               icon!.call(
@@ -100,11 +105,12 @@ class AppButton extends StatelessWidget {
               const SizedBox(width: 10),
             ],
             Flexible(
-              child: Text(
-                FlutterI18n.translate(context, labelKey),
-                textAlign: TextAlign.center,
-                style: contentStyle,
-              ),
+              child: labelWidget ??
+                  Text(
+                    FlutterI18n.translate(context, labelKey!),
+                    textAlign: TextAlign.center,
+                    style: contentStyle,
+                  ),
             ),
           ],
         ),

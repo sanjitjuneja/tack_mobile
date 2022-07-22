@@ -1,9 +1,19 @@
 part of mappers;
 
 class MapperFactory {
-  GroupMapper get groupMapper => GroupMapper();
+  GroupMapper get groupMapper => const GroupMapper();
 
-  TackStatusMapper get tackStatusMapper => TackStatusMapper();
+  TackStatusMapper get tackStatusMapper => const TackStatusMapper();
 
-  TackMapper get tackMapper => TackMapper(tackStatusMapper: tackStatusMapper);
+  TackUserContactsMapper get tackUserContactsMapper =>
+      const TackUserContactsMapper();
+
+  TackUserMapper get tackUserMapper => TackUserMapper(
+        tackUserContactsMapper: tackUserContactsMapper,
+      );
+
+  TackMapper get tackMapper => TackMapper(
+        tackStatusMapper: tackStatusMapper,
+        tackUserMapper: tackUserMapper,
+      );
 }
