@@ -43,69 +43,72 @@ class RoundedCustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Container(
-        decoration: BoxDecoration(
-          boxShadow: shadows ?? [],
-        ),
-        width: width ?? double.infinity,
-        height: height ?? 55,
-        child: ElevatedButton(
-          style: ButtonStyle(
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            shadowColor: MaterialStateProperty.all(Colors.transparent),
-            overlayColor: MaterialStateProperty.all(Colors.transparent),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                side: borderSide ?? BorderSide.none,
-                borderRadius: borderRadius ?? BorderRadius.circular(12),
+    return ClipRRect(
+      borderRadius: borderRadius ?? BorderRadius.circular(12),
+      child: Material(
+        child: Container(
+          decoration: BoxDecoration(
+            boxShadow: shadows ?? [],
+          ),
+          width: width ?? double.infinity,
+          height: height ?? 55,
+          child: ElevatedButton(
+            style: ButtonStyle(
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              shadowColor: MaterialStateProperty.all(Colors.transparent),
+              overlayColor: MaterialStateProperty.all(Colors.transparent),
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  side: borderSide ?? BorderSide.none,
+                  borderRadius: borderRadius ?? BorderRadius.circular(12),
+                ),
+              ),
+              backgroundColor: MaterialStateProperty.resolveWith(
+                (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.pressed)) {
+                    return isEnabled
+                        ? onPressedBackgroundColor ?? backgroundColor
+                        : disabledBackgroundColor ?? backgroundColor;
+                  } else {
+                    return isEnabled
+                        ? backgroundColor
+                        : disabledBackgroundColor ?? backgroundColor;
+                  }
+                },
               ),
             ),
-            backgroundColor: MaterialStateProperty.resolveWith(
-              (Set<MaterialState> states) {
-                if (states.contains(MaterialState.pressed)) {
-                  return isEnabled
-                      ? onPressedBackgroundColor ?? backgroundColor
-                      : disabledBackgroundColor ?? backgroundColor;
-                } else {
-                  return isEnabled
-                      ? backgroundColor
-                      : disabledBackgroundColor ?? backgroundColor;
-                }
-              },
+            onPressed: isEnabled ? onPressed : () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                if (image != null) ...<Widget>{
+                  image!,
+                  const SizedBox(width: 10),
+                },
+                isEnabled
+                    ? Text(
+                        FlutterI18n.translate(context, text),
+                        style: textStyle ??
+                            AppTextTheme.manrope14Medium.copyWith(
+                              color: AppTheme.positiveColor,
+                            ),
+                        overflow: TextOverflow.visible,
+                        textAlign: TextAlign.center,
+                      )
+                    : Text(
+                        disabledText != null
+                            ? FlutterI18n.translate(context, disabledText!)
+                            : FlutterI18n.translate(context, text),
+                        style: disabledTextStyle ??
+                            textStyle ??
+                            AppTextTheme.manrope14Medium.copyWith(
+                              color: AppTheme.accentColor,
+                            ),
+                        overflow: TextOverflow.visible,
+                        textAlign: TextAlign.center,
+                      ),
+              ],
             ),
-          ),
-          onPressed: isEnabled ? onPressed : () {},
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              if (image != null) ...<Widget>{
-                image!,
-                const SizedBox(width: 10),
-              },
-              isEnabled
-                  ? Text(
-                      FlutterI18n.translate(context, text),
-                      style: textStyle ??
-                          AppTextTheme.manrope14Medium.copyWith(
-                            color: AppTheme.positiveColor,
-                          ),
-                      overflow: TextOverflow.visible,
-                      textAlign: TextAlign.center,
-                    )
-                  : Text(
-                      disabledText != null
-                          ? FlutterI18n.translate(context, disabledText!)
-                          : FlutterI18n.translate(context, text),
-                      style: disabledTextStyle ??
-                          textStyle ??
-                          AppTextTheme.manrope14Medium.copyWith(
-                            color: AppTheme.accentColor,
-                          ),
-                      overflow: TextOverflow.visible,
-                      textAlign: TextAlign.center,
-                    ),
-            ],
           ),
         ),
       ),

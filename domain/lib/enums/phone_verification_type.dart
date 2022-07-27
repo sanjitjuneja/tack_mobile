@@ -1,0 +1,4 @@
+enum PhoneVerificationType {
+  signUp,
+  forgotPassword,
+}

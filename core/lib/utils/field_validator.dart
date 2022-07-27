@@ -1,8 +1,12 @@
 import 'package:core/utils/regular_expressions.dart';
+import 'package:domain/models/base_error_model.dart';
 
 String phoneNumberPattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
 String _namePattern =
     r'''^(?=[a-zA-Z0-9._]{3,100}$)(?!.*[_.]{2})[^_.].*[^_.]$''';
+String containCapitalPattern =
+    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+String containNumberPattern = '/\d/';
 
 class FieldValidator {
   static bool validatePhoneNumber(String phoneNumber) {
@@ -37,8 +41,8 @@ class FieldValidator {
   }
 
   static bool validatePassword(String password) {
-    const int passwordMinLength = 16;
-    const int passwordMaxLength = 50;
+    const int passwordMinLength = 8;
+    const int passwordMaxLength = 16;
 
     if (password.length >= passwordMinLength &&
         password.length <= passwordMaxLength) {
@@ -48,30 +52,66 @@ class FieldValidator {
     }
   }
 
-  bool isNameFormatValid(String name) {
-    return _regexValidator(
-      value: name,
-      regexPattern: _namePattern,
-    );
-  }
-
-  static String? getPasswordValidations(String password) {
-    if (password.length < 8 || password.length > 16) {
-      return '8-16 characters (E.g: Ab12345678 )';
-    } else if (!isContainCapitalLetter(password)) {
-      return 'At least 1 Capital Letter(E.g: ABCD )';
-    } else if (!isContainsNumeric(password)) {
-      return 'At least 1 Digit (E.g: 12345 )';
-    } else {
-      return null;
-    }
-  }
-
   static bool isContainsNumeric(String str) {
-    return numericRegEx.hasMatch(str);
+    final RegExp regExp = RegExp(r'[0-9]');
+    return str.contains(regExp);
   }
 
   static bool isContainCapitalLetter(String str) {
+    final RegExp regExp = RegExp(containCapitalPattern);
     return capitalLetterRegEx.hasMatch(str);
+  }
+
+  static List<BaseErrorModel> getPasswordValidationsList(String password) {
+    final List<BaseErrorModel> validations = <BaseErrorModel>[];
+    if (password.length < 8 || password.length > 16) {
+      validations.add(
+        BaseErrorModel(
+          errorText: '8-16 characters',
+          descriptionText: '(E.g: Ab12345678 )',
+        ),
+      );
+    }
+
+    if (!FieldValidator.isContainCapitalLetter(password)) {
+      validations.add(
+        BaseErrorModel(
+          errorText: 'At least 1 Capital Letter',
+          descriptionText: '(E.g: ABCD )',
+        ),
+      );
+    }
+
+    if (!FieldValidator.isContainsNumeric(password)) {
+      validations.add(
+        BaseErrorModel(
+          errorText: 'At least 1 Digit (E.g: 12345)',
+          descriptionText: '(E.g: 12345)',
+        ),
+      );
+    }
+
+    return validations;
+  }
+
+  static List<BaseErrorModel> getNameValidationsList(String name) {
+    final List<BaseErrorModel> validations = <BaseErrorModel>[];
+    if (name.isEmpty) {
+      validations.add(
+        BaseErrorModel(
+          errorText: 'This field should be not empty',
+        ),
+      );
+    }
+
+    if (name.length < 5 || name.length > 15) {
+      validations.add(
+        BaseErrorModel(
+          errorText: '5 - 15 characters',
+        ),
+      );
+    }
+
+    return validations;
   }
 }

@@ -4,86 +4,79 @@ import 'package:data/entities/tacks/tacks.dart';
 import 'package:data/mappers/mappers.dart';
 import 'package:data/providers/api_provider_base.dart';
 import 'package:domain/domain.dart' as domain;
-import 'package:domain/models/request_sms_code_result.dart';
 
+import '../entities/phone_verification/phone_verification.dart';
+import '../entities/user/user.dart';
 import '../query/api_query.dart';
 
 class ApiProvider {
-  final String _baseUrl;
   final ApiProviderBase _apiProviderBase;
   final MapperFactory mapper;
 
   ApiProvider({
-    required String baseUrl,
     required ApiProviderBase apiProviderBase,
     required this.mapper,
-  })  : _baseUrl = baseUrl,
-        _apiProviderBase = apiProviderBase;
+  }) : _apiProviderBase = apiProviderBase;
 
-  Future<void> signIn({
-    required Map<String, dynamic> signInBody,
+  Future<domain.Message> signIn({
+    required SignInRequest request,
   }) async {
-    final Map<String, dynamic> map = await _apiProviderBase.post(
-      ApiQuery(
-        params: null,
-        body: signInBody,
-        endpointPostfix: BaseUrlConstants.loginPath,
-      ),
-    ) as Map<String, dynamic>;
-
-    print('0--0-0-0-0-0-0-0-0-0');
-    print(map);
+    return _apiProviderBase
+        .post<MessageEntity>(
+          MessageEntity.fromJson,
+          ApiQuery(
+            params: null,
+            body: request.toJson(),
+            endpointPostfix: BaseUrlConstants.loginPath,
+          ),
+        )
+        .then((mapper.messageMapper.fromEntity));
   }
 
-  Future<void> signUp({
-    required Map<String, dynamic> signUpBody,
+  Future<domain.Customer> signUp({
+    required RegisterUserByPhoneRequest request,
   }) async {
-    final Map<String, dynamic> map = await _apiProviderBase.post(
-      ApiQuery(
-        params: null,
-        body: signUpBody,
-        endpointPostfix: BaseUrlConstants.signUpPath,
-      ),
-    ) as Map<String, dynamic>;
+    return await _apiProviderBase
+        .post<UserEntity>(
+          UserEntity.fromJson,
+          ApiQuery(
+            params: null,
+            body: request.toJson(),
+            endpointPostfix: BaseUrlConstants.signUpPath,
+          ),
+        )
+        .then(mapper.customerMapper.fromEntity);
   }
 
-  Future<RequestSmsCodeResult> requestSmsCode({
-    required Map<String, dynamic> requestSmsCodeBody,
+  Future<domain.SmsCodeResult> requestSmsCode({
+    required String endpointPostfix,
+    required SmsCodeRequest request,
   }) async {
-    print(3);
-    print(requestSmsCodeBody);
-    final dynamic k = await _apiProviderBase.post(
-      ApiQuery(
-        params: null,
-        body: requestSmsCodeBody,
-        endpointPostfix: BaseUrlConstants.requestSmsCodePath,
-      ),
-    );
-    print(k);
-    final Map<String, dynamic> map = await _apiProviderBase.post(
-      ApiQuery(
-        params: null,
-        body: requestSmsCodeBody,
-        endpointPostfix: BaseUrlConstants.requestSmsCodePath,
-      ),
-    ) as Map<String, dynamic>;
-
-    print('-=-=-=-=-==-=-=-=-=-=-=-==-=-=-=-=-=-');
-    print(map);
-    print('-=-=-=-=-==-=-=-=-=-=-=-==-=-=-=-=-=-');
-    return RequestSmsCodeResult.fromMap(map);
+    return _apiProviderBase
+        .post<SmsVerificationEntity>(
+          SmsVerificationEntity.fromJson,
+          ApiQuery(
+            endpointPostfix: endpointPostfix,
+            body: request.toJson(),
+            params: null,
+          ),
+        )
+        .then(mapper.smsVerificationMapper.fromEntity);
   }
 
-  Future<void> verifyPhoneNumber({
-    required Map<String, dynamic> verifyPhoneNumberBody,
+  Future<domain.PhoneVerificationResult> verifyPhoneNumber({
+    required VerifyPhoneNumberRequest request,
   }) async {
-    final Map<String, dynamic> map = await _apiProviderBase.post(
-      ApiQuery(
-        params: null,
-        body: verifyPhoneNumberBody,
-        endpointPostfix: BaseUrlConstants.verifyPhoneNumberPath,
-      ),
-    );
+    return _apiProviderBase
+        .post<PhoneVerificationEntity>(
+          PhoneVerificationEntity.fromJson,
+          ApiQuery(
+            params: null,
+            body: request.toJson(),
+            endpointPostfix: BaseUrlConstants.verifyPhoneNumberPath,
+          ),
+        )
+        .then(mapper.phoneVerificationMapper.fromEntity);
   }
 
   Future<domain.Group> createGroup({
@@ -91,6 +84,7 @@ class ApiProvider {
   }) async {
     return _apiProviderBase
         .post<GroupEntity>(
+          GroupEntity.fromJson,
           ApiQuery(
             endpointPostfix: BaseUrlConstants.groupsPath,
             body: request.toJson(),

@@ -1,38 +1,41 @@
+import 'package:core/constants/base_url_constants.dart';
 import 'package:data/data.dart';
-import 'package:domain/models/request_sms_code_result.dart';
-import 'package:domain/params_models/request_sms_params.dart';
-import 'package:domain/params_models/verify_phone_number_params.dart';
-import 'package:domain/repositories/phone_number_repository.dart';
 
-class PhoneNumberRepositoryImpl implements PhoneVerificationRepository {
+import '../entities/phone_verification/phone_verification.dart';
+
+import 'package:domain/domain.dart' as domain;
+
+class PhoneNumberRepositoryImpl implements domain.PhoneVerificationRepository {
   final ApiProvider _apiProvider;
-  final PrefsProvider _prefsProvider;
 
   PhoneNumberRepositoryImpl({
     required ApiProvider apiProvider,
     required PrefsProvider prefsProvider,
-  })  : _apiProvider = apiProvider,
-        _prefsProvider = prefsProvider;
+  }) : _apiProvider = apiProvider;
 
   @override
-  Future<RequestSmsCodeResult> requestSmsCode({
-    required RequestSmsParams smsCodeParams,
+  Future<domain.SmsCodeResult> requestSmsCode({
+    required domain.RequestSmsCodePayload payload,
   }) async {
-    print('2');
-    final RequestSmsCodeResult smsCode = await _apiProvider.requestSmsCode(
-      requestSmsCodeBody: smsCodeParams.toMap(),
+    final String endpointPostfix =
+        payload.phoneVerificationType == domain.PhoneVerificationType.signUp
+            ? BaseUrlConstants.requestSmsCodeSignUpPath
+            : BaseUrlConstants.requestSmsCodeResetPasswordPath;
+    return _apiProvider.requestSmsCode(
+      endpointPostfix: endpointPostfix,
+      request: SmsCodeRequest(phoneNumber: payload.phoneNumber),
     );
-    print('RequestSmsCodeResult');
-    print(smsCode.uuid);
-    return smsCode;
   }
 
   @override
-  Future<void> verifyPhoneNumber({
-    required VerifyPhoneNumberParams params,
+  Future<domain.PhoneVerificationResult> verifyPhoneNumber({
+    required domain.VerifyPhoneNumberPayload params,
   }) async {
-    await _apiProvider.verifyPhoneNumber(
-      verifyPhoneNumberBody: params.toMap(),
+    return _apiProvider.verifyPhoneNumber(
+      request: VerifyPhoneNumberRequest(
+        uuid: params.uuid,
+        smsCode: params.smsCode,
+      ),
     );
   }
 }

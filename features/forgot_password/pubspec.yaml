@@ -10,12 +10,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  home:
+    path: ../home
   core:
     path: ../../core
+  domain:
+    path: ../../domain
   core_ui:
     path: ../../core_ui
   navigation:
     path: ../../navigation
+  phone_verification:
+    path: ../phone_verification
 
 dev_dependencies:
   flutter_test:

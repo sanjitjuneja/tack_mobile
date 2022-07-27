@@ -2,10 +2,8 @@ import 'package:data/data.dart';
 import 'package:data/errors/error_handler.dart';
 import 'package:domain/domain.dart';
 import 'package:domain/repositories/auth_repository.dart';
-import 'package:domain/usecases/request_sms_code_usecase.dart';
 import 'package:domain/usecases/sign_in_usecase.dart';
 import 'package:domain/usecases/sign_up_usecase.dart';
-import 'package:domain/usecases/verify_phone_number_usecase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_di.dart';
@@ -42,7 +40,6 @@ class DataDI {
 
     appLocator.registerLazySingleton<ApiProvider>(
       () => ApiProvider(
-        baseUrl: baseUrl,
         apiProviderBase: appLocator.get<ApiProviderBase>(),
         mapper: MapperFactory(),
       ),

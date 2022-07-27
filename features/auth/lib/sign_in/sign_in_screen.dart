@@ -121,9 +121,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           },
                           child: Text(
                             FlutterI18n.translate(
-                              context,
-                              'signIn.forgotPassword',
-                            ),
+                                context, 'signIn.forgotPassword'),
                             style: AppTextTheme.manrope14Medium.copyWith(
                               color: AppTheme.accentColor,
                             ),
@@ -133,13 +131,13 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     const SizedBox(height: 25),
                     RoundedCustomButton(
+                      height: 68,
                       isEnabled: state.isDataValid,
                       backgroundColor: AppTheme.grassColor,
                       disabledBackgroundColor: AppTheme.buttonDisabledColor,
                       disabledTextStyle: AppTextTheme.manrope20Medium.copyWith(
                         color: AppTheme.textHeavyHintColor,
                       ),
-                      height: 68,
                       textStyle: AppTextTheme.manrope20Medium.copyWith(
                         color: AppTheme.positiveColor,
                       ),

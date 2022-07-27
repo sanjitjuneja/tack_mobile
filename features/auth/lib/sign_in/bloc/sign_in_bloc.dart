@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:auth/sign_in/bloc/sign_in_event.dart';
 import 'package:auth/sign_in/bloc/sign_in_state.dart';
 import 'package:core/core.dart';
-import 'package:core/errors/form_field_exception.dart';
-import 'package:domain/params_models/sign_in_params.dart';
+import 'package:core_ui/core_ui.dart';
+import 'package:domain/domain.dart';
 import 'package:domain/usecases/sign_in_usecase.dart';
 import 'package:forgot_password/forgot_password_page.dart';
 import 'package:home/home.dart';
@@ -25,26 +25,24 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   Stream<SignInState> mapEventToState(SignInEvent event) async* {
     if (event is SignIn) {
       try {
-        //TODO: Add loader
-        await signInUseCase.execute(
-          SignInParams(
+        appRouter.push(ProgressDialog.page());
+        final Message message = await signInUseCase.execute(
+          SignInPayload(
             password: event.password,
-            phoneNumber: event.phoneNumber,
+            phoneNumber: '${Constants.kPhonePrefix}${event.phoneNumber}',
           ),
         );
-
-        print('done');
-
-        appRouter.push(
-          HomeFeature.page(),
-        );
+        appRouter.pop();
+        appRouter.push(HomeFeature.page());
       } on Exception catch (e) {
-        if (e is FormFieldException) {
-          yield SignInContent(
-            isDataValid: true,
-            errors: e.validationErrors,
-          );
-        }
+        appRouter.replace(
+          AppAlertDialog.page(
+            ErrorAlert(
+              contentKey: 'signIn.signIn',
+              messageKey: e.toString(),
+            ),
+          ),
+        );
       }
     }
 
@@ -64,8 +62,10 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     }
 
     if (event is RouteToForgotPassword) {
-      appRouter.push(
-        ForgotPasswordPage(),
+      final result = await appRouter.pushForResult(
+        ForgotPasswordPage(
+          phoneVerificationType: PhoneVerificationType.forgotPassword,
+        ),
       );
     }
   }

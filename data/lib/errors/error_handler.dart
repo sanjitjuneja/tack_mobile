@@ -23,7 +23,7 @@ class ErrorHandler {
         }
 
         if (statusCode == 401) {
-          //TODO: Add handle server access
+          throw Exception(error.toString());
         }
 
         if (statusCode >= 500) {

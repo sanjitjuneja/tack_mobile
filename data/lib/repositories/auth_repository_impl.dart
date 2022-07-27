@@ -1,7 +1,10 @@
-import 'package:data/data.dart';
-import 'package:domain/params_models/sign_in_params.dart';
-import 'package:domain/params_models/sign_up_params.dart';
+import 'package:domain/auth/phone_verification.dart';
+import 'package:domain/domain.dart' as domain;
 import 'package:domain/repositories/auth_repository.dart';
+import 'package:domain/user/user.dart';
+
+import '../entities/user/user.dart';
+import '../providers/api_provider.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final ApiProvider _apiProvider;
@@ -11,16 +14,31 @@ class AuthRepositoryImpl implements AuthRepository {
   }) : _apiProvider = apiProvider;
 
   @override
-  Future<void> signIn({required SignInParams signInParams}) async {
-    await _apiProvider.signIn(
-      signInBody: signInParams.toMap(),
+  Future<domain.Message> signIn({
+    required SignInPayload payload,
+  }) async {
+    return _apiProvider.signIn(
+      request: SignInRequest(
+        password: payload.password,
+        phoneNumber: payload.phoneNumber,
+      ),
     );
   }
 
   @override
-  Future<void> signUp({required SignUpParams signUpParams}) async {
-    await _apiProvider.signUp(
-      signUpBody: signUpParams.toMap(),
+  Future<domain.Customer> signUp({
+    required SignUpByPhonePayload params,
+  }) async {
+    return _apiProvider.signUp(
+      request: RegisterUserByPhoneRequest(
+        uuid: params.uuid,
+        user: UserRequest(
+          password: params.password,
+          firstName: params.firstName,
+          lastName: params.lastName,
+          phoneNumber: params.phoneNumber,
+        ),
+      ),
     );
   }
 }

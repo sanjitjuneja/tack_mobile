@@ -45,6 +45,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: AppTheme.transparentColor,
       child: TextField(
         inputFormatters: widget.inputFormatters,
         obscureText: _obscureText,

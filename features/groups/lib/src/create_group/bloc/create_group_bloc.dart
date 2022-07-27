@@ -18,6 +18,7 @@ part 'create_group_event.dart';
 class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
   // max characters for name.
   static const int _nameMaxLength = 100;
+
   // max words for description.
   static const int _descriptionMaxWordsLength = 30;
 

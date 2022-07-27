@@ -8,6 +8,7 @@ import 'package:domain/domain.dart';
 import 'package:navigation/navigation.dart';
 
 part 'dashboard_event.dart';
+
 part 'dashboard_state.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
@@ -23,7 +24,6 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     on<CounterOfferOpen>(_onCounterOfferOpen);
     on<AcceptTack>(_onAcceptTack);
   }
-
 
   Future<void> _onCounterOfferOpen(
     CounterOfferOpen event,
