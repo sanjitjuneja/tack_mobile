@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 class AppTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String placeholder;
+  final EdgeInsets? padding;
   final Color? backgroundColor;
   final bool shouldShowCursor;
   final bool isDisabled;
@@ -13,6 +14,7 @@ class AppTextField extends StatelessWidget {
   final bool? forceFocus;
   final bool isInvalid;
   final bool shouldObscure;
+  final bool hasDecoration;
   final bool hasShadow;
   final bool isRequired;
   final double? height;
@@ -29,6 +31,7 @@ class AppTextField extends StatelessWidget {
   const AppTextField({
     super.key,
     required this.placeholder,
+    this.padding,
     this.controller,
     this.backgroundColor,
     this.isDisabled = false,
@@ -36,6 +39,7 @@ class AppTextField extends StatelessWidget {
     this.forceFocus,
     this.isInvalid = false,
     this.shouldObscure = false,
+    this.hasDecoration = true,
     this.hasShadow = true,
     bool? isRequired,
     this.height,
@@ -55,29 +59,33 @@ class AppTextField extends StatelessWidget {
     return CupertinoTextField(
       suffix: suffix,
       textAlignVertical: TextAlignVertical.center,
-      decoration: BoxDecoration(
-        color: backgroundColor ?? AppTheme.textFieldPrimaryBackgroundColor,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: hasShadow
-            ? <BoxShadow>[
-                BoxShadow(
-                  color: AppTheme.shadowColor,
-                  offset: const Offset(0, 4),
-                  blurRadius: 4,
-                ),
-              ]
-            : null,
-      ),
+      decoration: hasDecoration
+          ? BoxDecoration(
+              color:
+                  backgroundColor ?? AppTheme.textFieldPrimaryBackgroundColor,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: hasShadow
+                  ? <BoxShadow>[
+                      BoxShadow(
+                        color: AppTheme.shadowColor,
+                        offset: const Offset(0, 4),
+                        blurRadius: 4,
+                      ),
+                    ]
+                  : null,
+            )
+          : null,
       obscureText: shouldObscure,
       readOnly: _isReadOnly,
       controller: controller,
       cursorColor: AppTheme.textPrimaryColor,
-      padding: const EdgeInsets.only(
-        left: 20,
-        right: 10,
-        top: 23,
-        bottom: 23,
-      ),
+      padding: padding ??
+          const EdgeInsets.only(
+            left: 20,
+            right: 10,
+            top: 23,
+            bottom: 23,
+          ),
       placeholder:
           FlutterI18n.translate(context, placeholder) + (isRequired ? '*' : ''),
       scrollPadding: const EdgeInsets.all(30),

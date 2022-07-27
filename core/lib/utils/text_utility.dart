@@ -4,6 +4,7 @@ class TextUtility {
   static RegExp get wordsLengthRegExp => RegExp(r'[\w-]+');
 
   static int getWordsCount(String? source) {
+    /// only working with english language, russian is not supported.
     if (source == null) return 0;
 
     return wordsLengthRegExp.allMatches(source).length;

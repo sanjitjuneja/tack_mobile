@@ -35,12 +35,14 @@ class AppIconsTheme {
   /// SVG
   static const String _chevronLeftKey = '${_svgPath}chevron_left.svg';
   static const String _chevronRightKey = '${_svgPath}chevron_right.svg';
+  static const String _crossKey = '${_svgPath}cross.svg';
 
   static const String _tacksListKey = '${_svgPath}tacks_list.svg';
   static const String _phoneKey = '${_svgPath}phone.svg';
   static const String _moreKey = '${_svgPath}more.svg';
   static const String _starKey = '${_svgPath}star.svg';
   static const String _tackKey = '${_svgPath}tack.svg';
+  static const String _rateStartKey = '${_svgPath}rate_star.svg';
 
   /// Bottom Navigation bar
   static AppIcon get dashboardsActive => AppIcon(_dashboardActiveKey);
@@ -69,10 +71,12 @@ class AppIconsTheme {
   /// SVG
   static AppIcon get chevronLeft => AppIcon(_chevronLeftKey);
   static AppIcon get chevronRight => AppIcon(_chevronRightKey);
+  static AppIcon get cross => AppIcon(_crossKey);
 
   static AppIcon get tacksList => AppIcon(_tacksListKey);
   static AppIcon get phone => AppIcon(_phoneKey);
   static AppIcon get more => AppIcon(_moreKey);
   static AppIcon get star => AppIcon(_starKey);
   static AppIcon get tack => AppIcon(_tackKey);
+  static AppIcon get rateStar => AppIcon(_rateStartKey);
 }
