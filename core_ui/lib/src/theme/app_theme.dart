@@ -26,6 +26,7 @@ class AppTheme {
   static Color get primaryBackgroundColor => AppColors.tranquil;
   static Color get registrationBackGroundColor => AppColors.gin;
   static Color get textFieldBackgroundColor => AppColors.athensGrayx2;
+  static Color get ratingBackgroundColor => AppColors.nero;
 
   /// System colors
   static Color get successColor => AppColors.fern;
@@ -65,6 +66,7 @@ class AppTheme {
   /// Text
   static Color get textPrimaryColor => AppColors.black;
   static Color get textSecondaryColor => AppColors.fern;
+  static Color get textBrightColor => AppColors.white;
   static Color get textHintColor => AppColors.waterloo;
   static Color get textHeavyHintColor => AppColors.shuttleGray;
   static Color get textDescriptionColor => AppColors.midGrey;
@@ -97,4 +99,8 @@ class AppTheme {
 
   /// Toast
   static Color get toastBackgroundColor => AppColors.aluminium;
+
+  /// Rating
+  static Color get ratingFilledColor => AppColors.gamboge;
+  static Color get ratingEmptyColor => AppColors.brightGrey;
 }

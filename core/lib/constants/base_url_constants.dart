@@ -10,4 +10,6 @@ class BaseUrlConstants {
 
   static const String groupsPath = '/groups/';
   static const String tacksMePath = '/tacks/me/';
+
+  static const String reviews = '/reviews/';
 }

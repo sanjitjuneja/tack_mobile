@@ -1,3 +1,4 @@
+import 'package:data/entities/tacks/tacks.dart';
 import 'package:data/providers/api_provider.dart';
 import 'package:core/core.dart';
 import 'package:domain/domain.dart' as domain;
@@ -8,9 +9,11 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   late BehaviorSubject<List<domain.Tack>> _tackerTacksStreamController;
   late BehaviorSubject<List<domain.RunnerTack>> _runnerTacksStreamController;
 
+  @override
   ValueStream<List<domain.Tack>> get tackerTacksStream =>
       _tackerTacksStreamController;
 
+  @override
   ValueStream<List<domain.RunnerTack>> get runnerTacksStream =>
       _runnerTacksStreamController;
 
@@ -29,5 +32,16 @@ class TacksRepositoryImpl implements domain.TacksRepository {
     _tackerTacksStreamController.add(tacks);
 
     return tacks;
+  }
+
+  @override
+  Future<void> rateTack(domain.RateTackPayload payload) async {
+    return _apiProvider.rateTack(
+      RateTackRequest(
+        tack: payload.tackId,
+        description: payload.comment,
+        rating: payload.rating,
+      ),
+    );
   }
 }
