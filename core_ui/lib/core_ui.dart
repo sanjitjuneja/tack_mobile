@@ -36,6 +36,13 @@ export 'src/widgets/create_tack_widget.dart';
 export 'src/widgets/app_interface_size.dart';
 export 'src/widgets/create_tack_list_widget.dart';
 export 'src/widgets/rounded_custom_button.dart';
+export 'src/widgets/term_conditions_resolver.dart';
+export 'src/widgets/list_error_widget.dart';
+export 'src/widgets/information_field.dart';
+export 'src/widgets/required_marker_widget.dart';
+export 'src/widgets/my_group_list_widget.dart';
+export 'src/widgets/invitation_list_widget.dart';
+export 'src/widgets/phone_verification_widget.dart';
 
 export 'src/widgets/drawer_accessory_widget.dart';
 export 'src/widgets/empty_widget.dart';

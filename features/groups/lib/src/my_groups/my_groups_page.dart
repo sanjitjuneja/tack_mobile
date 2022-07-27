@@ -1,6 +1,9 @@
+import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:navigation/navigation.dart';
 
+import 'bloc/groups_bloc.dart';
 import 'my_groups_screen.dart';
 
 class MyGroups {
@@ -21,7 +24,14 @@ class _MyGroupsPage extends Page<Group> {
   Route<Group> createRoute(BuildContext context) {
     return CupertinoPageRoute<Group>(
       settings: this,
-      builder: (_) => const MyGroupsScreen(),
+      builder: (_) => BlocProvider<GroupsBloc>(
+        create: (_) {
+          return GroupsBloc(
+            appRouter: AppRouter.of(context),
+          );
+        },
+        child: const MyGroupsScreen(),
+      ),
     );
   }
 }

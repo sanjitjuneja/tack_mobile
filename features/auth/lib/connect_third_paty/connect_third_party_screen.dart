@@ -59,9 +59,14 @@ class _ConnectThirdPartyScreenState extends State<ConnectThirdPartyScreen> {
             const SizedBox(height: 144),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 46),
-              child: AppButton(
-                labelKey: '',
-                onTap: () {
+              child: RoundedCustomButton(
+                height: 65,
+                borderRadius: BorderRadius.circular(35),
+                text: !isConnected ? 'Connect' : 'Close',
+                textStyle: AppTextTheme.manrope16SemiBold.copyWith(
+                  color: AppTheme.positiveColor,
+                ),
+                onPressed: () {
                   if (isConnected) {
                     appLocator.get<AppRouterDelegate>().push(
                           HomeFeature.page(),

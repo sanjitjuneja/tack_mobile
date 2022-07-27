@@ -36,17 +36,18 @@ class ApiProviderBase {
   }
 
   Future<T> post<T>(
+    Function parse,
     ApiQuery query, {
     bool isFormData = false,
   }) async {
     return safeRequest(() async {
-      final Response<T> response = await _dio.post(
+      final Response response = await _dio.post(
         query.endpointPostfix,
         data: isFormData ? query.formDataBody : query.jsonEncodedBody,
         queryParameters: query.params,
       );
 
-      return response.data!;
+      return parse(response.data!);
     });
   }
 
@@ -84,10 +85,11 @@ class ApiProviderBase {
     try {
       return await request();
     } on DioError catch (e) {
-      print('101201010101010101010101010101001010101010101');
+      print('-=-=-=-=-=-=-=-=-=-=-=-=');
       print(e.error);
       print(e.response);
-      print('101201010101010101010101010101001010101010101');
+      print(e.message);
+      print('-=-=-=-=-=-=-=-=-=-=-=-=');
       return _errorHandler.handleError(e);
     }
   }

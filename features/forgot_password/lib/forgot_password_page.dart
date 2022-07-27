@@ -1,5 +1,5 @@
 import 'package:core/core.dart';
-import 'package:core/di/app_di.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 
@@ -7,6 +7,12 @@ import 'bloc/forgot_password_bloc.dart';
 import 'forgot_password_screen.dart';
 
 class ForgotPasswordPage extends PageWithScaffoldKey<dynamic> {
+  final PhoneVerificationType phoneVerificationType;
+
+  ForgotPasswordPage({
+    required this.phoneVerificationType,
+  });
+
   @override
   Route<dynamic> createRoute(BuildContext context) =>
       MaterialPageRoute<dynamic>(
@@ -15,6 +21,7 @@ class ForgotPasswordPage extends PageWithScaffoldKey<dynamic> {
             key: scaffoldKey,
             child: BlocProvider<ForgotPasswordBloc>(
               create: (BuildContext context) => ForgotPasswordBloc(
+                phoneVerificationType: phoneVerificationType,
                 appRouter: appLocator.get<AppRouterDelegate>(),
               ),
               child: const ForgotPasswordScreen(),

@@ -1,12 +1,18 @@
-import 'package:domain/models/user.dart';
-
 abstract class PersonalInformationEvent {}
 
 class RegisterUser extends PersonalInformationEvent {
-  final User user;
+  final String firstName;
+  final String lastName;
+  final String password;
+  final String phoneNumber;
+  final String confirmedPassword;
 
   RegisterUser({
-    required this.user,
+    required this.firstName,
+    required this.lastName,
+    required this.password,
+    required this.phoneNumber,
+    required this.confirmedPassword,
   });
 }
 
@@ -42,13 +48,11 @@ class ValidateConfirmedPassword extends PersonalInformationEvent {
   });
 }
 
-class UpdatePassword extends PersonalInformationEvent {
-  final String password;
-  final String confirmedPassword;
+class ValidateTermsConditions extends PersonalInformationEvent {
+  final bool isConditionsAccepted;
 
-  UpdatePassword({
-    required this.password,
-    required this.confirmedPassword,
+  ValidateTermsConditions({
+    required this.isConditionsAccepted,
   });
 }
 

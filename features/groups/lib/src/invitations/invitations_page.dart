@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'invitations_screen.dart';
 
 class Invitations {
-  static const String routeName = '/myGroups';
+  static const String routeName = '/myInvitations';
 
   static Page<void> page() {
     return const _InvitationsPage();

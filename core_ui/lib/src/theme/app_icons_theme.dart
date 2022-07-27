@@ -31,13 +31,16 @@ class AppIconsTheme {
   static const String _taskCompleteKey = '${_basePath}task_complete.png';
   static const String _cameraKey = '${_basePath}camera.png';
   static const String _trashKey = '${_basePath}trash.png';
-  static const String _logoKey = '${_basePath}logo.png';
   static const String _groupKey = '${_basePath}group.png';
+  static const String _logoKey = '${_basePath}logo.png';
   static const String _copyKey = '${_basePath}copy.png';
   static const String _shareKey = '${_basePath}share.png';
+  static const String _crossKey = '${_basePath}cross.png';
 
   /// SVG
   static const String _tacksListKey = '${_svgPath}tacks_list.svg';
+  static const String _promptKey = '${_svgPath}prompt.svg';
+  static const String _rightArrowKey = '${_svgPath}right_arrow.svg';
 
   /// Bottom Navigation bar
   static AppIcon get dashboardsActive => AppIcon(_dashboardActiveKey);
@@ -65,8 +68,11 @@ class AppIconsTheme {
   static AppIcon get group => AppIcon(_groupKey);
   static AppIcon get copy => AppIcon(_copyKey);
   static AppIcon get share => AppIcon(_shareKey);
+  static AppIcon get cross => AppIcon(_crossKey);
   static AppIcon get logo => AppIcon(_logoKey);
 
   /// SVG
   static AppIcon get tacksList => AppIcon(_tacksListKey);
+  static AppIcon get prompt => AppIcon(_promptKey);
+  static AppIcon get rightArrow => AppIcon(_rightArrowKey);
 }

@@ -92,7 +92,8 @@
     "more": "More",
     "price": "Price",
     "or": "or",
-    "ago": "ago"
+    "ago": "ago",
+    "andSymbol": " & "
   },
   "counterOfferScreen": {
     "tackDetails": "Tack Details",
@@ -182,10 +183,23 @@
     "description": "We temporarily use Venmo to process payments from both parties. Please connect to your Venmo account in order to recieve payments for completing Tacks or creating Tacks for others to complete. "
   },
   "personalInformation": {
-    "buttonText": "Next"
+    "title": "Personal Information",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phoneNumber": "Phone Number",
+    "password": "Password",
+    "passwordConfirm": "Confirm Password",
+    "agreementTitle": "Agree to ",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy",
+    "buttonTitle": "Next"
   },
   "forgotPassword": {
-    "buttonText": "Submit"
+    "title": "Enter New Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "primaryButton": "Submit & Sign In",
+    "secondaryButton": "Submit"
   },
   "phoneVerification": {
     "buttonText": "Verify"
@@ -194,7 +208,20 @@
     "title": "Create Tack",
     "description": "Select one of the following templates or create a Tack from scratch",
     "removeButton": "Remove",
-    "editAndPublishButton": "Edit & Publish"
+    "editAndPublishButton": "Edit & Publish",
+    "promptText": "If selected, a Runner will be able to counteroffer with an increased Tack price.",
+    "instructions": "Fill in the following info to create a custom Tack within your group ",
+    "fields": {
+      "title": "Title",
+      "titlePlaceholder": "Title",
+      "price": "Price",
+      "pricePlaceholder": "Price",
+      "description": "Description",
+      "descriptionPlaceholder": "Type here...",
+      "timeEstimation": "Time Estimation",
+      "timeEstimationPlaceholder": "#",
+      "counterOffer": "Allow Counteroffer"
+    }
   },
   "searchField": {
     "createTack": ":Search Templates"
@@ -209,5 +236,12 @@
     "copyLinkButtonLabel": "Copy Link",
     "shareLinkButtonLabel": "Share Link",
     "doneButtonLabel": "Done"
+  },
+  "smsVerification": {
+    "title": "Verify Phone Number",
+    "description": "Please enter the 6-digit code sent to ",
+    "resendCode": "Resend Code",
+    "buttonPrimary": "Verify",
+    "buttonSecondary": "Next"
   }
 }

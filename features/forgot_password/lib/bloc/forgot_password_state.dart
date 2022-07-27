@@ -1,9 +1,33 @@
-abstract class ForgotPasswordState {}
+import 'package:domain/models/base_error_model.dart';
 
-class ForgotPasswordContent extends ForgotPasswordState {
-  final Map<String, String>? errors;
+class ForgotPasswordState {
+  final List<BaseErrorModel>? passwordErrors;
+  final Map<String, String>? postValidationErrors;
+  final List<BaseErrorModel>? confirmedPasswordErrors;
 
-  ForgotPasswordContent({
-    this.errors,
+  ForgotPasswordState({
+    this.passwordErrors,
+    this.postValidationErrors,
+    this.confirmedPasswordErrors,
   });
+
+  ForgotPasswordState copyWith({
+    final List<BaseErrorModel>? newPasswordErrors,
+    final List<BaseErrorModel>? newConfirmedPasswordErrors,
+    final Map<String, String>? newPostValidationsErrors,
+  }) {
+    return ForgotPasswordState(
+      passwordErrors: newPasswordErrors ?? passwordErrors,
+      confirmedPasswordErrors:
+          newConfirmedPasswordErrors ?? confirmedPasswordErrors,
+      postValidationErrors: newPostValidationsErrors ?? postValidationErrors,
+    );
+  }
+
+  bool get isValidationsPassed {
+    return passwordErrors != null &&
+        passwordErrors!.isEmpty &&
+        confirmedPasswordErrors != null &&
+        passwordErrors!.isEmpty;
+  }
 }

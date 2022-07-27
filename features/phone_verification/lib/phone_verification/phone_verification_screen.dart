@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
@@ -9,7 +10,10 @@ import 'bloc/phone_verification_bloc.dart';
 import 'bloc/phone_verification_event.dart';
 
 class PhoneVerificationScreen extends StatefulWidget {
+  final PhoneVerificationType phoneVerificationType;
+
   const PhoneVerificationScreen({
+    required this.phoneVerificationType,
     Key? key,
   }) : super(key: key);
 
@@ -33,7 +37,7 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
               backgroundColor: AppTheme.primaryColor,
               leading: CupertinoButton(
                 padding: const EdgeInsets.symmetric(horizontal: 6),
-                onPressed: () => AppRouter.of(context).popWithResult(true),
+                onPressed: () => AppRouter.of(context).popWithResult(null),
                 child: Row(
                   children: [
                     AppImagesTheme.backArrow,
@@ -60,63 +64,30 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        FlutterI18n.translate(context, 'signUp.title'),
+                        widget.phoneVerificationType ==
+                                PhoneVerificationType.signUp
+                            ? FlutterI18n.translate(
+                                context,
+                                'signUp.title',
+                              )
+                            : FlutterI18n.translate(
+                                context,
+                                'signIn.forgotPassword',
+                              ),
                         style: AppTextTheme.manrope32Bold.copyWith(
                           color: AppTheme.accentColor,
                         ),
                       ),
                       const SizedBox(height: 80),
-                      Container(
-                        height: 75,
-                        decoration: BoxDecoration(
-                          color: AppTheme.textFieldBackgroundColor,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Row(
-                            children: [
-                              Row(
-                                children: [
-                                  AppImagesTheme.americanFlag,
-                                  Text(
-                                    Constants.kPhonePrefix,
-                                    style:
-                                        AppTextTheme.manrope16Medium.copyWith(
-                                      color: AppTheme.accentColor,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 15,
-                                  top: 15,
-                                  bottom: 15,
-                                ),
-                                child: VerticalDivider(
-                                  thickness: 1.5,
-                                  width: 35,
-                                  color: AppTheme.textFieldDividerColor,
-                                ),
-                              ),
-                              Flexible(
-                                child: PhoneNumberTextField(
-                                  controller: numberController,
-                                  onChanged: (String value) {
-                                    BlocProvider.of<PhoneVerificationBloc>(
-                                            context)
-                                        .add(
-                                      UpdateData(
-                                        phoneNumber: numberController.text,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      PhoneVerificationWidget(
+                        numberController: numberController,
+                        onChanged: (String value) {
+                          BlocProvider.of<PhoneVerificationBloc>(context).add(
+                            UpdateData(
+                              phoneNumber: numberController.text,
+                            ),
+                          );
+                        },
                       ),
                       const Spacer(),
                       Padding(
@@ -134,9 +105,15 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
                           text: 'signUp.primaryButton',
                           backgroundColor: AppTheme.grassColor,
                           disabledText: 'signUp.secondaryButton',
-                          disabledBackgroundColor:
-                              AppTheme.buttonDisabledColor,
+                          disabledBackgroundColor: AppTheme.buttonDisabledColor,
                           borderRadius: BorderRadius.circular(35),
+                          onPressed: () {
+                            BlocProvider.of<PhoneVerificationBloc>(context).add(
+                              VerifyPhoneNumber(
+                                phoneNumber: numberController.text,
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],

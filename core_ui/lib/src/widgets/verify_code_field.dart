@@ -19,13 +19,22 @@ class VerifyCodeField extends StatefulWidget {
 class _VerifyCodeFieldState extends State<VerifyCodeField> {
   @override
   Widget build(BuildContext context) {
-    return AbsorbPointer(
-      absorbing: true,
+    return Material(
       child: PinCodeTextField(
-        appContext: context,
         length: 6,
-        animationType: AnimationType.none,
         autoFocus: true,
+        appContext: context,
+        animationType: AnimationType.none,
+        showCursor: false,
+        enableActiveFill: true,
+        cursorColor: Colors.black,
+        autoDismissKeyboard: false,
+        animationCurve: Curves.ease,
+        controller: widget.controller,
+        keyboardType: TextInputType.number,
+        backgroundColor: AppTheme.positiveColor,
+        textStyle: AppTextTheme.manrope32Medium,
+        animationDuration: const Duration(seconds: 0),
         pinTheme: PinTheme(
           shape: PinCodeFieldShape.box,
           borderRadius: BorderRadius.circular(16),
@@ -42,18 +51,9 @@ class _VerifyCodeFieldState extends State<VerifyCodeField> {
           inactiveFillColor: AppTheme.textFieldBackgroundColor,
           errorBorderColor: AppTheme.textFieldBackgroundColor,
         ),
-        cursorColor: Colors.black,
-        textStyle: AppTextTheme.manrope32Medium,
-        enableActiveFill: true,
-        controller: widget.controller,
-        keyboardType: TextInputType.number,
         onChanged: (value) {
           widget.onChanged(value);
         },
-        animationDuration: const Duration(seconds: 0),
-        showCursor: false,
-        autoDismissKeyboard: false,
-        animationCurve: Curves.ease,
       ),
     );
   }

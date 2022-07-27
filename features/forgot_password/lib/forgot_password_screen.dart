@@ -1,6 +1,7 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:forgot_password/bloc/forgot_password_event.dart';
 import 'package:forgot_password/bloc/forgot_password_state.dart';
 import 'package:navigation/navigation.dart';
 
@@ -13,9 +14,10 @@ class ForgotPasswordScreen extends StatefulWidget {
   State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-bool isConnected = false;
-
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  String password = '';
+  String confirmedPassword = '';
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
@@ -28,49 +30,111 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             leading: CupertinoButton(
               padding: const EdgeInsets.symmetric(horizontal: 6),
               onPressed: () => AppRouter.of(context).popWithResult(null),
-              child: Text(
-                FlutterI18n.translate(context, 'general.cancel'),
-                style: AppTextTheme.manrope16Light.copyWith(
-                  color: AppTheme.textPrimaryColor,
-                ),
+              child: Row(
+                children: [
+                  AppImagesTheme.backArrow,
+                  const SizedBox(width: 16),
+                  Text(
+                    FlutterI18n.translate(context, 'general.back'),
+                    style: AppTextTheme.manrope16Light.copyWith(
+                      color: AppTheme.textPrimaryColor,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  'Enter New Password',
-                  style: AppTextTheme.manrope32Bold.copyWith(
-                    color: AppTheme.accentColor,
+                Expanded(
+                  child: CupertinoScrollbar(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            FlutterI18n.translate(
+                                context, 'forgotPassword.title'),
+                            style: AppTextTheme.manrope32Bold.copyWith(
+                              color: AppTheme.accentColor,
+                            ),
+                          ),
+                          const SizedBox(height: 52),
+                          AppTextFormField(
+                            obscureText: true,
+                            showObscureButton: true,
+                            hintText: FlutterI18n.translate(
+                              context,
+                              'forgotPassword.newPassword',
+                            ),
+                            onChanged: (String value) {
+                              setState(() {
+                                password = value;
+                              });
+                              BlocProvider.of<ForgotPasswordBloc>(context).add(
+                                ValidatePassword(password: value),
+                              );
+                            },
+                            errorText: state.postValidationErrors?['password'],
+                          ),
+                          if (state.passwordErrors != null) ...<Widget>{
+                            ListErrorWidget(errors: state.passwordErrors!),
+                          },
+                          const SizedBox(height: 12),
+                          AppTextFormField(
+                            obscureText: true,
+                            showObscureButton: true,
+                            hintText: FlutterI18n.translate(
+                              context,
+                              'forgotPassword.confirmPassword',
+                            ),
+                            onChanged: (String value) {
+                              setState(() {
+                                confirmedPassword = value;
+                              });
+                              BlocProvider.of<ForgotPasswordBloc>(context).add(
+                                ValidateConfirmedPassword(password: value),
+                              );
+                            },
+                            errorText: state
+                                .postValidationErrors?['confirmedPassword'],
+                          ),
+                          if (state.confirmedPasswordErrors !=
+                              null) ...<Widget>{
+                            ListErrorWidget(
+                                errors: state.confirmedPasswordErrors!),
+                          },
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 52),
-                AppTextFormField(
-                  obscureText: true,
-                  showObscureButton: true,
-                  hintText: 'New Password',
-                  onChanged: (String newText) {},
-                ),
-                const SizedBox(height: 12),
-                AppTextFormField(
-                  obscureText: true,
-                  showObscureButton: true,
-                  hintText: 'Confirm New Password',
-                  onChanged: (String newText) {},
-                ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 47),
-                  child: AppButton(
-                    labelKey: 'forgotPassword.buttonText',
+                KeyboardVisibilityWidget(
+                  padding: const EdgeInsets.only(bottom: 40),
+                  child: RoundedCustomButton(
+                    height: 60,
+                    isEnabled: state.isValidationsPassed,
+                    borderRadius: BorderRadius.circular(35),
+                    text: 'forgotPassword.primaryButton',
+                    backgroundColor: AppTheme.grassColor,
                     textStyle: AppTextTheme.manrope20Medium.copyWith(
                       color: AppTheme.positiveColor,
                     ),
-                    backgroundColor: AppTheme.grassColor,
-                    onTap: () {},
+                    disabledBackgroundColor: AppTheme.buttonDisabledColor,
+                    disabledText: 'forgotPassword.secondaryButton',
+                    disabledTextStyle: AppTextTheme.manrope20Medium.copyWith(
+                      color: AppTheme.accentColor,
+                    ),
+                    onPressed: () {
+                      BlocProvider.of<ForgotPasswordBloc>(context).add(
+                        ChangePassword(
+                          password: password,
+                          confirmedPassword: confirmedPassword,
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],

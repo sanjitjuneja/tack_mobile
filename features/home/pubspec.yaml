@@ -19,6 +19,8 @@ dependencies:
     path: ../../domain
   core_ui:
     path: ../../core_ui
+  create_tack:
+    path: ../create_tack
   navigation:
     path: ../../navigation
 

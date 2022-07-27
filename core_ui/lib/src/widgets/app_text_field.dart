@@ -19,6 +19,8 @@ class AppTextField extends StatelessWidget {
   final int? minLines;
   final int? maxLines;
   final Widget? suffix;
+  final TextAlign textAlign;
+  final EdgeInsets? padding;
   final Iterable<String>? autofillHints;
   final void Function(String)? onTextChange;
   final TextInputType? keyboardType;
@@ -39,6 +41,8 @@ class AppTextField extends StatelessWidget {
     this.hasShadow = true,
     bool? isRequired,
     this.height,
+    this.padding,
+    this.textAlign = TextAlign.left,
     this.minLines,
     this.maxLines,
     this.suffix,
@@ -72,12 +76,13 @@ class AppTextField extends StatelessWidget {
       readOnly: _isReadOnly,
       controller: controller,
       cursorColor: AppTheme.textPrimaryColor,
-      padding: const EdgeInsets.only(
-        left: 20,
-        right: 10,
-        top: 23,
-        bottom: 23,
-      ),
+      padding: padding ??
+          const EdgeInsets.only(
+            left: 20,
+            right: 10,
+            top: 23,
+            bottom: 23,
+          ),
       placeholder:
           FlutterI18n.translate(context, placeholder) + (isRequired ? '*' : ''),
       scrollPadding: const EdgeInsets.all(30),
@@ -90,6 +95,7 @@ class AppTextField extends StatelessWidget {
           : AppTextTheme.manrope16Light.copyWith(
               color: AppTheme.textPrimaryColor,
             ),
+      textAlign: textAlign,
       autofillHints: autofillHints,
       onChanged: (String text) => onTextChange?.call(text),
       keyboardType: keyboardType,

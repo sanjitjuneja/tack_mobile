@@ -59,7 +59,7 @@ cd ../..
 printf '\n\n'
 
 printf "phone_verification pub get\n"
-cd features/phone_verification || exit
+cd features/auth || exit
 flutter clean && flutter clean cache && flutter pub get
 cd ../..
 printf '\n\n'
