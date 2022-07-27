@@ -16,6 +16,7 @@ class OngoingTackerTackScreen extends StatelessWidget {
         backgroundColor: AppTheme.backgroundColor,
         actions: <Widget>[
           BlocBuilder<OngoingTackerTackBloc, OngoingTackerTackState>(
+            bloc: BlocProvider.of<OngoingTackerTackBloc>(context),
             builder: (_, OngoingTackerTackState state) {
               if (state.tack.canTackerCancel) {
                 return AppButton(

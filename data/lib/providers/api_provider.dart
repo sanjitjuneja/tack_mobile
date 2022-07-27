@@ -106,4 +106,14 @@ class ApiProvider {
         )
         .then(mapper.tackMapper.fromList);
   }
+
+  Future<void> rateTack(RateTackRequest request) async {
+    return _apiProviderBase.get<void>(
+      ApiQuery(
+        endpointPostfix: BaseUrlConstants.reviews,
+        body: request.toJson(),
+        params: null,
+      ),
+    );
+  }
 }

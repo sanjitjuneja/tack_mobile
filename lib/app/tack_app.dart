@@ -27,7 +27,7 @@ class _TackAppState extends State<TackApp> {
   @override
   Widget build(BuildContext context) {
     return TimeTickerInheritedWidget(
-      child: CupertinoApp.router(
+      child: CupertinoApp.router(debugShowCheckedModeBanner: false,
         localizationsDelegates: <LocalizationsDelegate<dynamic>>[
           FlutterI18nDelegate(
             translationLoader: FileTranslationLoader(

@@ -32,6 +32,8 @@ export 'src/widgets/page_app_bar.dart';
 export 'src/widgets/lifter_widget.dart';
 export 'src/widgets/app_form_field.dart';
 export 'src/widgets/phone_number_text_field.dart';
+export 'src/widgets/rate_widget.dart';
+export 'src/widgets/resizing_scrollable_layout.dart';
 export 'src/widgets/verify_code_field.dart';
 export 'src/widgets/custom_check_box.dart';
 export 'src/widgets/slide_panel.dart';
@@ -55,6 +57,7 @@ export 'src/widgets/expandable_text.dart';
 export 'src/widgets/keyboard_dismissible.dart';
 export 'src/widgets/keyboard_visibility_widget.dart';
 export 'src/widgets/group_user_header_widget.dart';
+export 'src/widgets/text_field_footer.dart';
 export 'src/widgets/text_with_highlight.dart';
 
 /// Time Ticker widgets

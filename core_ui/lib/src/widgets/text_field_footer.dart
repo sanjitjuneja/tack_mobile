@@ -2,24 +2,24 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 
-class SectionFooter extends StatelessWidget {
+class TextFieldFooter extends StatelessWidget {
   final String labelKey;
   final String content;
   final Size contentMaxSize;
 
   static TextStyle get textStyle => AppTextTheme.manrope12Medium.copyWith(
-        color: AppTheme.textHintColor,
-      );
+    color: AppTheme.textHintColor,
+  );
 
-  SectionFooter({
+  TextFieldFooter({
     super.key,
     required this.labelKey,
     required this.content,
     required String maxContent,
   }) : contentMaxSize = TextUtility.getTextSize(
-          maxContent,
-          textStyle: textStyle,
-        );
+    maxContent,
+    textStyle: textStyle,
+  );
 
   @override
   Widget build(BuildContext context) {
