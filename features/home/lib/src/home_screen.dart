@@ -1,4 +1,4 @@
-import 'package:create_tack/create_tack_screen/create_tack_screen.dart';
+import 'package:create_tack/create_tack.dart';
 import 'package:dashboard/dashboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

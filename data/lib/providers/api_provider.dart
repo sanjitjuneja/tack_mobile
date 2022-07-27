@@ -30,7 +30,7 @@ class ApiProvider {
             endpointPostfix: BaseUrlConstants.loginPath,
           ),
         )
-        .then((mapper.messageMapper.fromEntity));
+        .then(mapper.messageMapper.fromEntity);
   }
 
   Future<domain.Customer> signUp({

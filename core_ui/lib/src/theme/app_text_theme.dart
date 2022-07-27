@@ -53,7 +53,7 @@ class AppTextTheme {
         fontFamily: _manropeFamily,
       );
 
-  static TextStyle get manrope20Regular => const TextStyle(
+  static TextStyle get manrope20Light => const TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w400,
         fontFamily: _manropeFamily,

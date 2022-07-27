@@ -22,7 +22,6 @@ class AppTextField extends StatelessWidget {
   final int? maxLines;
   final Widget? suffix;
   final TextAlign textAlign;
-  final EdgeInsets? padding;
   final Iterable<String>? autofillHints;
   final void Function(String)? onTextChange;
   final TextInputType? keyboardType;
@@ -45,7 +44,6 @@ class AppTextField extends StatelessWidget {
     this.hasShadow = true,
     bool? isRequired,
     this.height,
-    this.padding,
     this.textAlign = TextAlign.left,
     this.minLines,
     this.maxLines,

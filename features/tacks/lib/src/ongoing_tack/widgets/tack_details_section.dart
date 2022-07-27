@@ -30,7 +30,7 @@ class TackDetailSection extends StatelessWidget {
             context,
             'Tack Details',
           ),
-          style: AppTextTheme.manrope20Regular
+          style: AppTextTheme.manrope20Light
               .copyWith(color: AppTheme.textPrimaryColor),
         ),
         const SizedBox(height: 20),
