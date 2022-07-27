@@ -3,12 +3,14 @@ part of app_dialog;
 class AppProgressIndicator extends StatelessWidget {
   final String? messageKey;
   final Color? backgroundColor;
+  final ProgressIndicatorSize indicatorSize;
 
   const AppProgressIndicator({
     super.key,
     this.messageKey,
     this.backgroundColor,
-  });
+    ProgressIndicatorSize? indicatorSize,
+  }): indicatorSize = indicatorSize ?? ProgressIndicatorSize.big;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +23,8 @@ class AppProgressIndicator extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             CircularProgressBar(
-              size: 80,
-              progressStrokeWidth: 11,
+              size: indicatorSize.size,
+              progressStrokeWidth: indicatorSize.strokeWidth,
               backStrokeWidth: 0,
               progressColor: AppTheme.progressInterfaceColor,
             ),

@@ -14,7 +14,7 @@ class CounterOfferBloc extends Bloc<CounterOfferEvent, CounterOfferState> {
 
   CounterOfferBloc({
     required this.appRouter,
-    required TackModel tack,
+    required Tack tack,
   }) : super(
           CounterOfferState(tack: tack),
         ) {

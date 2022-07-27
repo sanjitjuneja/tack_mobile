@@ -103,6 +103,11 @@ class DataDI {
         tacksRepository: appLocator.get<TacksRepository>(),
       ),
     );
+    appLocator.registerLazySingleton<RateTackUseCase>(
+      () => RateTackUseCase(
+        tacksRepository: appLocator.get<TacksRepository>(),
+      ),
+    );
   }
 
   Future<SharedPreferences> _initSharedPreferences() async {

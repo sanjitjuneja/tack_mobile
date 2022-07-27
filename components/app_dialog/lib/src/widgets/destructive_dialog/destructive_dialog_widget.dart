@@ -17,7 +17,7 @@ class DestructiveDialogWidget extends StatelessWidget {
     final _AlertLocalizationMapper mapper = _AlertLocalizationMapper(
       alert: destructiveAlert,
       context: context,
-      useDefaultContent: shouldUseDefaultContent
+      useDefaultContent: shouldUseDefaultContent,
     );
 
     final String? title = mapper.title;
@@ -72,7 +72,7 @@ class DestructiveDialogWidget extends StatelessWidget {
                 const AppDivider(axis: Axis.vertical),
                 Expanded(
                   child: CupertinoButton(
-                    onPressed: Navigator.of(context).pop,
+                    onPressed: () => _onNegativeActionTap(context),
                     minSize: 54,
                     padding: const EdgeInsets.only(bottom: 6),
                     child: Text(
@@ -93,6 +93,10 @@ class DestructiveDialogWidget extends StatelessWidget {
 
   void _onDestructiveActionTap(BuildContext context) {
     onDestructiveActionTap?.call();
-    Navigator.of(context).pop();
+    AppRouter.of(context).popWithResult(true);
+  }
+
+  void _onNegativeActionTap(BuildContext context) {
+    AppRouter.of(context).popWithResult(false);
   }
 }

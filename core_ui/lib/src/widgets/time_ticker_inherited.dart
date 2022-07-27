@@ -16,7 +16,7 @@ class TimeTickerInheritedWidget extends StatefulWidget {
 }
 
 class _TimeTickerInheritedWidgetState extends State<TimeTickerInheritedWidget> {
-  static const Duration _timerTickDuration = Duration(seconds: 1);
+  static const Duration _timerTickDuration = Duration(milliseconds: 250);
   late StreamController<Timer> _controller;
 
   late Timer _timer;

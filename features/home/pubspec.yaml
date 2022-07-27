@@ -19,14 +19,14 @@ dependencies:
     path: ../../domain
   core_ui:
     path: ../../core_ui
-  create_tack:
-    path: ../create_tack
   navigation:
     path: ../../navigation
 
   # Features
   dashboard:
     path: ../dashboard
+  create_tack:
+    path: ../create_tack
   tacks:
     path: ../tacks
 

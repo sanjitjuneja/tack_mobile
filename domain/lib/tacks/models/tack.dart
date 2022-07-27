@@ -5,22 +5,26 @@ class Tack extends Equatable {
   final String title;
   final double price;
   final String description;
-  final DateTime createdAt;
-  final DateTime expiresAt;
+  final Duration estimatedTime;
   final bool allowCounterOffers;
   final TackStatus status;
-  final int tacker;
-  final int? runner;
+  final TackUser tacker;
+  final TackUser? runner;
   final String? completionMessage;
   final DateTime? completionTime;
+
+  bool get canTackerCancel => status < TackStatus.pendingStart;
+
+  bool get canRunnerCancel => status < TackStatus.pendingReview;
+
+  bool get isChooseRunnerStage => status == TackStatus.pendingAccept;
 
   const Tack({
     required this.id,
     required this.title,
     required this.price,
     required this.description,
-    required this.createdAt,
-    required this.expiresAt,
+    required this.estimatedTime,
     required this.allowCounterOffers,
     required this.status,
     required this.tacker,
@@ -35,8 +39,7 @@ class Tack extends Equatable {
         title,
         price,
         description,
-        createdAt,
-        expiresAt,
+        estimatedTime,
         allowCounterOffers,
         status,
         tacker,

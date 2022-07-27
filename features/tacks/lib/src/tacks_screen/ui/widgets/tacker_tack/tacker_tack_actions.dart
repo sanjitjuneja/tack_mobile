@@ -3,7 +3,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 
 class TackerTackActions extends StatelessWidget {
-  final TackerTack tack;
+  final Tack tack;
 
   const TackerTackActions({
     super.key,
@@ -13,20 +13,24 @@ class TackerTackActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     switch (tack.status) {
-      case TackerTackStatus.created:
+      case TackStatus.created:
         return AppButton(
           labelKey: 'general.track',
         );
-      case TackerTackStatus.pendingChoose:
+      case TackStatus.pendingAccept:
         return AppButton(
           labelKey: 'tacksScreen.chooseRunnerButton',
           icon: AppIconsTheme.person,
         );
-      case TackerTackStatus.inProgress:
+      case TackStatus.pendingStart:
         return AppButton(
           labelKey: 'general.track',
         );
-      case TackerTackStatus.pendingReview:
+      case TackStatus.inProgress:
+        return AppButton(
+          labelKey: 'general.track',
+        );
+      case TackStatus.pendingReview:
         return AppButton(
           labelKey: 'general.review',
           icon: AppIconsTheme.edit,

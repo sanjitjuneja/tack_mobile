@@ -1,5 +1,4 @@
 import 'package:core/core.dart';
-import 'package:core/di/app_di.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:home/home.dart';
@@ -36,7 +35,7 @@ class TacksScreen extends StatelessWidget {
           actions: <Widget>[
             CupertinoButton(
               padding: const EdgeInsets.symmetric(vertical: 10),
-              onPressed: _onMenuTap,
+              onPressed: () => _onMenuTap(context),
               child: AppIconsTheme.menu(color: AppTheme.iconPrimaryColor),
             ),
           ],
@@ -46,7 +45,7 @@ class TacksScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _onMenuTap() async {
+  Future<void> _onMenuTap(BuildContext context) async {
     // TODO: implement functionality.
   }
 }

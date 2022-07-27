@@ -1,6 +1,8 @@
 part of mappers;
 
 class GroupMapper implements Mapper<GroupEntity, domain.Group> {
+  const GroupMapper();
+
   @override
   domain.Group fromEntity(GroupEntity entity) {
     return domain.Group(

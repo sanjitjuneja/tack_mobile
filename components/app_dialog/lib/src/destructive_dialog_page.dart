@@ -3,7 +3,7 @@ part of app_dialog;
 class DestructiveDialog {
   static const String routeName = '/destructiveDialog';
 
-  static Page<dynamic> page(
+  static Page<bool> page(
     DestructiveAlert destructiveAlert, {
     bool shouldUseDefaultContent = true,
     ButtonCallback? onDestructiveActionTap,

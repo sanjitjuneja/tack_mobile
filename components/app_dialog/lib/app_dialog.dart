@@ -6,6 +6,7 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:navigation/navigation.dart';
 
 part 'src/models/alert.dart';
 part 'src/models/destructive_alert.dart';
@@ -18,6 +19,7 @@ part 'src/widgets/destructive_dialog/destructive_dialog_widget.dart';
 part 'src/widgets/progress_dialog/circular_progress_bar.dart';
 part 'src/widgets/progress_dialog/circular_progress_bar_painter.dart';
 part 'src/widgets/progress_dialog/progress_indicator.dart';
+part 'src/widgets/progress_dialog/progress_indicator_size.dart';
 
 part 'src/widgets/base_dialog_widget.dart';
 part 'src/widgets/dialog_text_widget.dart';

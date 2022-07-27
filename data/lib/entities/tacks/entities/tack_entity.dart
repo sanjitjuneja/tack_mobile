@@ -2,20 +2,19 @@ part of tacks_entities;
 
 @JsonSerializable()
 @DoubleConverter()
+@BooleanConverter()
 class TackEntity extends JsonSerializable {
   final int id;
   final String title;
   final double price;
   final String description;
-  @JsonKey(name: 'creation_time')
-  final DateTime createdTime;
-  @JsonKey(name: 'expiration_time')
-  final DateTime expirationTime;
+  @JsonKey(name: 'estimation_time_seconds')
+  final Duration estimationTime;
   @JsonKey(name: 'allow_counter_offers')
   final bool allowCounterOffers;
   final String status;
-  final int tacker;
-  final int? runner;
+  final TackUserEntity tacker;
+  final TackUserEntity? runner;
   @JsonKey(name: 'completion_message')
   final String? completionMessage;
   @JsonKey(name: 'completion_time')
@@ -26,8 +25,7 @@ class TackEntity extends JsonSerializable {
     required this.title,
     required this.price,
     required this.description,
-    required this.createdTime,
-    required this.expirationTime,
+    required this.estimationTime,
     required this.allowCounterOffers,
     required this.status,
     required this.tacker,

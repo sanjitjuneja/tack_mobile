@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 import 'package:groups/src/create_group/bloc/create_group_bloc.dart';
-import 'package:groups/src/create_group/ui/widgets/section_footer.dart';
 import 'package:groups/src/create_group/ui/widgets/section_header_widget.dart';
 
 class DescriptionSection extends StatelessWidget {
@@ -36,7 +35,7 @@ class DescriptionSection extends StatelessWidget {
           onTextChange: (String value) => _onDescriptionChange(context, value),
         ),
         const SizedBox(height: 4),
-        SectionFooter(
+        TextFieldFooter(
           labelKey: 'createGroupScreen.descriptionSection.footerText',
           content: state.descriptionData.wordsLeft.toString(),
           maxContent: state.descriptionData.maxWords.toString(),

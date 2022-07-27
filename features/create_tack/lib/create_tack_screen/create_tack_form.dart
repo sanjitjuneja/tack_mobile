@@ -3,7 +3,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:create_tack/bloc/create_tack_bloc.dart';
 import 'package:create_tack/bloc/create_tack_event.dart';
 import 'package:create_tack/bloc/create_tack_state.dart';
-import 'package:domain/groups/groups.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

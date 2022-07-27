@@ -11,7 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  equatable: ^2.0.3
+  core:
+    path: ../core
 
 dev_dependencies:
   flutter_test:

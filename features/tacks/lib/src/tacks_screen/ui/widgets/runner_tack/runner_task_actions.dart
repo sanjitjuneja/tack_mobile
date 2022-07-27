@@ -3,20 +3,19 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:tacks/src/bloc/tacks_bloc.dart';
-import 'package:tacks/src/tacks_screen/ui/widgets/runner_tack/time_counter_widget.dart';
 
 class RunnerTackActions extends StatelessWidget {
-  final RunnerTack tack;
+  final RunnerTack runnerTack;
 
   const RunnerTackActions({
     super.key,
-    required this.tack,
+    required this.runnerTack,
   });
 
   @override
   Widget build(BuildContext context) {
-    switch (tack.status) {
-      case RunnerTackStatus.pendingAccept:
+    switch (runnerTack.tack.status) {
+      case TackStatus.pendingAccept:
         return Row(
           children: <Widget>[
             Expanded(
@@ -29,43 +28,64 @@ class RunnerTackActions extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
                 onTap: () {
                   BlocProvider.of<TacksBloc>(context)
-                      .add(CancelTackOffer(name: tack.name));
+                      .add(CancelTackOffer(tack: runnerTack.tack));
                 },
               ),
             ),
             const SizedBox(width: 10),
             Expanded(
               flex: 2,
-              child: TimeCounterWidget(builder: (_) {
-                final DateTime now = DateTime.now();
-                final Duration left = tack.expireAt.difference(now);
-
-                final String content =
-                    DurationUtility.durationFormatTime(left, withHours: false);
-                return AppButton(
-                  labelKey: FlutterI18n.translate(
-                    context,
-                    'tacksScreen.offerExpiresIn',
-                    translationParams: <String, String>{'time': content},
+              child: AppButton(
+                labelWidget: RichText(
+                  text: TextSpan(
+                    children: <InlineSpan>[
+                      TextSpan(
+                        text: FlutterI18n.translate(
+                          context,
+                          'tacksScreen.offerExpiresIn',
+                        ),
+                        style: AppTextTheme.manrope14Medium.copyWith(
+                          color: AppTheme.buttonInterfacePrimaryColor,
+                        ),
+                      ),
+                      const TextSpan(text: ': '),
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: TimeLeftWidget(
+                          tillTime: runnerTack.offer!.expiredAt,
+                          builder: (_, String content) {
+                            return SizedBox(
+                              width: 40,
+                              child: Text(
+                                content,
+                                style: AppTextTheme.manrope14Medium.copyWith(
+                                  color: AppTheme.buttonInterfacePrimaryColor,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                );
-              }),
+                ),
+              ),
             ),
           ],
         );
-      case RunnerTackStatus.pendingStart:
+      case TackStatus.pendingStart:
         return AppButton(
           labelKey: 'tacksScreen.beginTackButton',
-          icon: AppIconsTheme.edit,
+          icon: AppIconsTheme.taskComplete,
         );
-      case RunnerTackStatus.inProgress:
+      case TackStatus.inProgress:
         return AppButton(
           labelKey: 'general.track',
         );
-      case RunnerTackStatus.pendingReview:
+      case TackStatus.pendingReview:
         return AppButton(
           labelKey: 'tacksScreen.pendingReview',
-          icon: AppIconsTheme.edit,
+          icon: AppIconsTheme.taskComplete,
         );
       default:
         return const SizedBox.shrink();

@@ -1,5 +1,5 @@
 import 'package:core/core.dart';
-import 'package:core/di/app_di.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:navigation/navigation.dart';
@@ -26,24 +26,26 @@ class _TackAppState extends State<TackApp> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp.router(
-      localizationsDelegates: <LocalizationsDelegate<dynamic>>[
-        FlutterI18nDelegate(
-          translationLoader: FileTranslationLoader(
-            useCountryCode: false,
-            basePath: 'localization',
-            fallbackFile: 'en',
-            decodeStrategies: <BaseDecodeStrategy>[
-              JsonDecodeStrategy(),
-            ],
+    return TimeTickerInheritedWidget(
+      child: CupertinoApp.router(debugShowCheckedModeBanner: false,
+        localizationsDelegates: <LocalizationsDelegate<dynamic>>[
+          FlutterI18nDelegate(
+            translationLoader: FileTranslationLoader(
+              useCountryCode: false,
+              basePath: 'localization',
+              fallbackFile: 'en',
+              decodeStrategies: <BaseDecodeStrategy>[
+                JsonDecodeStrategy(),
+              ],
+            ),
           ),
-        ),
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate
-      ],
-      routerDelegate: appRouter,
-      routeInformationParser: routeInformationParser,
+          GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate
+        ],
+        routerDelegate: appRouter,
+        routeInformationParser: routeInformationParser,
+      ),
     );
   }
 }

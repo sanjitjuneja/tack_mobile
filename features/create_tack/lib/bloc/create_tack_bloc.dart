@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:core/core.dart';
-import 'package:create_tack/bloc/create_tack_event.dart';
 import 'package:groups/groups.dart';
 import 'package:navigation/navigation.dart';
 
+import 'create_tack_event.dart';
 import 'create_tack_state.dart';
 
 class CreateTackBloc extends Bloc<CreateTackEvent, CreateTackState> {
