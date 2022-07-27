@@ -16,7 +16,7 @@ class MessageWidget extends StatelessWidget {
       text: message,
       coloredTextColor: highlightColor,
       textAlign: TextAlign.center,
-      textStyle: AppTextTheme.manrope16Light.copyWith(
+      textStyle: AppTextTheme.manrope16Regular.copyWith(
         color: AppTheme.textPrimaryColor,
         height: 1.6,
       ),

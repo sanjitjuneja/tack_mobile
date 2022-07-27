@@ -28,7 +28,7 @@ class CounterOfferForm extends StatelessWidget {
                           context,
                           'counterOfferScreen.tackDetails',
                         ),
-                        style: AppTextTheme.manrope20Light,
+                        style: AppTextTheme.manrope20Regular,
                       ),
                       const SizedBox(height: 18),
                       TackTile(
@@ -41,7 +41,7 @@ class CounterOfferForm extends StatelessWidget {
                           context,
                           'counterOfferScreen.counterofferPrice',
                         ),
-                        style: AppTextTheme.manrope20Light,
+                        style: AppTextTheme.manrope20Regular,
                       ),
                       const SizedBox(height: 15),
                       AppTextField(

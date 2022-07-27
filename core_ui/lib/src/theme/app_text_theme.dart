@@ -5,67 +5,67 @@ class AppTextTheme {
   static const String _poppinsFamily = 'poppins';
 
   // Manrope font family
-  static TextStyle get manrope9Light => const TextStyle(
+  static TextStyle get manrope9Regular => const TextStyle(
         fontSize: 9,
         fontWeight: FontWeight.w400,
         fontFamily: _manropeFamily,
       );
 
-  static TextStyle get manrope11Light => const TextStyle(
+  static TextStyle get manrope11Regular => const TextStyle(
         fontSize: 11,
         fontWeight: FontWeight.w400,
         fontFamily: _manropeFamily,
       );
 
-  static TextStyle get manrope12Light => const TextStyle(
+  static TextStyle get manrope12Regular => const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w400,
         fontFamily: _manropeFamily,
       );
 
-  static TextStyle get manrope14Light => const TextStyle(
+  static TextStyle get manrope14Regular => const TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w400,
         fontFamily: _manropeFamily,
       );
 
-  static TextStyle get manrope15Light => const TextStyle(
+  static TextStyle get manrope15Regular => const TextStyle(
         fontSize: 15,
         fontWeight: FontWeight.w400,
         fontFamily: _manropeFamily,
       );
 
-  static TextStyle get manrope16Light => const TextStyle(
+  static TextStyle get manrope16Regular => const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w400,
         fontFamily: _manropeFamily,
       );
 
-  static TextStyle get manrope17Light => const TextStyle(
+  static TextStyle get manrope17Regular => const TextStyle(
         fontSize: 17,
         fontWeight: FontWeight.w400,
         fontFamily: _manropeFamily,
       );
 
-  static TextStyle get manrope18Light => const TextStyle(
+  static TextStyle get manrope18Regular => const TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w400,
         fontFamily: _manropeFamily,
       );
 
-  static TextStyle get manrope20Light => const TextStyle(
+  static TextStyle get manrope20Regular => const TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w400,
         fontFamily: _manropeFamily,
       );
 
-  static TextStyle get manrope24Light => const TextStyle(
+  static TextStyle get manrope24Regular => const TextStyle(
         fontSize: 24,
         fontWeight: FontWeight.w400,
         fontFamily: _manropeFamily,
       );
 
-  static TextStyle get manrope22Light => const TextStyle(
+  static TextStyle get manrope22Regular => const TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.w400,
         fontFamily: _manropeFamily,

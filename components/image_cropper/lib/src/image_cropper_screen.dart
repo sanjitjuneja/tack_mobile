@@ -90,7 +90,7 @@ class _ImageCropperScreenState extends State<_ImageCropperScreen>
                   onPressed: () => AppRouter.of(context).popWithResult(null),
                   child: Text(
                     FlutterI18n.translate(context, 'general.cancel'),
-                    style: AppTextTheme.manrope16Light.copyWith(
+                    style: AppTextTheme.manrope16Regular.copyWith(
                       color: AppTheme.textPrimaryColor,
                     ),
                   ),
@@ -102,7 +102,7 @@ class _ImageCropperScreenState extends State<_ImageCropperScreen>
                     onPressed: _cropController.crop,
                     child: Text(
                       FlutterI18n.translate(context, 'general.apply'),
-                      style: AppTextTheme.manrope16Light.copyWith(
+                      style: AppTextTheme.manrope16Regular.copyWith(
                         color: AppTheme.textSecondaryColor,
                       ),
                     ),

@@ -63,7 +63,7 @@ class DestructiveDialogWidget extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 6),
                     child: Text(
                       mainButtonLabel ?? '',
-                      style: AppTextTheme.manrope15Light.copyWith(
+                      style: AppTextTheme.manrope15Regular.copyWith(
                         color: AppTheme.textPrimaryColor,
                       ),
                     ),

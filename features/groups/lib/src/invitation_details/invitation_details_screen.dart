@@ -69,7 +69,7 @@ class InvitationDetailsScreen extends StatelessWidget {
                     const SizedBox(height: 14),
                     Text(
                       'Callaway 2022-2023 Tack Group (Pay other residents to do anything)',
-                      style: AppTextTheme.manrope14Light.copyWith(
+                      style: AppTextTheme.manrope14Regular.copyWith(
                         color: AppTheme.accentColor,
                       ),
                     ),
@@ -79,7 +79,7 @@ class InvitationDetailsScreen extends StatelessWidget {
               const SizedBox(height: 26),
               Text(
                 'Members',
-                style: AppTextTheme.manrope20Light.copyWith(
+                style: AppTextTheme.manrope20Regular.copyWith(
                   color: AppTheme.accentColor,
                 ),
               ),

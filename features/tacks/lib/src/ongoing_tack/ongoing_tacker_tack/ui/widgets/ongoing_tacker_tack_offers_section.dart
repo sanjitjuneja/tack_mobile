@@ -48,7 +48,7 @@ class OngoingTackerTackOffersSection extends StatelessWidget {
                     ),
                     child: Text(
                       FlutterI18n.translate(context, groupType.title),
-                      style: AppTextTheme.manrope20Light
+                      style: AppTextTheme.manrope20Regular
                           .copyWith(color: AppTheme.textPrimaryColor),
                     ),
                   );

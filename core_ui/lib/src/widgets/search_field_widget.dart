@@ -81,7 +81,7 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
               borderRadius: BorderRadius.circular(12),
             ),
             hintText: widget.hintText,
-            hintStyle: AppTextTheme.manrope16Light.copyWith(
+            hintStyle: AppTextTheme.manrope16Regular.copyWith(
               color: AppTheme.hintColor,
             ),
             prefixIcon: AppImagesTheme.search,

@@ -94,10 +94,10 @@ class AppTextField extends StatelessWidget {
       minLines: minLines,
       maxLines: maxLines,
       style: isDisabled
-          ? AppTextTheme.manrope16Light.copyWith(
+          ? AppTextTheme.manrope16Regular.copyWith(
               color: AppTheme.textPrimaryColor,
             )
-          : AppTextTheme.manrope16Light.copyWith(
+          : AppTextTheme.manrope16Regular.copyWith(
               color: AppTheme.textPrimaryColor,
             ),
       textAlign: textAlign,
@@ -105,7 +105,7 @@ class AppTextField extends StatelessWidget {
       onChanged: (String text) => onTextChange?.call(text),
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,
-      placeholderStyle: AppTextTheme.manrope16Light.copyWith(
+      placeholderStyle: AppTextTheme.manrope16Regular.copyWith(
         color: AppTheme.textHintColor,
       ),
     );
