@@ -43,7 +43,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         context,
                         'general.back',
                       ),
-                      style: AppTextTheme.manrope16Light.copyWith(
+                      style: AppTextTheme.manrope16Regular.copyWith(
                         color: AppTheme.textPrimaryColor,
                       ),
                     ),

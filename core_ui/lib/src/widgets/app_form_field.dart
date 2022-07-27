@@ -80,10 +80,10 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
             color: AppTheme.errorColor,
           ),
           labelText: widget.hintText,
-          labelStyle: AppTextTheme.manrope24Light.copyWith(
+          labelStyle: AppTextTheme.manrope24Regular.copyWith(
             color: AppTheme.textHintColor,
           ),
-          floatingLabelStyle: AppTextTheme.manrope14Light.copyWith(
+          floatingLabelStyle: AppTextTheme.manrope14Regular.copyWith(
             height: 4,
             color: AppTheme.textHintColor,
           ),
@@ -112,7 +112,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         ),
         cursorColor: AppTheme.accentColor,
         onChanged: widget.onChanged,
-        style: AppTextTheme.manrope20Light.copyWith(
+        style: AppTextTheme.manrope20Regular.copyWith(
           color: AppTheme.accentColor,
         ),
       ),

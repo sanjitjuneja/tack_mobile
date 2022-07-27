@@ -37,13 +37,13 @@ class GroupUserHeaderWidget extends StatelessWidget {
               children: <Widget>[
                 Text(
                   user.name,
-                  style: AppTextTheme.manrope18Light.copyWith(
+                  style: AppTextTheme.manrope18Regular.copyWith(
                     color: AppTheme.textPrimaryColor,
                   ),
                 ),
                 Text(
                   group.name,
-                  style: AppTextTheme.manrope11Light.copyWith(
+                  style: AppTextTheme.manrope11Regular.copyWith(
                     color: AppTheme.textHintColor,
                   ),
                 ),

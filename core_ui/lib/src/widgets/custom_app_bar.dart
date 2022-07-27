@@ -26,7 +26,7 @@ class CustomAppBar extends AppBar {
             children: [
               Text(
                 title,
-                style: AppTextTheme.manrope16Light.copyWith(
+                style: AppTextTheme.manrope16Regular.copyWith(
                   color: AppTheme.accentColor,
                 ),
               ),

@@ -35,7 +35,7 @@ class InformationField extends StatelessWidget {
           children: <Widget>[
             Text(
               description,
-              style: AppTextTheme.manrope14Light.copyWith(
+              style: AppTextTheme.manrope14Regular.copyWith(
                 color: AppTheme.k,
               ),
             ),

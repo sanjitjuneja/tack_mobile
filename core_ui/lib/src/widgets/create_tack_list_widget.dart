@@ -81,7 +81,7 @@ class CreateTackListWidget extends StatelessWidget {
               children: <Widget>[
                 Text(
                   tack.description,
-                  style: AppTextTheme.manrope12Light,
+                  style: AppTextTheme.manrope12Regular,
                 ),
                 const SizedBox(height: 16),
                 Row(

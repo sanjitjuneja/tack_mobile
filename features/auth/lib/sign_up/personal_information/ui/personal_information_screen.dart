@@ -46,7 +46,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   const SizedBox(width: 16),
                   Text(
                     FlutterI18n.translate(context, 'general.back'),
-                    style: AppTextTheme.manrope16Light.copyWith(
+                    style: AppTextTheme.manrope16Regular.copyWith(
                       color: AppTheme.textPrimaryColor,
                     ),
                   ),
