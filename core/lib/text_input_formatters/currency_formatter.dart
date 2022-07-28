@@ -34,4 +34,8 @@ class CurrencyFormatter implements TextInputFormatter {
       );
     }
   }
+
+  String removeFormat(String text) {
+    return text.replaceAll(leadingSymbol, '');
+  }
 }

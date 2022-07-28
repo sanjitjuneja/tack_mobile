@@ -1,22 +1,22 @@
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:groups/src/create_group/ui/create_group_form.dart';
+import 'package:tacks/src/edit_tack/ui/edit_tack_form.dart';
 
-class CreateGroupScreen extends StatelessWidget {
-  const CreateGroupScreen({super.key});
+class EditTackScreen extends StatelessWidget {
+  const EditTackScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      backgroundColor: AppTheme.secondaryBackgroundColor,
+      backgroundColor: AppTheme.primaryBackgroundColor,
       navigationBar: AppNavigationBar(
-        backgroundColor: AppTheme.secondaryBackgroundColor,
+        backgroundColor: AppTheme.primaryBackgroundColor,
         withResult: true,
       ),
       child: const SafeArea(
         child: KeyboardDismissible(
-          child: CreateGroupForm(),
+          child: EditTackForm(),
         ),
       ),
     );

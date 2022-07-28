@@ -2,6 +2,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
+import 'package:tacks/src/edit_tack/ui/edit_tack_page.dart';
 
 import 'package:tacks/src/ongoing_tack/view_extensions/ongoing_tack_to_view_extension.dart';
 import 'package:tacks/src/ongoing_tack/widgets/note_widget.dart';
@@ -25,6 +26,9 @@ class OngoingTackerTackActions extends StatelessWidget {
           child: AppCircleButton(
             margin: padding,
             labelKey: tack.status.getButtonLabel(isTacker: true),
+            onTap: () {
+              AppRouter.of(context).pushForResult(EditTack.page(tack));
+            },
           ),
         );
       case TackStatus.pendingAccept:

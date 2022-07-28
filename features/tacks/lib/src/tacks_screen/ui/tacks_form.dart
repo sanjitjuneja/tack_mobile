@@ -42,10 +42,16 @@ class _TacksFormState extends State<TacksForm> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 45.0),
                 child: AppSegmentController(
-                  tabs: <String>[
-                    FlutterI18n.translate(context, 'tacksScreen.tackerTab'),
-                    FlutterI18n.translate(context, 'tacksScreen.runnerTab'),
-                  ],
+                  tabs: <int, String>{
+                    0: FlutterI18n.translate(
+                      context,
+                      'tacksScreen.tackerTab',
+                    ),
+                    1: FlutterI18n.translate(
+                      context,
+                      'tacksScreen.runnerTab',
+                    ),
+                  },
                 ),
               ),
               const SizedBox(height: 17),

@@ -1,6 +1,6 @@
 part of tacks;
 
-class RateTackPayload {
+class RateTackPayload extends Equatable {
   final int tackId;
   final String comment;
   final int rating;
@@ -10,4 +10,11 @@ class RateTackPayload {
     required this.comment,
     required this.rating,
   });
+
+  @override
+  List<Object> get props => <Object>[
+        tackId,
+        comment,
+        rating,
+      ];
 }

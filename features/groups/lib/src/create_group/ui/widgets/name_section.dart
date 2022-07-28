@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 import 'package:groups/src/create_group/bloc/create_group_bloc.dart';
-import 'package:groups/src/create_group/ui/widgets/section_header_widget.dart';
 
 class NameSection extends StatelessWidget {
   final CreateGroupState state;

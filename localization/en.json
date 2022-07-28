@@ -17,6 +17,9 @@
     "rateTack": {
       "title": ""
     },
+    "tackUpdate": {
+      "title": ""
+    },
     "tackCanceled": {
       "title": "Tack Cancelled",
       "message": ""
@@ -220,6 +223,49 @@
     "editAndPublishButton": "Edit & Publish",
     "promptText": "If selected, a Runner will be able to counteroffer with an increased Tack price.",
     "instructions": "Fill in the following info to create a custom Tack within your group ",
+    "fields": {
+      "title": "Title",
+      "titlePlaceholder": "Title",
+      "price": "Price",
+      "pricePlaceholder": "Price",
+      "description": "Description",
+      "descriptionPlaceholder": "Type here...",
+      "timeEstimation": "Time Estimation",
+      "timeEstimationPlaceholder": "#",
+      "counterOffer": "Allow Counteroffer"
+    }
+  },
+  "editTack": {
+    "description": "Edit the following info to update your custom Tack within your group ({groupName})",
+    "updateTackButton": "Update",
+    "titleSection": {
+      "title": "Title",
+      "placeholder": "Title"
+    },
+    "priceSection": {
+      "title": "Price",
+      "placeholder": "Price"
+    },
+    "descriptionSection": {
+      "title": "Description",
+      "placeholder": "Type here..."
+    },
+    "timeSection": {
+      "title": "Time Estimation",
+      "placeholder": "#",
+      "options": {
+        "first": "Min",
+        "second": "Hrs"
+      }
+    },
+    "counterOfferSection": {
+      "title": "Allow Counteroffer",
+      "options": {
+        "first": "No",
+        "second": "Yes"
+      },
+      "hint": "If selected, a Runner will be able to counteroffer with an increased Tack price."
+    },
     "fields": {
       "title": "Title",
       "titlePlaceholder": "Title",

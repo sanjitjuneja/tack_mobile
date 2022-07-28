@@ -1,15 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 
 import 'segment_tab.dart';
 import 'utils/custom_clippers.dart';
 
-class SegmentedTabControl extends StatefulWidget
+class SegmentedTabControl<T> extends StatefulWidget
     implements PreferredSizeWidget {
   const SegmentedTabControl({
     Key? key,
     this.height = 46,
     required this.tabs,
+    this.initialValue,
+    this.onValueChange,
     this.controller,
     this.backgroundColor,
     this.tabTextColor,
@@ -32,7 +35,11 @@ class SegmentedTabControl extends StatefulWidget
   final double height;
 
   /// Selection options.
-  final List<SegmentTab> tabs;
+  final Map<T, SegmentTab> tabs;
+
+  final T? initialValue;
+
+  final void Function(T value)? onValueChange;
 
   /// Can be provided by [DefaultTabController].
   final TabController? controller;
@@ -75,13 +82,13 @@ class SegmentedTabControl extends StatefulWidget
   final Color? splashHighlightColor;
 
   @override
-  State<SegmentedTabControl> createState() => _SegmentedTabControlState();
+  State<SegmentedTabControl<T>> createState() => _SegmentedTabControlState<T>();
 
   @override
   Size get preferredSize => Size.fromHeight(height);
 }
 
-class _SegmentedTabControlState extends State<SegmentedTabControl>
+class _SegmentedTabControlState<T> extends State<SegmentedTabControl<T>>
     with SingleTickerProviderStateMixin {
   Alignment _currentIndicatorAlignment = Alignment.centerLeft;
   late AnimationController _internalAnimationController;
@@ -122,10 +129,17 @@ class _SegmentedTabControlState extends State<SegmentedTabControl>
   void didChangeDependencies() {
     super.didChangeDependencies();
     _updateTabController();
+    if (widget.initialValue != null) {
+      final int initialIndex = widget.tabs.entries.toList().indexWhere(
+            (MapEntry<dynamic, SegmentTab> element) =>
+                element.key == widget.initialValue,
+          );
+      _controller!.index = initialIndex;
+    }
   }
 
   @override
-  void didUpdateWidget(SegmentedTabControl oldWidget) {
+  void didUpdateWidget(SegmentedTabControl<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller != oldWidget.controller) {
       _updateTabController();
@@ -175,7 +189,11 @@ class _SegmentedTabControlState extends State<SegmentedTabControl>
   }
 
   void _updateControllerIndex() {
-    _controller!.index = _internalIndex;
+    final int newIndex = _internalIndex;
+    if (newIndex == _controller!.index) return;
+
+    _controller!.index = newIndex;
+    widget.onValueChange?.call(widget.tabs.entries.toList()[newIndex].key);
   }
 
   TickerFuture _animateIndicatorToNearest(
@@ -234,7 +252,7 @@ class _SegmentedTabControlState extends State<SegmentedTabControl>
 
   @override
   Widget build(BuildContext context) {
-    final currentTab = widget.tabs[_internalIndex];
+    final currentTab = widget.tabs.entries.toList()[_internalIndex].value;
 
     final textStyle =
         widget.textStyle ?? Theme.of(context).textTheme.bodyText2!;
@@ -281,7 +299,7 @@ class _SegmentedTabControlState extends State<SegmentedTabControl>
                 ),
                 child: Material(
                   color: Colors.transparent,
-                  child: _Labels(
+                  child: _Labels<T>(
                     borderRadius: borderRadius,
                     splashColor: widget.splashColor,
                     splashHighlightColor: widget.splashHighlightColor,
@@ -327,7 +345,7 @@ class _SegmentedTabControlState extends State<SegmentedTabControl>
                   ),
                 ),
                 child: IgnorePointer(
-                  child: _Labels(
+                  child: _Labels<T>(
                     borderRadius: borderRadius,
                     splashColor: widget.splashColor,
                     splashHighlightColor: widget.splashHighlightColor,
@@ -346,11 +364,14 @@ class _SegmentedTabControlState extends State<SegmentedTabControl>
     );
   }
 
-  VoidCallback Function(int)? _onTabTap() {
+  VoidCallback Function(int, T)? _onTabTap() {
     if (_controller!.indexIsChanging) {
       return null;
     }
-    return (int index) => () {
+    return (int index, T key) => () {
+          if (_controller?.index == index) return;
+
+          widget.onValueChange?.call(key);
           _internalAnimationController.stop();
           _controller!.animateTo(index);
         };
@@ -393,7 +414,7 @@ class _SegmentedTabControlState extends State<SegmentedTabControl>
   }
 }
 
-class _Labels extends StatelessWidget {
+class _Labels<T> extends StatelessWidget {
   const _Labels({
     this.callbackBuilder,
     required this.tabs,
@@ -404,8 +425,8 @@ class _Labels extends StatelessWidget {
     this.splashHighlightColor,
   });
 
-  final VoidCallback Function(int index)? callbackBuilder;
-  final List<SegmentTab> tabs;
+  final VoidCallback Function(int index, T key)? callbackBuilder;
+  final Map<T, SegmentTab> tabs;
   final int currentIndex;
   final TextStyle textStyle;
   final BorderRadius borderRadius;
@@ -420,7 +441,9 @@ class _Labels extends StatelessWidget {
         children: List.generate(
           tabs.length,
           (index) {
-            final tab = tabs[index];
+            final MapEntry<T, SegmentTab> tabEntry =
+                tabs.entries.toList()[index];
+            final SegmentTab tab = tabEntry.value;
 
             return Expanded(
               child: InkWell(
@@ -428,7 +451,7 @@ class _Labels extends StatelessWidget {
                 highlightColor:
                     tab.splashHighlightColor ?? splashHighlightColor,
                 borderRadius: borderRadius,
-                onTap: callbackBuilder?.call(index),
+                onTap: callbackBuilder?.call(index, tabEntry.key),
                 child: Center(
                   child: AnimatedDefaultTextStyle(
                     duration: kTabScrollDuration,

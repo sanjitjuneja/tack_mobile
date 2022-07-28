@@ -1,10 +1,13 @@
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:core_ui/src/theme/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
-class AppTextField extends StatelessWidget {
+// TODO: refactor.
+class AppTextField extends StatefulWidget {
   final TextEditingController? controller;
+  final String? initialText;
   final String placeholder;
   final EdgeInsets? padding;
   final Color? backgroundColor;
@@ -27,11 +30,10 @@ class AppTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
 
-  bool get _isReadOnly => onTap != null;
-
   const AppTextField({
     super.key,
     required this.placeholder,
+    this.initialText,
     this.padding,
     this.controller,
     this.backgroundColor,
@@ -57,16 +59,50 @@ class AppTextField extends StatelessWidget {
         isRequired = isRequired ?? false;
 
   @override
+  State<AppTextField> createState() => _AppTextFieldState();
+}
+
+class _AppTextFieldState extends State<AppTextField> {
+  late TextEditingController _controller;
+
+  bool get _isReadOnly => widget.onTap != null;
+
+  @override
+  void initState() {
+    if (widget.initialText != null) {
+      _controller = TextEditingController()..value = _initialFormattedText;
+    } else {
+      _controller = widget.controller ?? TextEditingController();
+    }
+
+    super.initState();
+  }
+
+  TextEditingValue get _initialFormattedText {
+    final List<TextInputFormatter>? inputFormatters = widget.inputFormatters;
+    TextEditingValue editingValue = TextEditingValue(text: widget.initialText!);
+
+    if (inputFormatters != null) {
+      for (final TextInputFormatter formatter in inputFormatters) {
+        editingValue =
+            formatter.formatEditUpdate(TextEditingValue.empty, editingValue);
+      }
+    }
+
+    return editingValue;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CupertinoTextField(
-      suffix: suffix,
+      suffix: widget.suffix,
       textAlignVertical: TextAlignVertical.center,
-      decoration: hasDecoration
+      decoration: widget.hasDecoration
           ? BoxDecoration(
-              color:
-                  backgroundColor ?? AppTheme.textFieldPrimaryBackgroundColor,
+              color: widget.backgroundColor ??
+                  AppTheme.textFieldPrimaryBackgroundColor,
               borderRadius: BorderRadius.circular(16),
-              boxShadow: hasShadow
+              boxShadow: widget.hasShadow
                   ? <BoxShadow>[
                       BoxShadow(
                         color: AppTheme.shadowColor,
@@ -77,34 +113,36 @@ class AppTextField extends StatelessWidget {
                   : null,
             )
           : null,
-      obscureText: shouldObscure,
+      obscureText: widget.shouldObscure,
       readOnly: _isReadOnly,
-      controller: controller,
+      controller: _controller,
       cursorColor: AppTheme.textPrimaryColor,
-      padding: padding ??
+      padding: widget.padding ??
           const EdgeInsets.only(
             left: 20,
             right: 10,
             top: 23,
             bottom: 23,
           ),
-      placeholder:
-          FlutterI18n.translate(context, placeholder) + (isRequired ? '*' : ''),
+      placeholder: <String>[
+        FlutterI18n.translate(context, widget.placeholder),
+        (widget.isRequired ? '*' : '')
+      ].join(''),
       scrollPadding: const EdgeInsets.all(30),
-      minLines: minLines,
-      maxLines: maxLines,
-      style: isDisabled
+      minLines: widget.minLines,
+      maxLines: widget.maxLines,
+      style: widget.isDisabled
           ? AppTextTheme.manrope16Regular.copyWith(
               color: AppTheme.textPrimaryColor,
             )
           : AppTextTheme.manrope16Regular.copyWith(
               color: AppTheme.textPrimaryColor,
             ),
-      textAlign: textAlign,
-      autofillHints: autofillHints,
-      onChanged: (String text) => onTextChange?.call(text),
-      keyboardType: keyboardType,
-      inputFormatters: inputFormatters,
+      textAlign: widget.textAlign,
+      autofillHints: widget.autofillHints,
+      onChanged: (String text) => widget.onTextChange?.call(text),
+      keyboardType: widget.keyboardType,
+      inputFormatters: widget.inputFormatters,
       placeholderStyle: AppTextTheme.manrope16Regular.copyWith(
         color: AppTheme.textHintColor,
       ),
