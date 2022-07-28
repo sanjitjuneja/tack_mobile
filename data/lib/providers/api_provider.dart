@@ -107,6 +107,16 @@ class ApiProvider {
         .then(mapper.tackMapper.fromList);
   }
 
+  Future<void> updateTack(UpdateTackRequest request) async {
+    return _apiProviderBase.put(
+      ApiQuery(
+        endpointPostfix: '${BaseUrlConstants.tacks}${request.id}',
+        body: request.toJson(),
+        params: null,
+      ),
+    );
+  }
+
   Future<void> rateTack(RateTackRequest request) async {
     return _apiProviderBase.get<void>(
       ApiQuery(

@@ -35,6 +35,20 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   }
 
   @override
+  Future<void> updateTack(domain.UpdateTackPayload payload) async {
+    return _apiProvider.updateTack(
+      UpdateTackRequest(
+        id: payload.tackId,
+        title: payload.title,
+        price: payload.price.toString(),
+        description: payload.description,
+        estimationTimeSeconds: payload.estimatedTime,
+        allowCounterOffer: payload.shouldAllowCounterOffers,
+      ),
+    );
+  }
+
+  @override
   Future<void> rateTack(domain.RateTackPayload payload) async {
     return _apiProvider.rateTack(
       RateTackRequest(

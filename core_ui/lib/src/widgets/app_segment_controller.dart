@@ -69,20 +69,28 @@ import 'package:segment_controller/segment_controller.dart';
 //   }
 // }
 
-class AppSegmentController extends StatelessWidget {
-  final List<String> tabs;
+class AppSegmentController<T> extends StatelessWidget {
+  final Map<T, String> tabs;
+  final T? initialValue;
+  final ValueChanged<T>? onChangeValue;
+  final TextStyle? textStyle;
   final TabController? controller;
 
   const AppSegmentController({
     super.key,
     required this.tabs,
+    this.initialValue,
+    this.onChangeValue,
+    this.textStyle,
     this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SegmentedTabControl(
+    return SegmentedTabControl<T>(
       controller: controller,
+      initialValue: initialValue,
+      onValueChange: onChangeValue,
       height: 38,
       shape: BoxShape.circle,
       backgroundColor: AppTheme.segmentBackgroundColor,
@@ -93,13 +101,15 @@ class AppSegmentController extends StatelessWidget {
         blurRadius: 4,
       ),
       border: Border.all(color: AppTheme.segmentBorderColor),
-      textStyle: AppTextTheme.manrope18Medium,
+      textStyle: textStyle ?? AppTextTheme.manrope18Medium,
       tabTextColor: AppTheme.segmentInactiveTabTextColor,
       selectedTabTextColor: AppTheme.segmentActiveTabTextColor,
-      tabs: List<SegmentTab>.generate(
-        tabs.length,
-        (index) => SegmentTab(
-          label: tabs[index],
+      tabs: tabs.map(
+        (key, value) => MapEntry(
+          key,
+          SegmentTab(
+            label: value,
+          ),
         ),
       ),
     );

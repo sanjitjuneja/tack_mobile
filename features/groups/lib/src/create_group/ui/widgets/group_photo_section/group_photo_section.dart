@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:groups/src/create_group/bloc/create_group_bloc.dart';
 import 'package:groups/src/create_group/ui/widgets/group_photo_section/group_photo_section_button.dart';
-import 'package:groups/src/create_group/ui/widgets/section_header_widget.dart';
+import 'package:core_ui/src/widgets/section_header_widget.dart';
 
 class GroupPhotoSection extends StatelessWidget {
   final CreateGroupState state;

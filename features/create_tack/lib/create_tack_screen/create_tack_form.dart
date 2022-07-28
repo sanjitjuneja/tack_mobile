@@ -123,10 +123,10 @@ class _CreateTackFormState extends State<CreateTackForm> {
                                 flex: 2,
                                 child: AppSegmentController(
                                   // controller: controller,
-                                  tabs: <String>[
-                                    'Min',
-                                    'Hrs',
-                                  ],
+                                  tabs: <int, String>{
+                                    0: 'Min',
+                                    1: 'Hrs',
+                                  },
                                 ),
                               ),
                             ],
@@ -150,10 +150,10 @@ class _CreateTackFormState extends State<CreateTackForm> {
                             const Flexible(
                               flex: 2,
                               child: AppSegmentController(
-                                tabs: <String>[
-                                  'No',
-                                  'Yes',
-                                ],
+                                tabs: <bool, String>{
+                                  true: 'No',
+                                  false: 'Yes',
+                                },
                               ),
                             ),
                             const SizedBox(width: 14),

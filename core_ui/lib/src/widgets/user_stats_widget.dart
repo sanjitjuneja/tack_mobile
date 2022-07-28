@@ -6,22 +6,30 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserStatsWidget extends StatelessWidget {
-  final String name;
   final double rating;
   final int tacksComplete;
+  final Brightness brightness;
+
+  Color get interfaceColor {
+    switch (brightness) {
+      case Brightness.dark:
+        return AppTheme.textHintColor;
+      case Brightness.light:
+        return AppTheme.textBrightColor;
+    }
+  }
 
   const UserStatsWidget({
     super.key,
-    required this.name,
     required this.rating,
     required this.tacksComplete,
+    this.brightness = Brightness.dark,
   });
 
   factory UserStatsWidget.fromTackUser({
     required TackUser tackUser,
   }) {
     return UserStatsWidget(
-      name: tackUser.fullName,
       rating: tackUser.rating,
       tacksComplete: tackUser.tacksComplete,
     );
@@ -31,8 +39,7 @@ class UserStatsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-        style: AppTextTheme.manrope13SemiBold
-            .copyWith(color: AppTheme.textHintColor),
+        style: AppTextTheme.manrope13SemiBold.copyWith(color: interfaceColor),
         children: <InlineSpan>[
           WidgetSpan(
             alignment: ui.PlaceholderAlignment.middle,

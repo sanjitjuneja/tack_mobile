@@ -57,6 +57,7 @@ export 'src/widgets/expandable_text.dart';
 export 'src/widgets/keyboard_dismissible.dart';
 export 'src/widgets/keyboard_visibility_widget.dart';
 export 'src/widgets/group_user_header_widget.dart';
+export 'src/widgets/section_header_widget.dart';
 export 'src/widgets/text_field_footer.dart';
 export 'src/widgets/text_with_highlight.dart';
 
