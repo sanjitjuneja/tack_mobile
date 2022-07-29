@@ -4,12 +4,12 @@ import 'package:intl/intl.dart';
 import 'package:core/text_input_formatters/currency_formatter.dart';
 
 class CurrencyUtility {
-  static List<TextInputFormatter> get dollarInputFormatters =>
+  static List<TextInputFormatter> dollarInputFormatters({double? maxValue}) =>
       <TextInputFormatter>[
         FilteringTextInputFormatter.allow(
           RegExp(r'^\$?\d+\.?\d{0,2}'),
         ),
-        const CurrencyFormatter(),
+        CurrencyFormatter(maxValue: maxValue),
       ];
 
   static NumberFormat get dollarFormat => NumberFormat.currency(

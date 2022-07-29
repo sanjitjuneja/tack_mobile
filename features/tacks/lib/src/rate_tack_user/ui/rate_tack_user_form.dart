@@ -19,7 +19,7 @@ class RateTackUserForm extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: ResizingScrollableLayout(
-            physics: const ClampingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 children: <Widget>[
                   Flexible(
                     child: RatingSection(
@@ -36,13 +36,14 @@ class RateTackUserForm extends StatelessWidget {
                         CommentField(
                           state: state,
                         ),
-                        const SizedBox(height: 120),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),
                 ],
               ),
             ),
+            const SizedBox(height: 6),
             KeyboardVisibilityWidget(
               padding: const EdgeInsets.only(bottom: 40),
               child: AppCircleButton(

@@ -30,6 +30,7 @@ class CommentField extends StatelessWidget {
             ),
             minLines: 5,
             hasDecoration: false,
+            keyboardType: TextInputType.text,
             inputFormatters: <TextInputFormatter>[
               WordsLengthFormatter(state.commentData.maxWords),
             ],

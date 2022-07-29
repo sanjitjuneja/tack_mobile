@@ -27,7 +27,7 @@ class PriceSection extends StatelessWidget {
           keyboardType: const TextInputType.numberWithOptions(
             decimal: true,
           ),
-          inputFormatters: CurrencyUtility.dollarInputFormatters,
+          inputFormatters: CurrencyUtility.dollarInputFormatters(),
           onTextChange: (String value) => _onPriceChange(context, value),
         ),
       ],

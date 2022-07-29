@@ -74,7 +74,8 @@ class _CreateTackFormState extends State<CreateTackForm> {
                         keyboardType: const TextInputType.numberWithOptions(
                           decimal: true,
                         ),
-                        inputFormatters: CurrencyUtility.dollarInputFormatters,
+                        inputFormatters:
+                            CurrencyUtility.dollarInputFormatters(),
                         onTextChange: (String value) {},
                       ),
                       const SizedBox(height: 12),

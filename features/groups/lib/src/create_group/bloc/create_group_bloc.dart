@@ -66,7 +66,8 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
       appRouter.pop();
       appRouter.popWithResult(group);
     } catch (e) {
-      appRouter.replace(
+      appRouter.pop();
+      appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
             contentKey: 'errorAlert.groupCreation',

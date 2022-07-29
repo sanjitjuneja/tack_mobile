@@ -22,6 +22,7 @@ class GroupUserHeaderWidget extends StatelessWidget {
         behavior: HitTestBehavior.translucent,
         onTap: onTap,
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Container(
               width: 45,
@@ -33,6 +34,7 @@ class GroupUserHeaderWidget extends StatelessWidget {
             ),
             const SizedBox(width: 14),
             Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(

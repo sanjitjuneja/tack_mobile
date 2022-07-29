@@ -35,7 +35,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         appRouter.pop();
         appRouter.push(HomeFeature.page());
       } on Exception catch (e) {
-        appRouter.replace(
+        appRouter.pop();
+        appRouter.pushForResult(
           AppAlertDialog.page(
             ErrorAlert(
               contentKey: 'signIn.signIn',

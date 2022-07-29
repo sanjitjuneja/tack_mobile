@@ -4,13 +4,15 @@ class AppProgressIndicator extends StatelessWidget {
   final String? messageKey;
   final Color? backgroundColor;
   final ProgressIndicatorSize indicatorSize;
+  final bool expand;
 
   const AppProgressIndicator({
     super.key,
     this.messageKey,
     this.backgroundColor,
     ProgressIndicatorSize? indicatorSize,
-  }): indicatorSize = indicatorSize ?? ProgressIndicatorSize.big;
+    this.expand = true,
+  }) : indicatorSize = indicatorSize ?? ProgressIndicatorSize.big;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,7 @@ class AppProgressIndicator extends StatelessWidget {
         width: double.infinity,
         color: backgroundColor ?? AppTheme.barrierColor,
         child: Column(
+          mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             CircularProgressBar(

@@ -28,6 +28,7 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
     ChangeGroup event,
     Emitter<GlobalState> emit,
   ) async {
+    HapticFeedbackManager.heavyImpact();
     final Group? newGroup = await appRouter.pushForResult(
       ChangeGroupDrawer.page(
         state.groups,

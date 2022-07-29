@@ -7,6 +7,7 @@ export 'package:core/di/app_di.dart';
 export 'package:core/di/data_di.dart';
 
 export 'package:core/managers/clipboard_manager.dart';
+export 'package:core/managers/haptic_feedback_manager.dart';
 export 'package:core/managers/share_manager.dart';
 export 'package:core/managers/toast_manager.dart';
 

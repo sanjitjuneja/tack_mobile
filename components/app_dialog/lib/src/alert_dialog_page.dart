@@ -40,12 +40,21 @@ class _AlertDialogPage extends Page<bool> {
     return DialogRoute<bool>(
       settings: this,
       context: context,
-      barrierColor: AppTheme.barrierColor,
-      barrierDismissible: true,
-      builder: (_) => AppAlertDialogWidget(
-        alert: alert,
-        shouldUseDefaultContent: shouldUseDefaultContent,
-        onTap: onButtonTap,
+      barrierColor: AppTheme.transparentColor,
+      useSafeArea: false,
+      barrierDismissible: false,
+      builder: (_) => GestureDetector(
+        onTap: () => AppRouter.of(context).popWithResult(false),
+        child: Container(
+          color: AppTheme.barrierColor,
+          child: Center(
+            child: AppAlertDialogWidget(
+              alert: alert,
+              shouldUseDefaultContent: shouldUseDefaultContent,
+              onTap: onButtonTap,
+            ),
+          ),
+        ),
       ),
     );
   }

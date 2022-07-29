@@ -24,6 +24,8 @@ class TitleSection extends StatelessWidget {
         AppTextField(
           placeholder: 'editTack.titleSection.placeholder',
           initialText: state.titleData.title,
+          keyboardType: TextInputType.text,
+          textInputAction: TextInputAction.next,
           onTextChange: (String value) => _onTitleChange(context, value),
         ),
       ],

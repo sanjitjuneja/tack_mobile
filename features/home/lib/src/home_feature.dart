@@ -22,7 +22,7 @@ class HomePage extends PageWithScaffoldKey<dynamic> {
               BlocProvider<GlobalBloc>(
                 create: (_) => GlobalBloc(
                   appRouter: appLocator.get<AppRouterDelegate>(),
-                  groups: getGroups(3),
+                  groups: getGroups(10),
                 ),
               ),
             ],

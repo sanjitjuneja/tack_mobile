@@ -25,6 +25,8 @@ class DescriptionSection extends StatelessWidget {
           placeholder: 'editTack.descriptionSection.placeholder',
           initialText: state.descriptionData.description,
           minLines: 3,
+          keyboardType: TextInputType.text,
+          textInputAction: TextInputAction.next,
           onTextChange: (String value) => _onDescriptionChange(context, value),
         ),
       ],

@@ -24,7 +24,9 @@ class RateTackUserScreen extends StatelessWidget {
             )
           ],
         ),
-        child: const RateTackUserForm(),
+        child: const KeyboardDismissible(
+          child: RateTackUserForm(),
+        ),
       ),
     );
   }

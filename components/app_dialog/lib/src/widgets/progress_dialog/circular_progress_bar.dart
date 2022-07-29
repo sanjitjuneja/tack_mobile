@@ -99,7 +99,7 @@ class CircularProgressBar extends StatefulWidget {
     required this.progressColor,
     this.fullProgressColor,
     this.backColor,
-    this.animationDuration = const Duration(milliseconds: 1400),
+    this.animationDuration = const Duration(milliseconds: 1000),
     this.mergeMode = false,
     this.valueNotifier,
     this.onGetText,
@@ -145,10 +145,10 @@ class _CircularProgressBarState extends State<CircularProgressBar>
     // Adjusting the colors.
     final List<Color> progressColors = <Color>[];
     final Color progressColor = widget.progressColor;
-    progressColors.add(progressColor);
-    progressColors.add(progressColor.withOpacity(0.8));
-    progressColors.add(progressColor.withOpacity(0.3));
     progressColors.add(progressColor.withOpacity(0.2));
+    progressColors.add(progressColor.withOpacity(0.3));
+    progressColors.add(progressColor.withOpacity(0.8));
+    progressColors.add(progressColor);
 
     sweepGradient = SweepGradient(
       tileMode: TileMode.decal,
@@ -188,7 +188,7 @@ class _CircularProgressBarState extends State<CircularProgressBar>
 
         // Repaint progress bar.
         return Transform.rotate(
-          angle: -sweepAngle,
+          angle: sweepAngle,
           child: CustomPaint(
             size: Size(widgetSize, widgetSize),
             painter: _ProgressBarPainter(

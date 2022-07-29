@@ -27,6 +27,7 @@ class AppTextField extends StatefulWidget {
   final TextAlign textAlign;
   final Iterable<String>? autofillHints;
   final void Function(String)? onTextChange;
+  final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
 
@@ -53,6 +54,7 @@ class AppTextField extends StatefulWidget {
     bool shouldShowCursor = true,
     this.autofillHints,
     this.onTextChange,
+    this.textInputAction,
     this.keyboardType,
     this.inputFormatters,
   })  : shouldShowCursor = !isDisabled && (shouldShowCursor || onTap != null),
@@ -141,6 +143,7 @@ class _AppTextFieldState extends State<AppTextField> {
       textAlign: widget.textAlign,
       autofillHints: widget.autofillHints,
       onChanged: (String text) => widget.onTextChange?.call(text),
+      textInputAction: widget.textInputAction,
       keyboardType: widget.keyboardType,
       inputFormatters: widget.inputFormatters,
       placeholderStyle: AppTextTheme.manrope16Regular.copyWith(

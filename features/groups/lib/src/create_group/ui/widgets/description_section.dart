@@ -24,7 +24,7 @@ class DescriptionSection extends StatelessWidget {
         const SizedBox(height: 12),
         AppTextField(
           placeholder: 'createGroupScreen.descriptionSection.placeholder',
-          keyboardType: TextInputType.multiline,
+          keyboardType: TextInputType.text,
           hasShadow: false,
           backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
           minLines: 4,

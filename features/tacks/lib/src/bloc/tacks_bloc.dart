@@ -63,7 +63,7 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
     CancelTackOffer event,
     Emitter<TacksState> emit,
   ) async {
-    appRouter.push(
+    appRouter.pushForResult(
       DestructiveDialog.page(
         DestructiveAlert(
           contentKey: 'destructiveAlert.cancelTack',
