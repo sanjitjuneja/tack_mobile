@@ -26,8 +26,8 @@ class CreateTackScreen extends StatelessWidget {
               automaticallyImplyLeading: false,
               middle: Align(
                 alignment: Alignment.centerLeft,
-                child: GroupUserHeaderWidget(
-                  user: state.user,
+                child: PageHeaderWidget(
+                  titleKey: 'createTack.title',
                   group: state.currentGroup,
                 ),
               ),

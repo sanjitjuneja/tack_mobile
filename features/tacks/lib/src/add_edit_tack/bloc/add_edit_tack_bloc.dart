@@ -2,30 +2,34 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:navigation/navigation.dart';
-import 'package:tacks/src/edit_tack/models/counter_offer_option_data.dart';
-import 'package:tacks/src/edit_tack/models/description_data.dart';
-import 'package:tacks/src/edit_tack/models/price_data.dart';
-import 'package:tacks/src/edit_tack/models/time_estimation_data.dart';
-import 'package:tacks/src/edit_tack/models/title_data.dart';
 
-part 'edit_tack_event.dart';
+import 'package:tacks/src/add_edit_tack/models/counter_offer_option_data.dart';
+import 'package:tacks/src/add_edit_tack/models/description_data.dart';
+import 'package:tacks/src/add_edit_tack/models/price_data.dart';
+import 'package:tacks/src/add_edit_tack/models/time_estimation_data.dart';
+import 'package:tacks/src/add_edit_tack/models/title_data.dart';
 
-part 'edit_tack_state.dart';
+part 'add_edit_tack_event.dart';
 
-class EditTackBloc extends Bloc<EditTackEvent, EditTackState> {
+part 'add_edit_tack_state.dart';
+
+class AddEditTackBloc extends Bloc<AddEditTackEvent, AddEditTackState> {
   final AppRouterDelegate _appRouter;
   final EditTackUseCase _editTackUseCase;
 
-  EditTackBloc({
-    required Tack tack,
+  AddEditTackBloc({
+    required Tack? tack,
+    required bool isAdd,
     required AppRouterDelegate appRouter,
     required EditTackUseCase editTackUseCase,
   })  : _appRouter = appRouter,
         _editTackUseCase = editTackUseCase,
         super(
-          EditTackState.fromTack(tack),
+          AddEditTackState.fromTack(tack, isAdd),
         ) {
+    on<CreateTackRequest>(_onCreateTackRequest);
     on<EditTackRequest>(_onEditTackRequest);
+    on<ClearAction>(_onClearAction);
     on<TitleChange>(_onTitleChange);
     on<PriceChange>(_onPriceChange);
     on<DescriptionChange>(_onDescriptionChange);
@@ -34,15 +38,36 @@ class EditTackBloc extends Bloc<EditTackEvent, EditTackState> {
     on<CounterOfferOptionChange>(_onCounterOfferOptionChange);
   }
 
+  Future<void> _onCreateTackRequest(
+    CreateTackRequest event,
+    Emitter<AddEditTackState> emit,
+  ) async {
+    _appRouter.push(ProgressDialog.page());
+    try {
+      // TODO: add creation tack API call.
+      _appRouter.pop();
+      _appRouter.popWithResult(true);
+    } catch (e) {
+      _appRouter.replace(
+        AppAlertDialog.page(
+          ErrorAlert(
+            contentKey: 'errorAlert.tackCreate',
+            messageKey: e.toString(),
+          ),
+        ),
+      );
+    }
+  }
+
   Future<void> _onEditTackRequest(
     EditTackRequest event,
-    Emitter<EditTackState> emit,
+    Emitter<AddEditTackState> emit,
   ) async {
     _appRouter.push(ProgressDialog.page());
     try {
       await _editTackUseCase.execute(
         UpdateTackPayload(
-          tackId: state.tack.id,
+          tackId: state.tack!.id,
           title: state.titleData.title,
           price: state.priceData.parsedPrice,
           description: state.descriptionData.description,
@@ -64,9 +89,16 @@ class EditTackBloc extends Bloc<EditTackEvent, EditTackState> {
     }
   }
 
+  Future<void> _onClearAction(
+    ClearAction event,
+    Emitter<AddEditTackState> emit,
+  ) async {
+    emit(state.clear());
+  }
+
   Future<void> _onTitleChange(
     TitleChange event,
-    Emitter<EditTackState> emit,
+    Emitter<AddEditTackState> emit,
   ) async {
     emit(
       state.copyWith(
@@ -77,7 +109,7 @@ class EditTackBloc extends Bloc<EditTackEvent, EditTackState> {
 
   Future<void> _onPriceChange(
     PriceChange event,
-    Emitter<EditTackState> emit,
+    Emitter<AddEditTackState> emit,
   ) async {
     emit(
       state.copyWith(
@@ -88,7 +120,7 @@ class EditTackBloc extends Bloc<EditTackEvent, EditTackState> {
 
   Future<void> _onDescriptionChange(
     DescriptionChange event,
-    Emitter<EditTackState> emit,
+    Emitter<AddEditTackState> emit,
   ) async {
     emit(
       state.copyWith(
@@ -99,7 +131,7 @@ class EditTackBloc extends Bloc<EditTackEvent, EditTackState> {
 
   Future<void> _onTimeEstimationChange(
     TimeEstimationChange event,
-    Emitter<EditTackState> emit,
+    Emitter<AddEditTackState> emit,
   ) async {
     emit(
       state.copyWith(
@@ -110,7 +142,7 @@ class EditTackBloc extends Bloc<EditTackEvent, EditTackState> {
 
   Future<void> _onTimeEstimationInChange(
     TimeEstimationInChange event,
-    Emitter<EditTackState> emit,
+    Emitter<AddEditTackState> emit,
   ) async {
     emit(
       state.copyWith(
@@ -121,7 +153,7 @@ class EditTackBloc extends Bloc<EditTackEvent, EditTackState> {
 
   Future<void> _onCounterOfferOptionChange(
     CounterOfferOptionChange event,
-    Emitter<EditTackState> emit,
+    Emitter<AddEditTackState> emit,
   ) async {
     emit(
       state.copyWith(

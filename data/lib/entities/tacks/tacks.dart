@@ -1,6 +1,7 @@
 library tacks_entities;
 
 import 'package:data/entities/converters.dart';
+import 'package:data/entities/entities.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'entities/offer_entity.dart';

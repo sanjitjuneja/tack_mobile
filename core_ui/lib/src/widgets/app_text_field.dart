@@ -95,6 +95,15 @@ class _AppTextFieldState extends State<AppTextField> {
   }
 
   @override
+  void didUpdateWidget(AppTextField oldWidget) {
+    if (widget.initialText == null || widget.initialText!.isEmpty) {
+      _controller.text = '';
+    }
+
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CupertinoTextField(
       suffix: widget.suffix,

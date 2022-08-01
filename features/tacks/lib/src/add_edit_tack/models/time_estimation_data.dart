@@ -5,7 +5,9 @@ enum TimeEstimationIn {
   static const int _hourInSeconds = 60 * 60;
   static const int _minuteInSeconds = 60;
 
-  factory TimeEstimationIn.fromTime(int timeInSeconds) {
+  factory TimeEstimationIn.fromTime(int? timeInSeconds) {
+    if (timeInSeconds == null) return TimeEstimationIn.min;
+
     final bool isHours = timeInSeconds % _hourInSeconds == 0;
     return isHours ? TimeEstimationIn.hour : TimeEstimationIn.min;
   }
@@ -30,15 +32,20 @@ enum TimeEstimationIn {
 }
 
 class TimeEstimationData {
-  final int maxValue;
+  final Map<TimeEstimationIn, num> maxValues;
   final bool isRequired;
   final TimeEstimationIn timeEstimationIn;
   final String timeEstimation;
 
+  num get maxValue => maxValues[timeEstimationIn] ?? 0;
+
   bool get isValid => isRequired ? timeEstimation.isNotEmpty : true;
 
-  bool isDataChanged(int oldTime) {
-    return timeInSeconds != oldTime;
+  bool isDataChanged(int? oldTime) {
+    final TimeEstimationIn oldTimeEstimationIn =
+        TimeEstimationIn.fromTime(oldTime);
+
+    return timeInSeconds != oldTime || timeEstimationIn != oldTimeEstimationIn;
   }
 
   int? get timeInSeconds => isValid
@@ -46,26 +53,27 @@ class TimeEstimationData {
       : null;
 
   const TimeEstimationData({
-    required this.maxValue,
+    required this.maxValues,
     required this.isRequired,
     this.timeEstimationIn = TimeEstimationIn.min,
-    this.timeEstimation = '',
-  });
+    String? timeEstimation,
+  }) : timeEstimation = timeEstimation ?? '';
 
   factory TimeEstimationData.fromTime({
-    required int maxValue,
+    required Map<TimeEstimationIn, num> maxValues,
     required bool isRequired,
-    required int timeInSeconds,
+    required int? timeInSeconds,
   }) {
     final TimeEstimationIn estimationIn =
         TimeEstimationIn.fromTime(timeInSeconds);
 
     return TimeEstimationData(
-      maxValue: maxValue,
+      maxValues: maxValues,
       isRequired: isRequired,
       timeEstimationIn: estimationIn,
-      timeEstimation:
-          estimationIn.timeInSecondsToValue(timeInSeconds).toString(),
+      timeEstimation: timeInSeconds == null
+          ? null
+          : estimationIn.timeInSecondsToValue(timeInSeconds).toString(),
     );
   }
 
@@ -74,10 +82,19 @@ class TimeEstimationData {
     TimeEstimationIn? timeEstimationIn,
   }) {
     return TimeEstimationData(
-      maxValue: maxValue,
+      maxValues: maxValues,
       isRequired: isRequired,
       timeEstimation: timeEstimation ?? this.timeEstimation,
       timeEstimationIn: timeEstimationIn ?? this.timeEstimationIn,
+    );
+  }
+
+  TimeEstimationData empty() {
+    return TimeEstimationData(
+      maxValues: maxValues,
+      isRequired: isRequired,
+      timeEstimation: '',
+      timeEstimationIn: TimeEstimationIn.min,
     );
   }
 }

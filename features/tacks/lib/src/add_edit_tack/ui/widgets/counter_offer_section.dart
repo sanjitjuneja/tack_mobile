@@ -1,10 +1,11 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:tacks/src/edit_tack/bloc/edit_tack_bloc.dart';
+
+import 'package:tacks/src/add_edit_tack/bloc/add_edit_tack_bloc.dart';
 
 class CounterOfferSection extends StatefulWidget {
-  final EditTackState state;
+  final AddEditTackState state;
 
   const CounterOfferSection({
     super.key,
@@ -16,6 +17,8 @@ class CounterOfferSection extends StatefulWidget {
 }
 
 class _CounterOfferSectionState extends State<CounterOfferSection> {
+  static const String _localizationPath =
+      'addEditTackScreen.counterOfferSection.';
   static const Duration _animationDuration = Duration(milliseconds: 350);
 
   final GlobalKey _hintWidgetKey = GlobalKey();
@@ -30,8 +33,7 @@ class _CounterOfferSectionState extends State<CounterOfferSection> {
         Row(
           children: <Widget>[
             SectionHeaderWidget(
-              labelKey: 'editTack.counterOfferSection.title',
-              headerWeight: HeaderWeight.heavy,
+              labelKey: '${_localizationPath}title',
             ),
             const SizedBox(width: 10),
             const Spacer(),
@@ -43,23 +45,27 @@ class _CounterOfferSectionState extends State<CounterOfferSection> {
                   tabs: <bool, String>{
                     false: FlutterI18n.translate(
                       context,
-                      'editTack.counterOfferSection.options.first',
+                      '${_localizationPath}options.first',
                     ),
                     true: FlutterI18n.translate(
                       context,
-                      'editTack.counterOfferSection.options.second',
+                      '${_localizationPath}options.second',
                     ),
                   },
                   initialValue: widget.state.counterOfferData.allow,
                   onChangeValue: _onCounterOfferOptionChange,
+                  height: 30,
                   textStyle: AppTextTheme.manrope14Medium,
                 ),
               ),
             ),
-            const SizedBox(width: 12),
-            GestureDetector(
+            const SizedBox(width: 10),
+            OpacityOnTapContainer(
               onTap: _onHintPressed,
-              child: AppIconsTheme.prompt(),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: AppIconsTheme.prompt(size: 20),
+              ),
             ),
           ],
         ),
@@ -73,7 +79,7 @@ class _CounterOfferSectionState extends State<CounterOfferSection> {
                   child: Text(
                     FlutterI18n.translate(
                       context,
-                      'createTack.promptText',
+                      '${_localizationPath}hint',
                     ),
                     style: AppTextTheme.manrope12SemiBold.copyWith(
                       color: AppTheme.textHeavyHintColor,
@@ -91,7 +97,7 @@ class _CounterOfferSectionState extends State<CounterOfferSection> {
   void _onCounterOfferOptionChange(
     bool allowCounterOffer,
   ) {
-    BlocProvider.of<EditTackBloc>(context)
+    BlocProvider.of<AddEditTackBloc>(context)
         .add(CounterOfferOptionChange(allowCounterOffer));
   }
 

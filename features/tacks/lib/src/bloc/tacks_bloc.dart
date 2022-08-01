@@ -66,7 +66,7 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
     appRouter.pushForResult(
       DestructiveDialog.page(
         DestructiveAlert(
-          contentKey: 'destructiveAlert.cancelTack',
+          contentKey: 'destructiveAlert.cancelTackRunner',
           titleKey: '',
           translationParams: {
             AlertPropertyKey.message: {

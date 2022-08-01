@@ -7,21 +7,31 @@ class TitleData {
 
   bool get isValid => isRequired ? title.isNotEmpty : true;
 
-  bool isDataChanged(String oldTitle) {
+  bool isDataChanged(String? oldTitle) {
+    oldTitle ??= '';
+
     return title != oldTitle;
   }
 
   const TitleData({
     required this.maxLength,
     required this.isRequired,
-    this.title = '',
-  });
+    String? title,
+  }) : title = title ?? '';
 
   TitleData copyWith({String? title}) {
     return TitleData(
       maxLength: maxLength,
       isRequired: isRequired,
       title: title ?? this.title,
+    );
+  }
+
+  TitleData empty() {
+    return TitleData(
+      maxLength: maxLength,
+      isRequired: isRequired,
+      title: '',
     );
   }
 }

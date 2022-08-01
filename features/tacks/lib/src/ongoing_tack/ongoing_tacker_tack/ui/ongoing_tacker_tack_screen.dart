@@ -19,19 +19,15 @@ class OngoingTackerTackScreen extends StatelessWidget {
             bloc: BlocProvider.of<OngoingTackerTackBloc>(context),
             builder: (_, OngoingTackerTackState state) {
               if (state.tack.canTackerCancel) {
-                return AppButton(
+                return NavigationBarActionButton(
                   labelKey: 'ongoingTackScreen.cancelTackButton',
-                  type: ButtonType.secondary,
-                  expanded: false,
-                  onTap: () => _onCancelButtonTap(context),
+                  onTap: _onCancelButtonPressed,
                 );
               } else {
-                return AppButton(
+                return NavigationBarActionButton(
                   labelKey: 'ongoingTackScreen.contactRunnerButton',
                   icon: AppIconsTheme.phone,
-                  type: ButtonType.secondary,
-                  expanded: false,
-                  onTap: () => _onContactButtonTap(context),
+                  onTap: _onContactButtonPressed,
                 );
               }
             },
@@ -42,11 +38,11 @@ class OngoingTackerTackScreen extends StatelessWidget {
     );
   }
 
-  void _onCancelButtonTap(BuildContext context) {
+  void _onCancelButtonPressed(BuildContext context) {
     BlocProvider.of<OngoingTackerTackBloc>(context).add(const CancelTack());
   }
 
-  void _onContactButtonTap(BuildContext context) {
+  void _onContactButtonPressed(BuildContext context) {
     BlocProvider.of<OngoingTackerTackBloc>(context).add(const ContactRunner());
   }
 }

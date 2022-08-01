@@ -26,8 +26,8 @@ class DashboardScreen extends StatelessWidget {
             builder: (_, GlobalState state) {
               return Align(
                 alignment: Alignment.centerLeft,
-                child: GroupUserHeaderWidget(
-                  user: state.user,
+                child: PageHeaderWidget(
+                  titleKey: 'dashboardScreen.title',
                   group: state.currentGroup,
                   onTap: () => _onHeaderTap(context),
                 ),

@@ -1,6 +1,7 @@
 library tacks;
 
 import 'package:core/core.dart';
+import 'package:domain/domain.dart';
 import 'package:domain/usecases/usecase.dart';
 
 part 'models/offer.dart';

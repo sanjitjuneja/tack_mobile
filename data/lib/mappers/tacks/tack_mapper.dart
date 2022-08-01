@@ -3,10 +3,12 @@ part of mappers;
 class TackMapper implements Mapper<TackEntity, domain.Tack> {
   final TackStatusMapper tackStatusMapper;
   final TackUserMapper tackUserMapper;
+  final GroupMapper groupMapper;
 
   const TackMapper({
     required this.tackStatusMapper,
     required this.tackUserMapper,
+    required this.groupMapper,
   });
 
   @override
@@ -21,6 +23,7 @@ class TackMapper implements Mapper<TackEntity, domain.Tack> {
       status: tackStatusMapper.fromEntity(entity.status),
       tacker: tackUserMapper.fromEntity(entity.tacker)!,
       runner: tackUserMapper.fromEntity(entity.runner),
+      group: groupMapper.fromEntity(entity.group),
       completionMessage: entity.completionMessage,
       completionTime: entity.completionTime,
     );
@@ -38,6 +41,7 @@ class TackMapper implements Mapper<TackEntity, domain.Tack> {
       status: tackStatusMapper.toEntity(item.status),
       tacker: tackUserMapper.toEntity(item.tacker)!,
       runner: tackUserMapper.toEntity(item.tacker),
+      group: groupMapper.toEntity(item.group),
       completionMessage: item.completionMessage,
       completionTime: item.completionTime,
     );

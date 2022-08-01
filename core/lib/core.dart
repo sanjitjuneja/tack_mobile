@@ -13,6 +13,7 @@ export 'package:core/managers/toast_manager.dart';
 
 export 'package:core/text_input_formatters/currency_formatter.dart';
 export 'package:core/text_input_formatters/phone_number_formatter.dart';
+export 'package:core/text_input_formatters/range_number_formatter.dart';
 export 'package:core/text_input_formatters/words_length_formatter.dart';
 
 export 'package:core/utils/currency_utils.dart';

@@ -1,10 +1,13 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:tacks/src/edit_tack/bloc/edit_tack_bloc.dart';
+
+import 'package:tacks/src/add_edit_tack/bloc/add_edit_tack_bloc.dart';
 
 class PriceSection extends StatelessWidget {
-  final EditTackState state;
+  static const String _localizationPath = 'addEditTackScreen.priceSection.';
+
+  final AddEditTackState state;
 
   const PriceSection({
     super.key,
@@ -17,25 +20,30 @@ class PriceSection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         SectionHeaderWidget(
-          labelKey: 'editTack.priceSection.title',
-          headerWeight: HeaderWeight.heavy,
+          labelKey: '${_localizationPath}title',
         ),
         const SizedBox(height: 12),
         AppTextField(
-          placeholder: 'editTack.priceSection.placeholder',
+          placeholder: '${_localizationPath}placeholder',
           initialText: state.priceData.price,
           keyboardType: const TextInputType.numberWithOptions(
             decimal: true,
           ),
-          inputFormatters: CurrencyUtility.dollarInputFormatters(),
+          inputFormatters:
+              CurrencyUtility.dollarInputFormatters(maxValue: 1000),
+          hasShadow: false,
+          backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
           onTextChange: (String value) => _onPriceChange(context, value),
         ),
       ],
     );
   }
 
-  void _onPriceChange(BuildContext context, String value) {
-    BlocProvider.of<EditTackBloc>(context).add(
+  void _onPriceChange(
+    BuildContext context,
+    String value,
+  ) {
+    BlocProvider.of<AddEditTackBloc>(context).add(
       PriceChange(const CurrencyFormatter().removeFormat(value)),
     );
   }

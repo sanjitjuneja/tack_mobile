@@ -16,8 +16,7 @@ class TackerTackWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
+    return OpacityOnTapContainer(
       onTap: () => _onTap(context),
       child: Container(
         padding: const EdgeInsets.all(16.0),
@@ -36,9 +35,13 @@ class TackerTackWidget extends StatelessWidget {
           children: <Widget>[
             TackHeaderWidget(
               tack: tack,
+              isRunner: false,
             ),
             const SizedBox(height: 30),
-            TackerTackActions(tack: tack),
+            TackerTackActions(
+              tack: tack,
+              onTap: () => _onTap(context),
+            ),
           ],
         ),
       ),

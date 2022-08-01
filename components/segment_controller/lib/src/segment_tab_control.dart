@@ -129,13 +129,7 @@ class _SegmentedTabControlState<T> extends State<SegmentedTabControl<T>>
   void didChangeDependencies() {
     super.didChangeDependencies();
     _updateTabController();
-    if (widget.initialValue != null) {
-      final int initialIndex = widget.tabs.entries.toList().indexWhere(
-            (MapEntry<dynamic, SegmentTab> element) =>
-                element.key == widget.initialValue,
-          );
-      _controller!.index = initialIndex;
-    }
+    _updateInitialIndex();
   }
 
   @override
@@ -144,6 +138,7 @@ class _SegmentedTabControlState<T> extends State<SegmentedTabControl<T>>
     if (widget.controller != oldWidget.controller) {
       _updateTabController();
     }
+    _updateInitialIndex();
   }
 
   bool get _controllerIsValid => _controller?.animation != null;
@@ -174,6 +169,20 @@ class _SegmentedTabControlState<T> extends State<SegmentedTabControl<T>>
     _controller = newController;
     if (_controller != null) {
       _controller!.animation!.addListener(_handleTabControllerAnimationTick);
+    }
+  }
+
+  void _updateInitialIndex() {
+    if (widget.initialValue != null) {
+      final int initialIndex = widget.tabs.entries.toList().indexWhere(
+            (MapEntry<dynamic, SegmentTab> element) =>
+                element.key == widget.initialValue,
+          );
+      _controller!.animateTo(
+        initialIndex,
+        duration: kTabScrollDuration,
+        curve: Curves.easeInOut,
+      );
     }
   }
 

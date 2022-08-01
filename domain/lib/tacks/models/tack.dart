@@ -10,6 +10,7 @@ class Tack extends Equatable {
   final TackStatus status;
   final TackUser tacker;
   final TackUser? runner;
+  final Group group;
   final String? completionMessage;
   final DateTime? completionTime;
 
@@ -29,6 +30,7 @@ class Tack extends Equatable {
     required this.status,
     required this.tacker,
     required this.runner,
+    required this.group,
     required this.completionMessage,
     required this.completionTime,
   });
@@ -44,6 +46,7 @@ class Tack extends Equatable {
         status,
         tacker,
         runner,
+        group,
         completionMessage,
         completionTime,
       ];

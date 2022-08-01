@@ -11,25 +11,25 @@ class RateTackUser {
 
   static Page<bool> page({
     required Tack tack,
-    required TackUser tackUser,
+    required bool isRateTacker,
   }) {
     return _RateTackUserPage(
       tack: tack,
-      tackUser: tackUser,
+      isRateTacker: isRateTacker,
     );
   }
 }
 
 class _RateTackUserPage extends Page<bool> {
   final Tack tack;
-  final TackUser tackUser;
+  final bool isRateTacker;
 
   @override
   String get name => RateTackUser.routeName;
 
   const _RateTackUserPage({
     required this.tack,
-    required this.tackUser,
+    required this.isRateTacker,
   });
 
   @override
@@ -41,7 +41,7 @@ class _RateTackUserPage extends Page<bool> {
         create: (_) {
           return RateTackUserBloc(
             tack: tack,
-            tackUser: tackUser,
+            isRateTacker: isRateTacker,
             appRouter: AppRouter.of(context),
             rateTackUseCase: appLocator.get<RateTackUseCase>(),
           );

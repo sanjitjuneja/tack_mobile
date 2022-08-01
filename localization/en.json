@@ -17,6 +17,9 @@
     "rateTack": {
       "title": ""
     },
+    "tackCreate": {
+      "title": ""
+    },
     "tackUpdate": {
       "title": ""
     },
@@ -107,6 +110,9 @@
     "ago": "ago",
     "andSymbol": " & "
   },
+  "dashboardScreen": {
+    "title": "Home Feed"
+  },
   "counterOfferScreen": {
     "tackDetails": "Tack Details",
     "counterofferPrice": "Counteroffer Price",
@@ -114,6 +120,7 @@
   },
   "tacksScreen": {
     "title": "My Tacks",
+    "subtitle": "Ongoing Tacks",
     "description": "Here are your ongoing Tacks (the ones you have created yourself or completing for others)",
     "tackerTab": "Tacker",
     "runnerTab": "Runner",
@@ -133,7 +140,8 @@
       }
     },
     "tackerStatus": {
-      "created": "Created"
+      "created": "Created",
+      "accepted": "Accepted"
     },
     "runnerStatus": {
     }
@@ -235,12 +243,14 @@
       "counterOffer": "Allow Counteroffer"
     }
   },
-  "editTack": {
-    "description": "Edit the following info to update your custom Tack within your group ({groupName})",
+  "addEditTackScreen": {
+    "clearButton": "Clear",
+    "createTackButton": "Create",
     "updateTackButton": "Update",
     "titleSection": {
       "title": "Title",
-      "placeholder": "Title"
+      "placeholder": "Title",
+      "footerText": "Characters Remaining"
     },
     "priceSection": {
       "title": "Price",
@@ -248,7 +258,8 @@
     },
     "descriptionSection": {
       "title": "Description",
-      "placeholder": "Type here..."
+      "placeholder": "Type here...",
+      "footerText": "Words Remaining"
     },
     "timeSection": {
       "title": "Time Estimation",

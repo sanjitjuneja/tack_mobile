@@ -1,3 +1,4 @@
+import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,7 +8,7 @@ import 'package:tacks/src/ongoing_tack/view_extensions/ongoing_tack_to_view_exte
 import 'package:tacks/src/ongoing_tack/widgets/note_widget.dart';
 
 class OngoingRunnerTackActions extends StatelessWidget {
-  final OngoingRunnerTackState  state;
+  final OngoingRunnerTackState state;
 
   const OngoingRunnerTackActions({
     super.key,
@@ -29,6 +30,7 @@ class OngoingRunnerTackActions extends StatelessWidget {
             AppCircleButton(
               labelKey: tack.status.getButtonLabel(isTacker: false),
               isDisabled: state.hasRunningTack,
+              onTap: () => _onActionPressed(context),
             ),
             if (state.hasRunningTack) ...<Widget>[
               const SizedBox(height: 12),
@@ -43,6 +45,7 @@ class OngoingRunnerTackActions extends StatelessWidget {
           children: <Widget>[
             AppCircleButton(
               labelKey: tack.status.getButtonLabel(isTacker: false),
+              onTap: () => _onActionPressed(context),
             ),
             const SizedBox(height: 12),
             NoteWidget(
@@ -57,5 +60,9 @@ class OngoingRunnerTackActions extends StatelessWidget {
       case TackStatus.completed:
         return const SizedBox.shrink();
     }
+  }
+
+  void _onActionPressed(BuildContext context) {
+    BlocProvider.of<OngoingRunnerTackBloc>(context).add(const ActionPressed());
   }
 }

@@ -15,6 +15,7 @@ class TackEntity extends JsonSerializable {
   final String status;
   final TackUserEntity tacker;
   final TackUserEntity? runner;
+  final GroupEntity group;
   @JsonKey(name: 'completion_message')
   final String? completionMessage;
   @JsonKey(name: 'completion_time')
@@ -30,6 +31,7 @@ class TackEntity extends JsonSerializable {
     required this.status,
     required this.tacker,
     required this.runner,
+    required this.group,
     required this.completionMessage,
     required this.completionTime,
   });

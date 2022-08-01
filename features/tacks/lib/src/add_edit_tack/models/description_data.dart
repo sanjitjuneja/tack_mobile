@@ -9,21 +9,31 @@ class DescriptionData {
 
   bool get isValid => isRequired ? description.isNotEmpty : true;
 
-  bool isDataChanged(String oldDescription) {
+  bool isDataChanged(String? oldDescription) {
+    oldDescription ??= '';
+
     return description != oldDescription;
   }
 
   const DescriptionData({
     required this.maxWords,
     required this.isRequired,
-    this.description = '',
-  });
+    String? description,
+  }) : description = description ?? '';
 
   DescriptionData copyWith({String? description}) {
     return DescriptionData(
       maxWords: maxWords,
       isRequired: isRequired,
       description: description ?? this.description,
+    );
+  }
+
+  DescriptionData empty() {
+    return DescriptionData(
+      maxWords: maxWords,
+      isRequired: isRequired,
+      description: '',
     );
   }
 }

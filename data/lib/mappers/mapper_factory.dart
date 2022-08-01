@@ -15,6 +15,7 @@ class MapperFactory {
   TackMapper get tackMapper => TackMapper(
         tackStatusMapper: tackStatusMapper,
         tackUserMapper: tackUserMapper,
+        groupMapper: groupMapper,
       );
 
   CustomerMapper get customerMapper => CustomerMapper();

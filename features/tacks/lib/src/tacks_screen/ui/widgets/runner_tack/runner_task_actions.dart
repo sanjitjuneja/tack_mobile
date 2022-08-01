@@ -6,14 +6,19 @@ import 'package:tacks/src/bloc/tacks_bloc.dart';
 
 class RunnerTackActions extends StatelessWidget {
   final RunnerTack runnerTack;
+  final VoidCallback? onTap;
 
   const RunnerTackActions({
     super.key,
     required this.runnerTack,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
+    final String labelKey;
+    AppIcon? icon;
+
     switch (runnerTack.tack.status) {
       case TackStatus.pendingAccept:
         return Row(
@@ -74,21 +79,33 @@ class RunnerTackActions extends StatelessWidget {
           ],
         );
       case TackStatus.pendingStart:
-        return AppButton(
-          labelKey: 'tacksScreen.beginTackButton',
-          icon: AppIconsTheme.taskComplete,
-        );
+        labelKey = 'tacksScreen.beginTackButton';
+        icon = AppIconsTheme.taskComplete;
+        break;
       case TackStatus.inProgress:
-        return AppButton(
-          labelKey: 'general.track',
-        );
+        labelKey = 'general.track';
+        icon = null;
+        break;
       case TackStatus.pendingReview:
-        return AppButton(
-          labelKey: 'tacksScreen.pendingReview',
-          icon: AppIconsTheme.taskComplete,
-        );
+        labelKey = 'tacksScreen.pendingReview';
+        icon = AppIconsTheme.taskComplete;
+        break;
       default:
         return const SizedBox.shrink();
     }
+
+    return Row(
+      children: <Widget>[
+        AppCircleAvatarWidget(runnerTack.tack.group.imageUrl),
+        const SizedBox(width: 10),
+        Expanded(
+          child: AppButton(
+            labelKey: labelKey,
+            icon: icon,
+            onTap: onTap,
+          ),
+        ),
+      ],
+    );
   }
 }

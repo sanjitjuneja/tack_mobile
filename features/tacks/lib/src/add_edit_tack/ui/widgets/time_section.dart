@@ -1,11 +1,15 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:tacks/src/edit_tack/bloc/edit_tack_bloc.dart';
-import 'package:tacks/src/edit_tack/models/time_estimation_data.dart';
+import 'package:flutter/services.dart';
+
+import 'package:tacks/src/add_edit_tack/bloc/add_edit_tack_bloc.dart';
+import 'package:tacks/src/add_edit_tack/models/time_estimation_data.dart';
 
 class TimeSection extends StatelessWidget {
-  final EditTackState state;
+  static const String _localizationPath = 'addEditTackScreen.timeSection.';
+
+  final AddEditTackState state;
 
   const TimeSection({
     super.key,
@@ -18,8 +22,7 @@ class TimeSection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         SectionHeaderWidget(
-          labelKey: 'editTack.timeSection.title',
-          headerWeight: HeaderWeight.heavy,
+          labelKey: '${_localizationPath}title',
         ),
         const SizedBox(height: 12),
         Flexible(
@@ -29,18 +32,22 @@ class TimeSection extends StatelessWidget {
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 90),
                 child: AppTextField(
-                  placeholder: 'editTack.timeSection.placeholder',
+                  placeholder: '${_localizationPath}placeholder',
                   initialText: state.timeEstimationData.timeEstimation,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 6.0,
-                    vertical: 14.0,
+                    vertical: 10.0,
                   ),
-                  maxLines: 1,
                   hasShadow: false,
+                  backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
+                  maxLines: 1,
                   textAlign: TextAlign.center,
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: false,
                   ),
+                  inputFormatters: <TextInputFormatter>[
+                    RangeNumberFormatter(max: state.timeEstimationData.maxValue),
+                  ],
                   onTextChange: (String value) => _onTimeChange(context, value),
                 ),
               ),
@@ -54,21 +61,22 @@ class TimeSection extends StatelessWidget {
                     tabs: <TimeEstimationIn, String>{
                       TimeEstimationIn.min: FlutterI18n.translate(
                         context,
-                        'editTack.timeSection.options.first',
+                        '${_localizationPath}options.first',
                       ),
                       TimeEstimationIn.hour: FlutterI18n.translate(
                         context,
-                        'editTack.timeSection.options.second',
+                        '${_localizationPath}options.second',
                       ),
                     },
                     initialValue: state.timeEstimationData.timeEstimationIn,
                     onChangeValue: (TimeEstimationIn value) =>
                         _onTimeEstimationInChange(context, value),
+                    height: 30,
                     textStyle: AppTextTheme.manrope14Medium,
                   ),
                 ),
               ),
-              const SizedBox(width: 36),
+              const SizedBox(width: 38),
             ],
           ),
         ),
@@ -76,11 +84,18 @@ class TimeSection extends StatelessWidget {
     );
   }
 
-  void _onTimeChange(BuildContext context, String value) {
-    BlocProvider.of<EditTackBloc>(context).add(TimeEstimationChange(value));
+  void _onTimeChange(
+    BuildContext context,
+    String value,
+  ) {
+    BlocProvider.of<AddEditTackBloc>(context).add(TimeEstimationChange(value));
   }
 
-  void _onTimeEstimationInChange(BuildContext context, TimeEstimationIn value) {
-    BlocProvider.of<EditTackBloc>(context).add(TimeEstimationInChange(value));
+  void _onTimeEstimationInChange(
+    BuildContext context,
+    TimeEstimationIn value,
+  ) {
+    BlocProvider.of<AddEditTackBloc>(context)
+        .add(TimeEstimationInChange(value));
   }
 }

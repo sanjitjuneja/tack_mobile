@@ -5,7 +5,7 @@ class PriceData {
 
   bool get isValid => isRequired ? price.isNotEmpty : true;
 
-  bool isDataChanged(double oldPrice) {
+  bool isDataChanged(double? oldPrice) {
     return double.tryParse(price) != oldPrice;
   }
 
@@ -14,14 +14,22 @@ class PriceData {
   const PriceData({
     required this.maxValue,
     required this.isRequired,
-    this.price = '',
-  });
+    String? price,
+  }) : price = price ?? '';
 
   PriceData copyWith({String? price}) {
     return PriceData(
       maxValue: maxValue,
       isRequired: isRequired,
       price: price ?? this.price,
+    );
+  }
+
+  PriceData empty() {
+    return PriceData(
+      maxValue: maxValue,
+      isRequired: isRequired,
+      price: '',
     );
   }
 }

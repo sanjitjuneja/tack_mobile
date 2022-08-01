@@ -65,7 +65,7 @@ class AppCircleButton extends StatelessWidget {
         disable: isDisabled,
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(19.0),
+          padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
             color: _backgroundColor,
             border: Border.all(color: _borderColor),
