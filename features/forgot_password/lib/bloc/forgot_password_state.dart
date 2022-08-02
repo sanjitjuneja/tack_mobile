@@ -1,9 +1,9 @@
-import 'package:domain/models/base_error_model.dart';
+import 'package:domain/models/password_validator.dart';
 
 class ForgotPasswordState {
-  final List<BaseErrorModel>? passwordErrors;
+  final PasswordValidator? passwordErrors;
   final Map<String, String>? postValidationErrors;
-  final List<BaseErrorModel>? confirmedPasswordErrors;
+  final PasswordValidator? confirmedPasswordErrors;
 
   ForgotPasswordState({
     this.passwordErrors,
@@ -12,8 +12,8 @@ class ForgotPasswordState {
   });
 
   ForgotPasswordState copyWith({
-    final List<BaseErrorModel>? newPasswordErrors,
-    final List<BaseErrorModel>? newConfirmedPasswordErrors,
+    final PasswordValidator? newPasswordErrors,
+    final PasswordValidator? newConfirmedPasswordErrors,
     final Map<String, String>? newPostValidationsErrors,
   }) {
     return ForgotPasswordState(
@@ -26,8 +26,8 @@ class ForgotPasswordState {
 
   bool get isValidationsPassed {
     return passwordErrors != null &&
-        passwordErrors!.isEmpty &&
+        passwordErrors!.isValidationsPassed &&
         confirmedPasswordErrors != null &&
-        passwordErrors!.isEmpty;
+        passwordErrors!.isValidationsPassed;
   }
 }

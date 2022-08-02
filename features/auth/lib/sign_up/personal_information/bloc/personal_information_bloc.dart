@@ -1,12 +1,16 @@
 import 'dart:async';
 
+import 'package:auth/sign_in/sign_in_feature.dart';
 import 'package:auth/sign_up/personal_information/bloc/personal_information_event.dart';
 import 'package:auth/sign_up/personal_information/bloc/personal_information_state.dart';
 import 'package:core/core.dart';
+import 'package:core/errors/existed_user_exception.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
+
+import '../../error_page/error_page.dart';
 
 class PersonalInformationBloc
     extends Bloc<PersonalInformationEvent, PersonalInformationState> {
@@ -14,11 +18,19 @@ class PersonalInformationBloc
   final SignUpUseCase signUpUseCase;
   final VerificationData verificationData;
 
+  PasswordValidator _passwordValidator = PasswordValidator.initial();
+  PasswordValidator _confirmedPasswordValidator = PasswordValidator.initial();
+
   PersonalInformationBloc({
     required this.appRouter,
     required this.signUpUseCase,
     required this.verificationData,
-  }) : super(PersonalInformationState());
+  }) : super(
+          PersonalInformationState(
+            passwordError: PasswordValidator.initial(),
+            confirmedPasswordError: PasswordValidator.initial(),
+          ),
+        );
 
   bool isDataValid = false;
   bool isPasswordDataValid = false;
@@ -28,15 +40,14 @@ class PersonalInformationBloc
       PersonalInformationEvent event) async* {
     if (event is RegisterUser) {
       final Map<String, String> postValidationErrors = getPostValidation(
-        password: event.password,
-        confirmedPassword: event.confirmedPassword,
+        email: event.email,
       );
-
       if (postValidationErrors.isEmpty) {
         try {
           appRouter.push(ProgressDialog.page());
           await signUpUseCase.execute(
             SignUpByPhonePayload(
+              email: event.email,
               uuid: verificationData.udid,
               firstName: event.firstName,
               lastName: event.lastName,
@@ -47,15 +58,25 @@ class PersonalInformationBloc
           );
           appRouter.pop();
           appRouter.push(HomeFeature.page());
-        } catch (e) {
-          appRouter.push(
-            AppAlertDialog.page(
-              ErrorAlert(
-                contentKey: 'signUp.title',
-                messageKey: e.toString(),
+        } on Exception catch (e) {
+          if (e is ExistedUserException) {
+            appRouter.replace(ErrorPage(
+              titleKey: 'errorScreen.title',
+              descriptionKey: 'errorScreen.description',
+              onPressed: () {
+                appRouter.push(SignInPage());
+              },
+            ));
+          } else {
+            appRouter.replace(
+              AppAlertDialog.page(
+                ErrorAlert(
+                  contentKey: 'signUp.title',
+                  messageKey: e.toString(),
+                ),
               ),
-            ),
-          );
+            );
+          }
         }
       } else {
         yield state.copyWith(
@@ -64,48 +85,48 @@ class PersonalInformationBloc
       }
     }
 
-    if (event is ValidateFirstName) {
-      final List<BaseErrorModel> validations =
-          FieldValidator.getNameValidationsList(
-        event.firstName,
-      );
-
-      yield state.copyWith(
-        newFirstNameError: validations,
-      );
-    }
-
-    if (event is ValidateLastName) {
-      final List<BaseErrorModel> validations =
-          FieldValidator.getNameValidationsList(
-        event.lastName,
-      );
-
-      yield state.copyWith(
-        newSecondNameError: validations,
-      );
-    }
-
     if (event is ValidatePassword) {
-      final List<BaseErrorModel> validations =
-          FieldValidator.getPasswordValidationsList(
-        event.password,
-      );
+      if (event.password.isNotEmpty) {
+        _passwordValidator = FieldValidator.getPasswordValidationsList(
+          password: event.password,
+          confirmedPassword: event.confirmedPassword,
+        );
+        _confirmedPasswordValidator = FieldValidator.getPasswordValidationsList(
+          password: event.password,
+          confirmedPassword: event.confirmedPassword,
+        );
 
-      yield state.copyWith(
-        newPasswordError: validations,
-      );
+        yield state.copyWith(
+          newPasswordError: _passwordValidator,
+          newConfirmedPasswordError: _confirmedPasswordValidator,
+        );
+      } else {
+        yield state.copyWith(
+          newPasswordError: PasswordValidator.initial(),
+        );
+      }
     }
 
     if (event is ValidateConfirmedPassword) {
-      final List<BaseErrorModel> validations =
-          FieldValidator.getPasswordValidationsList(
-        event.password,
-      );
+      if (event.confirmedPassword.isNotEmpty) {
+        _passwordValidator = FieldValidator.getPasswordValidationsList(
+          password: event.password,
+          confirmedPassword: event.confirmedPassword,
+        );
 
-      yield state.copyWith(
-        newConfirmedPasswordError: validations,
-      );
+        _confirmedPasswordValidator = FieldValidator.getPasswordValidationsList(
+          password: event.password,
+          confirmedPassword: event.confirmedPassword,
+        );
+        yield state.copyWith(
+          newPasswordError: _passwordValidator,
+          newConfirmedPasswordError: _confirmedPasswordValidator,
+        );
+      } else {
+        yield state.copyWith(
+          newConfirmedPasswordError: PasswordValidator.initial(),
+        );
+      }
     }
 
     if (event is ValidateTermsConditions) {
@@ -113,24 +134,20 @@ class PersonalInformationBloc
         isNewTermsAccepted: event.isConditionsAccepted,
       );
     }
-
-    if (event is RouteBack) {
-      appRouter.pop();
-    }
   }
 
   //TODO: Create common solution for forgetPassword feature
   Map<String, String> getPostValidation({
-    required String password,
-    required String confirmedPassword,
+    required String email,
   }) {
-    if (password == confirmedPassword) {
-      return <String, String>{};
-    } else {
-      return <String, String>{
-        'password': 'Passwords do not match',
-        'confirmedPassword': 'Passwords do not match',
-      };
+    Map<String, String> validations = {};
+    if (email.isNotEmpty) {
+      final String? emailError = FieldValidator.validateEmail(email);
+      if (emailError != null) {
+        validations['email'] = emailError;
+      }
     }
+
+    return validations;
   }
 }

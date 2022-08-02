@@ -74,7 +74,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 password = value;
                               });
                               BlocProvider.of<ForgotPasswordBloc>(context).add(
-                                ValidatePassword(password: value),
+                                ValidatePassword(
+                                  password: password,
+                                  confirmedPassword: confirmedPassword,
+                                ),
                               );
                             },
                             errorText: state.postValidationErrors?['password'],
@@ -95,7 +98,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 confirmedPassword = value;
                               });
                               BlocProvider.of<ForgotPasswordBloc>(context).add(
-                                ValidateConfirmedPassword(password: value),
+                                ValidateConfirmedPassword(
+                                  password: password,
+                                  confirmedPassword: confirmedPassword,
+                                ),
                               );
                             },
                             errorText: state

@@ -1,49 +1,62 @@
-import 'package:domain/models/base_error_model.dart';
+import 'package:core_ui/src/widgets/password_error_tile_widget.dart';
+import 'package:domain/models/password_validator.dart';
 import 'package:flutter/material.dart';
 
-import '../../core_ui.dart';
-
 class ListErrorWidget extends StatelessWidget {
-  List<BaseErrorModel> errors;
+  final bool isPasswordMatch;
+  final PasswordValidator errors;
 
-  ListErrorWidget({
+  const ListErrorWidget({
     required this.errors,
+    this.isPasswordMatch = false,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 0),
-      itemBuilder: (BuildContext context, int index) {
-        return Row(
-          children: <Widget>[
-            AppIconsTheme.cross(
-              color: AppTheme.errorColor,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 14),
+      child: ListView(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 0),
+        children: <Widget>[
+          Visibility(
+            visible: !isPasswordMatch,
+            child: Column(
+              children: <Widget>[
+                PasswordErrorTileWidget(
+                  errorTextKey: 'passwordValidations.length.title',
+                  descriptionKey: 'passwordValidations.length.description',
+                  isPassed: errors.isLengthValid,
+                  isValidationStarted: errors.isValidationStarted,
+                ),
+                PasswordErrorTileWidget(
+                  errorTextKey: 'passwordValidations.capitalLetter.title',
+                  descriptionKey:
+                      'passwordValidations.capitalLetter.description',
+                  isPassed: errors.isContainCapital,
+                  isValidationStarted: errors.isValidationStarted,
+                ),
+                PasswordErrorTileWidget(
+                  errorTextKey: 'passwordValidations.number.title',
+                  descriptionKey: 'passwordValidations.number.description',
+                  isPassed: errors.isContainNumeric,
+                  isValidationStarted: errors.isValidationStarted,
+                ),
+              ],
             ),
-            const SizedBox(width: 11),
-            Text(
-              errors[index].errorText,
-              style: AppTextTheme.manrope14Medium.copyWith(
-                color: AppTheme.accentColor,
-              ),
+          ),
+          Visibility(
+            visible: isPasswordMatch,
+            child: PasswordErrorTileWidget(
+              errorTextKey: 'passwordValidations.passwordMatch.title',
+              isPassed: errors.isPasswordsMatch,
+              isValidationStarted: errors.isValidationStarted,
             ),
-            const SizedBox(width: 4),
-            Text(
-              errors[index].descriptionText ?? '',
-              style: AppTextTheme.manrope14Medium.copyWith(
-                color: AppTheme.textDisabledColor,
-              ),
-            ),
-          ],
-        );
-      },
-      separatorBuilder: (BuildContext context, int index) {
-        return const SizedBox.shrink();
-      },
-      itemCount: errors.length,
+          ),
+        ],
+      ),
     );
   }
 }

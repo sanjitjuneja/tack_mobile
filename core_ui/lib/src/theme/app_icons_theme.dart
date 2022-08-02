@@ -30,6 +30,8 @@ class AppIconsTheme {
   static const String _trashKey = '${_basePath}trash.png';
   static const String _copyKey = '${_basePath}copy.png';
   static const String _shareKey = '${_basePath}share.png';
+  static const String _successKey = '${_basePath}success.png';
+  static const String _crossErrorKey = '${_basePath}cross.png';
 
   /// SVG
   static const String _chevronLeftKey = '${_svgPath}chevron_left.svg';
@@ -80,6 +82,8 @@ class AppIconsTheme {
   static AppIcon get trash => AppIcon(_trashKey);
   static AppIcon get copy => AppIcon(_copyKey);
   static AppIcon get share => AppIcon(_shareKey);
+  static AppIcon get success => AppIcon(_successKey);
+  static AppIcon get crossError => AppIcon(_crossErrorKey);
 
   /// SVG
   static AppIcon get chevronLeft => AppIcon(_chevronLeftKey);

@@ -293,6 +293,7 @@
     "title": "Personal Information",
     "firstName": "First Name",
     "lastName": "Last Name",
+    "email": "Email Address",
     "phoneNumber": "Phone Number",
     "password": "Password",
     "passwordConfirm": "Confirm Password",
@@ -398,6 +399,7 @@
     "doneButtonLabel": "Done"
   },
   "smsVerification": {
+    "loadingTitle": "Verifying Code",
     "title": "Verify Phone Number",
     "description": "Please enter the 6-digit code sent to ",
     "resendCode": "Resend Code",
@@ -502,5 +504,26 @@
     "regularPayoutSubtitle": "This process can take up to 3 business days",
     "newTackBalance": "New Tack Balance:",
     "close": "Close"
+  },
+  "errorScreen": {
+    "title": "Already Registered",
+    "description": "Your phone number is already registered within our system. Please Sign In by clicking below."
+  },
+  "passwordValidations": {
+    "length": {
+      "title": "8-16 characters",
+      "description": "(E.g: Ab12345678)"
+    },
+    "capitalLetter": {
+      "title": "At least 1 Capital Letter",
+      "description": "(E.g: ABCD)"
+    },
+    "number": {
+      "title": "At least 1 Digit",
+      "description": "(E.g: 12345)"
+    },
+    "passwordMatch": {
+      "title": "Passwords Match"
+    }
   }
 }

@@ -1,6 +1,7 @@
 abstract class PersonalInformationEvent {}
 
 class RegisterUser extends PersonalInformationEvent {
+  final String email;
   final String firstName;
   final String lastName;
   final String password;
@@ -8,6 +9,7 @@ class RegisterUser extends PersonalInformationEvent {
   final String confirmedPassword;
 
   RegisterUser({
+    required this.email,
     required this.firstName,
     required this.lastName,
     required this.password,
@@ -16,35 +18,31 @@ class RegisterUser extends PersonalInformationEvent {
   });
 }
 
-class ValidateFirstName extends PersonalInformationEvent {
-  final String firstName;
+class ValidateEmail extends PersonalInformationEvent {
+  final String email;
 
-  ValidateFirstName({
-    required this.firstName,
-  });
-}
-
-class ValidateLastName extends PersonalInformationEvent {
-  final String lastName;
-
-  ValidateLastName({
-    required this.lastName,
+  ValidateEmail({
+    required this.email,
   });
 }
 
 class ValidatePassword extends PersonalInformationEvent {
   final String password;
+  final String confirmedPassword;
 
   ValidatePassword({
     required this.password,
+    required this.confirmedPassword,
   });
 }
 
 class ValidateConfirmedPassword extends PersonalInformationEvent {
   final String password;
+  final String confirmedPassword;
 
   ValidateConfirmedPassword({
     required this.password,
+    required this.confirmedPassword,
   });
 }
 
@@ -55,5 +53,3 @@ class ValidateTermsConditions extends PersonalInformationEvent {
     required this.isConditionsAccepted,
   });
 }
-
-class RouteBack extends PersonalInformationEvent {}

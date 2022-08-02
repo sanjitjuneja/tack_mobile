@@ -47,6 +47,7 @@ export 'src/widgets/list_error_widget.dart';
 export 'src/widgets/information_field.dart';
 export 'src/widgets/required_marker_widget.dart';
 export 'src/widgets/phone_verification_widget.dart';
+export 'src/widgets/rounded_list_marker.dart';
 
 export 'src/widgets/drawer_accessory_widget.dart';
 export 'src/widgets/empty_widget.dart';

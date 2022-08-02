@@ -30,28 +30,28 @@ class InformationField extends StatelessWidget {
           left: 21,
           bottom: 10,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              description,
-              style: AppTextTheme.manrope14Regular.copyWith(
-                color: AppTheme.k,
-              ),
-            ),
-            const SizedBox(height: 6),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                Text(
+                  description,
+                  style: AppTextTheme.manrope14Regular.copyWith(
+                    color: AppTheme.k,
+                  ),
+                ),
+                const SizedBox(height: 6),
                 Text(
                   information,
                   style: AppTextTheme.manrope20Medium.copyWith(
                     color: AppTheme.p,
                   ),
-                ),
-                AppImagesTheme.fieldSuccessIcon,
+                )
               ],
-            )
+            ),
+            AppImagesTheme.fieldSuccessIcon,
           ],
         ),
       ),

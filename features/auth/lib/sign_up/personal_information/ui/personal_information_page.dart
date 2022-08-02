@@ -6,7 +6,7 @@ import 'package:navigation/navigation.dart';
 
 import '../bloc/personal_information_bloc.dart';
 
-class PersonalInformationPage extends PageWithScaffoldKey<bool> {
+class PersonalInformationPage extends PageWithScaffoldKey<bool?> {
   final VerificationData verificationData;
 
   PersonalInformationPage({
@@ -14,7 +14,7 @@ class PersonalInformationPage extends PageWithScaffoldKey<bool> {
   });
 
   @override
-  Route<bool> createRoute(BuildContext context) => MaterialPageRoute<bool>(
+  Route<bool?> createRoute(BuildContext context) => MaterialPageRoute<bool?>(
         builder: (BuildContext context) {
           return BlocProvider<PersonalInformationBloc>(
             create: (BuildContext context) => PersonalInformationBloc(

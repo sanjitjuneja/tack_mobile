@@ -1,7 +1,8 @@
 import 'package:core/core.dart';
+import 'package:core/utils/regular_expressions.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:navigation/navigation.dart';
+import 'package:flutter/services.dart';
 
 import '../bloc/personal_information_bloc.dart';
 import '../bloc/personal_information_event.dart';
@@ -24,6 +25,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   final TextEditingController codeController = TextEditingController();
 
   bool radioValue = false;
+  String email = '';
   String firstName = '';
   String lastName = '';
   String password = '';
@@ -34,25 +36,9 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     return BlocBuilder<PersonalInformationBloc, PersonalInformationState>(
       builder: (BuildContext context, state) {
         return CupertinoPageScaffold(
-          navigationBar: CupertinoNavigationBar(
-            border: null,
-            backgroundColor: AppTheme.primaryColor,
-            leading: CupertinoButton(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              onPressed: () => AppRouter.of(context).popWithResult(true),
-              child: Row(
-                children: [
-                  AppImagesTheme.backArrow,
-                  const SizedBox(width: 16),
-                  Text(
-                    FlutterI18n.translate(context, 'general.back'),
-                    style: AppTextTheme.manrope16Regular.copyWith(
-                      color: AppTheme.textPrimaryColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          navigationBar: AppNavigationBar(
+            backgroundColor: AppTheme.secondaryBackgroundColor,
+            withResult: true,
           ),
           backgroundColor: AppTheme.positiveColor,
           child: Padding(
@@ -76,50 +62,59 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   color: AppTheme.accentColor,
                                 ),
                               ),
-                              const SizedBox(height: 70),
+                              const SizedBox(height: 16),
                               AppTextFormField(
                                 hintText: FlutterI18n.translate(
                                   context,
                                   'personalInformation.firstName',
                                 ),
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.allow(
+                                    lettersOnlyRedEx,
+                                  ),
+                                ],
                                 onChanged: (String value) {
                                   setState(() {
                                     firstName = value;
                                   });
-                                  BlocProvider.of<PersonalInformationBloc>(
-                                          context)
-                                      .add(
-                                    ValidateFirstName(firstName: value),
-                                  );
                                 },
                               ),
-                              if (state.firstNameError != null) ...<Widget>{
-                                ListErrorWidget(
-                                  errors: state.firstNameError!,
-                                ),
-                              },
                               const SizedBox(height: 12),
                               AppTextFormField(
                                 hintText: FlutterI18n.translate(
                                   context,
                                   'personalInformation.lastName',
                                 ),
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.allow(
+                                    lettersOnlyRedEx,
+                                  ),
+                                ],
                                 onChanged: (String value) {
                                   setState(() {
                                     lastName = value;
                                   });
+                                },
+                              ),
+                              const SizedBox(height: 12),
+                              AppTextFormField(
+                                keyboardType: TextInputType.emailAddress,
+                                hintText: FlutterI18n.translate(
+                                  context,
+                                  'personalInformation.email',
+                                ),
+                                onChanged: (String value) {
+                                  setState(() {
+                                    email = value;
+                                  });
                                   BlocProvider.of<PersonalInformationBloc>(
                                           context)
                                       .add(
-                                    ValidateLastName(lastName: value),
+                                    ValidateEmail(email: value),
                                   );
                                 },
+                                errorText: state.postValidationErrors?['email'],
                               ),
-                              if (state.secondNameError != null) ...<Widget>{
-                                ListErrorWidget(
-                                  errors: state.secondNameError!,
-                                ),
-                              },
                               const SizedBox(height: 12),
                               InformationField(
                                 information: widget.phoneNumber,
@@ -143,17 +138,17 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   BlocProvider.of<PersonalInformationBloc>(
                                           context)
                                       .add(
-                                    ValidatePassword(password: value),
+                                    ValidatePassword(
+                                      password: password,
+                                      confirmedPassword: confirmedPassword,
+                                    ),
                                   );
                                 },
-                                errorText:
-                                    state.postValidationErrors?['password'],
                               ),
-                              if (state.passwordError != null) ...<Widget>{
-                                ListErrorWidget(
-                                  errors: state.passwordError!,
-                                ),
-                              },
+                              ListErrorWidget(
+                                isPasswordMatch: false,
+                                errors: state.passwordError,
+                              ),
                               const SizedBox(height: 12),
                               AppTextFormField(
                                 obscureText: true,
@@ -169,75 +164,71 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   BlocProvider.of<PersonalInformationBloc>(
                                           context)
                                       .add(
-                                    ValidateConfirmedPassword(password: value),
+                                    ValidateConfirmedPassword(
+                                      password: password,
+                                      confirmedPassword: confirmedPassword,
+                                    ),
                                   );
                                 },
-                                errorText: state
-                                    .postValidationErrors?['confirmedPassword'],
                               ),
-                              if (state.confirmedPasswordError !=
-                                  null) ...<Widget>{
-                                ListErrorWidget(
-                                  errors: state.confirmedPasswordError!,
+                              ListErrorWidget(
+                                isPasswordMatch: true,
+                                errors: state.confirmedPasswordError,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 14,
+                                  horizontal: 12,
                                 ),
-                              },
+                                child: TermsConditionsResolver(
+                                  onChanged: (bool value) {
+                                    setState(() {
+                                      radioValue = value;
+                                    });
+                                    BlocProvider.of<PersonalInformationBloc>(
+                                            context)
+                                        .add(
+                                      ValidateTermsConditions(
+                                        isConditionsAccepted: value,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
                             ],
                           ),
                         ),
                       ),
                     ),
                     KeyboardVisibilityWidget(
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 14,
-                              horizontal: 12,
+                      child: RoundedCustomButton(
+                        height: 60,
+                        isEnabled: isButtonEnabled(
+                          isValidationsPassed: state.isValidationsPassed,
+                        ),
+                        backgroundColor: AppTheme.grassColor,
+                        text: 'personalInformation.buttonTitle',
+                        disabledBackgroundColor: AppTheme.buttonDisabledColor,
+                        textStyle: AppTextTheme.manrope20Medium.copyWith(
+                          color: AppTheme.positiveColor,
+                        ),
+                        disabledTextStyle:
+                            AppTextTheme.manrope20Medium.copyWith(
+                          color: AppTheme.accentColor,
+                        ),
+                        borderRadius: BorderRadius.circular(35),
+                        onPressed: () {
+                          BlocProvider.of<PersonalInformationBloc>(context).add(
+                            RegisterUser(
+                              email: email,
+                              password: password,
+                              firstName: firstName,
+                              lastName: lastName,
+                              phoneNumber: widget.phoneNumber,
+                              confirmedPassword: confirmedPassword,
                             ),
-                            child: TermsConditionsResolver(
-                              onChanged: (bool value) {
-                                setState(() {
-                                  radioValue = value;
-                                });
-                                BlocProvider.of<PersonalInformationBloc>(
-                                        context)
-                                    .add(
-                                  ValidateTermsConditions(
-                                    isConditionsAccepted: value,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          RoundedCustomButton(
-                            height: 60,
-                            isEnabled: state.isValidationsPassed,
-                            backgroundColor: AppTheme.grassColor,
-                            text: 'personalInformation.buttonTitle',
-                            disabledBackgroundColor:
-                                AppTheme.buttonDisabledColor,
-                            textStyle: AppTextTheme.manrope20Medium.copyWith(
-                              color: AppTheme.positiveColor,
-                            ),
-                            disabledTextStyle:
-                                AppTextTheme.manrope20Medium.copyWith(
-                              color: AppTheme.accentColor,
-                            ),
-                            borderRadius: BorderRadius.circular(35),
-                            onPressed: () {
-                              BlocProvider.of<PersonalInformationBloc>(context)
-                                  .add(
-                                RegisterUser(
-                                  password: password,
-                                  firstName: firstName,
-                                  lastName: lastName,
-                                  phoneNumber: widget.phoneNumber,
-                                  confirmedPassword: confirmedPassword,
-                                ),
-                              );
-                            },
-                          ),
-                        ],
+                          );
+                        },
                       ),
                     ),
                   ],
@@ -248,5 +239,14 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         );
       },
     );
+  }
+
+  bool isButtonEnabled({
+    required bool isValidationsPassed,
+  }) {
+    return isValidationsPassed &&
+        email.isNotEmpty &&
+        firstName.isNotEmpty &&
+        lastName.isNotEmpty;
   }
 }

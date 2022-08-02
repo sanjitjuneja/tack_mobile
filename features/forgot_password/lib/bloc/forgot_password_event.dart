@@ -12,17 +12,21 @@ class SubmitNewPassword extends ForgotPasswordEvent {
 
 class ValidatePassword extends ForgotPasswordEvent {
   final String password;
+  final String confirmedPassword;
 
   ValidatePassword({
     required this.password,
+    required this.confirmedPassword,
   });
 }
 
 class ValidateConfirmedPassword extends ForgotPasswordEvent {
   final String password;
+  final String confirmedPassword;
 
   ValidateConfirmedPassword({
     required this.password,
+    required this.confirmedPassword,
   });
 }
 

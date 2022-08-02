@@ -49,7 +49,9 @@ class SmsVerificationBloc
     if (event is VerifyNumber) {
       try {
         if (uuid != null) {
-          appRouter.push(ProgressDialog.page());
+          appRouter.push(
+            ProgressDialog.page(messageKey: 'smsVerification.loadingTitle'),
+          );
           final PhoneVerificationResult result =
               await verifyPhoneNumberUseCase.execute(VerifyPhoneNumberPayload(
             uuid: uuid!,

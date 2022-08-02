@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:core/core.dart';
 import 'package:domain/enums/phone_verification_type.dart';
-import 'package:domain/models/base_error_model.dart';
+import 'package:domain/models/password_validator.dart';
 import 'package:domain/models/verification_data.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
@@ -59,15 +59,21 @@ class ForgotPasswordBloc
     }
 
     if (event is ValidatePassword) {
-      final List<BaseErrorModel> errors =
-          FieldValidator.getPasswordValidationsList(event.password);
+      final PasswordValidator errors =
+          FieldValidator.getPasswordValidationsList(
+        password: event.password,
+        confirmedPassword: event.confirmedPassword,
+      );
 
       yield state.copyWith(newPasswordErrors: errors);
     }
 
     if (event is ValidateConfirmedPassword) {
-      final List<BaseErrorModel> errors =
-          FieldValidator.getPasswordValidationsList(event.password);
+      final PasswordValidator errors =
+          FieldValidator.getPasswordValidationsList(
+        password: event.password,
+        confirmedPassword: event.confirmedPassword,
+      );
 
       yield state.copyWith(newConfirmedPasswordErrors: errors);
     }
