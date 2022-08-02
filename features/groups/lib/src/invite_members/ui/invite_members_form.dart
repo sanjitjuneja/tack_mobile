@@ -36,7 +36,7 @@ class InviteMembersForm extends StatelessWidget {
                     ),
                     const SizedBox(height: 22),
                     InviteMembersButton(
-                      leading: AppIconsTheme.group,
+                      leading: AppIconsTheme.people,
                       trailing: AppIconsTheme.copy,
                       labelKey: 'inviteMembersScreen.copyLinkButtonLabel',
                       backgroundColor:
@@ -49,7 +49,7 @@ class InviteMembersForm extends StatelessWidget {
                     const InviteMembersDivider(),
                     const SizedBox(height: 16),
                     InviteMembersButton(
-                      leading: AppIconsTheme.group,
+                      leading: AppIconsTheme.people,
                       trailing: AppIconsTheme.share,
                       labelKey: 'inviteMembersScreen.shareLinkButtonLabel',
                       backgroundColor: AppTheme.buttonPrimaryColor,

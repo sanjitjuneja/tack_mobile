@@ -1,7 +1,6 @@
 part of tacks_entities;
 
 @JsonSerializable(createFactory: false)
-@FileConverter()
 class RateTackRequest extends JsonSerializable {
   final int tack;
   final String description;

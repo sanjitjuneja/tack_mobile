@@ -7,6 +7,8 @@ abstract class TacksRepository {
 
   Future<List<Tack>> getMyTacks();
 
+  Future<List<Tack>> getGroupTacks(GroupTacksPayload payload);
+
   Future<void> updateTack(UpdateTackPayload payload);
 
   Future<void> rateTack(RateTackPayload payload);

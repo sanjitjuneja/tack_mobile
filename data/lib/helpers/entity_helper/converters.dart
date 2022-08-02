@@ -1,8 +1,4 @@
-import 'dart:io';
-
-import 'package:dio/dio.dart';
-import 'package:json_annotation/json_annotation.dart';
-import 'package:path/path.dart' as path;
+part of entities_helpers;
 
 class FileConverter implements JsonConverter<File, MultipartFile> {
   const FileConverter();

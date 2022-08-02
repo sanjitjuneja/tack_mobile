@@ -1,7 +1,6 @@
 part of tacks_entities;
 
 @JsonSerializable(createFactory: false)
-@FileConverter()
 class UpdateTackRequest extends JsonSerializable {
   @JsonKey(ignore: true)
   final int id;

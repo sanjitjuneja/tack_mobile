@@ -98,6 +98,11 @@ class DataDI {
         apiProvider: appLocator.get<ApiProvider>(),
       ),
     );
+    appLocator.registerLazySingleton<GetGroupTacksUseCase>(
+      () => GetGroupTacksUseCase(
+        tacksRepository: appLocator.get<TacksRepository>(),
+      ),
+    );
     appLocator.registerLazySingleton<GetMyTacksUseCase>(
       () => GetMyTacksUseCase(
         tacksRepository: appLocator.get<TacksRepository>(),

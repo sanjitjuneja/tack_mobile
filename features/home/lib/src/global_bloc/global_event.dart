@@ -7,3 +7,7 @@ abstract class GlobalEvent {
 class ChangeGroup extends GlobalEvent {
   const ChangeGroup();
 }
+
+class GoToMyInvitations extends GlobalEvent {
+  const GoToMyInvitations();
+}

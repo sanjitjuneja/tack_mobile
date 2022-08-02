@@ -108,10 +108,22 @@
     "price": "Price",
     "or": "or",
     "ago": "ago",
-    "andSymbol": " & "
+    "andSymbol": " & ",
+    "upToDate": "Up to date",
+    "updateFailed": "Update failed!"
   },
   "dashboardScreen": {
-    "title": "Home Feed"
+    "title": "Home Feed",
+    "noGroupSelectedSubtitle": "No Group Selected",
+    "emptyNoGroupSelected": {
+      "title": "Join A Group",
+      "description": "You must be invited to a Tack group before creating or completing Tacks. If you were sent an invite link, please use it to view your invitation or click below to view your current invitations.",
+      "labelButton": "My Invitations"
+    },
+    "noTacks": {
+      "description": "Looks like this group doesn’t have any current Tacks. This will automatically populate as Tacks are created within this group. Create your own Tack below.",
+      "labelButton": "Create Tack"
+    }
   },
   "counterOfferScreen": {
     "tackDetails": "Tack Details",

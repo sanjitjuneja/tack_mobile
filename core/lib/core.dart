@@ -1,6 +1,5 @@
 library core;
 
-export 'package:core/constants/base_url_constants.dart';
 export 'package:core/constants/constants.dart';
 
 export 'package:core/di/app_di.dart';

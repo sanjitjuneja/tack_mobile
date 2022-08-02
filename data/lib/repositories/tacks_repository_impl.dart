@@ -35,6 +35,15 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   }
 
   @override
+  Future<List<domain.Tack>> getGroupTacks(
+    domain.GroupTacksPayload payload,
+  ) async {
+    return _apiProvider.getGroupTacks(
+      GroupTacksRequest(groupId: payload.groupId),
+    );
+  }
+
+  @override
   Future<void> updateTack(domain.UpdateTackPayload payload) async {
     return _apiProvider.updateTack(
       UpdateTackRequest(

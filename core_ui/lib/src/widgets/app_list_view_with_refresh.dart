@@ -16,12 +16,16 @@ enum RefreshingStatus {
   failed,
 }
 
-typedef LoadCallback = void Function(Completer<LoadingStatus>);
-typedef RefreshCallback = void Function(Completer<RefreshingStatus>);
+typedef LoadCallback = void Function(BuildContext, Completer<LoadingStatus>);
+typedef RefreshCallback = void Function(
+    BuildContext, Completer<RefreshingStatus>);
 
 class AppListViewWithRefresh extends StatefulWidget {
   final BuilderFunction itemBuilder;
   final int itemCount;
+  final bool isLoading;
+  final bool hasData;
+  final Widget? emptyWidget;
   final ScrollPhysics? physics;
   final bool enableLoad;
   final bool enableRefresh;
@@ -32,6 +36,9 @@ class AppListViewWithRefresh extends StatefulWidget {
     super.key,
     required this.itemBuilder,
     required this.itemCount,
+    this.isLoading = false,
+    this.hasData = true,
+    this.emptyWidget,
     this.enableLoad = true,
     this.enableRefresh = true,
     this.onLoad,
@@ -48,6 +55,18 @@ class _AppListViewWithRefreshState extends State<AppListViewWithRefresh> {
 
   late RefreshController _refreshController;
 
+  bool get enableRefresh {
+    if (widget.isLoading) return false;
+
+    return widget.enableRefresh;
+  }
+
+  bool get enableLoad {
+    if (widget.isLoading) return false;
+
+    return widget.enableLoad;
+  }
+
   @override
   void initState() {
     _refreshController = RefreshController(initialRefresh: false);
@@ -59,42 +78,80 @@ class _AppListViewWithRefreshState extends State<AppListViewWithRefresh> {
   Widget build(BuildContext context) {
     return CupertinoScrollbar(
       child: SmartRefresher(
-        enablePullDown: widget.enableRefresh,
-        enablePullUp: widget.enableLoad,
+        enablePullDown: enableRefresh,
+        enablePullUp: enableLoad,
         header: CustomHeader(
-          builder: (_, __) => Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: AppProgressIndicator(
-              backgroundColor: AppTheme.transparentColor,
-              indicatorSize: ProgressIndicatorSize.medium,
-              expand: false,
-            ),
-          ),
+          builder: (_, RefreshStatus? status) {
+            if (status == RefreshStatus.completed) {
+              return Center(
+                child: Text(
+                  FlutterI18n.translate(context, 'general.upToDate'),
+                  style: AppTextTheme.manrope12Medium
+                      .copyWith(color: AppTheme.textHintColor),
+                ),
+              );
+            } else if (status == RefreshStatus.failed) {
+              return Center(
+                child: Text(
+                  FlutterI18n.translate(context, 'general.updateFailed'),
+                  style: AppTextTheme.manrope12Medium
+                      .copyWith(color: AppTheme.textHintColor),
+                ),
+              );
+            } else {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: AppProgressIndicator(
+                  backgroundColor: AppTheme.transparentColor,
+                  indicatorSize: ProgressIndicatorSize.medium,
+                  expand: false,
+                ),
+              );
+            }
+          },
         ),
         footer: CustomFooter(
           loadStyle: LoadStyle.ShowWhenLoading,
           builder: (_, LoadStatus? status) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: AppProgressIndicator(
-                backgroundColor: AppTheme.transparentColor,
-                indicatorSize: ProgressIndicatorSize.medium,
-                expand: false,
-              ),
-            );
+            if (status == LoadStatus.failed) {
+              return Center(
+                child: Text(
+                  FlutterI18n.translate(context, 'general.updateFailed'),
+                  style: AppTextTheme.manrope12Medium
+                      .copyWith(color: AppTheme.textHintColor),
+                ),
+              );
+            } else {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: AppProgressIndicator(
+                  backgroundColor: AppTheme.transparentColor,
+                  indicatorSize: ProgressIndicatorSize.medium,
+                  expand: false,
+                ),
+              );
+            }
           },
         ),
         controller: _refreshController,
         onRefresh: _onRefresh,
         onLoading: _onLoad,
-        child: ListView.separated(
-          shrinkWrap: widget.physics is NeverScrollableScrollPhysics,
-          physics: widget.physics,
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-          itemBuilder: widget.itemBuilder,
-          separatorBuilder: (_, __) => const SizedBox(height: 12.0),
-          itemCount: widget.itemCount,
-        ),
+        child: widget.isLoading
+            ? Center(
+                child: AppProgressIndicator(
+                  backgroundColor: AppTheme.transparentColor,
+                ),
+              )
+            : widget.hasData
+                ? ListView.separated(
+                    shrinkWrap: widget.physics is NeverScrollableScrollPhysics,
+                    physics: widget.physics,
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                    itemBuilder: widget.itemBuilder,
+                    separatorBuilder: (_, __) => const SizedBox(height: 12.0),
+                    itemCount: widget.itemCount,
+                  )
+                : widget.emptyWidget ?? const SizedBox.shrink(),
       ),
     );
   }
@@ -103,7 +160,7 @@ class _AppListViewWithRefreshState extends State<AppListViewWithRefresh> {
     final Completer<RefreshingStatus> completer = Completer<RefreshingStatus>();
 
     if (widget.onRefresh != null) {
-      widget.onRefresh!(completer);
+      widget.onRefresh!(context, completer);
     } else {
       completer.complete(RefreshingStatus.complete);
     }
@@ -124,7 +181,7 @@ class _AppListViewWithRefreshState extends State<AppListViewWithRefresh> {
     final Completer<LoadingStatus> completer = Completer<LoadingStatus>();
 
     if (widget.onLoad != null) {
-      widget.onLoad!(completer);
+      widget.onLoad!(context, completer);
     } else {
       completer.complete(LoadingStatus.complete);
     }

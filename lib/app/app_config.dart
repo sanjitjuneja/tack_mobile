@@ -1,5 +1,3 @@
-import 'package:core/constants/base_url_constants.dart';
-
 enum Flavor {
   dev,
   staging,
@@ -7,6 +5,10 @@ enum Flavor {
 }
 
 class AppConfig {
+  static const String stagingUrl = 'http://44.203.217.242:8020/api/v1/';
+  static const String productionUrl = 'http://44.203.217.242:8020/api/v1/';
+  static const String developmentUrl = 'http://44.203.217.242:8020/api/v1/';
+
   final Flavor flavor;
   final String baseUrl;
 
@@ -19,13 +21,13 @@ class AppConfig {
     String baseUrl;
     switch (flavor) {
       case Flavor.dev:
-        baseUrl = BaseUrlConstants.developmentUrl;
+        baseUrl = developmentUrl;
         break;
       case Flavor.staging:
-        baseUrl = BaseUrlConstants.stagingUrl;
+        baseUrl = stagingUrl;
         break;
       case Flavor.production:
-        baseUrl = BaseUrlConstants.productionUrl;
+        baseUrl = productionUrl;
         break;
     }
 

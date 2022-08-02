@@ -18,10 +18,10 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
           GlobalState(
             user: user,
             groups: groups,
-            currentGroup: groups.first,
           ),
         ) {
     on<ChangeGroup>(_onChangeGroup);
+    on<GoToMyInvitations>(_onGoToMyInvitations);
   }
 
   Future<void> _onChangeGroup(
@@ -40,4 +40,9 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
       state.copyWith(currentGroup: newGroup ?? state.currentGroup),
     );
   }
+
+  Future<void> _onGoToMyInvitations(
+    GoToMyInvitations event,
+    Emitter<GlobalState> emit,
+  ) async {}
 }

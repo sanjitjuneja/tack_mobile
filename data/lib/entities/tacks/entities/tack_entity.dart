@@ -3,7 +3,7 @@ part of tacks_entities;
 @JsonSerializable()
 @DoubleConverter()
 @BooleanConverter()
-class TackEntity extends JsonSerializable {
+class TackEntity extends JsonSerializable with ListParserMixin {
   final int id;
   final String title;
   final double price;
@@ -39,6 +39,9 @@ class TackEntity extends JsonSerializable {
   factory TackEntity.fromJson(Map<String, dynamic> json) {
     return _$TackEntityFromJson(json);
   }
+
+  static List<TackEntity> listFromJson(Map<String, dynamic> json) =>
+      ListParserMixin.listFromJson(json, TackEntity.fromJson);
 
   @override
   Map<String, dynamic> toJson() => _$TackEntityToJson(this);

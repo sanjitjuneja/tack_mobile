@@ -1,4 +1,3 @@
-import 'package:core/constants/base_url_constants.dart';
 import 'package:data/data.dart';
 
 import '../entities/phone_verification/phone_verification.dart';
@@ -17,14 +16,14 @@ class PhoneNumberRepositoryImpl implements domain.PhoneVerificationRepository {
   Future<domain.SmsCodeResult> requestSmsCode({
     required domain.RequestSmsCodePayload payload,
   }) async {
-    final String endpointPostfix =
-        payload.phoneVerificationType == domain.PhoneVerificationType.signUp
-            ? BaseUrlConstants.requestSmsCodeSignUpPath
-            : BaseUrlConstants.requestSmsCodeResetPasswordPath;
-    return _apiProvider.requestSmsCode(
-      endpointPostfix: endpointPostfix,
-      request: SmsCodeRequest(phoneNumber: payload.phoneNumber),
-    );
+    final SmsCodeRequest request =
+        SmsCodeRequest(phoneNumber: payload.phoneNumber);
+
+    if (payload.phoneVerificationType == domain.PhoneVerificationType.signUp) {
+      return _apiProvider.requestSighUpSmsCode(request: request);
+    } else {
+      return _apiProvider.requestResetPasswordSmsCode(request: request);
+    }
   }
 
   @override

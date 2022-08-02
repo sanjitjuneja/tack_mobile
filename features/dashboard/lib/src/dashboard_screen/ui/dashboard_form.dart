@@ -4,7 +4,10 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/src/bloc/dashboard_bloc.dart';
 import 'package:dashboard/src/widgets/tack_tile.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:home/home.dart';
+import 'package:navigation/navigation.dart';
 
 class DashboardForm extends StatelessWidget {
   const DashboardForm({
@@ -13,35 +16,81 @@ class DashboardForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DashboardBloc, DashboardState>(
-      builder: (_, DashboardState state) {
-        return AppListViewWithRefresh(
-          enableRefresh: true,
-          onRefresh: (Completer<RefreshingStatus> completer) {
-            Future.delayed(
-              const Duration(milliseconds: 1000),
-              () {
-                completer.complete(RefreshingStatus.complete);
+    return BlocBuilder<GlobalBloc, GlobalState>(
+      builder: (_, GlobalState state) {
+        if (state.isGroupSelected) {
+          return BlocProvider<DashboardBloc>(
+            key: ValueKey<Group>(state.currentGroup!),
+            create: (_) => DashboardBloc(
+              appRouter: appLocator.get<AppRouterDelegate>(),
+              getGroupTacksUseCase: appLocator.get<GetGroupTacksUseCase>(),
+              selectedGroup: state.currentGroup!,
+            ),
+            child: BlocBuilder<DashboardBloc, DashboardState>(
+              builder: (BuildContext dashboardContext, DashboardState state) {
+                return AppListViewWithRefresh(
+                  enableRefresh: true,
+                  enableLoad: state.canLoadMore,
+                  isLoading: state.isLoading,
+                  hasData: state.hasData,
+                  emptyWidget: EmptyWidget(
+                    svgIcon: AppIconsTheme.people,
+                    descriptionKey: 'dashboardScreen.noTacks.description',
+                    buttonLabelKey: 'dashboardScreen.noTacks.labelButton',
+                    onButtonTap: () =>
+                        _onNoTacksButtonPressed(dashboardContext),
+                  ),
+                  onRefresh: _onRefreshAction,
+                  onLoad: _onLoadMoreAction,
+                  itemCount: state.tacks.length,
+                  itemBuilder: (_, int index) {
+                    return TackTile(
+                      tack: state.tacks[index],
+                    );
+                  },
+                );
               },
-            );
-          },
-          enableLoad: true,
-          onLoad: (Completer<LoadingStatus> completer) {
-            Future.delayed(
-              const Duration(milliseconds: 1000),
-              () {
-                completer.complete(LoadingStatus.complete);
-              },
-            );
-          },
-          itemCount: state.tacks.length,
-          itemBuilder: (_, int index) {
-            return TackTile(
-              tack: state.tacks[index],
-            );
-          },
-        );
+            ),
+          );
+        } else {
+          return Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: EmptyWidget(
+              svgIcon: AppIconsTheme.people,
+              titleKey: 'dashboardScreen.emptyNoGroupSelected.title',
+              descriptionKey:
+                  'dashboardScreen.emptyNoGroupSelected.description',
+              buttonLabelKey:
+                  'dashboardScreen.emptyNoGroupSelected.labelButton',
+              onButtonTap: () => _onNoGroupButtonPressed(context),
+            ),
+          );
+        }
       },
     );
+  }
+
+  void _onRefreshAction(
+    BuildContext context,
+    Completer<RefreshingStatus> completer,
+  ) {
+    BlocProvider.of<DashboardBloc>(context)
+        .add(RefreshAction(completer: completer));
+  }
+
+  void _onLoadMoreAction(
+    BuildContext context,
+    Completer<LoadingStatus> completer,
+  ) {
+    BlocProvider.of<DashboardBloc>(context)
+        .add(LoadMoreAction(completer: completer));
+  }
+
+  void _onNoGroupButtonPressed(BuildContext context) {
+    BlocProvider.of<GlobalBloc>(context).add(const GoToMyInvitations());
+  }
+
+  void _onNoTacksButtonPressed(BuildContext context) {
+    BlocProvider.of<DashboardBloc>(context).add(const GoToCreateTack());
   }
 }

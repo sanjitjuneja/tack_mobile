@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CreateTackForm extends StatefulWidget {
-  final Group group;
+  final Group? group;
 
   const CreateTackForm({
     required this.group,
@@ -44,7 +44,7 @@ class _CreateTackFormState extends State<CreateTackForm> {
                         '${FlutterI18n.translate(
                           context,
                           'createTack.instructions',
-                        )} (${widget.group.name})',
+                        )} (${widget.group?.name ?? ''})',
                         style: AppTextTheme.manrope13Medium.copyWith(
                           color: AppTheme.textDescriptionColor,
                         ),

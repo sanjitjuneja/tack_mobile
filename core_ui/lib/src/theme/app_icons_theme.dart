@@ -28,7 +28,6 @@ class AppIconsTheme {
   static const String _taskCompleteKey = '${_basePath}task_complete.png';
   static const String _cameraKey = '${_basePath}camera.png';
   static const String _trashKey = '${_basePath}trash.png';
-  static const String _groupKey = '${_basePath}group.png';
   static const String _copyKey = '${_basePath}copy.png';
   static const String _shareKey = '${_basePath}share.png';
 
@@ -38,6 +37,7 @@ class AppIconsTheme {
   static const String _crossKey = '${_svgPath}cross.svg';
 
   static const String _tacksListKey = '${_svgPath}tacks_list.svg';
+  static const String _peopleKey = '${_svgPath}people.svg';
   static const String _phoneKey = '${_svgPath}phone.svg';
   static const String _moreKey = '${_svgPath}more.svg';
   static const String _starKey = '${_svgPath}star.svg';
@@ -66,7 +66,6 @@ class AppIconsTheme {
   static AppIcon get taskComplete => AppIcon(_taskCompleteKey);
   static AppIcon get camera => AppIcon(_cameraKey);
   static AppIcon get trash => AppIcon(_trashKey);
-  static AppIcon get group => AppIcon(_groupKey);
   static AppIcon get copy => AppIcon(_copyKey);
   static AppIcon get share => AppIcon(_shareKey);
 
@@ -76,6 +75,7 @@ class AppIconsTheme {
   static AppIcon get cross => AppIcon(_crossKey);
 
   static AppIcon get tacksList => AppIcon(_tacksListKey);
+  static AppIcon get people => AppIcon(_peopleKey);
   static AppIcon get phone => AppIcon(_phoneKey);
   static AppIcon get more => AppIcon(_moreKey);
   static AppIcon get star => AppIcon(_starKey);
