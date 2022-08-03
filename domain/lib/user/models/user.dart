@@ -1,14 +1,14 @@
 part of user;
 
-class Customer {
+class User {
   final int id;
   final double balance;
   final String firstName;
   final String lastName;
-  final int activeGroup;
+  final int? activeGroup;
   final String phoneNumber;
 
-  Customer({
+  User({
     required this.id,
     required this.balance,
     required this.firstName,

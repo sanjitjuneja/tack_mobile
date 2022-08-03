@@ -48,22 +48,26 @@ class AppAlertDialogWidget extends StatelessWidget {
           const SizedBox(height: 10),
           alert.image,
           const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 42),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                if (title != null && title.isNotEmpty) ...<Widget>[
-                  TitleWidget(title: title),
-                  const SizedBox(height: 10),
-                ],
-                if (message != null && message.isNotEmpty) ...<Widget>[
-                  MessageWidget(
-                    message: message,
-                    highlightColor: alert.color,
-                  ),
-                ],
-              ],
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 42),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    if (title != null && title.isNotEmpty) ...<Widget>[
+                      TitleWidget(title: title),
+                      const SizedBox(height: 10),
+                    ],
+                    if (message != null && message.isNotEmpty) ...<Widget>[
+                      MessageWidget(
+                        message: message,
+                        highlightColor: alert.color,
+                      ),
+                    ],
+                  ],
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 28),

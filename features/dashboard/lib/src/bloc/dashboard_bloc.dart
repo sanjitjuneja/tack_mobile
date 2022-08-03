@@ -48,30 +48,28 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     InitialLoad event,
     Emitter<DashboardState> emit,
   ) async {
-    emit(state.copyWith(tacks: <Tack>[]));
+    emit(state.copyWith(isLoading: true));
+    try {
+      final List<Tack> tacks = await _getGroupTacksUseCase.execute(
+        GroupTacksPayload(groupId: state.group.id),
+      );
 
-    // emit(state.copyWith(isLoading: true));
-    // try {
-    //   final List<Tack> tacks = await _getGroupTacksUseCase.execute(
-    //     GroupTacksPayload(groupId: state.group.id),
-    //   );
-    //
-    //   emit(state.copyWith(tacks: tacks));
-    // } catch (e) {
-    //   emit(state.copyWith(tacks: <Tack>[]));
-    // }
+      emit(state.copyWith(tacks: tacks));
+    } catch (e) {
+      emit(state.copyWith(tacks: <Tack>[]));
+    }
   }
 
   Future<void> _onRefreshAction(
     RefreshAction event,
     Emitter<DashboardState> emit,
   ) async {
-    // final List<Tack> tacks = await _getGroupTacksUseCase.execute(
-    //   GroupTacksPayload(groupId: state.group.id),
-    // );
+    final List<Tack> tacks = await _getGroupTacksUseCase.execute(
+      GroupTacksPayload(groupId: state.group.id),
+    );
 
     event.completer.complete(RefreshingStatus.complete);
-    emit(state.copyWith(tacks: <Tack>[]));
+    emit(state.copyWith(tacks: tacks));
   }
 
   Future<void> _onLoadMoreAction(

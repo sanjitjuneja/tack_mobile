@@ -1,7 +1,6 @@
-import 'package:core/text_input_formatters/phone_number_formatter.dart';
+import 'package:core/core.dart';
+import 'package:core_ui/src/theme/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import '../../core_ui.dart';
 
 class PhoneNumberTextField extends StatelessWidget {
   final Function(String value) onChanged;
@@ -27,9 +26,7 @@ class PhoneNumberTextField extends StatelessWidget {
           border: InputBorder.none,
           contentPadding: EdgeInsets.zero,
         ),
-        inputFormatters: [
-          PhoneNumberFormatter.phoneInputFormatter,
-        ],
+        inputFormatters: PhoneNumberFormatter.phoneInputFormatters,
         style: AppTextTheme.manrope25Medium.copyWith(
           color: AppTheme.accentColor,
           letterSpacing: 3,

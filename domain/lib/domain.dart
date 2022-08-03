@@ -1,9 +1,9 @@
 library domain;
 
+export 'authorization/authorization.dart';
 export 'groups/groups.dart';
 export 'tacks/tacks.dart';
-export 'auth/phone_verification.dart';
-export 'package:domain/user/user.dart';
+export 'user/user.dart';
 
 export 'models/create_tack_model.dart';
 export 'models/verification_data.dart';

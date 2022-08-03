@@ -2,7 +2,7 @@ library tacks;
 
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
-import 'package:domain/usecases/usecase.dart';
+import 'package:domain/use_case.dart';
 
 part 'models/offer.dart';
 part 'models/offer_type.dart';

@@ -1,11 +1,19 @@
-abstract class SignInState {}
-
-class SignInContent extends SignInState {
+class SignInState {
   final bool isDataValid;
   final Map<String, String>? errors;
 
-  SignInContent({
-    required this.isDataValid,
+  const SignInState({
+    this.isDataValid = false,
     this.errors,
   });
+
+  SignInState copyWith({
+    bool? isDataValid,
+    Map<String, String>? errors,
+  }) {
+    return SignInState(
+      isDataValid: isDataValid ?? this.isDataValid,
+      errors: errors,
+    );
+  }
 }

@@ -1,11 +1,9 @@
 import 'package:core/core.dart';
-import 'package:core/di/app_di.dart';
 import 'package:dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:home/home.dart';
+import 'package:home/src/global_bloc/global_bloc.dart';
+import 'package:home/src/home_screen.dart';
 import 'package:navigation/navigation.dart';
-
-import 'home_screen.dart';
 
 class HomeFeature {
   static Page<dynamic> page() => HomePage();

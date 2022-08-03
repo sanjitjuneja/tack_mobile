@@ -13,14 +13,14 @@ class SmsVerificationBloc
   final AppRouterDelegate appRouter;
   final PhoneVerificationType phoneVerificationType;
   final RequestSmsCodeUseCase requestSmsCodeUseCase;
-  final VerifyPhoneNumberUsecase verifyPhoneNumberUsecase;
+  final VerifyPhoneNumberUseCase verifyPhoneNumberUseCase;
 
   SmsVerificationBloc({
     required this.appRouter,
     required this.phoneNumber,
     required this.phoneVerificationType,
     required this.requestSmsCodeUseCase,
-    required this.verifyPhoneNumberUsecase,
+    required this.verifyPhoneNumberUseCase,
   }) : super(SmsVerificationContent(isDataValid: false)) {
     add(
       RequestVerificationCode(),
@@ -51,7 +51,7 @@ class SmsVerificationBloc
         if (uuid != null) {
           appRouter.push(ProgressDialog.page());
           final PhoneVerificationResult result =
-              await verifyPhoneNumberUsecase.execute(VerifyPhoneNumberPayload(
+              await verifyPhoneNumberUseCase.execute(VerifyPhoneNumberPayload(
             uuid: uuid!,
             smsCode: event.verificationCode,
           ));

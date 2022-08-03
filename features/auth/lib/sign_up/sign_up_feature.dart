@@ -1,6 +1,5 @@
 import 'package:auth/sign_up/sign_up_screen.dart';
 import 'package:core/core.dart';
-import 'package:core/di/app_di.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 

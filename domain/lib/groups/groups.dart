@@ -2,7 +2,7 @@ library groups;
 
 import 'dart:io';
 
-import 'package:domain/usecases/usecase.dart';
+import 'package:domain/use_case.dart';
 import 'package:equatable/equatable.dart';
 
 part 'models/group.dart';

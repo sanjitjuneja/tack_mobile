@@ -33,6 +33,10 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
       verificationData = data;
 
+      print('gjgjgjgjgjjgjgjgjgj');
+      print(verificationData?.udid);
+      print('gjgjgjgjgjjgjgjgjgj');
+
       if (verificationData != null) {
         final bool? result = await appRouter.pushForResult(
           PersonalInformationPage(

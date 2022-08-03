@@ -1,5 +1,5 @@
 import 'package:core/core.dart';
-import 'package:core/di/app_di.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 import 'package:splash/splash_screen.dart';
@@ -18,6 +18,7 @@ class SplashPage extends PageWithScaffoldKey<dynamic> {
           return BlocProvider<SplashBloc>(
             create: (BuildContext context) => SplashBloc(
               appRouter: appLocator.get<AppRouterDelegate>(),
+              isAuthorizedUseCase: appLocator.get<IsAuthorizedUseCase>(),
             ),
             child: ScaffoldMessenger(
               key: scaffoldKey,

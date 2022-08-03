@@ -28,32 +28,26 @@ class _SplashScreenState extends State<SplashScreen>
       value: 0,
     );
 
-    _panelController.animateTo(
-      0.3,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.ease,
-    );
+    BlocProvider.of<SplashBloc>(context).add(InitialEvent(_panelController));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SplashBloc, SplashState>(
-      listener: (BuildContext context, SplashState state) {
-        if (state is SplashContent) {
-          if (state.needToBackAnimation != null && state.needToBackAnimation!) {
-            startPopAnimation();
-          }
-        }
-      },
+    return BlocBuilder<SplashBloc, SplashState>(
       builder: (BuildContext context, SplashState state) {
         return Scaffold(
           backgroundColor: AppTheme.registrationBackGroundColor,
           body: Stack(
             children: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 140),
-                  child: AppImagesTheme.appLogo,
+              SafeArea(
+                child: Column(
+                  children: <Widget>[
+                    const Spacer(flex: 2),
+                    Center(
+                      child: AppImagesTheme.appLogo,
+                    ),
+                    const Spacer(flex: 3),
+                  ],
                 ),
               ),
               Positioned(
@@ -66,48 +60,20 @@ class _SplashScreenState extends State<SplashScreen>
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       children: <Widget>[
-                        RoundedCustomButton(
-                          text: 'signIn.buttonSignIn',
-                          textStyle: AppTextTheme.manrope20Medium.copyWith(
-                            color: AppTheme.positiveColor,
-                          ),
-                          height: 68,
-                          borderRadius: BorderRadius.circular(35),
-                          onPressed: () async {
-                            await _panelController.animateTo(
-                              1.0,
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeIn,
-                            );
-                            if(!mounted) return;
-
-                            BlocProvider.of<SplashBloc>(context).add(
-                              SignIn(),
-                            );
-                          },
+                        AppCircleButton(
+                          labelKey: 'signIn.buttonSignIn',
+                          interfaceSize: AppInterfaceSize.big,
+                          onTap: _onSignInPressed,
                           backgroundColor: AppTheme.grassColor,
                         ),
                         const SizedBox(height: 24),
-                        RoundedCustomButton(
-                          text: 'signUp.buttonSignUp',
-                          textStyle: AppTextTheme.manrope20Medium.copyWith(
-                            color: AppTheme.accentColor,
-                          ),
-                          height: 68,
-                          borderRadius: BorderRadius.circular(35),
+                        AppCircleButton(
+                          labelKey: 'signUp.buttonSignUp',
+                          interfaceSize: AppInterfaceSize.big,
                           backgroundColor: AppTheme.buttonDisabledColor,
-                          onPressed: () async {
-                            await _panelController.animateTo(
-                              1.0,
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeIn,
-                            );
-                            if(!mounted) return;
-
-                            BlocProvider.of<SplashBloc>(context).add(
-                              SignUp(),
-                            );
-                          },
+                          borderColor: AppTheme.buttonDisabledColor,
+                          interfaceColor: AppTheme.textPrimaryColor,
+                          onTap: _onSignUpPressed,
                         ),
                       ],
                     ),
@@ -121,11 +87,15 @@ class _SplashScreenState extends State<SplashScreen>
     );
   }
 
-  void startPopAnimation() async {
-    await _panelController.animateTo(
-      0.3,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.ease,
+  void _onSignInPressed() {
+    BlocProvider.of<SplashBloc>(context).add(
+      SignIn(_panelController),
+    );
+  }
+
+  void _onSignUpPressed() {
+    BlocProvider.of<SplashBloc>(context).add(
+      SignUp(_panelController),
     );
   }
 }
