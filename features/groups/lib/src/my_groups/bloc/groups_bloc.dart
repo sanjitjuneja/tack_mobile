@@ -28,7 +28,7 @@ class GroupsBloc extends Bloc<GroupsEvent, GroupsState> {
 
     if (event is OpenMyInvitations) {
       appRouter.push(
-        Invitations.page(),
+        InvitationsFeature.page(),
       );
     }
 

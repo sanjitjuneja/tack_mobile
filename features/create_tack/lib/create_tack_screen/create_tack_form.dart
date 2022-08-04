@@ -217,12 +217,4 @@ class _CreateTackFormState extends State<CreateTackForm> {
       CreateTack(),
     );
   }
-
-  void _onCreateOpenGroupsFlow(
-    BuildContext context,
-  ) {
-    BlocProvider.of<CreateTackBloc>(context).add(
-      OpenGroupsFlow(),
-    );
-  }
 }

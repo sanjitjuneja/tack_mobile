@@ -2,7 +2,6 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:create_tack/bloc/create_tack_bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:groups/groups.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
 
@@ -31,17 +30,6 @@ class CreateTackScreen extends StatelessWidget {
                   group: state.currentGroup,
                 ),
               ),
-              actions: <Widget>[
-                CupertinoButton(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  onPressed: () {
-                    appLocator.get<AppRouterDelegate>().push(MyGroups.page());
-                  },
-                  child: AppIconsTheme.menu(
-                    color: AppTheme.iconPrimaryColor,
-                  ),
-                ),
-              ],
             ),
             child: SafeArea(
               child: KeyboardDismissible(

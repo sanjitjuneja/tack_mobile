@@ -1,13 +1,23 @@
-part of user;
+part of user_entities;
 
 @JsonSerializable()
+@DoubleConverter()
 class UserEntity extends JsonSerializable {
   final int id;
-  final double? balance;
   @JsonKey(name: 'first_name')
   final String firstName;
   @JsonKey(name: 'last_name')
   final String lastName;
+  @JsonKey(name: 'birthday')
+  final String birthDate;
+  @JsonKey(name: 'profile_picture')
+  final String? profilePicture;
+  @JsonKey(name: 'tacks_rating')
+  final double tacksRating;
+  @JsonKey(name: 'tacks_amount')
+  final int tacksAmount;
+  @JsonKey(name: 'bankaccount')
+  final UserBankAccountEntity bankAccount;
   @JsonKey(name: 'phone_number')
   final String phoneNumber;
   @JsonKey(name: 'active_group')
@@ -15,9 +25,13 @@ class UserEntity extends JsonSerializable {
 
   const UserEntity({
     required this.id,
-    required this.balance,
     required this.firstName,
     required this.lastName,
+    required this.birthDate,
+    required this.profilePicture,
+    required this.tacksRating,
+    required this.tacksAmount,
+    required this.bankAccount,
     required this.phoneNumber,
     required this.activeGroup,
   });

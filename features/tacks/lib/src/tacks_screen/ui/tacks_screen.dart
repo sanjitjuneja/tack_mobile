@@ -20,6 +20,7 @@ class TacksScreen extends StatelessWidget {
         navigationBar: AppNavigationBar(
           backgroundColor: AppTheme.primaryBackgroundColor,
           automaticallyImplyLeading: false,
+          withMenu: true,
           middle: Align(
             alignment: Alignment.centerLeft,
             child: PageHeaderWidget(
@@ -28,20 +29,9 @@ class TacksScreen extends StatelessWidget {
               subtitleKey: 'tacksScreen.subtitle',
             ),
           ),
-          actions: <Widget>[
-            CupertinoButton(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              onPressed: () => _onMenuTap(context),
-              child: AppIconsTheme.menu(color: AppTheme.iconPrimaryColor),
-            ),
-          ],
         ),
         child: const TacksForm(),
       ),
     );
-  }
-
-  Future<void> _onMenuTap(BuildContext context) async {
-    // TODO: implement functionality.
   }
 }

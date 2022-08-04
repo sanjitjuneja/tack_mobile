@@ -18,4 +18,6 @@ abstract class AuthRepository {
   });
 
   Future<bool> isAuthorized();
+
+  Future<void> logout();
 }

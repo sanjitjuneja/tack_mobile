@@ -1,4 +1,4 @@
-part of user;
+part of user_entities;
 
 @JsonSerializable(createFactory: false)
 class UserRequest extends JsonSerializable {

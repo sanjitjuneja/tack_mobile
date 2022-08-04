@@ -12,13 +12,13 @@ import 'package:splash/bloc/splash_event.dart';
 import 'package:splash/bloc/splash_state.dart';
 
 class SplashBloc extends Bloc<SplashEvent, SplashState> {
-  final AppRouterDelegate _appRouter;
+  final GlobalAppRouterDelegate _globalAppRouter;
   final IsAuthorizedUseCase _isAuthorizedUseCase;
 
   SplashBloc({
-    required AppRouterDelegate appRouter,
+    required GlobalAppRouterDelegate globalAppRouter,
     required IsAuthorizedUseCase isAuthorizedUseCase,
-  })  : _appRouter = appRouter,
+  })  : _globalAppRouter = globalAppRouter,
         _isAuthorizedUseCase = isAuthorizedUseCase,
         super(SplashContent()) {
     on<InitialEvent>(_onInitialEvent);
@@ -31,15 +31,16 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     Emitter<SplashState> emit,
   ) async {
     /// TODO: uncomment (leave it until Logout functionality not implemented)
-    // final bool isAuthorized = await _isAuthorizedUseCase.execute(NoParams());
-    //
-    // if (isAuthorized) {
-    //   await _animateToEndPosition(event.slidingPanelController);
-    //
-    //   _appRouter.replace(HomePage());
-    // } else {
-      _animateToInitialPosition(event.slidingPanelController);
-    // }
+    final bool isAuthorized = await _isAuthorizedUseCase.execute(NoParams());
+
+    if (isAuthorized) {
+      await _animateToEndPosition(event.slidingPanelController);
+
+      await dataDI.setupPostLoginAppLocator();
+      _globalAppRouter.replace(FirstRouteFeature.page());
+    } else {
+    _animateToInitialPosition(event.slidingPanelController);
+    }
   }
 
   Future<void> _onSignIn(
@@ -48,12 +49,12 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
   ) async {
     await _animateToEndPosition(event.slidingPanelController);
 
-    final bool? result = await _appRouter.pushForResult(
+    final bool? result = await _globalAppRouter.pushForResult(
       SignInFeature.page(),
     );
 
     if (result == true) {
-      _appRouter.replace(HomePage());
+      _globalAppRouter.replace(FirstRouteFeature.page());
     } else {
       await _animateToInitialPosition(event.slidingPanelController);
     }
@@ -64,16 +65,11 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     Emitter<SplashState> emit,
   ) async {
     await _animateToEndPosition(event.slidingPanelController);
-    final bool? result = await _appRouter.pushForResult(
+    final bool? result = await _globalAppRouter.pushForResult(
       SignUpFeature.page(),
     );
 
-    if (result == true) {
-      await dataDI.setupPostLoginAppLocator();
-      _appRouter.replace(HomePage());
-    } else {
-      await _animateToInitialPosition(event.slidingPanelController);
-    }
+    await _animateToInitialPosition(event.slidingPanelController);
   }
 
   Future<void> _animateToInitialPosition(

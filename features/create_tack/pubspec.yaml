@@ -10,10 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  home:
-    path: ../home
-  groups:
-    path: ../groups
   core:
     path: ../../core
   domain:

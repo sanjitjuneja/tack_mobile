@@ -64,3 +64,17 @@ class DurationConverter implements JsonConverter<Duration, int> {
   @override
   int toJson(Duration json) => json.inMilliseconds;
 }
+
+class BalanceConverter implements JsonConverter<double, int> {
+  const BalanceConverter();
+
+  @override
+  double fromJson(int? json) {
+    if (json == null) return 0.0;
+
+    return json / 100;
+  }
+
+  @override
+  int toJson(double json) => (json * 100).toInt();
+}

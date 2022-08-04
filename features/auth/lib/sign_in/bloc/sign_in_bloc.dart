@@ -9,7 +9,7 @@ import 'package:forgot_password/forgot_password_page.dart';
 import 'package:navigation/navigation.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
-  final AppRouterDelegate appRouter;
+  final GlobalAppRouterDelegate appRouter;
   final SignInUseCase signInUseCase;
 
   SignInBloc({
@@ -24,8 +24,10 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         appRouter.push(ProgressDialog.page());
         await signInUseCase.execute(
           SignInPayload(
-            password: event.password,
-            phoneNumber: '${Constants.kPhonePrefix}${event.phoneNumber}',
+            // password: event.password,
+            // phoneNumber: '${Constants.kPhonePrefix}${event.phoneNumber}',
+            phoneNumber: '+590590134730',
+            password: 'Tackapp123'
           ),
         );
         appRouter.pop();

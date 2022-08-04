@@ -18,7 +18,7 @@ class SignInPage extends PageWithScaffoldKey<bool> {
           return BlocProvider<SignInBloc>(
             create: (BuildContext context) {
               return SignInBloc(
-                appRouter: appLocator.get<AppRouterDelegate>(),
+                appRouter: appLocator.get<GlobalAppRouterDelegate>(),
                 signInUseCase: appLocator.get<SignInUseCase>(),
               );
             },

@@ -35,6 +35,7 @@ class AppIconsTheme {
   static const String _chevronLeftKey = '${_svgPath}chevron_left.svg';
   static const String _chevronRightKey = '${_svgPath}chevron_right.svg';
   static const String _crossKey = '${_svgPath}cross.svg';
+  static const String _logoutKey = '${_svgPath}logout.svg';
 
   static const String _tacksListKey = '${_svgPath}tacks_list.svg';
   static const String _peopleKey = '${_svgPath}people.svg';
@@ -44,7 +45,7 @@ class AppIconsTheme {
   static const String _tackKey = '${_svgPath}tack.svg';
   static const String _rateStarKey = '${_svgPath}rate_star.svg';
   static const String _promptKey = '${_svgPath}prompt.svg';
-  static const String _rightArrowKey = '${_svgPath}right_arrow.svg';
+  static const String _editPencilKey = '${_svgPath}edit_pencil.svg';
 
   /// Bottom Navigation bar
   static AppIcon get dashboardsActive => AppIcon(_dashboardActiveKey);
@@ -73,6 +74,7 @@ class AppIconsTheme {
   static AppIcon get chevronLeft => AppIcon(_chevronLeftKey);
   static AppIcon get chevronRight => AppIcon(_chevronRightKey);
   static AppIcon get cross => AppIcon(_crossKey);
+  static AppIcon get logout => AppIcon(_logoutKey);
 
   static AppIcon get tacksList => AppIcon(_tacksListKey);
   static AppIcon get people => AppIcon(_peopleKey);
@@ -82,5 +84,5 @@ class AppIconsTheme {
   static AppIcon get tack => AppIcon(_tackKey);
   static AppIcon get rateStar => AppIcon(_rateStarKey);
   static AppIcon get prompt => AppIcon(_promptKey);
-  static AppIcon get rightArrow => AppIcon(_rightArrowKey);
+  static AppIcon get editPencil => AppIcon(_editPencilKey);
 }

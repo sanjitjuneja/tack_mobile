@@ -1,5 +1,6 @@
 {
   "errors": {
+    "couldNotLaunchURL": "Could not launch URL",
     "tackIsNotAvailable": "Sorry, this Tack is no longer available"
   },
   "errorAlert": {
@@ -111,6 +112,20 @@
     "andSymbol": " & ",
     "upToDate": "Up to date",
     "updateFailed": "Update failed!"
+  },
+  "drawer": {
+    "options": {
+      "account": "Account",
+      "previousTacks": "Previous Tacks",
+      "groups": "My Groups",
+      "invitations": "My Invitations",
+      "withdraw": "Withdraw",
+      "customerSupport": "Customer Support",
+      "termsAndConditions": "Terms & Conditions",
+      "privacyPolicy": "Privacy Policy"
+    },
+    "logOut": "Logout",
+    "note": "NOTE: This is an invite-only beta version of our\napp. Our official marketplace releases later this Fall. For more details, check out <a href=\"tackmarketplace.com\">tackmarketplace.com</a>"
   },
   "dashboardScreen": {
     "title": "Home Feed",

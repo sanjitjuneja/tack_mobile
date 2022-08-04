@@ -32,6 +32,8 @@ dependencies:
   # Components
   app_dialog:
     path: ../components/app_dialog
+  app_drawer:
+    path: ../components/app_drawer
   image_cropper:
     path: ../components/image_cropper
   segment_controller:

@@ -22,7 +22,7 @@ class ForgotPasswordPage extends PageWithScaffoldKey<dynamic> {
             child: BlocProvider<ForgotPasswordBloc>(
               create: (BuildContext context) => ForgotPasswordBloc(
                 phoneVerificationType: phoneVerificationType,
-                appRouter: appLocator.get<AppRouterDelegate>(),
+                appRouter: appLocator.get<GlobalAppRouterDelegate>(),
               ),
               child: const ForgotPasswordScreen(),
             ),

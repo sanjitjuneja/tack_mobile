@@ -1,6 +1,7 @@
 import 'package:core/src/app_config.dart';
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
+import 'package:navigation/navigation.dart';
 
 import 'app_di.dart';
 
@@ -33,7 +34,7 @@ class DataDI {
     appLocator.registerLazySingleton<SessionProvider>(
       () => SessionProvider(
         appLocator.get<SessionApiProvider>(),
-        sharedPreferencesProvider,
+        appLocator.get<SharedPreferencesProvider>(),
       ),
     );
 
@@ -49,7 +50,7 @@ class DataDI {
       () => AuthRepositoryImpl(
         apiProvider: appLocator.get<ApiProvider>(),
         sessionProvider: appLocator.get<SessionProvider>(),
-        sharedPreferencesProvider: sharedPreferencesProvider,
+        sharedPreferencesProvider: appLocator.get<SharedPreferencesProvider>(),
       ),
     );
 
@@ -84,6 +85,23 @@ class DataDI {
   }
 
   Future<void> setupPostLoginAppLocator() async {
+    appLocator.registerSingleton<UserRepository>(
+      UserRepositoryImpl(
+        apiProvider: appLocator.get<ApiProvider>(),
+        sharedPreferencesProvider: appLocator.get<SharedPreferencesProvider>(),
+      ),
+    );
+    appLocator.registerLazySingleton<GetCurrentUserUseCase>(
+      () => GetCurrentUserUseCase(
+        userRepository: appLocator.get<UserRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<ObserveUserUseCase>(
+      () => ObserveUserUseCase(
+        userRepository: appLocator.get<UserRepository>(),
+      ),
+    );
+
     appLocator.registerSingleton<GroupsRepository>(
       GroupsRepositoryImpl(
         apiProvider: appLocator.get<ApiProvider>(),
@@ -120,9 +138,20 @@ class DataDI {
         tacksRepository: appLocator.get<TacksRepository>(),
       ),
     );
+
+    appLocator.registerLazySingleton<LogOutUseCase>(
+      () => LogOutUseCase(
+        globalAppRouter: appLocator.get<GlobalAppRouterDelegate>(),
+        authRepository: appLocator.get<AuthRepository>(),
+      ),
+    );
   }
 
   Future<void> unregisterPostLoginAppLocator() async {
+    appLocator.unregister<UserRepository>();
+    appLocator.unregister<GetCurrentUserUseCase>();
+    appLocator.unregister<ObserveUserUseCase>();
+
     appLocator.unregister<GroupsRepository>();
     appLocator.unregister<CreateGroupUseCase>();
 
@@ -131,5 +160,7 @@ class DataDI {
     appLocator.unregister<GetMyTacksUseCase>();
     appLocator.unregister<RateTackUseCase>();
     appLocator.unregister<EditTackUseCase>();
+
+    appLocator.unregister<LogOutUseCase>();
   }
 }

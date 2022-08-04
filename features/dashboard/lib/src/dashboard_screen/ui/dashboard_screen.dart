@@ -1,9 +1,7 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:groups/groups.dart';
 import 'package:home/home.dart';
-import 'package:navigation/navigation.dart';
 
 import 'package:dashboard/src/dashboard_screen/ui/dashboard_form.dart';
 
@@ -17,6 +15,7 @@ class DashboardScreen extends StatelessWidget {
       navigationBar: AppNavigationBar(
         backgroundColor: AppTheme.primaryBackgroundColor,
         automaticallyImplyLeading: false,
+        withMenu: true,
         middle: BlocBuilder<GlobalBloc, GlobalState>(
           builder: (_, GlobalState state) {
             return Align(
@@ -30,15 +29,6 @@ class DashboardScreen extends StatelessWidget {
             );
           },
         ),
-        actions: <Widget>[
-          CupertinoButton(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            onPressed: () => _onMenuTap(context),
-            child: AppIconsTheme.menu(
-              color: AppTheme.iconPrimaryColor,
-            ),
-          ),
-        ],
       ),
       child: const DashboardForm(),
     );
@@ -46,9 +36,5 @@ class DashboardScreen extends StatelessWidget {
 
   void _onHeaderTap(BuildContext context) {
     BlocProvider.of<GlobalBloc>(context).add(const ChangeGroup());
-  }
-
-  void _onMenuTap(BuildContext context) {
-    AppRouter.of(context).pushForResult(CreateGroup.page());
   }
 }

@@ -2,6 +2,7 @@ library core_ui;
 
 export 'src/helpers/widget_shadow_type.dart';
 
+export 'src/routes/left_slide_route.dart';
 export 'src/routes/top_slide_route.dart';
 
 export 'src/theme/app_theme.dart';
@@ -72,6 +73,7 @@ export 'src/widgets/timer_ticker_widget.dart';
 export 'src/widgets/user_stats_widget.dart';
 
 export 'package:app_dialog/app_dialog.dart';
+export 'package:app_drawer/app_drawer.dart';
 export 'package:image_cropper/image_cropper.dart';
 export 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 export 'package:grouped_list/grouped_list.dart';

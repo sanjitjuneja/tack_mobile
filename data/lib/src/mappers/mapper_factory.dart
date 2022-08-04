@@ -18,7 +18,11 @@ class MapperFactory {
         groupMapper: groupMapper,
       );
 
-  CustomerMapper get customerMapper => CustomerMapper();
+  UserBankAccountMapper get userBankAccountMapper => UserBankAccountMapper();
+
+  UserMapper get customerMapper => UserMapper(
+        userBankAccountMapper: userBankAccountMapper,
+      );
 
   SmsVerificationMapper get smsVerificationMapper => SmsVerificationMapper();
 
