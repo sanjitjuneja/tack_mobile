@@ -18,6 +18,18 @@ class MapperFactory {
         groupMapper: groupMapper,
       );
 
+  OfferTypeMapper get offerTypeMapper => OfferTypeMapper();
+
+  OfferMapper get offerMapper => OfferMapper(
+        offerTypeMapper: offerTypeMapper,
+        tackUserMapper: tackUserMapper,
+      );
+
+  RunnerTackMapper get runnerTackMapper => RunnerTackMapper(
+        tackMapper: tackMapper,
+        offerMapper: offerMapper,
+      );
+
   UserBankAccountMapper get userBankAccountMapper => UserBankAccountMapper();
 
   UserMapper get customerMapper => UserMapper(

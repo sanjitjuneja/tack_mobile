@@ -6,7 +6,7 @@ class UserBankAccountMapper
   domain.UserBankAccount fromEntity(UserBankAccountEntity entity) {
     return domain.UserBankAccount(
       userId: entity.user,
-      usdBalance: entity.usdBalance,
+      usdBalance: entity.usdBalance / 100,
     );
   }
 
@@ -14,7 +14,7 @@ class UserBankAccountMapper
   UserBankAccountEntity toEntity(domain.UserBankAccount item) {
     return UserBankAccountEntity(
       user: item.userId,
-      usdBalance: item.usdBalance,
+      usdBalance: (item.usdBalance * 100).toInt(),
     );
   }
 }

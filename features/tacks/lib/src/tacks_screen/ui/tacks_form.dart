@@ -1,7 +1,8 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:tacks/src/bloc/tacks_bloc.dart';
+
+import 'package:tacks/src/tacks_screen/bloc/tacks_bloc.dart';
 import 'package:tacks/src/tacks_screen/ui/widgets/runner_tacks_widget.dart';
 import 'package:tacks/src/tacks_screen/ui/widgets/tacker_tacks_widget.dart';
 
@@ -26,7 +27,8 @@ class _TacksFormState extends State<TacksForm> {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-                  BlocProvider.of<TacksBloc>(context).add(const LoadTacks());
+                  BlocProvider.of<TacksBloc>(context)
+                      .add(const LoadMockedData());
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 18, right: 42),
@@ -55,11 +57,11 @@ class _TacksFormState extends State<TacksForm> {
                 ),
               ),
               const SizedBox(height: 17),
-              Expanded(
+              const Expanded(
                 child: TabBarView(
                   children: <Widget>[
-                    TackerTacksWidget(tackerTacks: state.tackerTacks),
-                    RunnerTacksWidget(runnerTacks: state.runnerTacks),
+                    TackerTacksWidget(),
+                    RunnerTacksWidget(),
                   ],
                 ),
               ),

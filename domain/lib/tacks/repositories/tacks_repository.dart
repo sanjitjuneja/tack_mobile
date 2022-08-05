@@ -5,7 +5,9 @@ abstract class TacksRepository {
 
   ValueStream<List<RunnerTack>> get runnerTacksStream;
 
-  Future<List<Tack>> getMyTacks();
+  Future<List<RunnerTack>> getRunnerTacks();
+
+  Future<List<Tack>> getTackerTacks();
 
   Future<List<Tack>> getGroupTacks(GroupTacksPayload payload);
 

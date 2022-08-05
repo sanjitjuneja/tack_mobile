@@ -1,5 +1,5 @@
 import 'package:core/core.dart';
-import 'package:dashboard/dashboard.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
@@ -27,7 +27,15 @@ class FirstRoutePage extends Page<void> {
             BlocProvider<GlobalBloc>(
               create: (_) => GlobalBloc(
                 appRouter: _appRouter,
-                groups: getGroups(10),
+                getCurrentUserUseCase: appLocator.get<GetCurrentUserUseCase>(),
+                observeUserUseCase: appLocator.get<ObserveUserUseCase>(),
+                getCurrentGroupUseCase:
+                    appLocator.get<GetCurrentGroupUseCase>(),
+                getGroupsUseCase: appLocator.get<GetGroupsUseCase>(),
+                observeCurrentGroupUseCase:
+                    appLocator.get<ObserveCurrentGroupUseCase>(),
+                observeGroupsUseCase: appLocator.get<ObserveGroupsUseCase>(),
+                selectGroupUseCase: appLocator.get<SelectGroupUseCase>(),
               ),
             ),
           ],

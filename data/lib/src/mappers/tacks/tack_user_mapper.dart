@@ -17,7 +17,6 @@ class TackUserMapper implements Mapper<TackUserEntity?, domain.TackUser?> {
       lastName: entity.lastName,
       rating: entity.tacksRating,
       tacksComplete: entity.tacksAmount,
-      contacts: tackUserContactsMapper.fromEntity(entity.contacts),
     );
   }
 
@@ -31,7 +30,6 @@ class TackUserMapper implements Mapper<TackUserEntity?, domain.TackUser?> {
       lastName: item.lastName,
       tacksRating: item.rating,
       tacksAmount: item.tacksComplete,
-      contacts: tackUserContactsMapper.toEntity(item.contacts),
     );
   }
 }

@@ -27,8 +27,16 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   }
 
   @override
-  Future<List<domain.Tack>> getMyTacks() async {
-    final List<domain.Tack> tacks = await _apiProvider.getMyTacks();
+  Future<List<domain.RunnerTack>> getRunnerTacks() async {
+    final List<domain.RunnerTack> tacks = await _apiProvider.getRunnerTacks();
+    _runnerTacksStreamController.add(tacks);
+
+    return tacks;
+  }
+
+  @override
+  Future<List<domain.Tack>> getTackerTacks() async {
+    final List<domain.Tack> tacks = await _apiProvider.getTackerTacks();
     _tackerTacksStreamController.add(tacks);
 
     return tacks;

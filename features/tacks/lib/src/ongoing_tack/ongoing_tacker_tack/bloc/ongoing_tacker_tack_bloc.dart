@@ -91,8 +91,9 @@ class OngoingTackerTackBloc
     ContactRunner event,
     Emitter<OngoingTackerTackState> emit,
   ) async {
-    final String? phoneNumber = state.tack.runner?.contacts.phoneNumber;
-    PhoneCallUtility.callNumber(phoneNumber);
+    // TODO: refactor when BE will fix
+    // final String? phoneNumber = state.tack.runner?.contacts.phoneNumber;
+    // PhoneCallUtility.callNumber(phoneNumber);
   }
 
   Future<void> _onLoadOffers(

@@ -69,8 +69,9 @@ class OngoingRunnerTackBloc
     ContactTacker event,
     Emitter<OngoingRunnerTackState> emit,
   ) async {
-    final String? phoneNumber = state.tack.tacker.contacts.phoneNumber;
-    PhoneCallUtility.callNumber(phoneNumber);
+    // TODO: refactor when BE will fix
+    // final String? phoneNumber = state.tack.tacker.contacts.phoneNumber;
+    // PhoneCallUtility.callNumber(phoneNumber);
   }
 
   Future<void> _onCancelTack(

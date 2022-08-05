@@ -1,17 +1,16 @@
 part of tacks_entities;
 
 @JsonSerializable()
-@DoubleConverter()
 @BooleanConverter()
 class TackEntity extends JsonSerializable with ListParserMixin {
   final int id;
   final String title;
-  final double price;
+  final int price;
   final String description;
   @JsonKey(name: 'estimation_time_seconds')
   final Duration estimationTime;
-  @JsonKey(name: 'allow_counter_offers')
-  final bool allowCounterOffers;
+  @JsonKey(name: 'allow_counter_offer')
+  final bool allowCounterOffer;
   final String status;
   final TackUserEntity tacker;
   final TackUserEntity? runner;
@@ -27,7 +26,7 @@ class TackEntity extends JsonSerializable with ListParserMixin {
     required this.price,
     required this.description,
     required this.estimationTime,
-    required this.allowCounterOffers,
+    required this.allowCounterOffer,
     required this.status,
     required this.tacker,
     required this.runner,
