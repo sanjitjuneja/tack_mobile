@@ -8,7 +8,7 @@ class GroupEntity extends JsonSerializable {
   final String name;
   final String description;
   @JsonKey(name: 'image')
-  final String imageUrl;
+  final String? imageUrl;
   @JsonKey(name: 'is_public')
   final bool isPublic;
 

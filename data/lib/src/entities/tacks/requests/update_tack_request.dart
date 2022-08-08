@@ -5,12 +5,13 @@ class UpdateTackRequest extends JsonSerializable {
   @JsonKey(ignore: true)
   final int id;
   final String title;
-  final String price;
+  final int price;
   final String description;
   @JsonKey(name: 'estimation_time_seconds')
   final int estimationTimeSeconds;
   @JsonKey(name: 'allow_counter_offer')
   final bool allowCounterOffer;
+  final String type;
 
   const UpdateTackRequest({
     required this.id,
@@ -19,6 +20,7 @@ class UpdateTackRequest extends JsonSerializable {
     required this.description,
     required this.estimationTimeSeconds,
     required this.allowCounterOffer,
+    this.type = 'groups'
   });
 
 

@@ -3,19 +3,19 @@ part of tacks;
 class UpdateTackPayload extends Equatable {
   final int tackId;
   final String title;
-  final double price;
+  final int price;
   final String description;
   final int estimatedTime;
   final bool shouldAllowCounterOffers;
 
-  const UpdateTackPayload({
+  UpdateTackPayload({
     required this.tackId,
     required this.title,
-    required this.price,
+    required double price,
     required this.description,
     required this.estimatedTime,
     required this.shouldAllowCounterOffers,
-  });
+  }) : price = (price * 100).toInt();
 
   @override
   List<Object> get props => <Object>[

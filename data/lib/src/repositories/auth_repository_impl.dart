@@ -79,14 +79,26 @@ class AuthRepositoryImpl implements domain.AuthRepository {
     );
   }
 
-
   @override
   Future<bool> isAuthorized() async {
     final bool isAuthorized = _sharedPreferencesProvider.isAuthorized();
     final bool isSessionValid = await _sessionProvider.isSessionValid();
     final bool isAllSetForLogin = _sharedPreferencesProvider.isAllSetForLogin();
 
-    return <bool>[isAuthorized, isSessionValid, isAllSetForLogin]
-        .every((bool element) => element == true);
+    return <bool>[
+      isAuthorized,
+      isSessionValid,
+      isAllSetForLogin,
+    ].every((bool element) => element == true);
+  }
+
+  @override
+  Future<void> logout() async {
+    try {
+      await _sessionProvider.endSession();
+    } catch (_) {
+    } finally {
+      await _sharedPreferencesProvider.clearSessionInfo();
+    }
   }
 }

@@ -1,4 +1,4 @@
-part of user;
+part of user_entities;
 
 class SignInResponse {
   final Response response;

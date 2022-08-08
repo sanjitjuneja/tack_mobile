@@ -32,7 +32,7 @@ class AppCircleAvatarWidget extends StatelessWidget {
             : null,
         color: AppTheme.primaryColor,
       ),
-      child: url == null || Uri.tryParse(url!)?.data == null
+      child: url == null || Uri.parse(url!).path.isEmpty
           ? placeholderIcon?.call() ?? AppIconsTheme.tack()
           : CachedNetworkImage(
               fadeInDuration: const Duration(milliseconds: 300),

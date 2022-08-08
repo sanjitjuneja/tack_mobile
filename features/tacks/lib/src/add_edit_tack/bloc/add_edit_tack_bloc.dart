@@ -1,6 +1,7 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
+import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
 
 import 'package:tacks/src/add_edit_tack/models/counter_offer_option_data.dart';
@@ -15,17 +16,27 @@ part 'add_edit_tack_state.dart';
 
 class AddEditTackBloc extends Bloc<AddEditTackEvent, AddEditTackState> {
   final AppRouterDelegate _appRouter;
+  final CreateTackUseCase _createTackUseCase;
   final EditTackUseCase _editTackUseCase;
 
   AddEditTackBloc({
+    required TemplateTack? templateTack,
     required Tack? tack,
     required bool isAdd,
     required AppRouterDelegate appRouter,
+    required GetCurrentGroupUseCase getCurrentGroupUseCase,
+    required CreateTackUseCase createTackUseCase,
     required EditTackUseCase editTackUseCase,
   })  : _appRouter = appRouter,
+        _createTackUseCase = createTackUseCase,
         _editTackUseCase = editTackUseCase,
         super(
-          AddEditTackState.fromTack(tack, isAdd),
+          AddEditTackState.fromTack(
+            getCurrentGroupUseCase.execute(NoParams()),
+            templateTack,
+            tack,
+            isAdd,
+          ),
         ) {
     on<CreateTackRequest>(_onCreateTackRequest);
     on<EditTackRequest>(_onEditTackRequest);
@@ -42,13 +53,24 @@ class AddEditTackBloc extends Bloc<AddEditTackEvent, AddEditTackState> {
     CreateTackRequest event,
     Emitter<AddEditTackState> emit,
   ) async {
+    if (state.group == null) return;
+
     _appRouter.push(ProgressDialog.page());
     try {
-      // TODO: add creation tack API call.
+      final Tack newTack = await _createTackUseCase.execute(
+        CreateTackPayload(
+            title: state.titleData.title,
+            price: state.priceData.parsedPrice,
+            description: state.descriptionData.description,
+            estimatedTime: state.timeEstimationData.timeInSeconds!,
+            shouldAllowCounterOffers: state.counterOfferData.allow,
+            groupId: state.group!.id),
+      );
       _appRouter.pop();
-      _appRouter.popWithResult(true);
+      _appRouter.popWithResult(newTack);
     } catch (e) {
-      _appRouter.replace(
+      _appRouter.pop();
+      _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
             contentKey: 'errorAlert.tackCreate',
@@ -65,7 +87,7 @@ class AddEditTackBloc extends Bloc<AddEditTackEvent, AddEditTackState> {
   ) async {
     _appRouter.push(ProgressDialog.page());
     try {
-      await _editTackUseCase.execute(
+      final Tack newTack = await _editTackUseCase.execute(
         UpdateTackPayload(
           tackId: state.tack!.id,
           title: state.titleData.title,
@@ -76,9 +98,10 @@ class AddEditTackBloc extends Bloc<AddEditTackEvent, AddEditTackState> {
         ),
       );
       _appRouter.pop();
-      _appRouter.popWithResult(true);
+      _appRouter.popWithResult(newTack);
     } catch (e) {
-      _appRouter.replace(
+      _appRouter.pop();
+      _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
             contentKey: 'errorAlert.tackUpdate',

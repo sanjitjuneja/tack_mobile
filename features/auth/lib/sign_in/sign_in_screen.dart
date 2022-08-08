@@ -48,7 +48,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   AppTextFormField(
                     hintText: FlutterI18n.translate(context, 'signIn.phone'),
                     inputFormatters: [
-                      LengthLimitingTextInputFormatter(10),
+                      // LengthLimitingTextInputFormatter(11),
                       FilteringTextInputFormatter.digitsOnly
                     ],
                     keyboardType: TextInputType.number,

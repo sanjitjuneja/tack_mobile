@@ -13,7 +13,7 @@ import 'forgot_password_state.dart';
 
 class ForgotPasswordBloc
     extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
-  final AppRouterDelegate appRouter;
+  final GlobalAppRouterDelegate appRouter;
   final PhoneVerificationType phoneVerificationType;
 
   ForgotPasswordBloc({

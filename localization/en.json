@@ -1,5 +1,6 @@
 {
   "errors": {
+    "couldNotLaunchURL": "Could not launch URL",
     "tackIsNotAvailable": "Sorry, this Tack is no longer available"
   },
   "errorAlert": {
@@ -110,11 +111,25 @@
     "ago": "ago",
     "andSymbol": " & ",
     "upToDate": "Up to date",
-    "updateFailed": "Update failed!"
+    "updateFailed": "Update failed!",
+    "noGroupSelectedSubtitle": "No Group Selected"
+  },
+  "drawer": {
+    "options": {
+      "account": "Account",
+      "previousTacks": "Previous Tacks",
+      "groups": "My Groups",
+      "invitations": "My Invitations",
+      "withdraw": "Withdraw",
+      "customerSupport": "Customer Support",
+      "termsAndConditions": "Terms & Conditions",
+      "privacyPolicy": "Privacy Policy"
+    },
+    "logOut": "Logout",
+    "note": "NOTE: This is an invite-only beta version of our\napp. Our official marketplace releases later this Fall. For more details, check out <a href=\"tackmarketplace.com\">tackmarketplace.com</a>"
   },
   "dashboardScreen": {
     "title": "Home Feed",
-    "noGroupSelectedSubtitle": "No Group Selected",
     "emptyNoGroupSelected": {
       "title": "Join A Group",
       "description": "You must be invited to a Tack group before creating or completing Tacks. If you were sent an invite link, please use it to view your invitation or click below to view your current invitations.",
@@ -134,8 +149,10 @@
     "title": "My Tacks",
     "subtitle": "Ongoing Tacks",
     "description": "Here are your ongoing Tacks (the ones you have created yourself or completing for others)",
-    "tackerTab": "Tacker",
-    "runnerTab": "Runner",
+    "tabs": {
+      "first": "Tacker",
+      "second": "Runner"
+    },
     "chooseRunnerButton": "Choose Runner",
     "beginTackButton": "Begin Tack",
     "pendingReview": "Review Pending",
@@ -236,23 +253,29 @@
   "phoneVerification": {
     "buttonText": "Verify"
   },
-  "createTack": {
+  "createTackScreen": {
     "title": "Create Tack",
-    "description": "Select one of the following templates or create a Tack from scratch",
-    "removeButton": "Remove",
-    "editAndPublishButton": "Edit & Publish",
-    "promptText": "If selected, a Runner will be able to counteroffer with an increased Tack price.",
-    "instructions": "Fill in the following info to create a custom Tack within your group ",
-    "fields": {
-      "title": "Title",
-      "titlePlaceholder": "Title",
-      "price": "Price",
-      "pricePlaceholder": "Price",
-      "description": "Description",
-      "descriptionPlaceholder": "Type here...",
-      "timeEstimation": "Time Estimation",
-      "timeEstimationPlaceholder": "#",
-      "counterOffer": "Allow Counteroffer"
+    "description": "Create custom Tack or select a popular template or frequent Tacks within your current group.",
+    "tabs": {
+      "first": "Nearby",
+      "second": "Group"
+    },
+    "nearbyPopular": {
+      "subtitle": "Popular Tacks Nearby",
+      "empty": {
+        "description": ""
+      }
+    },
+    "groupPopular": {
+      "subtitle": "Popular Tacks In Current Group",
+      "empty": {
+        "description": "Looks like this group doesn’t have any frequent Tacks. This will automatically populate as more Tacks are created within this group.",
+        "noGroupSelectedDescription": "You must be invited to a Tack group before creating or completing Tacks. If you were sent an invite link, please use it to view your invitation. "
+      }
+    },
+    "templateTack": {
+      "editAndPublishButton": "Edit & Publish",
+      "counterOffer": "Counter Offer"
     }
   },
   "addEditTackScreen": {
@@ -327,6 +350,7 @@
     "contactRunnerButton": "Call Runner",
     "contactTackerButton": "Call Tacker",
     "estimatedTackTime": "Estimated Tack Time",
+    "tackDetails": "Tack Details",
     "tacker": {
       "created": {
         "title": "Notifying Runners...",

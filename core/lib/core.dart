@@ -15,6 +15,7 @@ export 'src/managers/file_manager.dart';
 export 'src/managers/haptic_feedback_manager.dart';
 export 'src/managers/share_manager.dart';
 export 'src/managers/toast_manager.dart';
+export 'src/managers/url_manager.dart';
 
 export 'src/text_input_formatters/currency_formatter.dart';
 export 'src/text_input_formatters/phone_number_formatter.dart';

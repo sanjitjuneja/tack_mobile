@@ -102,6 +102,51 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.customerMapper.fromEntity);
   }
 
+  Future<domain.Group> getGroup({
+    required GetGroupRequest request,
+  }) async {
+    return get<GroupEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.groupPath,
+        id: request.id,
+        body: null,
+        params: null,
+      ),
+      parser: GroupEntity.fromJson,
+    ).then(mapper.groupMapper.fromEntity);
+  }
+
+  Future<List<domain.Group>> getGroups({
+    required GetGroupsRequest request,
+  }) async {
+    return get<GetGroupsResponse>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.groupsMePath,
+        body: null,
+        params: null,
+      ),
+      parser: GetGroupsResponse.fromJson,
+    ).then(
+      (GetGroupsResponse response) =>
+          mapper.groupMapper.fromList(response.results),
+    );
+  }
+
+  Future<void> selectGroup({
+    required SelectGroupRequest request,
+  }) async {
+    return post<void>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.groupSetActivePath,
+        id: request.id,
+        body: null,
+        params: null,
+      ),
+      parser: (_) {},
+      isFormData: true,
+    );
+  }
+
   Future<domain.Group> createGroup({
     required CreateGroupRequest request,
   }) async {
@@ -116,37 +161,113 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.groupMapper.fromEntity);
   }
 
-  Future<List<domain.Tack>> getMyTacks() async {
-    return get<List<TackEntity>>(
+  Future<List<domain.TemplateTack>> getNearbyPopularTacks({
+    required NearbyPopularTacksRequest request,
+  }) async {
+    return get<NearbyPopularTacksResponse>(
       ApiQuery(
-        endpoint: BaseUrlConstants.tacksMePath,
+        endpoint: BaseUrlConstants.nearbyPopularTacksPath,
         body: null,
         params: null,
       ),
-      parser: TackEntity.listFromJson,
-    ).then(mapper.tackMapper.fromList);
+      parser: NearbyPopularTacksResponse.fromJson,
+    ).then(
+      (NearbyPopularTacksResponse response) =>
+          mapper.templateTackMapper.fromList(response.popular),
+    );
+  }
+
+  Future<List<domain.TemplateTack>> getGroupPopularTacks({
+    required GroupPopularTacksRequest request,
+  }) async {
+    return get<GroupPopularTacksResponse>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.groupPopularTacksPath,
+        id: request.groupId,
+        body: null,
+        params: null,
+      ),
+      parser: GroupPopularTacksResponse.fromJson,
+    ).then(
+      (GroupPopularTacksResponse response) =>
+          mapper.templateTackMapper.fromList(response.popular),
+    );
+  }
+
+  Future<List<domain.RunnerTack>> getRunnerTacks() async {
+    return get<RunnerTacksResponse>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.tacksMeRunnerPath,
+        body: null,
+        params: null,
+      ),
+      parser: RunnerTacksResponse.fromJson,
+    ).then(
+      (RunnerTacksResponse response) =>
+          mapper.runnerTackMapper.fromList(response.results),
+    );
+  }
+
+  Future<List<domain.Tack>> getTackerTacks() async {
+    return get<TackerTacksResponse>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.tacksMeTackerPath,
+        body: null,
+        params: null,
+      ),
+      parser: TackerTacksResponse.fromJson,
+    ).then(
+      (TackerTacksResponse response) =>
+          mapper.tackMapper.fromList(response.results),
+    );
   }
 
   Future<List<domain.Tack>> getGroupTacks(GroupTacksRequest request) async {
-    return get<List<TackEntity>>(
+    return get<GroupTacksResponse>(
       ApiQuery(
         endpoint: BaseUrlConstants.groupsTacksPath,
         id: request.groupId,
         body: null,
         params: null,
       ),
-      parser: TackEntity.listFromJson,
-    ).then(mapper.tackMapper.fromList);
+      parser: GroupTacksResponse.fromJson,
+    ).then(
+      (GroupTacksResponse response) =>
+          mapper.tackMapper.fromList(response.results),
+    );
   }
 
-  Future<void> updateTack(UpdateTackRequest request) async {
-    return put(
+  Future<domain.Tack> createTack(CreateTackRequest request) async {
+    return post<TackEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.tacks,
+        body: request.toJson(),
+        params: null,
+      ),
+      parser: TackEntity.fromJson,
+    ).then(mapper.tackMapper.fromEntity);
+  }
+
+  Future<domain.Tack> updateTack(UpdateTackRequest request) async {
+    return put<TackEntity>(
       ApiQuery(
         endpoint: BaseUrlConstants.tacksWithId,
         id: request.id,
         body: request.toJson(),
         params: null,
       ),
+      parser: TackEntity.fromJson,
+    ).then(mapper.tackMapper.fromEntity);
+  }
+
+  Future<void> makeOffer(MakeOfferRequest request) async {
+    return post<void>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.offersPath,
+        body: request.toJson(),
+        params: null,
+      ),
+      parser: (_) {},
     );
   }
 

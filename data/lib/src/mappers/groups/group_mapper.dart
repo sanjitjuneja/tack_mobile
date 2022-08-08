@@ -10,7 +10,7 @@ class GroupMapper implements Mapper<GroupEntity, domain.Group> {
       ownerId: entity.ownerId,
       name: entity.name,
       description: entity.description,
-      imageUrl: entity.imageUrl,
+      imageUrl: entity.imageUrl ?? '',
       isPublic: entity.isPublic,
     );
   }

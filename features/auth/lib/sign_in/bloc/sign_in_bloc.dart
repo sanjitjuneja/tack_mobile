@@ -5,11 +5,12 @@ import 'package:auth/sign_in/bloc/sign_in_state.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
+import 'package:flutter/foundation.dart';
 import 'package:forgot_password/forgot_password_page.dart';
 import 'package:navigation/navigation.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
-  final AppRouterDelegate appRouter;
+  final GlobalAppRouterDelegate appRouter;
   final SignInUseCase signInUseCase;
 
   SignInBloc({
@@ -22,10 +23,21 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     if (event is SignIn) {
       try {
         appRouter.push(ProgressDialog.page());
+        final String phoneNumber;
+        final String password;
+
+        if (kDebugMode) {
+          phoneNumber = '+590590134730';
+          password = 'Tackapp123';
+        } else {
+          phoneNumber = '+${event.phoneNumber}';
+          password = event.password;
+        }
+
         await signInUseCase.execute(
           SignInPayload(
-            password: event.password,
-            phoneNumber: '${Constants.kPhonePrefix}${event.phoneNumber}',
+            password: password,
+            phoneNumber: phoneNumber,
           ),
         );
         appRouter.pop();
@@ -71,13 +83,15 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     required String password,
     required String phoneNumber,
   }) {
-    final bool isPasswordValid = FieldValidator.validatePassword(password);
-    final bool isPhoneValid = FieldValidator.validatePhoneNumber(phoneNumber);
-
-    if (isPhoneValid && isPasswordValid) {
-      return true;
-    } else {
-      return false;
-    }
+    /// TODO: refactor validation.
+    // final bool isPasswordValid = FieldValidator.validatePassword(password);
+    // final bool isPhoneValid = FieldValidator.validatePhoneNumber(phoneNumber);
+    //
+    // if (isPhoneValid && isPasswordValid) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+    return true;
   }
 }

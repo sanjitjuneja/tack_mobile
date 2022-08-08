@@ -5,11 +5,25 @@ abstract class TacksRepository {
 
   ValueStream<List<RunnerTack>> get runnerTacksStream;
 
-  Future<List<Tack>> getMyTacks();
+  Future<List<TemplateTack>> nearbyPopularTacks(
+    NearbyPopularTacksPayload payload,
+  );
+
+  Future<List<TemplateTack>> groupPopularTacks(
+    GroupPopularTacksPayload payload,
+  );
+
+  Future<List<RunnerTack>> getRunnerTacks();
+
+  Future<List<Tack>> getTackerTacks();
 
   Future<List<Tack>> getGroupTacks(GroupTacksPayload payload);
 
-  Future<void> updateTack(UpdateTackPayload payload);
+  Future<Tack> createTack(CreateTackPayload payload);
+
+  Future<Tack> updateTack(UpdateTackPayload payload);
+
+  Future<void> makeOffer(MakeOfferPayload payload);
 
   Future<void> rateTack(RateTackPayload payload);
 }

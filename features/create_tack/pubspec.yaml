@@ -1,7 +1,8 @@
 version: 0.0.1
-publish_to: none
 name: create_tack
 description: Create tack feature
+
+publish_to: none
 
 environment:
   sdk: ">=2.17.1 <3.0.0"
@@ -10,10 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  home:
-    path: ../home
-  groups:
-    path: ../groups
+
   core:
     path: ../../core
   domain:
@@ -22,6 +20,12 @@ dependencies:
     path: ../../core_ui
   navigation:
     path: ../../navigation
+
+  # Features
+  home:
+    path: ../../features/home
+  tacks:
+    path: ../../features/tacks
 
 dev_dependencies:
   flutter_test:

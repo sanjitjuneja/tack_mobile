@@ -1,10 +1,9 @@
-import 'dart:math';
-
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:dashboard/src/counter_offer_screen/models/counter_offer_data.dart';
 import 'package:domain/domain.dart';
 import 'package:navigation/navigation.dart';
+
+import 'package:dashboard/src/counter_offer_screen/models/counter_offer_data.dart';
 
 part 'counter_offer_event.dart';
 
@@ -13,12 +12,16 @@ part 'counter_offer_state.dart';
 class CounterOfferBloc extends Bloc<CounterOfferEvent, CounterOfferState> {
   static const double _maxCounterOfferValue = 1000;
 
-  final AppRouterDelegate appRouter;
+  final AppRouterDelegate _appRouter;
+  final MakeOfferUseCase _makeOfferUseCase;
 
   CounterOfferBloc({
-    required this.appRouter,
+    required AppRouterDelegate appRouter,
+    required MakeOfferUseCase makeOfferUseCase,
     required Tack tack,
-  }) : super(
+  })  : _appRouter = appRouter,
+        _makeOfferUseCase = makeOfferUseCase,
+        super(
           CounterOfferState(
             tack: tack,
             counterOfferData: const CounterOfferData(
@@ -44,24 +47,26 @@ class CounterOfferBloc extends Bloc<CounterOfferEvent, CounterOfferState> {
     CounterOfferSend event,
     Emitter<CounterOfferState> emit,
   ) async {
-    appRouter.push(ProgressDialog.page());
-    // API request simulation.
-    await Future.delayed(const Duration(seconds: 1));
-    appRouter.pop();
-
-    const List<dynamic> answers = <dynamic>['some error', false, true];
-    final dynamic answer = answers[Random().nextInt(answers.length)];
-
-    if (answer is String) {
-      appRouter.pushForResult(
+    try {
+      _appRouter.push(ProgressDialog.page());
+      await _makeOfferUseCase.execute(
+        MakeOfferPayload(
+          tackId: state.tack.id,
+          price: state.counterOfferData.parsedPrice,
+        ),
+      );
+      _appRouter.pop();
+      _appRouter.popWithResult(true);
+    } catch (e) {
+      _appRouter.pop();
+      _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
             contentKey: 'errorAlert.offerSending',
+            messageKey: e.toString(),
           ),
         ),
       );
-    } else {
-      appRouter.popWithResult(answer);
     }
   }
 }

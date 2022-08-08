@@ -10,7 +10,7 @@ import 'package:navigation/navigation.dart';
 import 'package:phone_verification/phone_verification_feature.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
-  final AppRouterDelegate appRouter;
+  final GlobalAppRouterDelegate appRouter;
 
   SignUpBloc({
     required this.appRouter,

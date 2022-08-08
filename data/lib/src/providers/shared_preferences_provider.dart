@@ -36,9 +36,9 @@ class SharedPreferencesProvider {
       SharedPreferencesKeys.session,
     );
 
-    return data != null
-        ? Session.fromJson(jsonDecode(data) as Map<String, dynamic>)
-        : null;
+    if (data == null) return null;
+
+    return Session.fromJson(jsonDecode(data));
   }
 
   Future<bool> setAuthorized() async {
@@ -61,6 +61,18 @@ class SharedPreferencesProvider {
     );
   }
 
+  domain.User? getUser() {
+    final String? data = _sharedPreferences.getString(
+      SharedPreferencesKeys.user,
+    );
+
+    if (data == null) return null;
+
+    final UserEntity userEntity = UserEntity.fromJson(jsonDecode(data));
+
+    return mapper.customerMapper.fromEntity(userEntity);
+  }
+
   bool isAllSetForLogin() {
     final String? user = _sharedPreferences.getString(
       SharedPreferencesKeys.user,
@@ -72,5 +84,11 @@ class SharedPreferencesProvider {
 
   Future<bool> clearAll() async {
     return _sharedPreferences.clear();
+  }
+
+  Future<void> clearSessionInfo() async {
+    await _sharedPreferences.remove(SharedPreferencesKeys.user);
+    await _sharedPreferences.remove(SharedPreferencesKeys.session);
+    await _sharedPreferences.setBool(SharedPreferencesKeys.isAuthorized, false);
   }
 }
