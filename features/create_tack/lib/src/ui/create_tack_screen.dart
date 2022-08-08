@@ -36,7 +36,9 @@ class CreateTackScreen extends StatelessWidget {
                   titleKey: 'createTackScreen.title',
                   subtitleKey: 'general.noGroupSelectedSubtitle',
                   group: state.currentGroup,
-                  onTap: () => _onHeaderTap(context),
+                  onTap: state.canPickOtherGroup
+                      ? () => _onHeaderTap(context)
+                      : null,
                 ),
               );
             },

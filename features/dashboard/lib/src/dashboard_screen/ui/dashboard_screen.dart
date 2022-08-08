@@ -24,7 +24,9 @@ class DashboardScreen extends StatelessWidget {
                 titleKey: 'dashboardScreen.title',
                 subtitleKey: 'general.noGroupSelectedSubtitle',
                 group: state.currentGroup,
-                onTap: () => _onHeaderTap(context),
+                onTap: state.canPickOtherGroup
+                    ? () => _onHeaderTap(context)
+                    : null,
               ),
             );
           },

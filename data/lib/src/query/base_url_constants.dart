@@ -17,7 +17,7 @@ class BaseUrlConstants {
 
   static const String groupsPath = '/groups/';
   static const String groupsMePath = '/groups/me/';
-  static const String groupPath = '/group/${ApiQuery.idKey}/';
+  static const String groupPath = '/groups/${ApiQuery.idKey}/';
   static const String groupSetActivePath = '/groups/${ApiQuery.idKey}/set_active';
   static const String groupsTacksPath = '/groups/${ApiQuery.idKey}/tacks';
 
