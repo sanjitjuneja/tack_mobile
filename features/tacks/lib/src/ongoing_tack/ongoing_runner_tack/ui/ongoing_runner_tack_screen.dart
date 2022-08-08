@@ -15,12 +15,10 @@ class OngoingRunnerTackScreen extends StatelessWidget {
       navigationBar: AppNavigationBar(
         backgroundColor: AppTheme.backgroundColor,
         actions: <Widget>[
-          AppButton(
+          NavigationBarActionButton(
             labelKey: 'ongoingTackScreen.contactTackerButton',
             icon: AppIconsTheme.phone,
-            type: ButtonType.secondary,
-            expanded: false,
-            onTap: () => _onContactButtonTap(context),
+            onTap: _onContactButtonPressed,
           ),
         ],
       ),
@@ -30,7 +28,7 @@ class OngoingRunnerTackScreen extends StatelessWidget {
     );
   }
 
-  void _onContactButtonTap(BuildContext context) {
+  void _onContactButtonPressed(BuildContext context) {
     BlocProvider.of<OngoingRunnerTackBloc>(context).add(const ContactTacker());
   }
 }

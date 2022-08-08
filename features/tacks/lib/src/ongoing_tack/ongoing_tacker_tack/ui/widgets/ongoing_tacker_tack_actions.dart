@@ -1,12 +1,11 @@
+import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:navigation/navigation.dart';
-import 'package:tacks/src/edit_tack/ui/edit_tack_page.dart';
+import 'package:tacks/src/ongoing_tack/ongoing_tacker_tack/bloc/ongoing_tacker_tack_bloc.dart';
 
 import 'package:tacks/src/ongoing_tack/view_extensions/ongoing_tack_to_view_extension.dart';
 import 'package:tacks/src/ongoing_tack/widgets/note_widget.dart';
-import 'package:tacks/src/rate_tack_user/ui/rate_tack_user_page.dart';
 
 class OngoingTackerTackActions extends StatelessWidget {
   final Tack tack;
@@ -26,9 +25,7 @@ class OngoingTackerTackActions extends StatelessWidget {
           child: AppCircleButton(
             margin: padding,
             labelKey: tack.status.getButtonLabel(isTacker: true),
-            onTap: () {
-              AppRouter.of(context).pushForResult(EditTack.page(tack));
-            },
+            onTap: () => _onActionPressed(context),
           ),
         );
       case TackStatus.pendingAccept:
@@ -45,11 +42,7 @@ class OngoingTackerTackActions extends StatelessWidget {
               children: <Widget>[
                 AppCircleButton(
                   labelKey: tack.status.getButtonLabel(isTacker: true),
-                  onTap: () {
-                    AppRouter.of(context).push(
-                      RateTackUser.page(tack: tack, tackUser: tack.runner!),
-                    );
-                  },
+                  onTap: () => _onActionPressed(context),
                 ),
                 const SizedBox(height: 12),
                 NoteWidget(
@@ -62,5 +55,9 @@ class OngoingTackerTackActions extends StatelessWidget {
       case TackStatus.completed:
         return const SizedBox.shrink();
     }
+  }
+
+  void _onActionPressed(BuildContext context) {
+    BlocProvider.of<OngoingTackerTackBloc>(context).add(const ActionPressed());
   }
 }

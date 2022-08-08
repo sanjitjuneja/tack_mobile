@@ -14,12 +14,12 @@ class TackApp extends StatefulWidget {
 }
 
 class _TackAppState extends State<TackApp> {
-  late final AppRouterDelegate appRouter;
+  late final GlobalAppRouterDelegate globalAppRouter;
   late final RouteInformationParser<RouteConfiguration> routeInformationParser;
 
   @override
   void initState() {
-    appRouter = appLocator.get<AppRouterDelegate>();
+    globalAppRouter = appLocator.get<GlobalAppRouterDelegate>();
     routeInformationParser = appLocator.get<AppRouteInformationParser>();
     super.initState();
   }
@@ -27,7 +27,8 @@ class _TackAppState extends State<TackApp> {
   @override
   Widget build(BuildContext context) {
     return TimeTickerInheritedWidget(
-      child: CupertinoApp.router(debugShowCheckedModeBanner: false,
+      child: CupertinoApp.router(
+        debugShowCheckedModeBanner: false,
         localizationsDelegates: <LocalizationsDelegate<dynamic>>[
           FlutterI18nDelegate(
             translationLoader: FileTranslationLoader(
@@ -43,7 +44,7 @@ class _TackAppState extends State<TackApp> {
           GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate
         ],
-        routerDelegate: appRouter,
+        routerDelegate: globalAppRouter,
         routeInformationParser: routeInformationParser,
       ),
     );

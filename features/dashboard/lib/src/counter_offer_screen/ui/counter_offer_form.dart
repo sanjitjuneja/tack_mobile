@@ -1,8 +1,9 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:flutter/cupertino.dart';
+
 import 'package:dashboard/src/counter_offer_screen/bloc/counter_offer_bloc.dart';
 import 'package:dashboard/src/widgets/tack_tile.dart';
-import 'package:flutter/cupertino.dart';
 
 class CounterOfferForm extends StatelessWidget {
   const CounterOfferForm({super.key});
@@ -49,7 +50,9 @@ class CounterOfferForm extends StatelessWidget {
                         keyboardType: const TextInputType.numberWithOptions(
                           decimal: true,
                         ),
-                        inputFormatters: CurrencyUtility.dollarInputFormatters,
+                        inputFormatters: CurrencyUtility.dollarInputFormatters(
+                          maxValue: state.counterOfferData.maxValue,
+                        ),
                         onTextChange: (String value) =>
                             _onCounterOfferChange(context, value),
                       ),
@@ -63,7 +66,7 @@ class CounterOfferForm extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 40),
               child: AppCircleButton(
                 margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                isDisabled: !state.isOfferValid,
+                isDisabled: !state.isReadyToProceed,
                 labelKey: 'counterOfferScreen.sendOfferButton',
                 onTap: () => _onCounterOfferSendPress(context),
               ),
@@ -78,8 +81,11 @@ class CounterOfferForm extends StatelessWidget {
     BuildContext context,
     String value,
   ) {
-    BlocProvider.of<CounterOfferBloc>(context)
-        .add(CounterOfferChange(counterOffer: value));
+    BlocProvider.of<CounterOfferBloc>(context).add(
+      CounterOfferChange(
+        counterOffer: const CurrencyFormatter().removeFormat(value),
+      ),
+    );
   }
 
   void _onCounterOfferSendPress(BuildContext context) {

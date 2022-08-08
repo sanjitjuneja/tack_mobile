@@ -2,14 +2,18 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
+
+import 'package:tacks/src/tacks_screen/view_extensions/runner_task_to_view_extension.dart';
 import 'package:tacks/src/tacks_screen/view_extensions/tacker_task_to_view_extensions.dart';
 
 class TackHeaderWidget extends StatelessWidget {
   final Tack tack;
+  final bool isRunner;
 
   const TackHeaderWidget({
     super.key,
     required this.tack,
+    required this.isRunner,
   });
 
   @override
@@ -20,12 +24,15 @@ class TackHeaderWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
-              child: Text(
-                tack.title,
-                style: AppTextTheme.manrope16SemiBold
-                    .copyWith(color: AppTheme.textPrimaryColor),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 6.0),
+                child: Text(
+                  tack.title,
+                  style: AppTextTheme.manrope16SemiBold
+                      .copyWith(color: AppTheme.textPrimaryColor),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
             const SizedBox(width: 6),
@@ -41,8 +48,23 @@ class TackHeaderWidget extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: Text(
-                FlutterI18n.translate(context, tack.finalDescription),
-                style: tack.descriptionTextStyle,
+                FlutterI18n.translate(
+                  context,
+                  isRunner
+                      ? RunnerTackStatusToDescriptionExtension.finalDescription(
+                          tack,
+                        )
+                      : TackerTackStatusToDescriptionExtension.finalDescription(
+                          tack,
+                        ),
+                ),
+                style: isRunner
+                    ? RunnerTackStatusToTextStyleExtension.descriptionTextStyle(
+                        tack,
+                      )
+                    : TackerTackStatusToTextStyleExtension.descriptionTextStyle(
+                        tack,
+                      ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

@@ -3,25 +3,21 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 
 extension TackerTackStatusToDescriptionExtension on Tack {
-  String get finalDescription {
-    switch (status) {
+  static String finalDescription(Tack tack) {
+    switch (tack.status) {
       case TackStatus.created:
         return 'tacksScreen.tackerStatus.created';
+      case TackStatus.pendingAccept:
+        return 'tacksScreen.tackerStatus.accepted';
       default:
-        return tacker.fullName;
+        return tack.runner?.fullName ?? '';
     }
   }
 }
 
 extension TackerTackStatusToTextStyleExtension on Tack {
-  TextStyle get descriptionTextStyle {
-    switch (status) {
-      case TackStatus.created:
-        return AppTextTheme.manrope20Bold
-            .copyWith(color: AppTheme.textDisabledColor);
-      default:
-        return AppTextTheme.manrope16Bold
-            .copyWith(color: AppTheme.textHeavyHintColor);
-    }
+  static TextStyle descriptionTextStyle(Tack tack) {
+    return AppTextTheme.manrope16Bold
+        .copyWith(color: AppTheme.textHeavyHintColor);
   }
 }

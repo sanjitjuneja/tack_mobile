@@ -25,6 +25,8 @@ class NameSection extends StatelessWidget {
         AppTextField(
           placeholder: 'createGroupScreen.nameSection.placeholder',
           hasShadow: false,
+          keyboardType: TextInputType.text,
+          textInputAction: TextInputAction.next,
           backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
           inputFormatters: <TextInputFormatter>[
             LengthLimitingTextInputFormatter(

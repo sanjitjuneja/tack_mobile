@@ -1,18 +1,20 @@
 part of 'global_bloc.dart';
 
 class GlobalState {
-  final UserModel user;
+  final User user;
   final List<Group> groups;
-  final Group currentGroup;
+  final Group? currentGroup;
+
+  bool get isGroupSelected => currentGroup != null;
 
   const GlobalState({
     required this.user,
     required this.groups,
-    required this.currentGroup,
+    this.currentGroup,
   });
 
   GlobalState copyWith({
-    UserModel? user,
+    User? user,
     List<Group>? groups,
     Group? currentGroup,
   }) {

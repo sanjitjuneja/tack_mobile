@@ -1,10 +1,10 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
-import 'package:tacks/src/bloc/tacks_bloc.dart';
 
+import 'package:tacks/src/tacks_screen/bloc/tacks_bloc.dart';
 import 'package:tacks/src/tacks_screen/ui/tacks_form.dart';
 
 class TacksScreen extends StatelessWidget {
@@ -15,37 +15,26 @@ class TacksScreen extends StatelessWidget {
     return BlocProvider<TacksBloc>(
       create: (_) => TacksBloc(
         appRouter: appLocator.get<AppRouterDelegate>(),
+        getRunnerTacksUseCase: appLocator.get<GetRunnerTacksUseCase>(),
+        getTackerTacksUseCase: appLocator.get<GetTackerTacksUseCase>(),
       ),
       child: CupertinoPageScaffold(
         backgroundColor: AppTheme.primaryBackgroundColor,
         navigationBar: AppNavigationBar(
           backgroundColor: AppTheme.primaryBackgroundColor,
           automaticallyImplyLeading: false,
-          middle: BlocBuilder<GlobalBloc, GlobalState>(
-            builder: (_, GlobalState state) {
-              return Align(
-                alignment: Alignment.centerLeft,
-                child: GroupUserHeaderWidget(
-                  user: state.user,
-                  group: state.currentGroup,
-                ),
-              );
-            },
-          ),
-          actions: <Widget>[
-            CupertinoButton(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              onPressed: () => _onMenuTap(context),
-              child: AppIconsTheme.menu(color: AppTheme.iconPrimaryColor),
+          withMenu: true,
+          middle: Align(
+            alignment: Alignment.centerLeft,
+            child: PageHeaderWidget(
+              titleKey: 'tacksScreen.title',
+              image: AppIconsTheme.tack,
+              subtitleKey: 'tacksScreen.subtitle',
             ),
-          ],
+          ),
         ),
         child: const TacksForm(),
       ),
     );
-  }
-
-  Future<void> _onMenuTap(BuildContext context) async {
-    // TODO: implement functionality.
   }
 }

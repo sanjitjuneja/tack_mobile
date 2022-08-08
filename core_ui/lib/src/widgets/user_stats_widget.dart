@@ -26,6 +26,15 @@ class UserStatsWidget extends StatelessWidget {
     this.brightness = Brightness.dark,
   });
 
+  factory UserStatsWidget.fromUser({
+    required User user,
+  }) {
+    return UserStatsWidget(
+      rating: user.rating,
+      tacksComplete: user.tacksAmount,
+    );
+  }
+
   factory UserStatsWidget.fromTackUser({
     required TackUser tackUser,
   }) {
@@ -45,14 +54,16 @@ class UserStatsWidget extends StatelessWidget {
             alignment: ui.PlaceholderAlignment.middle,
             child: AppIconsTheme.star(size: 15),
           ),
-          const WidgetSpan(child: SizedBox(width: 1)),
-          TextSpan(text: '$rating'),
+          const WidgetSpan(child: SizedBox(width: 2)),
+          TextSpan(
+            text: rating.toStringAsFixed(2),
+          ),
           const TextSpan(text: '\t\t|\t'),
           WidgetSpan(
             alignment: ui.PlaceholderAlignment.middle,
             child: AppIconsTheme.tack(size: 16),
           ),
-          const WidgetSpan(child: SizedBox(width: 1)),
+          const WidgetSpan(child: SizedBox(width: 2)),
           TextSpan(
             text: FlutterI18n.plural(
               context,

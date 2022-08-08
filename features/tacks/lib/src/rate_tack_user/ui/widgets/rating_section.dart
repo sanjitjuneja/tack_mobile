@@ -26,7 +26,7 @@ class RatingSection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            state.tackUser.fullName,
+            state.userToRate?.fullName ?? '',
             textAlign: TextAlign.center,
             style: AppTextTheme.manrope24SemiBold
                 .copyWith(color: AppTheme.textBrightColor),

@@ -4,6 +4,30 @@ abstract class DashboardEvent {
   const DashboardEvent();
 }
 
+class GoToCreateTack extends DashboardEvent {
+  const GoToCreateTack();
+}
+
+class InitialLoad extends DashboardEvent {
+  const InitialLoad();
+}
+
+class RefreshAction extends DashboardEvent {
+  final Completer<RefreshingStatus> completer;
+
+  const RefreshAction({
+    required this.completer,
+  });
+}
+
+class LoadMoreAction extends DashboardEvent {
+  final Completer<LoadingStatus> completer;
+
+  const LoadMoreAction({
+    required this.completer,
+  });
+}
+
 class CounterOfferOpen extends DashboardEvent {
   final Tack tack;
 

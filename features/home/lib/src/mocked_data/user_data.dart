@@ -11,7 +11,6 @@ const TackUser tackCreatorUser = TackUser(
   lastName: 'Cooper',
   rating: 5,
   tacksComplete: 125,
-  contacts: TackUserContacts(phoneNumber: '+375296159325'),
 );
 
 const List<TackUser> tackRunnerUsers = <TackUser>[
@@ -21,7 +20,6 @@ const List<TackUser> tackRunnerUsers = <TackUser>[
     lastName: 'Bothman',
     rating: 5,
     tacksComplete: 125,
-    contacts: TackUserContacts(phoneNumber: '+375296159325'),
   ),
   TackUser(
     id: 2,
@@ -29,6 +27,5 @@ const List<TackUser> tackRunnerUsers = <TackUser>[
     lastName: 'Gomez',
     rating: 5,
     tacksComplete: 125,
-    contacts: TackUserContacts(phoneNumber: '+375296159325'),
   ),
 ];

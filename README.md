@@ -7,5 +7,5 @@ A new Flutter project.
 #### for auto generate json_serializable files run:
 ```
 cd data  
-flutter pub run build_runner build delete-conflicting-outputs
+flutter pub run build_runner build --delete-conflicting-outputs
 ```

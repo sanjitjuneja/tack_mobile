@@ -13,6 +13,12 @@ dependencies:
 
   core:
     path: ../core
+  navigation:
+    path: ../navigation
+
+  # Features
+  splash:
+    path: ../features/splash
 
 dev_dependencies:
   flutter_test:

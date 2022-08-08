@@ -6,6 +6,8 @@ part 'invite_members_event.dart';
 part 'invite_members_state.dart';
 
 class InviteMembersBloc extends Bloc<InviteMembersEvent, InviteMembersState> {
+  static const Duration _hapticFeedbackOnCopyDelay = Duration(milliseconds: 250);
+
   final AppRouterDelegate appRouter;
 
   InviteMembersBloc({
@@ -26,6 +28,10 @@ class InviteMembersBloc extends Bloc<InviteMembersEvent, InviteMembersState> {
       appRouter.navigatorKey.currentContext!,
       messageKey: 'toast.copiedToClipboard',
       backgroundColor: AppTheme.toastBackgroundColor,
+    );
+    Future.delayed(
+      _hapticFeedbackOnCopyDelay,
+      HapticFeedbackManager.success,
     );
   }
 

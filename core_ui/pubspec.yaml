@@ -12,6 +12,8 @@ dependencies:
     sdk: flutter
 
   animated_toggle_switch: ^0.5.2
+  cached_network_image: ^3.2.1
+  pull_to_refresh: ^2.0.0
   expandable_text: ^2.3.0
   grouped_list: ^5.1.2
   flutter_html: ^3.0.0-alpha.5
@@ -30,6 +32,8 @@ dependencies:
   # Components
   app_dialog:
     path: ../components/app_dialog
+  app_drawer:
+    path: ../components/app_drawer
   image_cropper:
     path: ../components/image_cropper
   segment_controller:

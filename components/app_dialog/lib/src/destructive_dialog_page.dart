@@ -35,12 +35,21 @@ class _DestructiveDialogPage extends Page<bool> {
     return DialogRoute<bool>(
       settings: this,
       context: context,
-      barrierColor: AppTheme.barrierColor,
-      barrierDismissible: true,
-      builder: (_) => DestructiveDialogWidget(
-        destructiveAlert: destructiveAlert,
-        shouldUseDefaultContent: shouldUseDefaultContent,
-        onDestructiveActionTap: onDestructiveActionTap,
+      barrierColor: AppTheme.transparentColor,
+      useSafeArea: false,
+      barrierDismissible: false,
+      builder: (_) => GestureDetector(
+        onTap: () => AppRouter.of(context).popWithResult(false),
+        child: Container(
+          color: AppTheme.barrierColor,
+          child: Center(
+            child: DestructiveDialogWidget(
+              destructiveAlert: destructiveAlert,
+              shouldUseDefaultContent: shouldUseDefaultContent,
+              onDestructiveActionTap: onDestructiveActionTap,
+            ),
+          ),
+        ),
       ),
     );
   }

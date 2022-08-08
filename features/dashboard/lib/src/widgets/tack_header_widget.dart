@@ -16,12 +16,15 @@ class TackHeaderWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Expanded(
-          child: Text(
-            name,
-            style: AppTextTheme.manrope16SemiBold
-                .copyWith(color: AppTheme.textPrimaryColor),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 6.0),
+            child: Text(
+              name,
+              style: AppTextTheme.manrope16SemiBold
+                  .copyWith(color: AppTheme.textPrimaryColor),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ),
         const SizedBox(width: 6),

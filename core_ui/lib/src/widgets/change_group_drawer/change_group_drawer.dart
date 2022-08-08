@@ -16,7 +16,7 @@ class ChangeGroupDrawer {
 
   static Page<Group> page(
     List<Group> groups,
-    Group currentGroup,
+    Group? currentGroup,
   ) {
     return _ChangeGroupDrawerPage(
       groups: groups,
@@ -27,7 +27,7 @@ class ChangeGroupDrawer {
 
 class _ChangeGroupDrawerPage extends Page<Group> {
   final List<Group> groups;
-  final Group currentGroup;
+  final Group? currentGroup;
 
   @override
   String get name => ChangeGroupDrawer.routeName;
@@ -41,6 +41,8 @@ class _ChangeGroupDrawerPage extends Page<Group> {
   Route<Group> createRoute(BuildContext context) {
     return TopSlideRoute(
       settings: this,
+      transitionAnimationDuration: const Duration(milliseconds: 300),
+      isDismissible: false,
       builder: (_) {
         return _ChangeGroupDrawerWidget(
           groups,

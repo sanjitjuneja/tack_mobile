@@ -2,13 +2,13 @@ part of 'counter_offer_bloc.dart';
 
 class CounterOfferState {
   final Tack tack;
-  final String? counterOffer;
+  final CounterOfferData counterOfferData;
 
-  bool get isOfferValid => counterOffer != null && counterOffer!.isNotEmpty;
+  bool get isReadyToProceed => counterOfferData.isValid;
 
   const CounterOfferState({
     required this.tack,
-    this.counterOffer,
+    required this.counterOfferData,
   });
 
   CounterOfferState copyWith({
@@ -16,7 +16,9 @@ class CounterOfferState {
   }) {
     return CounterOfferState(
       tack: tack,
-      counterOffer: counterOffer ?? this.counterOffer,
+      counterOfferData: counterOfferData.copyWith(
+        counterOfferValue: counterOffer,
+      ),
     );
   }
 }
