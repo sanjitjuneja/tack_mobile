@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 class OpacityOnTapContainer extends StatefulWidget {
   final Widget child;
   final VoidCallback? onTap;
-  final double? pressedOpacity;
+  final double pressedOpacity;
   final double disabledOpacity;
   final bool disable;
 
@@ -11,10 +11,10 @@ class OpacityOnTapContainer extends StatefulWidget {
     super.key,
     required this.child,
     this.pressedOpacity = 0.7,
-    this.disabledOpacity = 1,
+    double? disabledOpacity,
     this.onTap,
     this.disable = false,
-  });
+  }) : disabledOpacity = disabledOpacity ?? pressedOpacity;
 
   @override
   State<OpacityOnTapContainer> createState() => _OpacityOnTapContainerState();
@@ -50,9 +50,10 @@ class _OpacityOnTapContainerState extends State<OpacityOnTapContainer>
 
   void _setTween() {
     if (widget.disable) {
-      _opacityTween.begin = widget.disabledOpacity;
+      _opacityTween.end = widget.disabledOpacity;
+    } else {
+      _opacityTween.end = widget.pressedOpacity;
     }
-    _opacityTween.end = widget.pressedOpacity ?? 1.0;
 
     _animate();
   }
@@ -88,6 +89,7 @@ class _OpacityOnTapContainerState extends State<OpacityOnTapContainer>
 
   void _animate() {
     if (_animationController.isAnimating) return;
+    if (widget.onTap == null) return;
 
     final bool wasHeldDown = _buttonHeldDown;
     final TickerFuture ticker = _buttonHeldDown || widget.disable

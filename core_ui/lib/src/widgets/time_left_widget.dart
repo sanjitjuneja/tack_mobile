@@ -1,4 +1,4 @@
-import 'package:core/utils/duration_utility.dart';
+import 'package:core/core.dart';
 import 'package:core_ui/src/widgets/timer_ticker_widget.dart';
 import 'package:flutter/cupertino.dart';
 

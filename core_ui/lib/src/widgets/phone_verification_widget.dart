@@ -1,7 +1,7 @@
-import 'package:core/constants/constants.dart';
+import 'package:core/core.dart';
+import 'package:core_ui/src/theme/app_theme.dart';
+import 'package:core_ui/src/widgets/phone_number_text_field.dart';
 import 'package:flutter/material.dart';
-
-import '../../core_ui.dart';
 
 class PhoneVerificationWidget extends StatelessWidget {
   final Function(String) onChanged;

@@ -1,3 +1,4 @@
+import 'package:app_drawer/app_drawer.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/src/theme/app_theme.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,6 +16,7 @@ class AppNavigationBar extends StatelessWidget
   final List<Widget>? actions;
   final bool automaticallyImplyLeading;
   final bool withResult;
+  final bool withMenu;
 
   AppNavigationBar({
     super.key,
@@ -26,6 +28,7 @@ class AppNavigationBar extends StatelessWidget
     this.actions,
     this.automaticallyImplyLeading = true,
     this.withResult = false,
+    this.withMenu = false,
   })  : titleStyle = titleStyle ?? AppTextTheme.manrope20Medium,
         titleColor = titleColor ?? AppColors.black;
 
@@ -74,7 +77,18 @@ class AppNavigationBar extends StatelessWidget
             ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
-          children: actions ?? <Widget>[],
+          children: <Widget>[
+            ...?actions,
+            if (withMenu) ...<Widget>[
+              CupertinoButton(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                onPressed: () => _onMenuButtonPressed(context),
+                child: AppIconsTheme.menu(
+                  color: AppTheme.iconPrimaryColor,
+                ),
+              ),
+            ],
+          ],
         ),
         automaticallyImplyLeading: false,
         automaticallyImplyMiddle: false,
@@ -92,5 +106,9 @@ class AppNavigationBar extends StatelessWidget
         ? CupertinoDynamicColor.resolve(this.backgroundColor!, context)
         : CupertinoTheme.of(context).barBackgroundColor;
     return backgroundColor.alpha == 0xFF;
+  }
+
+  void _onMenuButtonPressed(BuildContext context) {
+    AppRouter.of(context).push(AppDrawer.page());
   }
 }

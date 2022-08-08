@@ -94,6 +94,7 @@ class AppTheme {
   static Color get bottomSheetLift => AppColors.ghost;
   static Color get errorIconColor => AppColors.cinnabar;
   static Color get iconPrimaryColor => AppColors.midGrey;
+  static Color get iconSecondaryColor => AppColors.fern;
   static Color get iconHintColor => AppColors.shuttleGray;
   static Color get thirdPartyDescriptionColor => AppColors.stormGray;
 

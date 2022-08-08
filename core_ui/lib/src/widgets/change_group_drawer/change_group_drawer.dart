@@ -16,7 +16,7 @@ class ChangeGroupDrawer {
 
   static Page<Group> page(
     List<Group> groups,
-    Group currentGroup,
+    Group? currentGroup,
   ) {
     return _ChangeGroupDrawerPage(
       groups: groups,
@@ -27,7 +27,7 @@ class ChangeGroupDrawer {
 
 class _ChangeGroupDrawerPage extends Page<Group> {
   final List<Group> groups;
-  final Group currentGroup;
+  final Group? currentGroup;
 
   @override
   String get name => ChangeGroupDrawer.routeName;

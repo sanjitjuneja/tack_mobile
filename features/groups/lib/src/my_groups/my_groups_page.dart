@@ -6,7 +6,7 @@ import 'package:navigation/navigation.dart';
 import 'bloc/groups_bloc.dart';
 import 'my_groups_screen.dart';
 
-class MyGroups {
+class MyGroupsFeature {
   static const String routeName = '/myGroups';
 
   static Page<Group> page() {
@@ -16,7 +16,7 @@ class MyGroups {
 
 class _MyGroupsPage extends Page<Group> {
   @override
-  String get name => MyGroups.routeName;
+  String get name => MyGroupsFeature.routeName;
 
   const _MyGroupsPage();
 

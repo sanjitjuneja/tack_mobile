@@ -25,7 +25,11 @@ extension OngoingTackToViewExtension on TackStatus {
       basicPath = 'ongoingTackScreen.runner';
     }
 
-    return <String>[basicPath, name, field].join('.');
+    return <String>[
+      basicPath,
+      name,
+      field,
+    ].join('.');
   }
 }
 

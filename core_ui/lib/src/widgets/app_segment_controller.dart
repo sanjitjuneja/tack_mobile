@@ -73,6 +73,7 @@ class AppSegmentController<T> extends StatelessWidget {
   final Map<T, String> tabs;
   final T? initialValue;
   final ValueChanged<T>? onChangeValue;
+  final double? height;
   final TextStyle? textStyle;
   final TabController? controller;
 
@@ -81,6 +82,7 @@ class AppSegmentController<T> extends StatelessWidget {
     required this.tabs,
     this.initialValue,
     this.onChangeValue,
+    this.height,
     this.textStyle,
     this.controller,
   });
@@ -91,7 +93,7 @@ class AppSegmentController<T> extends StatelessWidget {
       controller: controller,
       initialValue: initialValue,
       onValueChange: onChangeValue,
-      height: 38,
+      height: height ?? 38,
       shape: BoxShape.circle,
       backgroundColor: AppTheme.segmentBackgroundColor,
       indicatorColor: AppTheme.segmentActiveBackgroundColor,

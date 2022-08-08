@@ -35,6 +35,7 @@ class _CounterOfferPage extends Page<bool?> {
         create: (_) {
           return CounterOfferBloc(
             appRouter: AppRouter.of(context),
+            makeOfferUseCase: appLocator.get<MakeOfferUseCase>(),
             tack: tack,
           );
         },

@@ -2,15 +2,17 @@ part of 'rate_tack_user_bloc.dart';
 
 class RateTackUserState {
   final Tack tack;
-  final TackUser tackUser;
+  final bool isRateTacker;
   final CommentData commentData;
   final RateData rateData;
 
   bool get isReadyToProceed => commentData.isValid && rateData.isValid;
 
+  TackUser? get userToRate => isRateTacker ? tack.tacker : tack.runner;
+
   const RateTackUserState({
     required this.tack,
-    required this.tackUser,
+    required this.isRateTacker,
     required this.commentData,
     required this.rateData,
   });
@@ -21,7 +23,7 @@ class RateTackUserState {
   }) {
     return RateTackUserState(
       tack: tack,
-      tackUser: tackUser,
+      isRateTacker: isRateTacker,
       commentData: comment != null
           ? commentData.copyWith(comment: comment)
           : commentData,

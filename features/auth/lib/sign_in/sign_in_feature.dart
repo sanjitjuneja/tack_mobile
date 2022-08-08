@@ -1,7 +1,6 @@
 import 'package:auth/sign_in/sign_in_screen.dart';
 import 'package:core/core.dart';
-import 'package:core/di/app_di.dart';
-import 'package:domain/usecases/sign_in_usecase.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 
@@ -19,7 +18,7 @@ class SignInPage extends PageWithScaffoldKey<bool> {
           return BlocProvider<SignInBloc>(
             create: (BuildContext context) {
               return SignInBloc(
-                appRouter: appLocator.get<AppRouterDelegate>(),
+                appRouter: appLocator.get<GlobalAppRouterDelegate>(),
                 signInUseCase: appLocator.get<SignInUseCase>(),
               );
             },

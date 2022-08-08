@@ -22,7 +22,7 @@ class RateTackUserBloc extends Bloc<RateTackUserEvent, RateTackUserState> {
 
   RateTackUserBloc({
     required Tack tack,
-    required TackUser tackUser,
+    required bool isRateTacker,
     required AppRouterDelegate appRouter,
     required RateTackUseCase rateTackUseCase,
   })  : _appRouter = appRouter,
@@ -30,7 +30,7 @@ class RateTackUserBloc extends Bloc<RateTackUserEvent, RateTackUserState> {
         super(
           RateTackUserState(
             tack: tack,
-            tackUser: tackUser,
+            isRateTacker: isRateTacker,
             commentData: const CommentData(
               maxWords: _commentMaxWordsLength,
               isRequired: true,

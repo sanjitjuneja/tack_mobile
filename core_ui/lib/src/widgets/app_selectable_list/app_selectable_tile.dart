@@ -29,14 +29,7 @@ class AppBaseSelectableTile<T extends AppSelectableItem>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             if (item.imagePath != null) ...<Widget>[
-              Container(
-                width: 45,
-                height: 45,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppTheme.shadowColor,
-                ),
-              ),
+              AppCircleAvatarWidget(item.imagePath),
               const SizedBox(width: 20),
             ],
             Expanded(

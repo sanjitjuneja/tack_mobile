@@ -1,9 +1,7 @@
-import 'package:core/di/app_di.dart';
-import 'package:core/di/data_di.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'app/app_config.dart';
 import 'app/tack_app.dart';
 
 Future<void> mainCommon(Flavor flavor) async {
@@ -18,9 +16,7 @@ Future<void> mainCommon(Flavor flavor) async {
   );
 
   appDI.initDependencies();
-  await dataDI.initDependencies(
-    baseUrl: AppConfig.fromFlavor(flavor).baseUrl,
-  );
+  await dataDI.setupPreLoginAppLocator(flavor);
 
   runApp(
     const TackApp(),

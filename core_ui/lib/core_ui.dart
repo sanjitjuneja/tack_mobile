@@ -2,6 +2,7 @@ library core_ui;
 
 export 'src/helpers/widget_shadow_type.dart';
 
+export 'src/routes/left_slide_route.dart';
 export 'src/routes/top_slide_route.dart';
 
 export 'src/theme/app_theme.dart';
@@ -13,6 +14,7 @@ export 'src/widgets/change_group_drawer/change_group_drawer.dart';
 export 'src/widgets/steps_with_progress/steps_with_progress.dart';
 
 export 'src/widgets/app_button_type.dart';
+export 'src/widgets/app_circle_avatar.dart';
 export 'src/widgets/app_circle_button.dart';
 export 'src/widgets/app_divider.dart';
 export 'src/widgets/app_list_view.dart';
@@ -53,11 +55,12 @@ export 'src/widgets/phone_verification_widget.dart';
 
 export 'src/widgets/drawer_accessory_widget.dart';
 export 'src/widgets/empty_widget.dart';
+export 'src/widgets/navigation_bar_action_button.dart';
 export 'src/widgets/opacity_on_tap_container.dart';
 export 'src/widgets/expandable_text.dart';
 export 'src/widgets/keyboard_dismissible.dart';
 export 'src/widgets/keyboard_visibility_widget.dart';
-export 'src/widgets/group_user_header_widget.dart';
+export 'src/widgets/page_header_widget.dart';
 export 'src/widgets/section_header_widget.dart';
 export 'src/widgets/text_field_footer.dart';
 export 'src/widgets/text_with_highlight.dart';
@@ -70,6 +73,7 @@ export 'src/widgets/timer_ticker_widget.dart';
 export 'src/widgets/user_stats_widget.dart';
 
 export 'package:app_dialog/app_dialog.dart';
+export 'package:app_drawer/app_drawer.dart';
 export 'package:image_cropper/image_cropper.dart';
 export 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 export 'package:grouped_list/grouped_list.dart';

@@ -4,7 +4,7 @@ class _ChangeGroupDrawerWidget extends StatelessWidget {
   static const _autoPopDuration = Duration(milliseconds: 140);
 
   final List<Group> _groups;
-  final Group _currentGroup;
+  final Group? _currentGroup;
 
   const _ChangeGroupDrawerWidget(
     this._groups,
@@ -16,7 +16,8 @@ class _ChangeGroupDrawerWidget extends StatelessWidget {
     final List<SelectableGroup> groups = List<SelectableGroup>.from(
       _groups.map(SelectableGroup.new),
     );
-    final SelectableGroup currentGroup = SelectableGroup(_currentGroup);
+    final SelectableGroup? currentGroup =
+        _currentGroup == null ? null : SelectableGroup(_currentGroup!);
 
     return Material(
       color: AppTheme.transparentColor,

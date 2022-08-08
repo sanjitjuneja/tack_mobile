@@ -1,19 +1,27 @@
 part of user;
 
-class Customer {
+class User {
   final int id;
-  final double balance;
   final String firstName;
   final String lastName;
-  final int activeGroup;
+  final DateTime birthDate;
+  final String? profilePicture;
+  final double rating;
+  final int tacksAmount;
   final String phoneNumber;
+  final int? activeGroup;
 
-  Customer({
+  String get fullName => <String>[firstName, lastName].join(' ');
+
+  User({
     required this.id,
-    required this.balance,
     required this.firstName,
     required this.lastName,
-    required this.activeGroup,
+    required this.birthDate,
+    required this.profilePicture,
+    required this.rating,
+    required this.tacksAmount,
     required this.phoneNumber,
+    required this.activeGroup,
   });
 }
