@@ -37,8 +37,7 @@ class AppDrawerHeader extends StatelessWidget {
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        CurrencyUtility.dollarFormat
-                            .format(state.user.bankAccount.usdBalance),
+                        CurrencyUtility.dollarFormat.format(0.0),
                         style: AppTextTheme.manrope26Bold
                             .copyWith(color: AppTheme.textSecondaryColor),
                       ),

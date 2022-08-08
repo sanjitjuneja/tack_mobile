@@ -8,7 +8,7 @@ class EditTackUseCase extends FutureUseCase<void, UpdateTackPayload> {
   }) : _tacksRepository = tacksRepository;
 
   @override
-  Future<void> execute(UpdateTackPayload params) async {
+  Future<Tack> execute(UpdateTackPayload params) async {
     return _tacksRepository.updateTack(params);
   }
 }

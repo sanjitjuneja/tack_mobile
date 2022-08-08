@@ -161,6 +161,39 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.groupMapper.fromEntity);
   }
 
+  Future<List<domain.TemplateTack>> getNearbyPopularTacks({
+    required NearbyPopularTacksRequest request,
+  }) async {
+    return get<NearbyPopularTacksResponse>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.nearbyPopularTacksPath,
+        body: null,
+        params: null,
+      ),
+      parser: NearbyPopularTacksResponse.fromJson,
+    ).then(
+      (NearbyPopularTacksResponse response) =>
+          mapper.templateTackMapper.fromList(response.popular),
+    );
+  }
+
+  Future<List<domain.TemplateTack>> getGroupPopularTacks({
+    required GroupPopularTacksRequest request,
+  }) async {
+    return get<GroupPopularTacksResponse>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.groupPopularTacksPath,
+        id: request.groupId,
+        body: null,
+        params: null,
+      ),
+      parser: GroupPopularTacksResponse.fromJson,
+    ).then(
+      (GroupPopularTacksResponse response) =>
+          mapper.templateTackMapper.fromList(response.popular),
+    );
+  }
+
   Future<List<domain.RunnerTack>> getRunnerTacks() async {
     return get<RunnerTacksResponse>(
       ApiQuery(
@@ -204,14 +237,37 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
-  Future<void> updateTack(UpdateTackRequest request) async {
-    return put(
+  Future<domain.Tack> createTack(CreateTackRequest request) async {
+    return post<TackEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.tacks,
+        body: request.toJson(),
+        params: null,
+      ),
+      parser: TackEntity.fromJson,
+    ).then(mapper.tackMapper.fromEntity);
+  }
+
+  Future<domain.Tack> updateTack(UpdateTackRequest request) async {
+    return put<TackEntity>(
       ApiQuery(
         endpoint: BaseUrlConstants.tacksWithId,
         id: request.id,
         body: request.toJson(),
         params: null,
       ),
+      parser: TackEntity.fromJson,
+    ).then(mapper.tackMapper.fromEntity);
+  }
+
+  Future<void> makeOffer(MakeOfferRequest request) async {
+    return post<void>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.offersPath,
+        body: request.toJson(),
+        params: null,
+      ),
+      parser: (_) {},
     );
   }
 

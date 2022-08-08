@@ -59,8 +59,8 @@ class DurationConverter implements JsonConverter<Duration, int> {
   const DurationConverter();
 
   @override
-  Duration fromJson(int? json) => Duration(milliseconds: json ?? 0);
+  Duration fromJson(int? json) => Duration(seconds: json ?? 0);
 
   @override
-  int toJson(Duration json) => json.inMilliseconds;
+  int toJson(Duration json) => json.inSeconds;
 }

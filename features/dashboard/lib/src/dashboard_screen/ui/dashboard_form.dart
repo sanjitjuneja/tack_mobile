@@ -24,6 +24,7 @@ class DashboardForm extends StatelessWidget {
             create: (_) => DashboardBloc(
               appRouter: appLocator.get<AppRouterDelegate>(),
               getGroupTacksUseCase: appLocator.get<GetGroupTacksUseCase>(),
+              makeOfferUseCase: appLocator.get<MakeOfferUseCase>(),
               selectedGroup: state.currentGroup!,
             ),
             child: BlocBuilder<DashboardBloc, DashboardState>(

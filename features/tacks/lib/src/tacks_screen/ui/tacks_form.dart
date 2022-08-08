@@ -47,11 +47,11 @@ class _TacksFormState extends State<TacksForm> {
                   tabs: <int, String>{
                     0: FlutterI18n.translate(
                       context,
-                      'tacksScreen.tackerTab',
+                      'tacksScreen.tabs.first',
                     ),
                     1: FlutterI18n.translate(
                       context,
-                      'tacksScreen.runnerTab',
+                      'tacksScreen.tabs.second',
                     ),
                   },
                 ),
