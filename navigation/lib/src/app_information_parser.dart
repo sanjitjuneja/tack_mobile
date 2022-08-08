@@ -6,12 +6,18 @@ import 'package:splash/splash_feature.dart';
 
 class AppRouteInformationParser
     extends RouteInformationParser<RouteConfiguration> {
-  bool isStartUp = true;
-  Uri? initialUri;
+  final Uri? initialUri;
+  bool isStartUp;
+
+  AppRouteInformationParser({
+    this.initialUri,
+    this.isStartUp = true,
+  });
 
   @override
   Future<RouteConfiguration> parseRouteInformation(
-      RouteInformation routeInformation) {
+    RouteInformation routeInformation,
+  ) {
     Uri? uri;
     if (isStartUp && initialUri != null) {
       uri = initialUri;

@@ -45,7 +45,10 @@ class OngoingTackerTackBloc
   ) async {
     switch (state.tack.status) {
       case TackStatus.created:
-        _appRouter.pushForResult(AddEditTack.editPage(state.tack));
+        final Tack? tack = await _appRouter.pushForResult(
+          AddEditTack.editPage(state.tack),
+        );
+        if (tack != null) emit(state.copyWith(tack: tack));
         break;
       case TackStatus.pendingReview:
         // TODO: action to complete tack.
@@ -91,8 +94,9 @@ class OngoingTackerTackBloc
     ContactRunner event,
     Emitter<OngoingTackerTackState> emit,
   ) async {
-    final String? phoneNumber = state.tack.runner?.contacts.phoneNumber;
-    PhoneCallUtility.callNumber(phoneNumber);
+    // TODO: refactor when BE will fix
+    // final String? phoneNumber = state.tack.runner?.contacts.phoneNumber;
+    // PhoneCallUtility.callNumber(phoneNumber);
   }
 
   Future<void> _onLoadOffers(

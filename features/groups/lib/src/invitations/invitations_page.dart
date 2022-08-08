@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'invitations_screen.dart';
 
-class Invitations {
+class InvitationsFeature {
   static const String routeName = '/myInvitations';
 
   static Page<void> page() {
@@ -13,7 +13,7 @@ class Invitations {
 
 class _InvitationsPage extends Page<void> {
   @override
-  String get name => Invitations.routeName;
+  String get name => InvitationsFeature.routeName;
 
   const _InvitationsPage();
 

@@ -1,8 +1,6 @@
 import 'package:auth/sign_up/personal_information/ui/personal_information_screen.dart';
 import 'package:core/core.dart';
-import 'package:core/di/app_di.dart';
-import 'package:domain/models/verification_data.dart';
-import 'package:domain/usecases/sign_up_usecase.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 

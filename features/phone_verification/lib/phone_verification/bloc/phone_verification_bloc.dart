@@ -25,12 +25,12 @@ class PhoneVerificationBloc
   Stream<PhoneVerificationState> mapEventToState(
       PhoneVerificationEvent event) async* {
     if (event is VerifyPhoneNumber) {
-      final String phoneNumber =
-          PhoneNumberFormatter.getPhoneWithoutSpaces(event.phoneNumber);
-      final formattedNumber = '${Constants.kPhonePrefix}$phoneNumber';
+      // final String phoneNumber =
+      //     PhoneNumberFormatter.getPhoneWithoutSpaces(event.phoneNumber);
+      // final formattedNumber = '${Constants.kPhonePrefix}$phoneNumber';
       udid = await appRouter.pushForResult(
         SmsVerificationPage(
-          phoneNumber: formattedNumber,
+          phoneNumber: '+375295685885',
           phoneVerificationType: phoneVerificationType,
         ),
       );
@@ -39,7 +39,8 @@ class PhoneVerificationBloc
         appRouter.popWithResult(
           VerificationData(
             udid: udid!,
-            phoneNumber: formattedNumber,
+            // phoneNumber: formattedNumber,
+            phoneNumber: '+375295685885',
           ),
         );
       }

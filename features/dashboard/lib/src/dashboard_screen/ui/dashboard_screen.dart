@@ -1,11 +1,8 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:groups/groups.dart';
 import 'package:home/home.dart';
-import 'package:navigation/navigation.dart';
 
-import 'package:dashboard/src/bloc/dashboard_bloc.dart';
 import 'package:dashboard/src/dashboard_screen/ui/dashboard_form.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -13,47 +10,31 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<DashboardBloc>(
-      create: (_) => DashboardBloc(
-        appRouter: appLocator.get<AppRouterDelegate>(),
-      ),
-      child: CupertinoPageScaffold(
+    return CupertinoPageScaffold(
+      backgroundColor: AppTheme.primaryBackgroundColor,
+      navigationBar: AppNavigationBar(
         backgroundColor: AppTheme.primaryBackgroundColor,
-        navigationBar: AppNavigationBar(
-          backgroundColor: AppTheme.primaryBackgroundColor,
-          automaticallyImplyLeading: false,
-          middle: BlocBuilder<GlobalBloc, GlobalState>(
-            builder: (_, GlobalState state) {
-              return Align(
-                alignment: Alignment.centerLeft,
-                child: PageHeaderWidget(
-                  titleKey: 'dashboardScreen.title',
-                  group: state.currentGroup,
-                  onTap: () => _onHeaderTap(context),
-                ),
-              );
-            },
-          ),
-          actions: <Widget>[
-            CupertinoButton(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              onPressed: () => _onMenuTap(context),
-              child: AppIconsTheme.menu(
-                color: AppTheme.iconPrimaryColor,
+        automaticallyImplyLeading: false,
+        withMenu: true,
+        middle: BlocBuilder<GlobalBloc, GlobalState>(
+          builder: (_, GlobalState state) {
+            return Align(
+              alignment: Alignment.centerLeft,
+              child: PageHeaderWidget(
+                titleKey: 'dashboardScreen.title',
+                subtitleKey: 'general.noGroupSelectedSubtitle',
+                group: state.currentGroup,
+                onTap: () => _onHeaderTap(context),
               ),
-            ),
-          ],
+            );
+          },
         ),
-        child: const DashboardForm(),
       ),
+      child: const DashboardForm(),
     );
   }
 
   void _onHeaderTap(BuildContext context) {
     BlocProvider.of<GlobalBloc>(context).add(const ChangeGroup());
-  }
-
-  void _onMenuTap(BuildContext context) {
-    AppRouter.of(context).pushForResult(CreateGroup.page());
   }
 }

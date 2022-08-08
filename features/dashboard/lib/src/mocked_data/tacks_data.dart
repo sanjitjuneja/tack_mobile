@@ -17,7 +17,6 @@ final List<Tack> tacks = List<Tack>.generate(
       lastName: 'Cooper',
       rating: 2.5,
       tacksComplete: 120,
-      contacts: TackUserContacts(phoneNumber: '+375296159325'),
     ),
     runner: null,
     group: const Group(
