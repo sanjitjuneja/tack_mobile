@@ -1,5 +1,4 @@
 import 'package:core/core.dart';
-import 'package:core/di/app_di.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';

@@ -1,6 +1,7 @@
 part of 'add_edit_tack_bloc.dart';
 
 class AddEditTackState {
+  final Group? group;
   final Tack? tack;
   final bool isAdd;
   final TitleData titleData;
@@ -18,6 +19,8 @@ class AddEditTackState {
       counterOfferData.isValid,
     ].every((bool element) => element == true);
 
+    if (isAdd) return isAllValid && group != null;
+
     return isAllValid && isAnyDataChanged;
   }
 
@@ -32,6 +35,7 @@ class AddEditTackState {
   }
 
   const AddEditTackState({
+    required this.group,
     required this.tack,
     required this.isAdd,
     required this.titleData,
@@ -41,24 +45,30 @@ class AddEditTackState {
     required this.counterOfferData,
   });
 
-  factory AddEditTackState.fromTack(Tack? tack, bool isAdd) {
+  factory AddEditTackState.fromTack(
+    Group? group,
+    TemplateTack? templateTack,
+    Tack? tack,
+    bool isAdd,
+  ) {
     return AddEditTackState(
+      group: group,
       tack: tack,
       isAdd: isAdd,
       titleData: TitleData(
         maxLength: 100,
         isRequired: true,
-        title: tack?.title,
+        title: templateTack?.title ?? tack?.title,
       ),
       priceData: PriceData(
         maxValue: 1000,
         isRequired: true,
-        price: tack?.price.toString(),
+        price: templateTack?.price.toString() ?? tack?.price.toString(),
       ),
       descriptionData: DescriptionData(
         maxWords: 30,
         isRequired: true,
-        description: tack?.description,
+        description: templateTack?.description ?? tack?.description,
       ),
       timeEstimationData: TimeEstimationData.fromTime(
         maxValues: <TimeEstimationIn, num>{
@@ -66,11 +76,12 @@ class AddEditTackState {
           TimeEstimationIn.hour: 24,
         },
         isRequired: true,
-        timeInSeconds: tack?.estimatedTime.inSeconds,
+        timeInSeconds: templateTack?.estimatedTime.inSeconds ??
+            tack?.estimatedTime.inSeconds,
       ),
       counterOfferData: CounterOfferData(
         isRequired: true,
-        allow: tack?.allowCounterOffers,
+        allow: templateTack?.allowCounterOffers ?? tack?.allowCounterOffers,
       ),
     );
   }
@@ -84,6 +95,7 @@ class AddEditTackState {
     bool? allowCounterOffer,
   }) {
     return AddEditTackState(
+      group: group,
       tack: tack,
       isAdd: isAdd,
       titleData: titleData.copyWith(title: title),
@@ -99,6 +111,7 @@ class AddEditTackState {
 
   AddEditTackState clear() {
     return AddEditTackState(
+      group: group,
       tack: tack,
       isAdd: isAdd,
       titleData: titleData.empty(),

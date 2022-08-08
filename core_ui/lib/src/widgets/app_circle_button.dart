@@ -13,6 +13,8 @@ class AppCircleButton extends StatelessWidget {
   final EdgeInsets? margin;
   final TextStyle? interfaceTextStyle;
   final Color? backgroundColor;
+  final Color? borderColor;
+  final Color? interfaceColor;
   final VoidCallback? onTap;
 
   const AppCircleButton({
@@ -24,6 +26,8 @@ class AppCircleButton extends StatelessWidget {
     this.margin,
     this.interfaceTextStyle,
     this.backgroundColor,
+    this.borderColor,
+    this.interfaceColor,
     this.onTap,
   });
 
@@ -35,9 +39,13 @@ class AppCircleButton extends StatelessWidget {
         : AppTheme.buttonSecondaryColor;
   }
 
-  Color get _interfaceColor => type.isPrimary
-      ? AppTheme.buttonInterfacePrimaryColor
-      : AppTheme.buttonInterfaceSecondaryColor;
+  Color get _interfaceColor {
+    if (interfaceColor != null) return interfaceColor!;
+
+    return type.isPrimary
+        ? AppTheme.buttonInterfacePrimaryColor
+        : AppTheme.buttonInterfaceSecondaryColor;
+  }
 
   TextStyle get _interfaceTextStyle {
     if (interfaceTextStyle != null) return interfaceTextStyle!;
@@ -52,9 +60,13 @@ class AppCircleButton extends StatelessWidget {
     }
   }
 
-  Color get _borderColor => type.isPrimary
-      ? AppTheme.buttonPrimaryColor
-      : AppTheme.buttonBorderSecondaryColor;
+  Color get _borderColor {
+    if (borderColor != null) return borderColor!;
+
+    return type.isPrimary
+        ? AppTheme.buttonPrimaryColor
+        : AppTheme.buttonBorderSecondaryColor;
+  }
 
   @override
   Widget build(BuildContext context) {

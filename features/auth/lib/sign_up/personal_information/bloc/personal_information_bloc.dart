@@ -5,7 +5,6 @@ import 'package:auth/sign_up/personal_information/bloc/personal_information_stat
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
-import 'package:domain/usecases/sign_up_usecase.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
 
@@ -42,7 +41,8 @@ class PersonalInformationBloc
               firstName: event.firstName,
               lastName: event.lastName,
               password: event.password,
-              phoneNumber: event.phoneNumber,
+              // phoneNumber: event.phoneNumber,
+              phoneNumber: '+375295685885',
             ),
           );
           appRouter.pop();

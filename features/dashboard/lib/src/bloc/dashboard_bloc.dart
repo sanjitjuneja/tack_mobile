@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
@@ -15,13 +14,16 @@ part 'dashboard_state.dart';
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final AppRouterDelegate _appRouter;
   final GetGroupTacksUseCase _getGroupTacksUseCase;
+  final MakeOfferUseCase _makeOfferUseCase;
 
   DashboardBloc({
     required AppRouterDelegate appRouter,
     required GetGroupTacksUseCase getGroupTacksUseCase,
+    required MakeOfferUseCase makeOfferUseCase,
     required Group selectedGroup,
   })  : _appRouter = appRouter,
         _getGroupTacksUseCase = getGroupTacksUseCase,
+        _makeOfferUseCase = makeOfferUseCase,
         super(
           DashboardState(group: selectedGroup),
         ) {
@@ -48,30 +50,28 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     InitialLoad event,
     Emitter<DashboardState> emit,
   ) async {
-    emit(state.copyWith(tacks: <Tack>[]));
+    emit(state.copyWith(isLoading: true));
+    try {
+      final List<Tack> tacks = await _getGroupTacksUseCase.execute(
+        GroupTacksPayload(groupId: state.group.id),
+      );
 
-    // emit(state.copyWith(isLoading: true));
-    // try {
-    //   final List<Tack> tacks = await _getGroupTacksUseCase.execute(
-    //     GroupTacksPayload(groupId: state.group.id),
-    //   );
-    //
-    //   emit(state.copyWith(tacks: tacks));
-    // } catch (e) {
-    //   emit(state.copyWith(tacks: <Tack>[]));
-    // }
+      emit(state.copyWith(tacks: tacks));
+    } catch (e) {
+      emit(state.copyWith(tacks: <Tack>[]));
+    }
   }
 
   Future<void> _onRefreshAction(
     RefreshAction event,
     Emitter<DashboardState> emit,
   ) async {
-    // final List<Tack> tacks = await _getGroupTacksUseCase.execute(
-    //   GroupTacksPayload(groupId: state.group.id),
-    // );
+    final List<Tack> tacks = await _getGroupTacksUseCase.execute(
+      GroupTacksPayload(groupId: state.group.id),
+    );
 
     event.completer.complete(RefreshingStatus.complete);
-    emit(state.copyWith(tacks: <Tack>[]));
+    emit(state.copyWith(tacks: tacks));
   }
 
   Future<void> _onLoadMoreAction(
@@ -95,7 +95,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     );
 
     if (result != null) {
-      _onTackRequestAnswer(result);
+      _onTackRequestAnswer(result, 'not available');
     }
   }
 
@@ -103,27 +103,30 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     AcceptTack event,
     Emitter<DashboardState> emit,
   ) async {
-    _appRouter.push(ProgressDialog.page());
-    // API request simulation.
-    await Future.delayed(const Duration(seconds: 1));
-    _appRouter.pop();
+    bool result = false;
+    String? error;
 
-    const List<dynamic> answers = <dynamic>['some error', false, true];
-    final dynamic answer = answers[Random().nextInt(answers.length)];
-    if (answer is String) {
-      _appRouter.pushForResult(
-        AppAlertDialog.page(
-          ErrorAlert(
-            contentKey: 'errorAlert.offerSending',
-          ),
+    try {
+      _appRouter.push(ProgressDialog.page());
+      await _makeOfferUseCase.execute(
+        MakeOfferPayload(
+          tackId: event.tack.id,
         ),
       );
-    } else {
-      _onTackRequestAnswer(answer);
+      _appRouter.pop();
+      result = true;
+    } catch (e) {
+      _appRouter.pop();
+      error = e.toString();
     }
+
+    _onTackRequestAnswer(result, error);
   }
 
-  Future<void> _onTackRequestAnswer(bool result) async {
+  Future<void> _onTackRequestAnswer(
+    bool result,
+    String? error,
+  ) async {
     if (result) {
       final bool dialogResult = await _appRouter.pushForResult(
         AppAlertDialog.page(
@@ -135,12 +138,21 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       if (dialogResult) {
         _appRouter.navigationTabState.changeTabIndex(HomeScreenTab.tacks);
       }
-    } else {
+    } else if (error.toString().toLowerCase().contains('not available')) {
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
             contentKey: 'errorAlert.offerSending',
             messageKey: 'errors.tackIsNotAvailable',
+          ),
+        ),
+      );
+    } else {
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            contentKey: 'errorAlert.offerSending',
+            messageKey: error.toString(),
           ),
         ),
       );

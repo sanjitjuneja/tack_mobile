@@ -36,6 +36,7 @@ class ContainerWithSeparator extends StatelessWidget {
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SizedBox(height: padding.top),
           Padding(

@@ -1,4 +1,4 @@
-import 'package:core/utils/currency_utils.dart';
+import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';

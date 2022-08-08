@@ -1,4 +1,4 @@
-import 'package:tack_app/app/app_config.dart';
+import 'package:core/core.dart';
 import 'package:tack_app/main_common.dart';
 
 void main() {

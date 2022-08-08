@@ -28,7 +28,7 @@ class TackDetailSection extends StatelessWidget {
         Text(
           FlutterI18n.translate(
             context,
-            'Tack Details',
+            'ongoingTackScreen.tackDetails',
           ),
           style: AppTextTheme.manrope20Regular
               .copyWith(color: AppTheme.textPrimaryColor),

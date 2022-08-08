@@ -44,7 +44,7 @@ class _AlertDialogPage extends Page<bool> {
       useSafeArea: false,
       barrierDismissible: false,
       builder: (_) => GestureDetector(
-        onTap: () => AppRouter.of(context).popWithResult(false),
+        onTap: () => GlobalAppRouter.of(context).popWithResult(false),
         child: Container(
           color: AppTheme.barrierColor,
           child: Center(

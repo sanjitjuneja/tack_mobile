@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:core/core.dart';
-import 'package:core/utils/file_manager.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:groups/src/create_group/models/description_data.dart';

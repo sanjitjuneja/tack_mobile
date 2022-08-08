@@ -16,19 +16,22 @@ import 'package:flutter/cupertino.dart';
 
 class AppDivider extends StatelessWidget {
   final Axis axis;
+  final double? width;
+  final double? height;
 
   const AppDivider({
-
     super.key,
     this.axis = Axis.horizontal,
+    this.width,
+    this.height,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: AppTheme.dividerColor,
-      height: axis == Axis.vertical ? null : 1,
-      width: axis == Axis.horizontal ? null : 1,
+      height: axis == Axis.vertical ? height : height ?? 1,
+      width: axis == Axis.horizontal ? width : width ?? 1,
     );
   }
 }

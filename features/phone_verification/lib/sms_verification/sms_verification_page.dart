@@ -1,6 +1,5 @@
 import 'package:core/core.dart';
-import 'package:domain/enums/phone_verification_type.dart';
-import 'package:domain/auth/phone_verification.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 
@@ -29,8 +28,8 @@ class SmsVerificationPage extends PageWithScaffoldKey<String?> {
               phoneVerificationType: phoneVerificationType,
               appRouter: appLocator.get<AppRouterDelegate>(),
               requestSmsCodeUseCase: appLocator.get<RequestSmsCodeUseCase>(),
-              verifyPhoneNumberUsecase:
-                  appLocator.get<VerifyPhoneNumberUsecase>(),
+              verifyPhoneNumberUseCase:
+                  appLocator.get<VerifyPhoneNumberUseCase>(),
             ),
             child: NumberVerifyScreen(
               phoneNumber: phoneNumber,

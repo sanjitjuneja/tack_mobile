@@ -3,7 +3,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 
 class OngoingTackerTackOfferUserWidget extends StatelessWidget {
-  final TackUser runner;
+  final TackUser? runner;
 
   const OngoingTackerTackOfferUserWidget({
     super.key,
@@ -12,17 +12,19 @@ class OngoingTackerTackOfferUserWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (runner == null) return const SizedBox();
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          runner.fullName,
+          runner!.fullName,
           style: AppTextTheme.manrope16Bold
               .copyWith(color: AppTheme.textPrimaryColor),
         ),
         const SizedBox(height: 6),
-        UserStatsWidget.fromTackUser(tackUser: runner),
+        UserStatsWidget.fromTackUser(tackUser: runner!),
       ],
     );
   }

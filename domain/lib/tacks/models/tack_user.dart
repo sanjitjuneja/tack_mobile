@@ -6,7 +6,6 @@ class TackUser extends Equatable {
   final String lastName;
   final double rating;
   final int tacksComplete;
-  final TackUserContacts contacts;
 
   String get fullName => <String>[firstName, lastName].join(' ');
 
@@ -16,7 +15,6 @@ class TackUser extends Equatable {
     required this.lastName,
     required this.rating,
     required this.tacksComplete,
-    required this.contacts,
   });
 
   @override
@@ -26,6 +24,5 @@ class TackUser extends Equatable {
         lastName,
         rating,
         tacksComplete,
-        contacts,
       ];
 }

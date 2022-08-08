@@ -15,7 +15,6 @@ part 'ongoing_runner_tack_state.dart';
 class OngoingRunnerTackBloc
     extends Bloc<OngoingRunnerTackEvent, OngoingRunnerTackState> {
   final AppRouterDelegate _appRouter;
-  final TacksRepository _tacksRepository;
 
   static bool _hasInProgressRunnerTack(List<RunnerTack> tacks) {
     return tacks.any((element) => element.tack.status == TackStatus.inProgress);
@@ -26,7 +25,6 @@ class OngoingRunnerTackBloc
     required AppRouterDelegate appRouter,
     required TacksRepository tacksRepository,
   })  : _appRouter = appRouter,
-        _tacksRepository = tacksRepository,
         super(
           OngoingRunnerTackState(
             tack: tack,
@@ -69,8 +67,9 @@ class OngoingRunnerTackBloc
     ContactTacker event,
     Emitter<OngoingRunnerTackState> emit,
   ) async {
-    final String? phoneNumber = state.tack.tacker.contacts.phoneNumber;
-    PhoneCallUtility.callNumber(phoneNumber);
+    // TODO: refactor when BE will fix
+    // final String? phoneNumber = state.tack.tacker.contacts.phoneNumber;
+    // PhoneCallUtility.callNumber(phoneNumber);
   }
 
   Future<void> _onCancelTack(

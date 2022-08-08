@@ -3,37 +3,92 @@ import 'dart:async';
 import 'package:auth/sign_in/sign_in_feature.dart';
 import 'package:auth/sign_up/sign_up_feature.dart';
 import 'package:core/core.dart';
+import 'package:domain/domain.dart';
+import 'package:domain/use_case.dart';
+import 'package:flutter/material.dart';
+import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
 import 'package:splash/bloc/splash_event.dart';
 import 'package:splash/bloc/splash_state.dart';
 
 class SplashBloc extends Bloc<SplashEvent, SplashState> {
-  final AppRouterDelegate appRouter;
+  final GlobalAppRouterDelegate _globalAppRouter;
+  final IsAuthorizedUseCase _isAuthorizedUseCase;
 
   SplashBloc({
-    required this.appRouter,
-  }) : super(SplashContent());
+    required GlobalAppRouterDelegate globalAppRouter,
+    required IsAuthorizedUseCase isAuthorizedUseCase,
+  })  : _globalAppRouter = globalAppRouter,
+        _isAuthorizedUseCase = isAuthorizedUseCase,
+        super(SplashContent()) {
+    on<InitialEvent>(_onInitialEvent);
+    on<SignIn>(_onSignIn);
+    on<SignUp>(_onSignUp);
+  }
 
-  @override
-  Stream<SplashState> mapEventToState(SplashEvent event) async* {
-    if (event is SignIn) {
-      final bool? result = await appRouter.pushForResult(
-        SignInFeature.page(),
-      );
+  Future<void> _onInitialEvent(
+    InitialEvent event,
+    Emitter<SplashState> emit,
+  ) async {
+    /// TODO: uncomment (leave it until Logout functionality not implemented)
+    final bool isAuthorized = await _isAuthorizedUseCase.execute(NoParams());
 
-      yield (SplashContent(
-        needToBackAnimation: result,
-      ));
+    if (isAuthorized) {
+      await _animateToEndPosition(event.slidingPanelController);
+
+      await dataDI.setupPostLoginAppLocator();
+      _globalAppRouter.replace(FirstRouteFeature.page());
+    } else {
+    _animateToInitialPosition(event.slidingPanelController);
     }
+  }
 
-    if (event is SignUp) {
-      final bool? result = await appRouter.pushForResult(
-        SignUpFeature.page(),
-      );
+  Future<void> _onSignIn(
+    SignIn event,
+    Emitter<SplashState> emit,
+  ) async {
+    await _animateToEndPosition(event.slidingPanelController);
 
-      yield (SplashContent(
-        needToBackAnimation: result,
-      ));
+    final bool? result = await _globalAppRouter.pushForResult(
+      SignInFeature.page(),
+    );
+
+    if (result == true) {
+      _globalAppRouter.replace(FirstRouteFeature.page());
+    } else {
+      await _animateToInitialPosition(event.slidingPanelController);
     }
+  }
+
+  Future<void> _onSignUp(
+    SignUp event,
+    Emitter<SplashState> emit,
+  ) async {
+    await _animateToEndPosition(event.slidingPanelController);
+    final bool? result = await _globalAppRouter.pushForResult(
+      SignUpFeature.page(),
+    );
+
+    await _animateToInitialPosition(event.slidingPanelController);
+  }
+
+  Future<void> _animateToInitialPosition(
+    AnimationController panelController,
+  ) async {
+    return panelController.animateTo(
+      0.3,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.ease,
+    );
+  }
+
+  Future<void> _animateToEndPosition(
+    AnimationController panelController,
+  ) async {
+    return panelController.animateTo(
+      1.0,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeIn,
+    );
   }
 }

@@ -5,35 +5,43 @@ import 'package:auth/sign_in/bloc/sign_in_state.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
-import 'package:domain/usecases/sign_in_usecase.dart';
+import 'package:flutter/foundation.dart';
 import 'package:forgot_password/forgot_password_page.dart';
-import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
-  final AppRouterDelegate appRouter;
+  final GlobalAppRouterDelegate appRouter;
   final SignInUseCase signInUseCase;
 
   SignInBloc({
     required this.appRouter,
     required this.signInUseCase,
-  }) : super(SignInContent(
-          isDataValid: false,
-        ));
+  }) : super(const SignInState());
 
   @override
   Stream<SignInState> mapEventToState(SignInEvent event) async* {
     if (event is SignIn) {
       try {
         appRouter.push(ProgressDialog.page());
-        final Message message = await signInUseCase.execute(
+        final String phoneNumber;
+        final String password;
+
+        if (kDebugMode) {
+          phoneNumber = '+590590134730';
+          password = 'Tackapp123';
+        } else {
+          phoneNumber = '+${event.phoneNumber}';
+          password = event.password;
+        }
+
+        await signInUseCase.execute(
           SignInPayload(
-            password: event.password,
-            phoneNumber: '${Constants.kPhonePrefix}${event.phoneNumber}',
+            password: password,
+            phoneNumber: phoneNumber,
           ),
         );
         appRouter.pop();
-        appRouter.push(HomeFeature.page());
+        appRouter.popWithResult(true);
       } on Exception catch (e) {
         appRouter.pop();
         appRouter.pushForResult(
@@ -48,7 +56,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     }
 
     if (event is RouteBack) {
-      appRouter.popWithResult(true);
+      appRouter.popWithResult(false);
     }
 
     if (event is UpdateData) {
@@ -57,7 +65,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         phoneNumber: event.phoneNumber,
       );
 
-      yield SignInContent(
+      yield state.copyWith(
         isDataValid: isDataValid,
       );
     }
@@ -75,13 +83,15 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     required String password,
     required String phoneNumber,
   }) {
-    final bool isPasswordValid = FieldValidator.validatePassword(password);
-    final bool isPhoneValid = FieldValidator.validatePhoneNumber(phoneNumber);
-
-    if (isPhoneValid && isPasswordValid) {
-      return true;
-    } else {
-      return false;
-    }
+    /// TODO: refactor validation.
+    // final bool isPasswordValid = FieldValidator.validatePassword(password);
+    // final bool isPhoneValid = FieldValidator.validatePhoneNumber(phoneNumber);
+    //
+    // if (isPhoneValid && isPasswordValid) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+    return true;
   }
 }
