@@ -5,6 +5,8 @@ class GlobalState {
   final List<Group> groups;
   final Group? currentGroup;
 
+  bool get canPickOtherGroup => groups.length > 1;
+
   bool get isGroupSelected => currentGroup != null;
 
   const GlobalState({

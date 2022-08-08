@@ -39,9 +39,10 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
     await getGroups(const domain.GetGroupsPayload());
     final domain.User user = _userRepository.currentUser;
     if (user.activeGroup != null) {
-      await getGroup(
+      final domain.Group group = await getGroup(
         domain.GetGroupPayload(id: user.activeGroup!),
       );
+      _groupStreamController.add(group);
     }
   }
 
