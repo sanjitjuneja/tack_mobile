@@ -9,44 +9,42 @@ import 'package:tacks/src/add_edit_tack/ui/add_edit_tack_screen.dart';
 class AddEditTack {
   static const String routeName = '/addEditTack';
 
-  static Page<bool> page(
-    Tack tack, {
-    required bool isAdd,
-  }) {
-    return _AddEditTackPage(tack: tack, isAdd: isAdd);
+  static Page<Tack?> addPage({TemplateTack? templateTack}) {
+    return _AddEditTackPage(templateTack: templateTack, isAdd: true);
   }
 
-  static Page<bool> addPage({Tack? tack}) {
-    return _AddEditTackPage(tack: tack, isAdd: true);
-  }
-
-  static Page<bool> editPage(Tack tack) {
+  static Page<Tack?> editPage(Tack tack) {
     return _AddEditTackPage(tack: tack, isAdd: false);
   }
 }
 
-class _AddEditTackPage extends Page<bool> {
-  final Tack? tack;
+class _AddEditTackPage extends Page<Tack?> {
   final bool isAdd;
+  final TemplateTack? templateTack;
+  final Tack? tack;
 
   @override
   String get name => AddEditTack.routeName;
 
   const _AddEditTackPage({
-    required this.tack,
     required this.isAdd,
+    this.templateTack,
+    this.tack,
   });
 
   @override
-  Route<bool> createRoute(BuildContext context) {
-    return CupertinoPageRoute<bool>(
+  Route<Tack?> createRoute(BuildContext context) {
+    return CupertinoPageRoute<Tack?>(
       settings: this,
       builder: (_) => BlocProvider<AddEditTackBloc>(
         create: (_) {
           return AddEditTackBloc(
+            templateTack: templateTack,
             tack: tack,
             isAdd: isAdd,
             appRouter: AppRouter.of(context),
+            getCurrentGroupUseCase: appLocator.get<GetCurrentGroupUseCase>(),
+            createTackUseCase: appLocator.get<CreateTackUseCase>(),
             editTackUseCase: appLocator.get<EditTackUseCase>(),
           );
         },

@@ -63,6 +63,7 @@ class _AppListViewWithRefreshState extends State<AppListViewWithRefresh> {
 
   bool get enableLoad {
     if (widget.isLoading) return false;
+    if (!widget.hasData) return false;
 
     return widget.enableLoad;
   }
@@ -112,6 +113,7 @@ class _AppListViewWithRefreshState extends State<AppListViewWithRefresh> {
         ),
         footer: CustomFooter(
           loadStyle: LoadStyle.ShowWhenLoading,
+          height: 50,
           builder: (_, LoadStatus? status) {
             if (status == LoadStatus.failed) {
               return Center(

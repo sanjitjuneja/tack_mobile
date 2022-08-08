@@ -18,6 +18,7 @@ class AppButton extends StatelessWidget {
   final EdgeInsets? padding;
   final AppIcon? icon;
   final ButtonType type;
+  final BoxShape shape;
   final Color? interfaceColor;
   final Color? backgroundColor;
   final Color? borderColor;
@@ -34,6 +35,7 @@ class AppButton extends StatelessWidget {
     this.padding,
     this.icon,
     this.type = ButtonType.primary,
+    this.shape = BoxShape.rectangle,
     this.interfaceColor,
     this.backgroundColor,
     this.borderColor,
@@ -41,7 +43,7 @@ class AppButton extends StatelessWidget {
     this.isDisabled = false,
     this.expanded = true,
     this.onTap,
-  }) : assert(labelKey != null || labelWidget != null);
+  }) : assert(labelKey != null || labelWidget != null || icon != null);
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +57,8 @@ class AppButton extends StatelessWidget {
         AppTextTheme.manrope14Medium.copyWith(
           color: contentColor,
         );
+    final bool needSeparator =
+        icon != null && labelKey != null || icon != null && labelWidget != null;
 
     final Color? resultBorderColor = borderColor ?? interfaceColor;
 
@@ -63,10 +67,12 @@ class AppButton extends StatelessWidget {
       disable: isDisabled,
       child: Container(
         padding: padding ??
-            const EdgeInsets.symmetric(
-              vertical: 10.0,
-              horizontal: 16.0,
-            ),
+            (shape == BoxShape.rectangle
+                ? const EdgeInsets.symmetric(
+                    vertical: 10.0,
+                    horizontal: 16.0,
+                  )
+                : const EdgeInsets.all(12.0)),
         decoration: BoxDecoration(
           color: isDisabled
               ? AppTheme.buttonSecondaryColor
@@ -82,7 +88,9 @@ class AppButton extends StatelessWidget {
                         ? AppTheme.buttonBorderPrimaryColor
                         : AppTheme.buttonBorderSecondaryColor),
           ),
-          borderRadius: BorderRadius.circular(12),
+          shape: shape,
+          borderRadius:
+              shape == BoxShape.rectangle ? BorderRadius.circular(12) : null,
           boxShadow: withShadow && type.isPrimary
               ? <BoxShadow>[
                   BoxShadow(
@@ -102,16 +110,18 @@ class AppButton extends StatelessWidget {
                 color: contentColor,
                 size: contentStyle.fontSize! * 1.3,
               ),
-              const SizedBox(width: 10),
             ],
-            Flexible(
-              child: labelWidget ??
-                  Text(
-                    FlutterI18n.translate(context, labelKey!),
-                    textAlign: TextAlign.center,
-                    style: contentStyle,
-                  ),
-            ),
+            if (needSeparator) const SizedBox(width: 10),
+            if (labelKey != null || labelWidget != null) ...<Widget>[
+              Flexible(
+                child: labelWidget ??
+                    Text(
+                      FlutterI18n.translate(context, labelKey!),
+                      textAlign: TextAlign.center,
+                      style: contentStyle,
+                    ),
+              ),
+            ],
           ],
         ),
       ),

@@ -27,8 +27,34 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   }
 
   @override
-  Future<List<domain.Tack>> getMyTacks() async {
-    final List<domain.Tack> tacks = await _apiProvider.getMyTacks();
+  Future<List<domain.TemplateTack>> nearbyPopularTacks(
+    domain.NearbyPopularTacksPayload payload,
+  ) async {
+    return _apiProvider.getNearbyPopularTacks(
+      request: const NearbyPopularTacksRequest(),
+    );
+  }
+
+  @override
+  Future<List<domain.TemplateTack>> groupPopularTacks(
+    domain.GroupPopularTacksPayload payload,
+  ) async {
+    return _apiProvider.getGroupPopularTacks(
+      request: GroupPopularTacksRequest(groupId: payload.groupId),
+    );
+  }
+
+  @override
+  Future<List<domain.RunnerTack>> getRunnerTacks() async {
+    final List<domain.RunnerTack> tacks = await _apiProvider.getRunnerTacks();
+    _runnerTacksStreamController.add(tacks);
+
+    return tacks;
+  }
+
+  @override
+  Future<List<domain.Tack>> getTackerTacks() async {
+    final List<domain.Tack> tacks = await _apiProvider.getTackerTacks();
     _tackerTacksStreamController.add(tacks);
 
     return tacks;
@@ -44,15 +70,39 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   }
 
   @override
-  Future<void> updateTack(domain.UpdateTackPayload payload) async {
+  Future<domain.Tack> createTack(domain.CreateTackPayload payload) async {
+    return _apiProvider.createTack(
+      CreateTackRequest(
+        title: payload.title,
+        price: payload.price,
+        description: payload.description,
+        estimationTimeSeconds: payload.estimatedTime,
+        allowCounterOffer: payload.shouldAllowCounterOffers,
+        group: payload.groupId,
+      ),
+    );
+  }
+
+  @override
+  Future<domain.Tack> updateTack(domain.UpdateTackPayload payload) async {
     return _apiProvider.updateTack(
       UpdateTackRequest(
         id: payload.tackId,
         title: payload.title,
-        price: payload.price.toString(),
+        price: payload.price,
         description: payload.description,
         estimationTimeSeconds: payload.estimatedTime,
         allowCounterOffer: payload.shouldAllowCounterOffers,
+      ),
+    );
+  }
+
+  @override
+  Future<void> makeOffer(domain.MakeOfferPayload payload) async {
+    return _apiProvider.makeOffer(
+      MakeOfferRequest(
+        tack: payload.tackId,
+        price: payload.price,
       ),
     );
   }

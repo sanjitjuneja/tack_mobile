@@ -3,6 +3,8 @@ part of mappers;
 class MapperFactory {
   GroupMapper get groupMapper => const GroupMapper();
 
+  TemplateTackMapper get templateTackMapper => const TemplateTackMapper();
+
   TackStatusMapper get tackStatusMapper => const TackStatusMapper();
 
   TackUserContactsMapper get tackUserContactsMapper =>
@@ -16,6 +18,18 @@ class MapperFactory {
         tackStatusMapper: tackStatusMapper,
         tackUserMapper: tackUserMapper,
         groupMapper: groupMapper,
+      );
+
+  OfferTypeMapper get offerTypeMapper => OfferTypeMapper();
+
+  OfferMapper get offerMapper => OfferMapper(
+        offerTypeMapper: offerTypeMapper,
+        tackUserMapper: tackUserMapper,
+      );
+
+  RunnerTackMapper get runnerTackMapper => RunnerTackMapper(
+        tackMapper: tackMapper,
+        offerMapper: offerMapper,
       );
 
   UserBankAccountMapper get userBankAccountMapper => UserBankAccountMapper();

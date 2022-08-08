@@ -16,8 +16,6 @@ class UserEntity extends JsonSerializable {
   final double tacksRating;
   @JsonKey(name: 'tacks_amount')
   final int tacksAmount;
-  @JsonKey(name: 'bankaccount')
-  final UserBankAccountEntity bankAccount;
   @JsonKey(name: 'phone_number')
   final String phoneNumber;
   @JsonKey(name: 'active_group')
@@ -31,7 +29,6 @@ class UserEntity extends JsonSerializable {
     required this.profilePicture,
     required this.tacksRating,
     required this.tacksAmount,
-    required this.bankAccount,
     required this.phoneNumber,
     required this.activeGroup,
   });

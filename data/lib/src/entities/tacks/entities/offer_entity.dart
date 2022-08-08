@@ -4,14 +4,17 @@ part of tacks_entities;
 @DoubleConverter()
 @BooleanConverter()
 @DateTimeConverter()
+@DurationConverter()
 class OfferEntity extends JsonSerializable {
   final int id;
   final int tack;
   final double? price;
+  @JsonKey(name: 'offer_type')
   final String offerType;
   @JsonKey(name: 'is_accepted')
   final bool isAccepted;
-  final TackUserEntity runner;
+  @JsonKey(ignore: true)
+  final TackUserEntity? runner;
   @JsonKey(name: 'creation_time')
   final DateTime creationTime;
   @JsonKey(name: 'lifetime_seconds')
@@ -23,7 +26,7 @@ class OfferEntity extends JsonSerializable {
     required this.price,
     required this.offerType,
     required this.isAccepted,
-    required this.runner,
+    this.runner,
     required this.creationTime,
     required this.lifeTime,
   });

@@ -1,6 +1,7 @@
 part of tacks_entities;
 
 @JsonSerializable()
+@DoubleConverter()
 class TackUserEntity extends JsonSerializable {
   final int id;
   @JsonKey(name: 'first_name')
@@ -11,7 +12,6 @@ class TackUserEntity extends JsonSerializable {
   final double tacksRating;
   @JsonKey(name: 'tacks_amount')
   final int tacksAmount;
-  final TackUserContactsEntity contacts;
 
   const TackUserEntity({
     required this.id,
@@ -19,7 +19,6 @@ class TackUserEntity extends JsonSerializable {
     required this.lastName,
     required this.tacksRating,
     required this.tacksAmount,
-    required this.contacts,
   });
 
   factory TackUserEntity.fromJson(Map<String, dynamic> json) {

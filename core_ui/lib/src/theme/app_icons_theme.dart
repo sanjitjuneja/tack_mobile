@@ -46,6 +46,7 @@ class AppIconsTheme {
   static const String _rateStarKey = '${_svgPath}rate_star.svg';
   static const String _promptKey = '${_svgPath}prompt.svg';
   static const String _editPencilKey = '${_svgPath}edit_pencil.svg';
+  static const String _plusKey = '${_svgPath}plus.svg';
 
   /// Bottom Navigation bar
   static AppIcon get dashboardsActive => AppIcon(_dashboardActiveKey);
@@ -85,4 +86,5 @@ class AppIconsTheme {
   static AppIcon get rateStar => AppIcon(_rateStarKey);
   static AppIcon get prompt => AppIcon(_promptKey);
   static AppIcon get editPencil => AppIcon(_editPencilKey);
+  static AppIcon get plus => AppIcon(_plusKey);
 }

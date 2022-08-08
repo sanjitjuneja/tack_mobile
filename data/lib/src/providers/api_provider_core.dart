@@ -64,14 +64,17 @@ abstract class ApiProviderCore {
   }
 
   @protected
-  Future<void> put(ApiQuery query) async {
-    return _safeRequest<void>(
+  Future<T> put<T>(
+    ApiQuery query, {
+    required Parser<T> parser,
+  }) async {
+    return _safeRequest<T>(
       request: _dio.put(
         query.path,
         data: query.body,
         queryParameters: query.params,
       ),
-      parser: (_) {},
+      parser: parser,
     );
   }
 

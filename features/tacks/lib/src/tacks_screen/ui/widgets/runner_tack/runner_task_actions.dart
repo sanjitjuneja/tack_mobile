@@ -2,7 +2,8 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:tacks/src/bloc/tacks_bloc.dart';
+
+import 'package:tacks/src/tacks_screen/bloc/tacks_bloc.dart';
 
 class RunnerTackActions extends StatelessWidget {
   final RunnerTack runnerTack;
