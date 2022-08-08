@@ -22,7 +22,7 @@ class DashboardScreen extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: PageHeaderWidget(
                 titleKey: 'dashboardScreen.title',
-                subtitleKey: 'dashboardScreen.noGroupSelectedSubtitle',
+                subtitleKey: 'general.noGroupSelectedSubtitle',
                 group: state.currentGroup,
                 onTap: () => _onHeaderTap(context),
               ),

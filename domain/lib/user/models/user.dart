@@ -8,7 +8,6 @@ class User {
   final String? profilePicture;
   final double rating;
   final int tacksAmount;
-  final UserBankAccount bankAccount;
   final String phoneNumber;
   final int? activeGroup;
 
@@ -22,7 +21,6 @@ class User {
     required this.profilePicture,
     required this.rating,
     required this.tacksAmount,
-    required this.bankAccount,
     required this.phoneNumber,
     required this.activeGroup,
   });

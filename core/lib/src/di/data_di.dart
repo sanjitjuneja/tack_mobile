@@ -156,8 +156,28 @@ class DataDI {
         apiProvider: appLocator.get<ApiProvider>(),
       ),
     );
+    appLocator.registerLazySingleton<CreateTackUseCase>(
+      () => CreateTackUseCase(
+        tacksRepository: appLocator.get<TacksRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<EditTackUseCase>(
+      () => EditTackUseCase(
+        tacksRepository: appLocator.get<TacksRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<GetGroupPopularTacksUseCase>(
+      () => GetGroupPopularTacksUseCase(
+        tacksRepository: appLocator.get<TacksRepository>(),
+      ),
+    );
     appLocator.registerLazySingleton<GetGroupTacksUseCase>(
       () => GetGroupTacksUseCase(
+        tacksRepository: appLocator.get<TacksRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<GetNearbyPopularTacksUseCase>(
+      () => GetNearbyPopularTacksUseCase(
         tacksRepository: appLocator.get<TacksRepository>(),
       ),
     );
@@ -167,17 +187,17 @@ class DataDI {
       ),
     );
     appLocator.registerLazySingleton<GetTackerTacksUseCase>(
-          () => GetTackerTacksUseCase(
+      () => GetTackerTacksUseCase(
+        tacksRepository: appLocator.get<TacksRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<MakeOfferUseCase>(
+      () => MakeOfferUseCase(
         tacksRepository: appLocator.get<TacksRepository>(),
       ),
     );
     appLocator.registerLazySingleton<RateTackUseCase>(
       () => RateTackUseCase(
-        tacksRepository: appLocator.get<TacksRepository>(),
-      ),
-    );
-    appLocator.registerLazySingleton<EditTackUseCase>(
-      () => EditTackUseCase(
         tacksRepository: appLocator.get<TacksRepository>(),
       ),
     );
@@ -207,11 +227,15 @@ class DataDI {
     appLocator.unregister<SelectGroupUseCase>();
 
     appLocator.unregister<TacksRepository>();
+    appLocator.unregister<CreateTackUseCase>();
+    appLocator.unregister<EditTackUseCase>();
+    appLocator.unregister<GetGroupPopularTacksUseCase>();
     appLocator.unregister<GetGroupTacksUseCase>();
+    appLocator.unregister<GetNearbyPopularTacksUseCase>();
     appLocator.unregister<GetRunnerTacksUseCase>();
     appLocator.unregister<GetTackerTacksUseCase>();
+    appLocator.unregister<MakeOfferUseCase>();
     appLocator.unregister<RateTackUseCase>();
-    appLocator.unregister<EditTackUseCase>();
 
     appLocator.unregister<LogOutUseCase>();
   }

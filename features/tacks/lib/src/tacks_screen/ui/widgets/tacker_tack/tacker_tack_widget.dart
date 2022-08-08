@@ -19,7 +19,7 @@ class TackerTackWidget extends StatelessWidget {
     return OpacityOnTapContainer(
       onTap: () => _onTap(context),
       child: Container(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
         decoration: BoxDecoration(
           color: AppTheme.primaryColor,
           borderRadius: BorderRadius.circular(16.0),

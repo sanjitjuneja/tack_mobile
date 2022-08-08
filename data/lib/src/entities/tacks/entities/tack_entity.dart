@@ -2,6 +2,7 @@ part of tacks_entities;
 
 @JsonSerializable()
 @BooleanConverter()
+@DurationConverter()
 class TackEntity extends JsonSerializable with ListParserMixin {
   final int id;
   final String title;

@@ -10,7 +10,7 @@ String containNumberPattern = '/\d/';
 
 class FieldValidator {
   static bool validatePhoneNumber(String phoneNumber) {
-    const int phoneNumberLength = 10;
+    const int phoneNumberLength = 11;
     final number = phoneNumber.replaceAll(RegExp(r"\s+"), "");
 
     if (number.isEmpty) {

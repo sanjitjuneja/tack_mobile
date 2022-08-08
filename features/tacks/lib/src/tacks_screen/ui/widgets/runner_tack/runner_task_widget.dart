@@ -22,7 +22,7 @@ class RunnerTackWidget extends StatelessWidget {
       disabledOpacity: 1,
       disable: !runnerTack.isTracking,
       child: Container(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
         decoration: BoxDecoration(
           color: AppTheme.primaryColor,
           borderRadius: BorderRadius.circular(16.0),

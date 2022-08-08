@@ -17,7 +17,6 @@ class UserMapper implements Mapper<UserEntity, domain.User> {
       profilePicture: entity.profilePicture,
       rating: entity.tacksRating,
       tacksAmount: entity.tacksAmount,
-      bankAccount: userBankAccountMapper.fromEntity(entity.bankAccount),
       phoneNumber: entity.phoneNumber,
       activeGroup: entity.activeGroup,
     );
@@ -33,7 +32,6 @@ class UserMapper implements Mapper<UserEntity, domain.User> {
       profilePicture: item.profilePicture,
       tacksRating: item.rating,
       tacksAmount: item.tacksAmount,
-      bankAccount: userBankAccountMapper.toEntity(item.bankAccount),
       phoneNumber: item.phoneNumber,
       activeGroup: item.activeGroup,
     );

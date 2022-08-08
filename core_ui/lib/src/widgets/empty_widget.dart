@@ -5,16 +5,18 @@ import 'package:flutter/cupertino.dart';
 class EmptyWidget extends StatelessWidget {
   final AppIcon svgIcon;
   final String? titleKey;
-  final String descriptionKey;
-  final String buttonLabelKey;
-  final VoidCallback onButtonTap;
+  final String? descriptionKey;
+  final Widget? footer;
+  final String? buttonLabelKey;
+  final VoidCallback? onButtonTap;
 
   const EmptyWidget({
     super.key,
     required this.svgIcon,
-    required this.descriptionKey,
-    required this.buttonLabelKey,
-    required this.onButtonTap,
+    this.descriptionKey,
+    this.footer,
+    this.buttonLabelKey,
+    this.onButtonTap,
     this.titleKey,
   });
 
@@ -59,18 +61,26 @@ class EmptyWidget extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(height: 28),
-          Text(
-            FlutterI18n.translate(context, descriptionKey),
-            textAlign: TextAlign.center,
-            style: AppTextTheme.manrope14Medium
-                .copyWith(color: AppTheme.textHintColor),
-          ),
-          const SizedBox(height: 48),
-          AppCircleButton(
-            labelKey: buttonLabelKey,
-            onTap: onButtonTap,
-          ),
+          if (descriptionKey != null) ...<Widget>[
+            const SizedBox(height: 28),
+            Text(
+              FlutterI18n.translate(context, descriptionKey!),
+              textAlign: TextAlign.center,
+              style: AppTextTheme.manrope14Medium
+                  .copyWith(color: AppTheme.textHintColor),
+            ),
+          ],
+          if (footer != null) ...<Widget>[
+            const SizedBox(height: 48),
+            footer!,
+          ],
+          if (buttonLabelKey != null) ...<Widget>[
+            const SizedBox(height: 48),
+            AppCircleButton(
+              labelKey: buttonLabelKey!,
+              onTap: onButtonTap,
+            ),
+          ],
           const Spacer(flex: 2),
         ],
       ),

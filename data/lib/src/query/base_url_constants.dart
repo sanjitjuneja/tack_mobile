@@ -13,6 +13,8 @@ class BaseUrlConstants {
 
   static const String userPath = 'users/me/';
 
+  static const String offersPath = '/offers/';
+
   static const String groupsPath = '/groups/';
   static const String groupsMePath = '/groups/me/';
   static const String groupPath = '/group/${ApiQuery.idKey}/';
@@ -24,6 +26,10 @@ class BaseUrlConstants {
 
   static const String tacks = '/tacks/';
   static const String tacksWithId = '/tacks/${ApiQuery.idKey}/';
+
+  static const String groupPopularTacksPath = 'groups/${ApiQuery.idKey}/popular_tacks/';
+  static const String nearbyPopularTacksPath = 'tacks/nearby/';
+
 
   static const String reviews = '/reviews/';
 }

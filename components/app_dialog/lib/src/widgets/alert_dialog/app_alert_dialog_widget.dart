@@ -86,6 +86,6 @@ class AppAlertDialogWidget extends StatelessWidget {
 
   void _onButtonTap(BuildContext context) {
     onTap?.call();
-    AppRouter.of(context).popWithResult(true);
+    GlobalAppRouter.of(context).popWithResult(true);
   }
 }

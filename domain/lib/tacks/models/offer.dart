@@ -3,7 +3,7 @@ part of tacks;
 class Offer extends Equatable {
   final int id;
   final int tackId;
-  final TackUser runner;
+  final TackUser? runner;
   final double price;
   final OfferType type;
   final bool isAccepted;

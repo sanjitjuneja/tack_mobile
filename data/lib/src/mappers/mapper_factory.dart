@@ -3,6 +3,8 @@ part of mappers;
 class MapperFactory {
   GroupMapper get groupMapper => const GroupMapper();
 
+  TemplateTackMapper get templateTackMapper => const TemplateTackMapper();
+
   TackStatusMapper get tackStatusMapper => const TackStatusMapper();
 
   TackUserContactsMapper get tackUserContactsMapper =>
