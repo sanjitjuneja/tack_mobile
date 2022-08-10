@@ -28,7 +28,7 @@ class DashboardForm extends StatelessWidget {
               selectedGroup: state.currentGroup!,
             ),
             child: BlocBuilder<DashboardBloc, DashboardState>(
-              builder: (BuildContext dashboardContext, DashboardState state) {
+              builder: (BuildContext blocContext, DashboardState state) {
                 return AppListViewWithRefresh(
                   enableRefresh: true,
                   enableLoad: state.canLoadMore,
@@ -39,7 +39,7 @@ class DashboardForm extends StatelessWidget {
                     descriptionKey: 'dashboardScreen.noTacks.description',
                     buttonLabelKey: 'dashboardScreen.noTacks.labelButton',
                     onButtonTap: () =>
-                        _onNoTacksButtonPressed(dashboardContext),
+                        _onNoTacksButtonPressed(blocContext),
                   ),
                   onRefresh: _onRefreshAction,
                   onLoad: _onLoadMoreAction,

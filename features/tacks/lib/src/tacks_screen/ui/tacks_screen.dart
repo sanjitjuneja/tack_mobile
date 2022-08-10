@@ -26,7 +26,7 @@ class TacksScreen extends StatelessWidget {
           withMenu: true,
           middle: Align(
             alignment: Alignment.centerLeft,
-            child: PageHeaderWidget(
+            child: PageHeaderWithGroupWidget(
               titleKey: 'tacksScreen.title',
               image: AppIconsTheme.tack,
               subtitleKey: 'tacksScreen.subtitle',

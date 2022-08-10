@@ -22,68 +22,76 @@ class EmptyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                if (titleKey != null) ...<Widget>[
-                  Text(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Expanded(
+          flex: 1,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              if (titleKey != null) ...<Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                  child: Text(
                     FlutterI18n.translate(context, titleKey!),
                     style: AppTextTheme.manrope24SemiBold,
                   ),
-                  const SizedBox(height: 12),
-                ],
+                ),
+                const SizedBox(height: 12),
               ],
-            ),
+            ],
           ),
-          LayoutBuilder(
-            builder: (_, BoxConstraints constraints) {
-              return Container(
-                width: constraints.maxWidth,
-                padding: const EdgeInsets.symmetric(vertical: 24),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppTheme.primaryColor,
-                  borderRadius: BorderRadius.circular(18),
-                ),
-                child: svgIcon.svg(
-                  color: AppTheme.iconSecondaryColor,
-                  fit: BoxFit.fitHeight,
-                  size: constraints.maxWidth * 0.5,
-                ),
-              );
-            },
-          ),
-          if (descriptionKey != null) ...<Widget>[
-            const SizedBox(height: 28),
-            Text(
+        ),
+        LayoutBuilder(
+          builder: (_, BoxConstraints constraints) {
+            return Container(
+              width: constraints.maxWidth,
+              margin: const EdgeInsets.symmetric(horizontal: 48.0),
+              padding: const EdgeInsets.symmetric(vertical: 24.0),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: AppTheme.primaryColor,
+                borderRadius: BorderRadius.circular(18),
+              ),
+              child: svgIcon.svg(
+                color: AppTheme.iconSecondaryColor,
+                fit: BoxFit.fitHeight,
+                size: constraints.maxWidth * 0.37,
+              ),
+            );
+          },
+        ),
+        if (descriptionKey != null) ...<Widget>[
+          const SizedBox(height: 28),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 44.0),
+            child: Text(
               FlutterI18n.translate(context, descriptionKey!),
               textAlign: TextAlign.center,
               style: AppTextTheme.manrope14Medium
                   .copyWith(color: AppTheme.textHintColor),
             ),
-          ],
-          if (footer != null) ...<Widget>[
-            const SizedBox(height: 48),
-            footer!,
-          ],
-          if (buttonLabelKey != null) ...<Widget>[
-            const SizedBox(height: 48),
-            AppCircleButton(
-              labelKey: buttonLabelKey!,
-              onTap: onButtonTap,
-            ),
-          ],
-          const Spacer(flex: 2),
+          ),
         ],
-      ),
+        if (footer != null) ...<Widget>[
+          const SizedBox(height: 48),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 28.0),
+            child: footer!,
+          ),
+        ],
+        if (buttonLabelKey != null) ...<Widget>[
+          const SizedBox(height: 28),
+          AppCircleButton(
+            margin: const EdgeInsets.symmetric(horizontal: 48.0),
+            labelKey: buttonLabelKey!,
+            onTap: onButtonTap,
+          ),
+        ],
+        const Spacer(flex: 2),
+      ],
     );
   }
 }

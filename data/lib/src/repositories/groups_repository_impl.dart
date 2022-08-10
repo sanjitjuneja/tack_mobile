@@ -1,11 +1,12 @@
 import 'package:core/core.dart';
 import 'package:data/src/entities/entities.dart';
 import 'package:data/src/providers/api_provider.dart';
+import 'package:data/src/providers/shared_preferences_provider.dart';
 import 'package:domain/domain.dart' as domain;
 
 class GroupsRepositoryImpl implements domain.GroupsRepository {
   final ApiProvider _apiProvider;
-  final domain.UserRepository _userRepository;
+  final SharedPreferencesProvider _sharedPreferencesProvider;
 
   late BehaviorSubject<List<domain.Group>> _groupsStreamController;
 
@@ -25,9 +26,9 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
 
   GroupsRepositoryImpl({
     required ApiProvider apiProvider,
-    required domain.UserRepository userRepository,
+    required SharedPreferencesProvider sharedPreferencesProvider,
   })  : _apiProvider = apiProvider,
-        _userRepository = userRepository {
+        _sharedPreferencesProvider = sharedPreferencesProvider {
     _groupsStreamController = BehaviorSubject<List<domain.Group>>.seeded(
       <domain.Group>[],
     );
@@ -36,14 +37,33 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
 
   @override
   Future<void> initialLoad() async {
-    await getGroups(const domain.GetGroupsPayload());
-    final domain.User user = _userRepository.currentUser;
-    if (user.activeGroup != null) {
-      final domain.Group group = await getGroup(
-        domain.GetGroupPayload(id: user.activeGroup!),
+    // Handle of network error, no any action needed on error.
+    try {
+      await getGroups(const domain.GetGroupsPayload());
+      await _initialSetActiveGroup();
+    } catch (_) {}
+  }
+
+  Future<void> _initialSetActiveGroup() async {
+    final int? activeGroupId = _sharedPreferencesProvider.getActiveGroupId();
+
+    if (activeGroupId == null) return;
+
+    final int groupIndex = _groupsStreamController.stream.value.indexWhere(
+      (domain.Group group) => group.id == activeGroupId,
+    );
+
+    final domain.Group group;
+
+    if (groupIndex == -1) {
+      group = await getGroup(
+        domain.GetGroupPayload(id: activeGroupId),
       );
-      _groupStreamController.add(group);
+    } else {
+      group = _groupsStreamController.stream.value.elementAt(groupIndex);
     }
+
+    _groupStreamController.add(group);
   }
 
   @override
@@ -65,7 +85,10 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
 
   @override
   Future<void> selectGroup(domain.SelectGroupPayload payload) async {
+    if (payload.group.id == currentGroup?.id) return;
+
     _groupStreamController.add(payload.group);
+    _sharedPreferencesProvider.setActiveGroupId(payload.group.id);
     try {
       await _apiProvider.selectGroup(
         request: SelectGroupRequest(
@@ -76,12 +99,88 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
   }
 
   @override
-  Future<domain.Group> createGroup(domain.CreateGroupPayload payload) {
+  Future<domain.Group> createGroup(domain.CreateGroupPayload payload) async {
     return _apiProvider.createGroup(
       request: CreateGroupRequest(
         name: payload.name,
         description: payload.description,
         image: payload.image,
+      ),
+    );
+  }
+
+  @override
+  Future<void> leaveGroup(domain.LeaveGroupPayload payload) async {
+    return _apiProvider.leaveGroup(
+      request: LeaveGroupRequest(
+        id: payload.group.id,
+      ),
+    );
+  }
+
+  @override
+  Future<domain.Group> muteGroup(domain.MuteGroupPayload payload) async {
+    return _apiProvider.muteGroup(
+      request: MuteGroupRequest(
+        id: payload.group.id,
+      ),
+    );
+  }
+
+  @override
+  Future<domain.Group> unMuteGroup(domain.UnMuteGroupPayload payload) async {
+    return _apiProvider.unMuteGroup(
+      request: UnMuteGroupRequest(
+        id: payload.group.id,
+      ),
+    );
+  }
+
+  @override
+  Future<domain.GroupInviteLink> getGroupInviteLink(
+    domain.GetGroupInviteLinkPayload payload,
+  ) async {
+    return _apiProvider.getGroupInviteLink(
+      request: GetGroupInviteLinkRequest(id: payload.group.id),
+    );
+  }
+
+  @override
+  Future<List<domain.TackUser>> getGroupMembers(
+    domain.GetGroupMembersPayload payload,
+  ) async {
+    return _apiProvider.getGroupMembers(
+      request: GetGroupMembersRequest(id: payload.group.id),
+    );
+  }
+
+  @override
+  Future<List<domain.GroupInvitation>> getInvitations(
+    domain.GetGroupInvitationsPayload payload,
+  ) async {
+    return _apiProvider.getInvitations(
+      request: const GetGroupInvitationsRequest(),
+    );
+  }
+
+  @override
+  Future<void> acceptGroupInvitation(
+    domain.AcceptGroupInvitationPayload payload,
+  ) {
+    return _apiProvider.acceptGroupInvitation(
+      request: AcceptGroupInvitationRequest(
+        id: payload.invitation.id,
+      ),
+    );
+  }
+
+  @override
+  Future<void> declineGroupInvitation(
+    domain.DeclineGroupInvitationPayload payload,
+  ) {
+    return _apiProvider.declineGroupInvitation(
+      request: DeclineGroupInvitationRequest(
+        id: payload.invitation.id,
       ),
     );
   }

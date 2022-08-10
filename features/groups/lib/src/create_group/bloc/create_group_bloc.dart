@@ -21,13 +21,15 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
   // max words for description.
   static const int _descriptionMaxWordsLength = 30;
 
-  final AppRouterDelegate appRouter;
-  final CreateGroupUseCase createGroupUseCase;
+  final AppRouterDelegate _appRouter;
+  final CreateGroupUseCase _createGroupUseCase;
 
   CreateGroupBloc({
-    required this.appRouter,
-    required this.createGroupUseCase,
-  }) : super(
+    required AppRouterDelegate appRouter,
+    required CreateGroupUseCase createGroupUseCase,
+  })  : _appRouter = appRouter,
+        _createGroupUseCase = createGroupUseCase,
+        super(
           const CreateGroupState(
             nameData: NameData(
               maxLength: _nameMaxLength,
@@ -53,20 +55,20 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
     CreateGroupRequest event,
     Emitter<CreateGroupState> emit,
   ) async {
-    appRouter.push(ProgressDialog.page());
+    _appRouter.push(ProgressDialog.page());
     try {
-      final Group group = await createGroupUseCase.execute(
+      final Group group = await _createGroupUseCase.execute(
         CreateGroupPayload(
           name: state.nameData.name,
           description: state.descriptionData.description,
           image: state.groupPhotoData.imageFile!,
         ),
       );
-      appRouter.pop();
-      appRouter.popWithResult(group);
+      _appRouter.pop();
+      _appRouter.popWithResult(group);
     } catch (e) {
-      appRouter.pop();
-      appRouter.pushForResult(
+      _appRouter.pop();
+      _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
             contentKey: 'errorAlert.groupCreation',
@@ -105,12 +107,15 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
     CreateGroupPickPhoto event,
     Emitter<CreateGroupState> emit,
   ) async {
-    final ImageSource? imageSource = await appRouter.pushForResult(
+    final ImageSource? imageSource = await _appRouter.pushForResult(
       ImagePickOptionDrawer.page(),
     );
     if (imageSource == null) return;
 
-    final XFile? xFile = await FileManager.pickImage(imageSource);
+    final XFile? xFile = await FileManager.pickImage(
+      imageSource,
+      imageQuality: 15,
+    );
     if (xFile == null) return;
 
     final File imageToCrop = await FileManager.writeTempFile(
@@ -119,7 +124,7 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
       mimeType: xFile.mimeType,
     );
 
-    final File? result = await appRouter.pushForResult(
+    final File? result = await _appRouter.pushForResult(
       ImageCropper.page(file: imageToCrop),
     );
 

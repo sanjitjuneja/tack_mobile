@@ -9,6 +9,7 @@ class SharedPreferencesKeys {
   static const String session = 'session';
   static const String isAuthorized = 'isAuthorized';
   static const String user = 'user';
+  static const String activeGroupId = 'activeGroupId';
 }
 
 class SharedPreferencesProvider {
@@ -71,6 +72,19 @@ class SharedPreferencesProvider {
     final UserEntity userEntity = UserEntity.fromJson(jsonDecode(data));
 
     return mapper.customerMapper.fromEntity(userEntity);
+  }
+
+  Future<bool> setActiveGroupId(int? groupId) async {
+    if (groupId == null) return true;
+
+    return _sharedPreferences.setInt(
+      SharedPreferencesKeys.activeGroupId,
+      groupId,
+    );
+  }
+
+  int? getActiveGroupId() {
+    return _sharedPreferences.getInt(SharedPreferencesKeys.activeGroupId);
   }
 
   bool isAllSetForLogin() {

@@ -1,11 +1,15 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class InviteMembersHeaderWidget extends StatelessWidget {
+  final Group group;
+
   const InviteMembersHeaderWidget({
     super.key,
+    required this.group,
   });
 
   @override
@@ -13,14 +17,7 @@ class InviteMembersHeaderWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Container(
-          width: 45,
-          height: 45,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppTheme.shadowColor,
-          ),
-        ),
+        AppCircleAvatarWidget(group.imageUrl),
         const SizedBox(width: 12),
         Text(
           FlutterI18n.translate(

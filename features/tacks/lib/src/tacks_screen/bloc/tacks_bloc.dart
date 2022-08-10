@@ -67,32 +67,8 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
         runnerTacksState: state.runnerTacksState.copyWith(isLoading: true),
       ),
     );
-    try {
-      final List<Tack> tacks = await _getTackerTacksUseCase.execute(NoParams());
-      emit(
-        state.copyWith(
-          tackerTacksState: state.tackerTacksState.copyWith(tacks: tacks),
-        ),
-      );
-    } catch (e) {
-      emit(
-        state.copyWith(tackerTacksState: const TackerTacksState()),
-      );
-    }
-
-    try {
-      final List<RunnerTack> tacks =
-          await _getRunnerTacksUseCase.execute(NoParams());
-      emit(
-        state.copyWith(
-          runnerTacksState: state.runnerTacksState.copyWith(tacks: tacks),
-        ),
-      );
-    } catch (e) {
-      emit(
-        state.copyWith(runnerTacksState: const RunnerTacksState()),
-      );
-    }
+    add(const RefreshTackerTacks());
+    add(const RefreshTackerTacks());
   }
 
   Future<void> _onLoadMockedData(
@@ -120,54 +96,84 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
     LoadRunnerTacks event,
     Emitter<TacksState> emit,
   ) async {
-    final List<RunnerTack> tacks =
-    await _getRunnerTacksUseCase.execute(NoParams());
-    event.completer.complete(LoadingStatus.complete);
-    emit(
-      state.copyWith(
-        runnerTacksState: state.runnerTacksState.copyWith(tacks: tacks),
-      ),
-    );
+    try {
+      final List<RunnerTack> tacks =
+          await _getRunnerTacksUseCase.execute(NoParams());
+
+      event.completer.complete(LoadingStatus.complete);
+      emit(
+        state.copyWith(
+          runnerTacksState: state.runnerTacksState.copyWith(tacks: tacks),
+        ),
+      );
+    } catch (_) {
+      event.completer.complete(LoadingStatus.failed);
+    }
   }
 
   Future<void> _onRefreshRunnerTacks(
     RefreshRunnerTacks event,
     Emitter<TacksState> emit,
   ) async {
-    final List<RunnerTack> tacks =
-    await _getRunnerTacksUseCase.execute(NoParams());
-    event.completer.complete(RefreshingStatus.complete);
-    emit(
-      state.copyWith(
-        runnerTacksState: state.runnerTacksState.copyWith(tacks: tacks),
-      ),
-    );
+    try {
+      final List<RunnerTack> tacks =
+          await _getRunnerTacksUseCase.execute(NoParams());
+
+      event.completer?.complete(RefreshingStatus.complete);
+      emit(
+        state.copyWith(
+          runnerTacksState: state.runnerTacksState.copyWith(tacks: tacks),
+        ),
+      );
+    } catch (_) {
+      event.completer?.complete(RefreshingStatus.failed);
+      if (event.completer == null) {
+        emit(
+          state.copyWith(runnerTacksState: const RunnerTacksState()),
+        );
+      }
+    }
   }
 
   Future<void> _onLoadTackerTacks(
     LoadTackerTacks event,
     Emitter<TacksState> emit,
   ) async {
-    final List<Tack> tacks = await _getTackerTacksUseCase.execute(NoParams());
-    event.completer.complete(LoadingStatus.complete);
-    emit(
-      state.copyWith(
-        tackerTacksState: state.tackerTacksState.copyWith(tacks: tacks),
-      ),
-    );
+    try {
+      final List<Tack> tacks = await _getTackerTacksUseCase.execute(NoParams());
+
+      event.completer.complete(LoadingStatus.complete);
+      emit(
+        state.copyWith(
+          tackerTacksState: state.tackerTacksState.copyWith(tacks: tacks),
+        ),
+      );
+    } catch (_) {
+      event.completer.complete(LoadingStatus.failed);
+    }
   }
 
   Future<void> _onRefreshTackerTacks(
     RefreshTackerTacks event,
     Emitter<TacksState> emit,
   ) async {
-    final List<Tack> tacks = await _getTackerTacksUseCase.execute(NoParams());
-    event.completer.complete(RefreshingStatus.complete);
-    emit(
-      state.copyWith(
-        tackerTacksState: state.tackerTacksState.copyWith(tacks: tacks),
-      ),
-    );
+    try {
+      final List<Tack> tacks = await _getTackerTacksUseCase.execute(NoParams());
+
+      event.completer?.complete(RefreshingStatus.complete);
+      emit(
+        state.copyWith(
+          tackerTacksState: state.tackerTacksState.copyWith(tacks: tacks),
+        ),
+      );
+    } catch (_) {
+      event.completer?.complete(RefreshingStatus.failed);
+      if (event.completer == null) {
+        emit(
+          state.copyWith(runnerTacksState: const RunnerTacksState()),
+        );
+      }
+    }
   }
 
   Future<void> _onCancelTackOffer(

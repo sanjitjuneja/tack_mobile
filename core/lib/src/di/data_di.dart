@@ -104,14 +104,24 @@ class DataDI {
 
     final GroupsRepository groupsRepository = GroupsRepositoryImpl(
       apiProvider: appLocator.get<ApiProvider>(),
-      userRepository: appLocator.get<UserRepository>(),
+      sharedPreferencesProvider: appLocator.get<SharedPreferencesProvider>(),
     );
 
     await groupsRepository.initialLoad();
 
     appLocator.registerSingleton<GroupsRepository>(groupsRepository);
+    appLocator.registerLazySingleton<AcceptGroupInvitationUseCase>(
+      () => AcceptGroupInvitationUseCase(
+        groupsRepository: appLocator.get<GroupsRepository>(),
+      ),
+    );
     appLocator.registerLazySingleton<CreateGroupUseCase>(
       () => CreateGroupUseCase(
+        groupsRepository: appLocator.get<GroupsRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<DeclineGroupInvitationUseCase>(
+      () => DeclineGroupInvitationUseCase(
         groupsRepository: appLocator.get<GroupsRepository>(),
       ),
     );
@@ -125,6 +135,26 @@ class DataDI {
         groupsRepository: appLocator.get<GroupsRepository>(),
       ),
     );
+    appLocator.registerLazySingleton<LeaveGroupUseCase>(
+      () => LeaveGroupUseCase(
+        groupsRepository: appLocator.get<GroupsRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<LoadGroupInvitationsUseCase>(
+      () => LoadGroupInvitationsUseCase(
+        groupsRepository: appLocator.get<GroupsRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<LoadGroupInviteLinkUseCase>(
+      () => LoadGroupInviteLinkUseCase(
+        groupsRepository: appLocator.get<GroupsRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<LoadGroupMembersUseCase>(
+      () => LoadGroupMembersUseCase(
+        groupsRepository: appLocator.get<GroupsRepository>(),
+      ),
+    );
     appLocator.registerLazySingleton<LoadGroupUseCase>(
       () => LoadGroupUseCase(
         groupsRepository: appLocator.get<GroupsRepository>(),
@@ -132,6 +162,11 @@ class DataDI {
     );
     appLocator.registerLazySingleton<LoadGroupsUseCase>(
       () => LoadGroupsUseCase(
+        groupsRepository: appLocator.get<GroupsRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<MuteGroupUseCase>(
+      () => MuteGroupUseCase(
         groupsRepository: appLocator.get<GroupsRepository>(),
       ),
     );
@@ -147,6 +182,11 @@ class DataDI {
     );
     appLocator.registerLazySingleton<SelectGroupUseCase>(
       () => SelectGroupUseCase(
+        groupsRepository: appLocator.get<GroupsRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<UnMuteGroupUseCase>(
+      () => UnMuteGroupUseCase(
         groupsRepository: appLocator.get<GroupsRepository>(),
       ),
     );
@@ -216,15 +256,22 @@ class DataDI {
     appLocator.unregister<ObserveUserUseCase>();
 
     appLocator.unregister<GroupsRepository>();
+    appLocator.unregister<AcceptGroupInvitationUseCase>();
     appLocator.unregister<CreateGroupUseCase>();
-
+    appLocator.unregister<DeclineGroupInvitationUseCase>();
     appLocator.unregister<GetCurrentGroupUseCase>();
     appLocator.unregister<GetGroupsUseCase>();
+    appLocator.unregister<LeaveGroupUseCase>();
+    appLocator.unregister<LoadGroupInvitationsUseCase>();
+    appLocator.unregister<LoadGroupInviteLinkUseCase>();
+    appLocator.unregister<LoadGroupMembersUseCase>();
     appLocator.unregister<LoadGroupUseCase>();
     appLocator.unregister<LoadGroupsUseCase>();
+    appLocator.unregister<MuteGroupUseCase>();
     appLocator.unregister<ObserveCurrentGroupUseCase>();
     appLocator.unregister<ObserveGroupsUseCase>();
     appLocator.unregister<SelectGroupUseCase>();
+    appLocator.unregister<UnMuteGroupUseCase>();
 
     appLocator.unregister<TacksRepository>();
     appLocator.unregister<CreateTackUseCase>();

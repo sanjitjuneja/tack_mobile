@@ -3,6 +3,8 @@ library mappers;
 import 'package:data/src/entities/entities.dart';
 import 'package:domain/domain.dart' as domain;
 
+part 'groups/group_invitation_mapper.dart';
+part 'groups/group_invite_link_mapper.dart';
 part 'groups/group_mapper.dart';
 
 part 'phone_verification/sms_verification_mapper.dart';

@@ -51,39 +51,42 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     Emitter<DashboardState> emit,
   ) async {
     emit(state.copyWith(isLoading: true));
-    try {
-      final List<Tack> tacks = await _getGroupTacksUseCase.execute(
-        GroupTacksPayload(groupId: state.group.id),
-      );
-
-      emit(state.copyWith(tacks: tacks));
-    } catch (e) {
-      emit(state.copyWith(tacks: <Tack>[]));
-    }
+    add(const RefreshAction());
   }
 
   Future<void> _onRefreshAction(
     RefreshAction event,
     Emitter<DashboardState> emit,
   ) async {
-    final List<Tack> tacks = await _getGroupTacksUseCase.execute(
-      GroupTacksPayload(groupId: state.group.id),
-    );
+    try {
+      final List<Tack> tacks = await _getGroupTacksUseCase.execute(
+        GroupTacksPayload(groupId: state.group.id),
+      );
 
-    event.completer.complete(RefreshingStatus.complete);
-    emit(state.copyWith(tacks: tacks));
+      event.completer?.complete(RefreshingStatus.complete);
+      emit(state.copyWith(tacks: tacks));
+    } catch (_) {
+      event.completer?.complete(RefreshingStatus.failed);
+      if (event.completer == null) {
+        emit(state.copyWith(tacks: <Tack>[]));
+      }
+    }
   }
 
   Future<void> _onLoadMoreAction(
     LoadMoreAction event,
     Emitter<DashboardState> emit,
   ) async {
-    final List<Tack> tacks = await _getGroupTacksUseCase.execute(
-      GroupTacksPayload(groupId: state.group.id),
-    );
+    try {
+      final List<Tack> tacks = await _getGroupTacksUseCase.execute(
+        GroupTacksPayload(groupId: state.group.id),
+      );
 
-    event.completer.complete(LoadingStatus.complete);
-    emit(state.copyWith(tacks: tacks));
+      event.completer.complete(LoadingStatus.complete);
+      emit(state.copyWith(tacks: tacks));
+    } catch (_) {
+      event.completer.complete(LoadingStatus.failed);
+    }
   }
 
   Future<void> _onCounterOfferOpen(

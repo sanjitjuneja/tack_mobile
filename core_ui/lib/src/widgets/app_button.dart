@@ -66,13 +66,13 @@ class AppButton extends StatelessWidget {
       onTap: onTap,
       disable: isDisabled,
       child: Container(
-        padding: padding ??
-            (shape == BoxShape.rectangle
-                ? const EdgeInsets.symmetric(
-                    vertical: 10.0,
-                    horizontal: 16.0,
-                  )
-                : const EdgeInsets.all(12.0)),
+        padding: shape == BoxShape.rectangle
+            ? padding ??
+                const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 10.0,
+                )
+            : const EdgeInsets.all(12.0),
         decoration: BoxDecoration(
           color: isDisabled
               ? AppTheme.buttonSecondaryColor

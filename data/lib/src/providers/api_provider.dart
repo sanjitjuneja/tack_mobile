@@ -37,6 +37,7 @@ class ApiProvider extends ApiProviderCore {
                 'Bearer ${session.accessToken}';
           }
 
+          print(session?.accessToken);
           return handler.next(options);
         },
       ),
@@ -159,6 +160,125 @@ class ApiProvider extends ApiProviderCore {
       parser: GroupEntity.fromJson,
       isFormData: true,
     ).then(mapper.groupMapper.fromEntity);
+  }
+
+  Future<void> leaveGroup({
+    required LeaveGroupRequest request,
+  }) async {
+    return post<void>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.groupLeavePath,
+        id: request.id,
+        body: null,
+        params: null,
+      ),
+      parser: (_) {},
+    );
+  }
+
+  Future<domain.Group> muteGroup({
+    required MuteGroupRequest request,
+  }) async {
+    return post<GroupEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.groupMutePath,
+        id: request.id,
+        body: null,
+        params: null,
+      ),
+      parser: GroupEntity.fromJson,
+    ).then(mapper.groupMapper.fromEntity);
+  }
+
+  Future<domain.Group> unMuteGroup({
+    required UnMuteGroupRequest request,
+  }) async {
+    return post<GroupEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.groupUnMutePath,
+        id: request.id,
+        body: null,
+        params: null,
+      ),
+      parser: GroupEntity.fromJson,
+    ).then(mapper.groupMapper.fromEntity);
+  }
+
+  Future<domain.GroupInviteLink> getGroupInviteLink({
+    required GetGroupInviteLinkRequest request,
+  }) async {
+    return get<GroupInviteLinkEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.groupInviteLinkPath,
+        id: request.id,
+        body: null,
+        params: null,
+      ),
+      parser: GroupInviteLinkEntity.fromJson,
+    ).then(mapper.groupInviteLinkMapper.fromEntity);
+  }
+
+  Future<List<domain.TackUser>> getGroupMembers({
+    required GetGroupMembersRequest request,
+  }) async {
+    return get<GetGroupMembersResponse>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.groupMembersPath,
+        id: request.id,
+        body: null,
+        params: null,
+      ),
+      parser: GetGroupMembersResponse.fromJson,
+    ).then(
+      (GetGroupMembersResponse response) {
+        return List<domain.TackUser>.from(
+          mapper.tackUserMapper.fromList(response.results),
+        );
+      },
+    );
+  }
+
+  Future<List<domain.GroupInvitation>> getInvitations({
+    required GetGroupInvitationsRequest request,
+  }) async {
+    return get<GetGroupInvitationsResponse>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.invitationsMePath,
+        body: null,
+        params: null,
+      ),
+      parser: GetGroupInvitationsResponse.fromJson,
+    ).then(
+      (GetGroupInvitationsResponse response) =>
+          mapper.groupInvitationMapper.fromList(response.results),
+    );
+  }
+
+  Future<void> acceptGroupInvitation({
+    required AcceptGroupInvitationRequest request,
+  }) async {
+    return post<void>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.invitationAcceptPath,
+        id: request.id,
+        body: null,
+        params: null,
+      ),
+      parser: (_) {},
+    );
+  }
+
+  Future<void> declineGroupInvitation({
+    required DeclineGroupInvitationRequest request,
+  }) async {
+    return delete(
+      ApiQuery(
+        endpoint: BaseUrlConstants.invitationDeclinePath,
+        id: request.id,
+        body: null,
+        params: null,
+      ),
+    );
   }
 
   Future<List<domain.TemplateTack>> getNearbyPopularTacks({

@@ -3,6 +3,7 @@ part of app_dialog;
 class AppProgressIndicator extends StatelessWidget {
   final String? messageKey;
   final Color? backgroundColor;
+  final Color? indicatorColor;
   final ProgressIndicatorSize indicatorSize;
   final bool expand;
 
@@ -10,6 +11,7 @@ class AppProgressIndicator extends StatelessWidget {
     super.key,
     this.messageKey,
     this.backgroundColor,
+    this.indicatorColor,
     ProgressIndicatorSize? indicatorSize,
     this.expand = true,
   }) : indicatorSize = indicatorSize ?? ProgressIndicatorSize.big;
@@ -29,7 +31,7 @@ class AppProgressIndicator extends StatelessWidget {
               size: indicatorSize.size,
               progressStrokeWidth: indicatorSize.strokeWidth,
               backStrokeWidth: 0,
-              progressColor: AppTheme.progressInterfaceColor,
+              progressColor: indicatorColor ?? AppTheme.progressInterfaceLightColor,
             ),
             if (messageKey != null) ...<Widget>[
               const SizedBox(height: 28),
@@ -39,7 +41,7 @@ class AppProgressIndicator extends StatelessWidget {
                   FlutterI18n.translate(context, messageKey!),
                   textAlign: TextAlign.center,
                   style: AppTextTheme.manrope18Medium
-                      .copyWith(color: AppTheme.progressInterfaceColor),
+                      .copyWith(color: AppTheme.progressInterfaceLightColor),
                 ),
               ),
             ],

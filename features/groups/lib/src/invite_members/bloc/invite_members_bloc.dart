@@ -1,37 +1,58 @@
 import 'package:core/core.dart';
-import 'package:core_ui/core_ui.dart';
+import 'package:domain/domain.dart';
 import 'package:navigation/navigation.dart';
 
 part 'invite_members_event.dart';
+
 part 'invite_members_state.dart';
 
 class InviteMembersBloc extends Bloc<InviteMembersEvent, InviteMembersState> {
-  static const Duration _hapticFeedbackOnCopyDelay = Duration(milliseconds: 250);
-
-  final AppRouterDelegate appRouter;
+  final AppRouterDelegate _appRouter;
+  final LoadGroupInviteLinkUseCase _loadGroupInviteLinkUseCase;
 
   InviteMembersBloc({
-    required this.appRouter,
-  }) : super(
-          const InviteMembersState(inviteLink: 'https://www.tackapp.net'),
+    required Group group,
+    required AppRouterDelegate appRouter,
+    required LoadGroupInviteLinkUseCase loadGroupInviteLinkUseCase,
+  })  : _appRouter = appRouter,
+        _loadGroupInviteLinkUseCase = loadGroupInviteLinkUseCase,
+        super(
+          InviteMembersState(group: group),
         ) {
+    on<LoadLink>(_onLoadLink);
+
     on<InviteCopyLink>(_onInviteCopyLink);
     on<InviteShareLink>(_onInviteShareLink);
+
+    add(const LoadLink());
+  }
+
+  Future<void> _onLoadLink(
+    LoadLink event,
+    Emitter<InviteMembersState> emit,
+  ) async {
+    emit(state.copyWith(isLoading: true));
+    try {
+      final GroupInviteLink inviteLink =
+          await _loadGroupInviteLinkUseCase.execute(
+        GetGroupInviteLinkPayload(group: state.group),
+      );
+
+      emit(state.copyWith(inviteLink: inviteLink));
+    } catch (_) {
+      emit(state.copyWith(hasError: true));
+    }
   }
 
   Future<void> _onInviteCopyLink(
     InviteCopyLink event,
     Emitter<InviteMembersState> emit,
   ) async {
-    await ClipboardManager.copyText(state.inviteLink);
-    ToastManager.showToast(
-      appRouter.navigatorKey.currentContext!,
-      messageKey: 'toast.copiedToClipboard',
-      backgroundColor: AppTheme.toastBackgroundColor,
-    );
-    Future.delayed(
-      _hapticFeedbackOnCopyDelay,
-      HapticFeedbackManager.success,
+    if (!state.hasData) return;
+
+    ClipboardManager.copyText(
+      _appRouter.navigatorKey.currentContext!,
+      state.inviteLink!.link,
     );
   }
 
@@ -39,6 +60,8 @@ class InviteMembersBloc extends Bloc<InviteMembersEvent, InviteMembersState> {
     InviteShareLink event,
     Emitter<InviteMembersState> emit,
   ) async {
-    ShareManager.shareText(state.inviteLink);
+    if (!state.hasData) return;
+
+    ShareManager.shareText(state.inviteLink!.link);
   }
 }

@@ -55,6 +55,7 @@ class AuthRepositoryImpl implements domain.AuthRepository {
 
     final User user = await _apiProvider.getUser();
     await _sharedPreferencesProvider.setUser(user);
+    await _sharedPreferencesProvider.setActiveGroupId(user.activeGroup);
 
     await _sharedPreferencesProvider.setAuthorized();
     await dataDI.setupPostLoginAppLocator();

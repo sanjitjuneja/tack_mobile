@@ -8,6 +8,8 @@ class Group extends Equatable {
   final String imageUrl;
   final bool isPublic;
 
+  bool get isNotificationsEnabled => true;
+
   const Group({
     required this.id,
     required this.ownerId,

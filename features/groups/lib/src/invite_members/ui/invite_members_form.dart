@@ -1,12 +1,12 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:navigation/navigation.dart';
 
 import 'package:groups/src/invite_members/bloc/invite_members_bloc.dart';
 import 'package:groups/src/invite_members/ui/widgets/invite_members_button.dart';
 import 'package:groups/src/invite_members/ui/widgets/invite_members_divider.dart';
 import 'package:groups/src/invite_members/ui/widgets/invite_members_header_widget.dart';
-import 'package:navigation/navigation.dart';
 
 class InviteMembersForm extends StatelessWidget {
   const InviteMembersForm({super.key});
@@ -24,38 +24,63 @@ class InviteMembersForm extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const InviteMembersHeaderWidget(),
+                    InviteMembersHeaderWidget(group: state.group),
                     const SizedBox(height: 10),
-                    Text(
-                      FlutterI18n.translate(
-                        context,
-                        'inviteMembersScreen.description',
+                    if (state.isLoading) ...<Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(50.0),
+                        child: AppProgressIndicator(
+                          indicatorSize: ProgressIndicatorSize.medium,
+                          backgroundColor: AppTheme.transparentColor,
+                          indicatorColor: AppTheme.progressInterfaceDarkColor,
+                        ),
                       ),
-                      style: AppTextTheme.manrope14SemiBold
-                          .copyWith(color: AppTheme.textHeavyHintColor),
-                    ),
-                    const SizedBox(height: 22),
-                    InviteMembersButton(
-                      leading: AppIconsTheme.people,
-                      trailing: AppIconsTheme.copy,
-                      labelKey: 'inviteMembersScreen.copyLinkButtonLabel',
-                      backgroundColor:
-                          AppTheme.textFieldSecondaryBackgroundColor,
-                      interfaceColor: AppTheme.textHeavyHintColor,
-                      onTap: () => _onCopyButtonPressed(context),
-                      content: state.inviteLink,
-                    ),
-                    const SizedBox(height: 14),
-                    const InviteMembersDivider(),
-                    const SizedBox(height: 16),
-                    InviteMembersButton(
-                      leading: AppIconsTheme.people,
-                      trailing: AppIconsTheme.share,
-                      labelKey: 'inviteMembersScreen.shareLinkButtonLabel',
-                      backgroundColor: AppTheme.buttonPrimaryColor,
-                      interfaceColor: AppTheme.buttonInterfacePrimaryColor,
-                      onTap: () => _onShareButtonPressed(context),
-                    ),
+                    ] else if (state.hasError) ...<Widget>[
+                      Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.only(top: 40.0),
+                        child: IconButton(
+                          onPressed: () => _onReloadButtonPressed(context),
+                          padding: EdgeInsets.zero,
+                          iconSize: 60,
+                          icon: Icon(
+                            Icons.refresh_rounded,
+                            color: AppTheme.progressInterfaceDarkColor,
+                          ),
+                        ),
+                      ),
+                    ] else ...<Widget>[
+                      Text(
+                        FlutterI18n.translate(
+                          context,
+                          'inviteMembersScreen.description',
+                        ),
+                        style: AppTextTheme.manrope14SemiBold
+                            .copyWith(color: AppTheme.textHeavyHintColor),
+                      ),
+                      const SizedBox(height: 22),
+                      InviteMembersButton(
+                        leading: AppIconsTheme.people,
+                        trailing: AppIconsTheme.copy,
+                        labelKey: 'inviteMembersScreen.copyLinkButtonLabel',
+                        backgroundColor:
+                            AppTheme.textFieldSecondaryBackgroundColor,
+                        interfaceColor: AppTheme.textHeavyHintColor,
+                        onTap: () => _onCopyButtonPressed(context),
+                        content: state.inviteLink!.link,
+                      ),
+                      const SizedBox(height: 14),
+                      const InviteMembersDivider(),
+                      const SizedBox(height: 16),
+                      InviteMembersButton(
+                        leading: AppIconsTheme.people,
+                        trailing: AppIconsTheme.share,
+                        labelKey: 'inviteMembersScreen.shareLinkButtonLabel',
+                        backgroundColor: AppTheme.buttonPrimaryColor,
+                        interfaceColor: AppTheme.buttonInterfacePrimaryColor,
+                        onTap: () => _onShareButtonPressed(context),
+                      ),
+                    ],
                   ],
                 ),
               ),
@@ -79,5 +104,9 @@ class InviteMembersForm extends StatelessWidget {
 
   void _onShareButtonPressed(BuildContext context) {
     BlocProvider.of<InviteMembersBloc>(context).add(const InviteShareLink());
+  }
+
+  void _onReloadButtonPressed(BuildContext context) {
+    BlocProvider.of<InviteMembersBloc>(context).add(const LoadLink());
   }
 }
