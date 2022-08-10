@@ -55,8 +55,8 @@ class AddEditTackBloc extends Bloc<AddEditTackEvent, AddEditTackState> {
   ) async {
     if (state.group == null) return;
 
-    _appRouter.push(ProgressDialog.page());
     try {
+      _appRouter.push(ProgressDialog.page());
       final Tack newTack = await _createTackUseCase.execute(
         CreateTackPayload(
             title: state.titleData.title,
@@ -85,8 +85,8 @@ class AddEditTackBloc extends Bloc<AddEditTackEvent, AddEditTackState> {
     EditTackRequest event,
     Emitter<AddEditTackState> emit,
   ) async {
-    _appRouter.push(ProgressDialog.page());
     try {
+      _appRouter.push(ProgressDialog.page());
       final Tack newTack = await _editTackUseCase.execute(
         UpdateTackPayload(
           tackId: state.tack!.id,

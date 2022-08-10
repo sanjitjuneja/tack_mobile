@@ -391,6 +391,67 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
+  Future<void> cancelOffer(CancelOfferRequest request) async {
+    return delete(
+      ApiQuery(
+        endpoint: BaseUrlConstants.offerCancelPath,
+        id: request.tackId,
+        body: null,
+        params: null,
+      ),
+    );
+  }
+
+  Future<List<domain.Offer>> getTackOffers(GetTackOffersRequest request) async {
+    return get<GroupOffersResponse>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.tackOffersPath,
+        id: request.tackId,
+        body: null,
+        params: null,
+      ),
+      parser: GroupOffersResponse.fromJson,
+    ).then(
+      (GroupOffersResponse response) =>
+          mapper.offerMapper.fromList(response.results),
+    );
+  }
+
+  Future<void> startTackByRunner(StartTackRequest request) async {
+    return post<void>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.tackStartPath,
+        id: request.tackId,
+        body: null,
+        params: null,
+      ),
+      parser: (_) {},
+    );
+  }
+
+  Future<void> cancelTackByTacker(CancelTackRequest request) async {
+    return delete(
+      ApiQuery(
+        endpoint: BaseUrlConstants.tacksWithId,
+        id: request.tackId,
+        body: null,
+        params: null,
+      ),
+    );
+  }
+
+  Future<void> completeTackByRunner(CompleteTackRequest request) async {
+    return post<void>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.tackCompletePath,
+        id: request.tackId,
+        body: null,
+        params: null,
+      ),
+      parser: (_) {},
+    );
+  }
+
   Future<void> rateTack(RateTackRequest request) async {
     return post<void>(
       ApiQuery(

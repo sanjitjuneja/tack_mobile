@@ -1,6 +1,6 @@
 part of tacks;
 
-class EditTackUseCase extends FutureUseCase<void, UpdateTackPayload> {
+class EditTackUseCase extends FutureUseCase<Tack, UpdateTackPayload> {
   final TacksRepository _tacksRepository;
 
   EditTackUseCase({

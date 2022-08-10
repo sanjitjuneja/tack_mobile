@@ -24,7 +24,7 @@
     "tackUpdate": {
       "title": ""
     },
-    "tackCanceled": {
+    "tackCancel": {
       "title": "Tack Cancelled",
       "message": ""
     }
@@ -35,6 +35,9 @@
       "message": "",
       "mainButtonLabel": "Yes",
       "secondaryButtonLabel": "No"
+    },
+    "cancelOffer": {
+      "message": "Are you sure want to <colored>Cancel Offer</colored>\n <highlight>{tackName}</highlight>"
     },
     "cancelTackTacker": {
       "message": "Are you sure want to <colored>Cancel</colored>\n <highlight>{tackName}</highlight>"

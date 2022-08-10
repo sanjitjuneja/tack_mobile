@@ -6,6 +6,7 @@ import 'package:domain/domain.dart';
 import 'package:domain/use_case.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
+
 import 'package:tacks/src/mocked_data/runner_tacks_data.dart';
 import 'package:tacks/src/mocked_data/tacker_tacks.dart';
 import 'package:tacks/src/tacks_screen/models/runner_tacks_data.dart';
@@ -19,14 +20,17 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
   final AppRouterDelegate _appRouter;
   final GetTackerTacksUseCase _getTackerTacksUseCase;
   final GetRunnerTacksUseCase _getRunnerTacksUseCase;
+  final CancelOfferUseCase _cancelOfferUseCase;
 
   TacksBloc({
     required AppRouterDelegate appRouter,
     required GetTackerTacksUseCase getTackerTacksUseCase,
     required GetRunnerTacksUseCase getRunnerTacksUseCase,
+    required CancelOfferUseCase cancelOfferUseCase,
   })  : _appRouter = appRouter,
         _getTackerTacksUseCase = getTackerTacksUseCase,
         _getRunnerTacksUseCase = getRunnerTacksUseCase,
+        _cancelOfferUseCase = cancelOfferUseCase,
         super(const TacksState()) {
     on<MoveToAddTab>(_onMoveToAddTab);
     on<MoveToHomeTab>(_onMoveToHomeTab);
@@ -180,11 +184,10 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
     CancelTackOffer event,
     Emitter<TacksState> emit,
   ) async {
-    _appRouter.pushForResult(
+    final bool result = await _appRouter.pushForResult(
       DestructiveDialog.page(
         DestructiveAlert(
-          contentKey: 'destructiveAlert.cancelTackRunner',
-          titleKey: '',
+          contentKey: 'destructiveAlert.cancelOffer',
           translationParams: {
             AlertPropertyKey.message: {
               'tackName': event.tack.title,
@@ -193,5 +196,23 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
         ),
       ),
     );
+    if (!result) return;
+
+    try {
+      _appRouter.push(ProgressDialog.page());
+      await _cancelOfferUseCase.execute(
+        CancelOfferPayload(tack: event.tack),
+      );
+      _appRouter.pop();
+    } catch (e) {
+      _appRouter.pop();
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            messageKey: e.toString(),
+          ),
+        ),
+      );
+    }
   }
 }

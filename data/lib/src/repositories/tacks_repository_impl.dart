@@ -98,12 +98,77 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   }
 
   @override
+  Future<void> startTackByRunner(domain.StartTackPayload payload) async {
+    return _apiProvider.startTackByRunner(
+      StartTackRequest(
+        tackId: payload.tack.id,
+      ),
+    );
+  }
+
+  @override
+  Future<void> cancelTackByTacker(domain.CancelTackPayload payload) async {
+    return _apiProvider.cancelTackByTacker(
+      CancelTackRequest(
+        tackId: payload.tack.id,
+      ),
+    );
+  }
+
+  @override
+  Future<void> cancelTackByRunner(domain.CancelTackPayload payload) async {
+    // TODO: replace by canceling by runner
+    return _apiProvider.cancelTackByTacker(
+      CancelTackRequest(
+        tackId: payload.tack.id,
+      ),
+    );
+  }
+
+  @override
+  Future<void> completeTackByTacker(domain.CompleteTackPayload payload) async {
+    // TODO: replace by canceling by tacker
+    return _apiProvider.completeTackByRunner(
+      CompleteTackRequest(
+        tackId: payload.tack.id,
+      ),
+    );
+  }
+
+  @override
+  Future<void> completeTackByRunner(domain.CompleteTackPayload payload) async {
+    return _apiProvider.completeTackByRunner(
+      CompleteTackRequest(
+        tackId: payload.tack.id,
+      ),
+    );
+  }
+
+  @override
+  Future<List<domain.Offer>> getTackOffers(
+    domain.TackOffersPayload payload,
+  ) async {
+    return _apiProvider.getTackOffers(
+      GetTackOffersRequest(
+        tackId: payload.tack.id,
+      ),
+    );
+  }
+
+  @override
   Future<void> makeOffer(domain.MakeOfferPayload payload) async {
     return _apiProvider.makeOffer(
       MakeOfferRequest(
         tack: payload.tackId,
         price: payload.price,
       ),
+    );
+  }
+
+  @override
+  Future<void> cancelOffer(domain.CancelOfferPayload payload) async {
+    return _apiProvider.cancelOffer(
+      CancelOfferRequest(tackId: payload.tack.id),
     );
   }
 

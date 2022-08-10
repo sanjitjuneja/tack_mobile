@@ -17,6 +17,7 @@ class TacksScreen extends StatelessWidget {
         appRouter: appLocator.get<AppRouterDelegate>(),
         getRunnerTacksUseCase: appLocator.get<GetRunnerTacksUseCase>(),
         getTackerTacksUseCase: appLocator.get<GetTackerTacksUseCase>(),
+        cancelOfferUseCase: appLocator.get<CancelOfferUseCase>(),
       ),
       child: CupertinoPageScaffold(
         backgroundColor: AppTheme.primaryBackgroundColor,
