@@ -47,6 +47,13 @@ class AppIconsTheme {
   static const String _promptKey = '${_svgPath}prompt.svg';
   static const String _editPencilKey = '${_svgPath}edit_pencil.svg';
   static const String _plusKey = '${_svgPath}plus.svg';
+  static const String _bankRoundedKey = '${_svgPath}bank_rounded.svg';
+  static const String _addKey = '${_svgPath}add.svg';
+  static const String _masterCardKey = '${_svgPath}master_card.svg';
+  static const String _morganChaseKey = '${_svgPath}morgan_chase.svg';
+  static const String _applePayKey = '${_svgPath}apple_pay.svg';
+  static const String _bankKey = '${_svgPath}bank.svg';
+  static const String _lockKey = '${_svgPath}lock.svg';
 
   /// Bottom Navigation bar
   static AppIcon get dashboardsActive => AppIcon(_dashboardActiveKey);
@@ -87,4 +94,11 @@ class AppIconsTheme {
   static AppIcon get prompt => AppIcon(_promptKey);
   static AppIcon get editPencil => AppIcon(_editPencilKey);
   static AppIcon get plus => AppIcon(_plusKey);
+  static AppIcon get bankRounded => AppIcon(_bankRoundedKey);
+  static AppIcon get bank => AppIcon(_bankKey);
+  static AppIcon get add => AppIcon(_addKey);
+  static AppIcon get masterCard => AppIcon(_masterCardKey);
+  static AppIcon get morganChase => AppIcon(_morganChaseKey);
+  static AppIcon get applePay => AppIcon(_applePayKey);
+  static AppIcon get lock => AppIcon(_lockKey);
 }

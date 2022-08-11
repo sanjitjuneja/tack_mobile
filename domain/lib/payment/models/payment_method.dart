@@ -13,9 +13,3 @@ class PaymentMethod {
     required this.paymentMethodType,
   });
 }
-
-enum PaymentMethodType {
-  card,
-  bankAccount,
-  digitalWallet,
-}

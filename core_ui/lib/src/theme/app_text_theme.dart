@@ -101,6 +101,12 @@ class AppTextTheme {
         fontFamily: _manropeFamily,
       );
 
+  static TextStyle get manrope15Medium => const TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
+    fontFamily: _manropeFamily,
+  );
+
   static TextStyle get manrope16Medium => const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w500,
@@ -258,13 +264,19 @@ class AppTextTheme {
       );
 
   static TextStyle get manrope26Bold => const TextStyle(
-      fontSize: 26,
-      fontWeight: FontWeight.w700,
-      fontFamily: _manropeFamily,
-    );
+        fontSize: 26,
+        fontWeight: FontWeight.w700,
+        fontFamily: _manropeFamily,
+      );
 
   static TextStyle get manrope28Bold => const TextStyle(
         fontSize: 28,
+        fontWeight: FontWeight.w700,
+        fontFamily: _manropeFamily,
+      );
+
+  static TextStyle get manrope30Bold => const TextStyle(
+        fontSize: 30,
         fontWeight: FontWeight.w700,
         fontFamily: _manropeFamily,
       );
@@ -275,9 +287,21 @@ class AppTextTheme {
         fontFamily: _manropeFamily,
       );
 
-  // Manrope font family
+  // Poppins font family
+  static TextStyle get poppins12Medium => const TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+        fontFamily: _poppinsFamily,
+      );
+
   static TextStyle get poppins14Medium => const TextStyle(
         fontSize: 14,
+        fontWeight: FontWeight.w500,
+        fontFamily: _poppinsFamily,
+      );
+
+  static TextStyle get poppins18Medium => const TextStyle(
+        fontSize: 18,
         fontWeight: FontWeight.w500,
         fontFamily: _poppinsFamily,
       );

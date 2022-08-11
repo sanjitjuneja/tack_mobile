@@ -28,6 +28,9 @@ dependencies:
     path: ../../features/customer_support
   groups:
     path: ../../features/groups
+  payment_settings:
+    path: ../../features/payment_settings
+
 
 dev_dependencies:
   flutter_test:

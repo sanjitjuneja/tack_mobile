@@ -1,6 +1,8 @@
-import 'package:core_ui/core_ui.dart';
+import 'package:core/core.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:navigation/navigation.dart';
 import 'payment_settings_screen.dart';
+import '/src/bloc/payment_settings_bloc.dart';
 
 class PaymentSettingsFeature {
   static const String routeName = '/paymentSettings';
@@ -18,11 +20,12 @@ class PaymentSettingsPage extends Page<void> {
   Route<void> createRoute(BuildContext context) {
     return CupertinoPageRoute<void>(
       settings: this,
-      builder: (_) => CupertinoPageScaffold(
-        backgroundColor: AppTheme.secondaryBackgroundColor,
-        navigationBar: AppNavigationBar(
-          backgroundColor: AppTheme.secondaryBackgroundColor,
-        ),
+      builder: (_) => BlocProvider<PaymentSettingsBloc>(
+        create: (_) {
+          return PaymentSettingsBloc(
+            appRouter: appLocator.get<AppRouterDelegate>(),
+          );
+        },
         child: const PaymentSettingsScreen(),
       ),
     );

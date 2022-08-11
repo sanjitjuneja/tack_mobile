@@ -121,6 +121,7 @@
       "groups": "My Groups",
       "invitations": "My Invitations",
       "withdraw": "Withdraw",
+      "paymentSettings": "Payment Settings",
       "customerSupport": "Customer Support",
       "termsAndConditions": "Terms & Conditions",
       "privacyPolicy": "Privacy Policy"
@@ -412,5 +413,18 @@
     "commentPlaceholder": "Type your explanation here...",
     "commentFooterText": "Words Remaining",
     "confirmButtonLabel": "Complete Tack"
+  },
+  "paymentSettingsScreen": {
+    "title": "Payment Settings",
+    "tackBalance": "Tack Balance",
+    "addCash": "Add Cash",
+    "payout": "Payout",
+    "primary": "Primary",
+    "add": "Add",
+    "banks": "Banks",
+    "cards": "Cards",
+    "digitalWallets": "Digital Wallets",
+    "addPaymentMethod": "Add Payment Method",
+    "privacyInfo": "Tack does not store any of your payment info"
   }
 }
