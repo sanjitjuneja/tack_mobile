@@ -1,6 +1,7 @@
 library core;
 
 export 'src/constants/constants.dart';
+export 'src/constants/void_type.dart';
 
 export 'src/di/app_di.dart';
 export 'src/di/data_di.dart';

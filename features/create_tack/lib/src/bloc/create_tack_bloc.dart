@@ -89,9 +89,11 @@ class CreateTackBloc extends Bloc<CreateTackEvent, CreateTackState> {
       );
     } catch (e) {
       event.completer?.complete(RefreshingStatus.failed);
-      emit(
-        state.copyWith(nearbyTacksState: const NearbyTacksState()),
-      );
+      if (event.completer == null) {
+        emit(
+          state.copyWith(nearbyTacksState: const NearbyTacksState()),
+        );
+      }
     }
   }
 
@@ -121,11 +123,13 @@ class CreateTackBloc extends Bloc<CreateTackEvent, CreateTackState> {
       );
     } catch (e) {
       event.completer?.complete(RefreshingStatus.failed);
-      emit(
-        state.copyWith(
-          groupTacksState: const GroupTacksState(),
-        ),
-      );
+      if (event.completer == null) {
+        emit(
+          state.copyWith(
+            groupTacksState: const GroupTacksState(),
+          ),
+        );
+      }
     }
   }
 

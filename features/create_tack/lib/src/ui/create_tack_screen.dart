@@ -32,10 +32,11 @@ class CreateTackScreen extends StatelessWidget {
             builder: (_, GlobalState state) {
               return Align(
                 alignment: Alignment.centerLeft,
-                child: PageHeaderWidget(
+                child: PageHeaderWithGroupWidget(
                   titleKey: 'createTackScreen.title',
                   subtitleKey: 'general.noGroupSelectedSubtitle',
                   group: state.currentGroup,
+                  withFeedback: state.canPickOtherGroup,
                   onTap: state.canPickOtherGroup
                       ? () => _onHeaderTap(context)
                       : null,

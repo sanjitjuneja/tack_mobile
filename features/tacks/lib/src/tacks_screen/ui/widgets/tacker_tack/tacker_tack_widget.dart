@@ -37,7 +37,7 @@ class TackerTackWidget extends StatelessWidget {
               tack: tack,
               isRunner: false,
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             TackerTackActions(
               tack: tack,
               onTap: () => _onTap(context),

@@ -14,7 +14,14 @@ class ApiQuery {
   final Map<String, dynamic>? params;
   final Map<String, dynamic>? body;
 
-  String get path => endpoint.replaceAll(idKey, id.toString());
+  String get path {
+    String finalPath = endpoint.replaceAll(idKey, id.toString());
+    final hasEndSlash = finalPath.endsWith('/');
+
+    if (hasEndSlash) return finalPath;
+
+    return '$finalPath/';
+  }
 
   String get jsonEncodedBody => jsonEncode(body);
 

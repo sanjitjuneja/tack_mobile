@@ -5,6 +5,7 @@ import 'package:navigation/navigation.dart';
 
 import 'package:tacks/src/add_edit_tack/ui/add_edit_tack_page.dart';
 import 'package:tacks/src/mocked_data/offers.dart';
+import 'package:tacks/src/ongoing_tack/models/ongoing_tacker_screen_result.dart';
 import 'package:tacks/src/ongoing_tack/view_extensions/ongoing_tack_to_view_extension.dart';
 import 'package:tacks/src/rate_tack_user/ui/rate_tack_user_page.dart';
 
@@ -15,11 +16,17 @@ part 'ongoing_tacker_tack_state.dart';
 class OngoingTackerTackBloc
     extends Bloc<OngoingTackerTackEvent, OngoingTackerTackState> {
   final AppRouterDelegate _appRouter;
+  final CancelTackTackerUseCase _cancelTackUseCase;
+  final CompleteTackTackerUseCase _completeTackUseCase;
 
   OngoingTackerTackBloc({
     required Tack tack,
     required AppRouterDelegate appRouter,
+    required CancelTackTackerUseCase cancelTackTackerUseCase,
+    required CompleteTackTackerUseCase completeTackUseCase,
   })  : _appRouter = appRouter,
+        _cancelTackUseCase = cancelTackTackerUseCase,
+        _completeTackUseCase = completeTackUseCase,
         super(
           OngoingTackerTackState(
             tack: tack,
@@ -45,22 +52,47 @@ class OngoingTackerTackBloc
   ) async {
     switch (state.tack.status) {
       case TackStatus.created:
-        final Tack? tack = await _appRouter.pushForResult(
-          AddEditTack.editPage(state.tack),
-        );
-        if (tack != null) emit(state.copyWith(tack: tack));
-        break;
+        return __onEditTack(emit);
       case TackStatus.pendingReview:
-        // TODO: action to complete tack.
-        _appRouter.pushForResult(
-          RateTackUser.page(
-            tack: state.tack,
-            isRateTacker: false,
-          ),
-        );
-        break;
+        return __onCompleteTack();
       default:
         break;
+    }
+  }
+
+  Future<void> __onEditTack(Emitter<OngoingTackerTackState> emit) async {
+    final Tack? tack = await _appRouter.pushForResult(
+      AddEditTack.editPage(state.tack),
+    );
+
+    if (tack != null) emit(state.copyWith(tack: tack));
+  }
+
+  Future<void> __onCompleteTack() async {
+    try {
+      _appRouter.push(ProgressDialog.page());
+      await _completeTackUseCase.execute(
+        CompleteTackPayload(tack: state.tack),
+      );
+      _appRouter.pop();
+
+      _appRouter.pushForResult(
+        RateTackUser.page(
+          tack: state.tack,
+          isRateTacker: false,
+        ),
+      );
+
+      _appRouter.popWithResult(OngoingTackerScreenResult.complete);
+    } catch (e) {
+      _appRouter.pop();
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            messageKey: e.toString(),
+          ),
+        ),
+      );
     }
   }
 
@@ -68,23 +100,35 @@ class OngoingTackerTackBloc
     CancelTack event,
     Emitter<OngoingTackerTackState> emit,
   ) async {
-    final bool? result = await _appRouter.pushForResult(
+    final bool result = await _appRouter.pushForResult(
       DestructiveDialog.page(
         DestructiveAlert(
           contentKey: 'destructiveAlert.cancelTackTacker',
           translationParams: <AlertPropertyKey, Map<String, String>>{
-            AlertPropertyKey.message: {'tackName': state.tack.title},
+            AlertPropertyKey.message: {
+              'tackName': state.tack.title,
+            },
           },
         ),
       ),
     );
 
-    if (result == true) {
-      // TODO: add request for cancelling tack.
+    if (!result) return;
+
+    try {
+      _appRouter.push(ProgressDialog.page());
+      await _cancelTackUseCase.execute(
+        CancelTackPayload(tack: state.tack),
+      );
+      _appRouter.pop();
+      _appRouter.popWithResult(OngoingTackerScreenResult.cancel);
+    } catch (e) {
       _appRouter.pop();
       _appRouter.pushForResult(
         AppAlertDialog.page(
-          ErrorAlert(contentKey: 'errorAlert.tackCanceled'),
+          ErrorAlert(
+            messageKey: e.toString(),
+          ),
         ),
       );
     }

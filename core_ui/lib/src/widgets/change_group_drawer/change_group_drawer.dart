@@ -39,10 +39,8 @@ class _ChangeGroupDrawerPage extends Page<Group> {
 
   @override
   Route<Group> createRoute(BuildContext context) {
-    return TopSlideRoute(
+    return TopSlideRoute<Group>(
       settings: this,
-      transitionAnimationDuration: const Duration(milliseconds: 300),
-      isDismissible: false,
       builder: (_) {
         return _ChangeGroupDrawerWidget(
           groups,

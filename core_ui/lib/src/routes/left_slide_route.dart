@@ -1,6 +1,8 @@
+import 'package:core/core.dart';
 import 'package:core_ui/src/theme/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:navigation/navigation.dart';
 
 class _LeftSlideRouteLayout extends SingleChildLayoutDelegate {
   final double progress;
@@ -47,20 +49,37 @@ class _LeftSlideRouteBody<T> extends StatelessWidget {
       builder: (_, Widget? child) {
         final double animationValue = route.animation!.value;
 
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        return Stack(
           children: <Widget>[
-            Expanded(
-              child: ClipRect(
-                child: CustomSingleChildLayout(
-                  delegate: _LeftSlideRouteLayout(animationValue),
-                  child: child,
+            GestureDetector(
+              onTap: () {
+                if (!route.isDismissible) return;
+
+                if (isVoid(T)) {
+                  AppRouter.of(context).pop();
+                } else {
+                  AppRouter.of(context).popWithResult(null);
+                }
+              },
+              child: Container(
+                color: route.modalBarrierColor.withOpacity(
+                  route.modalBarrierColor.opacity * animationValue,
                 ),
               ),
             ),
-            Opacity(
-              opacity: animationValue,
-              child: route.rightOuterAnimationWidget,
+            ClipRect(
+              child: CustomSingleChildLayout(
+                delegate: _LeftSlideRouteLayout(animationValue),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: child ?? const SizedBox.shrink(),
+                    ),
+                    route.rightBorderWidget ?? const SizedBox.shrink(),
+                  ],
+                ),
+              ),
             ),
           ],
         );
@@ -70,34 +89,42 @@ class _LeftSlideRouteBody<T> extends StatelessWidget {
 }
 
 class LeftSlideRoute<T> extends PopupRoute<T> {
+  static const Duration _defaultAnimationDuration = Duration(milliseconds: 300);
+
   LeftSlideRoute({
     required this.builder,
-    this.rightOuterAnimationWidget,
+    this.rightBorderWidget,
     this.barrierLabel,
-    this.modalBarrierColor,
+    Color? modalBarrierColor,
     this.isDismissible = true,
     RouteSettings? settings,
-  }) : super(settings: settings);
+  })  : modalBarrierColor = modalBarrierColor ?? AppTheme.barrierColor,
+        super(settings: settings);
 
   final WidgetBuilder? builder;
-  final Widget? rightOuterAnimationWidget;
-  final Color? modalBarrierColor;
+  final Widget? rightBorderWidget;
+  final Color modalBarrierColor;
   final bool isDismissible;
 
   @override
-  Duration get transitionDuration => const Duration(milliseconds: 300);
+  Duration get transitionDuration => _defaultAnimationDuration;
 
   @override
-  Duration get reverseTransitionDuration => const Duration(milliseconds: 300);
+  Duration get reverseTransitionDuration => _defaultAnimationDuration;
 
   @override
-  bool get barrierDismissible => isDismissible;
+  bool get barrierDismissible => false;
 
   @override
   final String? barrierLabel;
 
   @override
   Color get barrierColor => AppTheme.barrierColor;
+
+  @override
+  Animation<double>? get animation => controller?.drive(
+        CurveTween(curve: Curves.easeInOutQuad),
+      );
 
   @override
   Widget buildPage(

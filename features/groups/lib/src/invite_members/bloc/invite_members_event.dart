@@ -4,6 +4,10 @@ abstract class InviteMembersEvent {
   const InviteMembersEvent();
 }
 
+class LoadLink extends InviteMembersEvent {
+  const LoadLink();
+}
+
 class InviteCopyLink extends InviteMembersEvent {
   const InviteCopyLink();
 }

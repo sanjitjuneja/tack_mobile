@@ -24,7 +24,7 @@
     "tackUpdate": {
       "title": ""
     },
-    "tackCanceled": {
+    "tackCancel": {
       "title": "Tack Cancelled",
       "message": ""
     }
@@ -36,12 +36,21 @@
       "mainButtonLabel": "Yes",
       "secondaryButtonLabel": "No"
     },
+    "cancelOffer": {
+      "message": "Are you sure want to <colored>Cancel Offer</colored>\n <highlight>{tackName}</highlight>"
+    },
     "cancelTackTacker": {
       "message": "Are you sure want to <colored>Cancel</colored>\n <highlight>{tackName}</highlight>"
     },
     "cancelTackRunner": {
       "title": "Your Tack Score Will Decrease",
       "message": "Are you sure want to <colored>Cancel</colored>\n <highlight>{tackName}</highlight>"
+    },
+    "declineGroupInvite": {
+      "message": "Are you sure want to <colored>Leave</colored>\n <highlight>{groupName}</highlight>"
+    },
+    "leaveGroup": {
+      "message": "Are you sure want to <colored>Leave</colored>\n <highlight>{groupName}</highlight>"
     },
     "deleteAccount": {
       "message": "Are you sure you want to \n<colored>Delete Your Account</colored>?"
@@ -117,10 +126,12 @@
   "drawer": {
     "options": {
       "account": "Account",
-      "previousTacks": "Previous Tacks",
       "groups": "My Groups",
       "invitations": "My Invitations",
+      "previousTacks": "Previous Tacks",
+      "deposit": "Deposit",
       "withdraw": "Withdraw",
+      "paymentSettings": "Payment Settings",
       "customerSupport": "Customer Support",
       "termsAndConditions": "Terms & Conditions",
       "privacyPolicy": "Privacy Policy"
@@ -153,9 +164,9 @@
       "first": "Tacker",
       "second": "Runner"
     },
-    "chooseRunnerButton": "Choose Runner",
-    "beginTackButton": "Begin Tack",
-    "pendingReview": "Review Pending",
+    "chooseRunnerButton": "Choose",
+    "beginTackButton": "Begin",
+    "pendingReview": "Review",
     "cancelOfferButton": "Cancel Offer",
     "offerExpiresIn": "Offer Expires In",
     "empty": {
@@ -176,15 +187,33 @@
     }
   },
   "groupsScreen": {
-    "title": "Groups",
-    "description": "Create and complete tasks between a select group of people (invite-only or public groups)",
-    "privateTab": "Private",
-    "publicTab": "Public",
-    "searchFieldHint": "Search Groups",
-    "manageGroupButton": "Manage Group",
-    "createNewGroupButton": "Create New Group",
-    "myInvitationsButton": "My Invitations",
-    "unacceptedTacks": "{count} Unaccepted Tacks"
+    "title": "My Groups",
+    "description": "Select one of the following groups to switch your current app view",
+    "empty": {
+      "description": "Looks like your not currently part of any Tack groups. Please accept an invitation or create and share your own Tack group!"
+    },
+    "groupInfoButton": "Group Info",
+    "inviteMembersButton": "Invite Members",
+    "createGroupButton": "Create Group",
+    "myInvitationsButton": "My Invitations"
+  },
+  "invitationsScreen": {
+    "title": "My Invitations",
+    "description": "Here is a list of all Tack groups you have been invited to.",
+    "empty": {
+      "description": "Looks like you don’t have any current invitations at this time. If you were sent an invite link, please use it to view your group invitation now."
+    },
+    "joinGroupButton": "Join",
+    "viewInviteButton": "View Invite"
+  },
+  "groupDetailsScreen": {
+    "members": "Members",
+    "leaveButton": "Leave",
+    "inviteMembersButton": "Invite Members",
+    "muteNotificationsButton": "Mute Notifications",
+    "unMuteNotificationsButton": "Un Mute Notifications",
+    "declineButton": "Decline",
+    "joinButton": "Join"
   },
   "imagePickOptionsDrawer": {
     "pickPhoto": "Take Photo",

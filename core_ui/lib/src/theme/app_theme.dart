@@ -49,7 +49,8 @@ class AppTheme {
 
   /// Progress Dialog
   static Color get progressBarrierColor => AppColors.midnightExpress68;
-  static Color get progressInterfaceColor => AppColors.white;
+  static Color get progressInterfaceLightColor => AppColors.white;
+  static Color get progressInterfaceDarkColor => AppColors.athensGrey;
 
   /// Segment Controller
   static Color get segmentBackgroundColor => AppColors.white;
@@ -77,7 +78,7 @@ class AppTheme {
 
   /// Button
   static Color get buttonDisabledColor => AppColors.athensGrey;
-  static Color get buttonLightBorder => AppColors.gallery;
+  static Color get buttonLightBorderColor => AppColors.gallery;
   // Primary
   static Color get buttonPrimaryColor => AppColors.fern;
   static Color get buttonBorderPrimaryColor => AppColors.white;

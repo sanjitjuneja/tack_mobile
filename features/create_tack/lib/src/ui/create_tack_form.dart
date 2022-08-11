@@ -18,6 +18,8 @@ class CreateTackForm extends StatelessWidget {
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           floatingActionButton: AppButton(
             icon: AppIconsTheme.plus,
+            iconSize: 28,
+            withFeedback: true,
             expanded: false,
             shape: BoxShape.circle,
             onTap: () => _onAddButtonPressed(context),
@@ -27,17 +29,8 @@ class CreateTackForm extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 18, right: 42),
-                  child: Text(
-                    FlutterI18n.translate(
-                      context,
-                      'createTackScreen.description',
-                    ),
-                    style: AppTextTheme.manrope13Medium.copyWith(
-                      color: AppTheme.textHeavyHintColor,
-                    ),
-                  ),
+                const PageHeaderWidget(
+                  descriptionKey: 'createTackScreen.description',
                 ),
                 const SizedBox(height: 17),
                 Padding(
