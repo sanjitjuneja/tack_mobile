@@ -30,6 +30,7 @@ class OngoingRunnerTackActions extends StatelessWidget {
             AppCircleButton(
               labelKey: tack.status.getButtonLabel(isTacker: false),
               isDisabled: state.hasRunningTack,
+              withFeedback: true,
               onTap: () => _onActionPressed(context),
             ),
             if (state.hasRunningTack) ...<Widget>[
@@ -45,6 +46,7 @@ class OngoingRunnerTackActions extends StatelessWidget {
           children: <Widget>[
             AppCircleButton(
               labelKey: tack.status.getButtonLabel(isTacker: false),
+              withFeedback: true,
               onTap: () => _onActionPressed(context),
             ),
             const SizedBox(height: 12),

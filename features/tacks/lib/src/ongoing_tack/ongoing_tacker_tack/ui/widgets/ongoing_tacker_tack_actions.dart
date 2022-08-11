@@ -22,9 +22,11 @@ class OngoingTackerTackActions extends StatelessWidget {
     switch (tack.status) {
       case TackStatus.created:
         return SafeArea(
+          top: false,
           child: AppCircleButton(
             margin: padding,
             labelKey: tack.status.getButtonLabel(isTacker: true),
+            withFeedback: true,
             onTap: () => _onActionPressed(context),
           ),
         );
@@ -36,12 +38,14 @@ class OngoingTackerTackActions extends StatelessWidget {
         return const SizedBox.shrink();
       case TackStatus.pendingReview:
         return SafeArea(
+          top: false,
           child: Padding(
             padding: padding,
             child: Column(
               children: <Widget>[
                 AppCircleButton(
                   labelKey: tack.status.getButtonLabel(isTacker: true),
+                  withFeedback: true,
                   onTap: () => _onActionPressed(context),
                 ),
                 const SizedBox(height: 12),

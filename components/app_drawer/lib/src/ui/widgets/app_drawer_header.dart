@@ -12,41 +12,41 @@ class AppDrawerHeader extends StatelessWidget {
       builder: (_, AppDrawerState state) {
         return Container(
           color: AppTheme.accentColor,
+          padding: const EdgeInsets.only(
+            left: 16.0,
+            top: 10.0,
+            right: 16.0,
+            bottom: 20.0,
+          ),
           child: SafeArea(
             bottom: false,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 10.0,
-                horizontal: 16.0,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          state.user.fullName,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextTheme.manrope24SemiBold.copyWith(
-                            color: AppTheme.positiveColor,
-                          ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        state.user.fullName,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextTheme.manrope24SemiBold.copyWith(
+                          color: AppTheme.positiveColor,
                         ),
                       ),
-                      const SizedBox(width: 6),
-                      Text(
-                        CurrencyUtility.dollarFormat.format(0.0),
-                        style: AppTextTheme.manrope26Bold
-                            .copyWith(color: AppTheme.textSecondaryColor),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  UserStatsWidget.fromUser(user: state.user)
-                ],
-              ),
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      CurrencyUtility.dollarFormat.format(0.0),
+                      style: AppTextTheme.manrope26Bold
+                          .copyWith(color: AppTheme.textSecondaryColor),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                UserStatsWidget.fromUser(user: state.user)
+              ],
             ),
           ),
         );

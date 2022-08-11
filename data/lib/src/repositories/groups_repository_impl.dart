@@ -100,13 +100,16 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
 
   @override
   Future<domain.Group> createGroup(domain.CreateGroupPayload payload) async {
-    return _apiProvider.createGroup(
+    final domain.Group group = await _apiProvider.createGroup(
       request: CreateGroupRequest(
         name: payload.name,
         description: payload.description,
         image: payload.image,
       ),
     );
+    await selectGroup(domain.SelectGroupPayload(group: group));
+
+    return group;
   }
 
   @override
@@ -166,18 +169,22 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
   @override
   Future<void> acceptGroupInvitation(
     domain.AcceptGroupInvitationPayload payload,
-  ) {
-    return _apiProvider.acceptGroupInvitation(
+  ) async {
+    await _apiProvider.acceptGroupInvitation(
       request: AcceptGroupInvitationRequest(
         id: payload.invitation.id,
       ),
+    );
+
+    await selectGroup(
+      domain.SelectGroupPayload(group: payload.invitation.group),
     );
   }
 
   @override
   Future<void> declineGroupInvitation(
     domain.DeclineGroupInvitationPayload payload,
-  ) {
+  ) async {
     return _apiProvider.declineGroupInvitation(
       request: DeclineGroupInvitationRequest(
         id: payload.invitation.id,

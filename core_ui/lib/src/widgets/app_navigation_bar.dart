@@ -1,8 +1,10 @@
 import 'package:app_drawer/app_drawer.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/src/theme/app_theme.dart';
+import 'package:core_ui/src/widgets/opacity_on_tap_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
+
 
 const double _kNavBarPersistentHeight = 48;
 
@@ -44,9 +46,9 @@ class AppNavigationBar extends StatelessWidget
                 padding: EdgeInsets.zero,
                 onPressed: () {
                   if (withResult) {
-                    AppRouter.of(context).popWithResult(null);
+                    GlobalAppRouter.of(context).popWithResult(null);
                   } else {
-                    AppRouter.of(context).pop();
+                    GlobalAppRouter.of(context).pop();
                   }
                 },
                 child: Row(
@@ -80,11 +82,14 @@ class AppNavigationBar extends StatelessWidget
           children: <Widget>[
             ...?actions,
             if (withMenu) ...<Widget>[
-              CupertinoButton(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                onPressed: () => _onMenuButtonPressed(context),
-                child: AppIconsTheme.menu(
-                  color: AppTheme.iconPrimaryColor,
+              OpacityOnTapContainer(
+                onTap: () => _onMenuButtonPressed(context),
+                withFeedback: true,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: AppIconsTheme.menu(
+                    color: AppTheme.iconPrimaryColor,
+                  ),
                 ),
               ),
             ],

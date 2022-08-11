@@ -30,12 +30,9 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     InitialEvent event,
     Emitter<SplashState> emit,
   ) async {
-    /// TODO: uncomment (leave it until Logout functionality not implemented)
     final bool isAuthorized = await _isAuthorizedUseCase.execute(NoParams());
 
     if (isAuthorized) {
-      await _animateToEndPosition(event.slidingPanelController);
-
       await dataDI.setupPostLoginAppLocator();
       _globalAppRouter.replace(FirstRouteFeature.page());
     } else {

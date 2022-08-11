@@ -20,10 +20,10 @@ class GroupDetailsNavigationBarAction extends StatelessWidget {
           );
         } else {
           final String labelKey;
-          if (state.group.isNotificationsEnabled) {
-            labelKey = 'groupDetailsScreen.muteNotificationsButton';
-          } else {
+          if (state.group.isMuted) {
             labelKey = 'groupDetailsScreen.unMuteNotificationsButton';
+          } else {
+            labelKey = 'groupDetailsScreen.muteNotificationsButton';
           }
 
           return NavigationBarActionButton(

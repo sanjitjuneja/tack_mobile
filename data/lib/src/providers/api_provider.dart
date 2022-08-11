@@ -37,7 +37,6 @@ class ApiProvider extends ApiProviderCore {
                 'Bearer ${session.accessToken}';
           }
 
-          print(session?.accessToken);
           return handler.next(options);
         },
       ),

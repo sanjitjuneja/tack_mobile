@@ -27,7 +27,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         final String password;
 
         if (kDebugMode) {
-          phoneNumber = '+590590134730';
+          phoneNumber = '+18096666919';
           password = 'Tackapp123';
         } else {
           phoneNumber = '+${event.phoneNumber}';

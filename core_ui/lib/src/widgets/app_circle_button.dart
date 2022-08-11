@@ -15,6 +15,8 @@ class AppCircleButton extends StatelessWidget {
   final Color? backgroundColor;
   final Color? borderColor;
   final Color? interfaceColor;
+  final HapticFeedbackType feedbackType;
+  final bool withFeedback;
   final VoidCallback? onTap;
 
   const AppCircleButton({
@@ -28,6 +30,8 @@ class AppCircleButton extends StatelessWidget {
     this.backgroundColor,
     this.borderColor,
     this.interfaceColor,
+    this.feedbackType = HapticFeedbackType.heavy,
+    this.withFeedback = false,
     this.onTap,
   });
 
@@ -74,6 +78,8 @@ class AppCircleButton extends StatelessWidget {
       padding: margin ?? EdgeInsets.zero,
       child: OpacityOnTapContainer(
         onTap: onTap,
+        feedbackType: feedbackType,
+        withFeedback: withFeedback,
         disable: isDisabled,
         child: Container(
           width: double.infinity,

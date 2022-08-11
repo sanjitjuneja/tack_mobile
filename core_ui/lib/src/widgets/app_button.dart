@@ -17,11 +17,15 @@ class AppButton extends StatelessWidget {
   final TextStyle? textStyle;
   final EdgeInsets? padding;
   final AppIcon? icon;
+  final double? iconSize;
+  final BoxConstraints? constraints;
   final ButtonType type;
   final BoxShape shape;
   final Color? interfaceColor;
   final Color? backgroundColor;
   final Color? borderColor;
+  final HapticFeedbackType feedbackType;
+  final bool withFeedback;
   final bool withShadow;
   final bool isDisabled;
   final bool expanded;
@@ -34,11 +38,15 @@ class AppButton extends StatelessWidget {
     this.textStyle,
     this.padding,
     this.icon,
+    this.iconSize,
+    this.constraints,
     this.type = ButtonType.primary,
     this.shape = BoxShape.rectangle,
     this.interfaceColor,
     this.backgroundColor,
     this.borderColor,
+    this.feedbackType = HapticFeedbackType.heavy,
+    this.withFeedback = false,
     this.withShadow = true,
     this.isDisabled = false,
     this.expanded = true,
@@ -64,8 +72,11 @@ class AppButton extends StatelessWidget {
 
     return OpacityOnTapContainer(
       onTap: onTap,
+      feedbackType: feedbackType,
+      withFeedback: withFeedback,
       disable: isDisabled,
       child: Container(
+        constraints: constraints,
         padding: shape == BoxShape.rectangle
             ? padding ??
                 const EdgeInsets.symmetric(
@@ -108,7 +119,7 @@ class AppButton extends StatelessWidget {
             if (icon != null) ...<Widget>[
               icon!.call(
                 color: contentColor,
-                size: contentStyle.fontSize! * 1.3,
+                size: iconSize ?? contentStyle.fontSize! * 1.3,
               ),
             ],
             if (needSeparator) const SizedBox(width: 10),
