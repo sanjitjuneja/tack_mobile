@@ -52,6 +52,7 @@ class AddEditTackForm extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 16.0),
                       isDisabled: !state.isReadyToProceed,
                       labelKey: 'addEditTackScreen.createTackButton',
+                      withFeedback: true,
                       onTap: () => _onCreateTackPressed(context),
                     )
                   : AppCircleButton(

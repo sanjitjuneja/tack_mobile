@@ -239,13 +239,13 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
     try {
       final Group group;
 
-      if (state.group.isNotificationsEnabled) {
-        group = await _muteGroupUseCase.execute(
-          MuteGroupPayload(group: state.group),
-        );
-      } else {
+      if (state.group.isMuted) {
         group = await _unMuteGroupUseCase.execute(
           UnMuteGroupPayload(group: state.group),
+        );
+      } else {
+        group = await _muteGroupUseCase.execute(
+          MuteGroupPayload(group: state.group),
         );
       }
       _appRouter.pop();

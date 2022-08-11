@@ -72,7 +72,7 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
       ),
     );
     add(const RefreshTackerTacks());
-    add(const RefreshTackerTacks());
+    add(const RefreshRunnerTacks());
   }
 
   Future<void> _onLoadMockedData(
@@ -174,7 +174,7 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
       event.completer?.complete(RefreshingStatus.failed);
       if (event.completer == null) {
         emit(
-          state.copyWith(runnerTacksState: const RunnerTacksState()),
+          state.copyWith(tackerTacksState: const TackerTacksState()),
         );
       }
     }

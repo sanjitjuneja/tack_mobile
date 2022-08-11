@@ -24,9 +24,9 @@ class _AppDrawerPage extends Page<void> {
 
   @override
   Route<void> createRoute(BuildContext context) {
-    return LeftSlideRoute(
+    return LeftSlideRoute<void>(
       settings: this,
-      rightOuterAnimationWidget: const AppDrawerCloseButton(),
+      rightBorderWidget: const AppDrawerCloseButton(),
       builder: (_) {
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.light,

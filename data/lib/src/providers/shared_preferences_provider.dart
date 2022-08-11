@@ -102,6 +102,7 @@ class SharedPreferencesProvider {
 
   Future<void> clearSessionInfo() async {
     await _sharedPreferences.remove(SharedPreferencesKeys.user);
+    await _sharedPreferences.remove(SharedPreferencesKeys.activeGroupId);
     await _sharedPreferences.remove(SharedPreferencesKeys.session);
     await _sharedPreferences.setBool(SharedPreferencesKeys.isAuthorized, false);
   }

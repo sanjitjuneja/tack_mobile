@@ -9,6 +9,7 @@ class PageHeaderWithGroupWidget extends StatelessWidget {
   final AppIcon? image;
   final String? subtitleKey;
   final VoidCallback? onTap;
+  final bool withFeedback;
 
   const PageHeaderWithGroupWidget({
     super.key,
@@ -17,6 +18,7 @@ class PageHeaderWithGroupWidget extends StatelessWidget {
     this.image,
     this.subtitleKey,
     this.onTap,
+    this.withFeedback = false,
   }) : assert(group != null || subtitleKey != null);
 
   @override
@@ -25,6 +27,7 @@ class PageHeaderWithGroupWidget extends StatelessWidget {
       padding: const EdgeInsets.only(left: 6.0),
       child: OpacityOnTapContainer(
         onTap: onTap,
+        withFeedback: withFeedback,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[

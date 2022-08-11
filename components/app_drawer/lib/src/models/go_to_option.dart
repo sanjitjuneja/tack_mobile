@@ -1,9 +1,11 @@
 enum GoToOption {
   account,
-  previousTacks,
   groups,
   invitations,
+  previousTacks,
+  deposit,
   withdraw,
+  paymentSettings,
   customerSupport,
   termsAndConditions,
   privacyPolicy,

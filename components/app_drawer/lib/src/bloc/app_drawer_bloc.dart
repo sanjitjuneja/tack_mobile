@@ -63,16 +63,22 @@ class AppDrawerBloc extends Bloc<AppDrawerEvent, AppDrawerState> {
       case GoToOption.account:
         _appRouter.push(AccountInformationFeature.page());
         break;
-      case GoToOption.previousTacks:
-        _appRouter.push(PreviousTacksFeature.page());
-        break;
       case GoToOption.groups:
         _appRouter.push(MyGroupsFeature.page());
         break;
       case GoToOption.invitations:
         _appRouter.push(InvitationsFeature.page());
         break;
+      case GoToOption.previousTacks:
+        _appRouter.push(PreviousTacksFeature.page());
+        break;
+      case GoToOption.deposit:
+        // TODO: Handle this case.
+        break;
       case GoToOption.withdraw:
+        // TODO: Handle this case.
+        break;
+      case GoToOption.paymentSettings:
         // TODO: Handle this case.
         break;
       case GoToOption.customerSupport:

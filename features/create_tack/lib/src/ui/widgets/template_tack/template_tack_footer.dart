@@ -28,6 +28,7 @@ class TemplateTackFooter extends StatelessWidget {
         AppButton(
           labelKey: 'createTackScreen.templateTack.editAndPublishButton',
           icon: AppIconsTheme.edit,
+          withFeedback: true,
           onTap: () => onActionPressed(context),
         )
       ],
