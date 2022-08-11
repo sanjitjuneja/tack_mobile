@@ -1,23 +1,30 @@
 import 'package:core/core.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:navigation/navigation.dart';
 
 import 'package:groups/src/invite_members/bloc/invite_members_bloc.dart';
 import 'package:groups/src/invite_members/ui/invite_members_screen.dart';
-import 'package:navigation/navigation.dart';
 
-class InviteMembers {
+class InviteMembersFeature {
   static const String routeName = '/inviteMembers';
 
-  static Page<void> page() {
-    return const _InviteMembersPage();
+  static Page<void> page({
+    required Group group,
+  }) {
+    return _InviteMembersPage(group: group);
   }
 }
 
 class _InviteMembersPage extends Page<void> {
-  @override
-  String get name => InviteMembers.routeName;
+  final Group group;
 
-  const _InviteMembersPage();
+  @override
+  String get name => InviteMembersFeature.routeName;
+
+  const _InviteMembersPage({
+    required this.group,
+  });
 
   @override
   Route<void> createRoute(BuildContext context) {
@@ -26,7 +33,10 @@ class _InviteMembersPage extends Page<void> {
       builder: (_) => BlocProvider<InviteMembersBloc>(
         create: (_) {
           return InviteMembersBloc(
-            appRouter: appLocator.get<AppRouterDelegate>(),
+            group: group,
+            appRouter: AppRouter.of(context),
+            loadGroupInviteLinkUseCase:
+                appLocator.get<LoadGroupInviteLinkUseCase>(),
           );
         },
         child: const InviteMembersScreen(),

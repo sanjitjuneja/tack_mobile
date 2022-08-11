@@ -8,9 +8,7 @@ import 'package:groups/src/create_group/ui/widgets/group_photo_section/group_pho
 import 'package:groups/src/create_group/ui/widgets/name_section.dart';
 
 class CreateGroupForm extends StatelessWidget {
-  const CreateGroupForm({
-    super.key,
-  });
+  const CreateGroupForm({super.key});
 
   @override
   Widget build(BuildContext context) {

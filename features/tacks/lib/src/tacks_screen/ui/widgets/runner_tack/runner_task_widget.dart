@@ -45,7 +45,7 @@ class RunnerTackWidget extends StatelessWidget {
                 isRunner: true,
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             Flexible(
               child: RunnerTackActions(
                 runnerTack: runnerTack,

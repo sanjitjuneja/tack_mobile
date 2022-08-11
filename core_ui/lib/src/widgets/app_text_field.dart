@@ -96,7 +96,11 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   void didUpdateWidget(AppTextField oldWidget) {
-    if (widget.initialText == null || widget.initialText!.isEmpty) {
+    final bool didUpdateInitialText =
+        oldWidget.initialText != widget.initialText;
+
+    if (didUpdateInitialText && (widget.initialText == null ||
+        widget.initialText!.isEmpty)) {
       _controller.text = '';
     }
 

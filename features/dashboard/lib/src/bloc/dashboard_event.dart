@@ -13,10 +13,10 @@ class InitialLoad extends DashboardEvent {
 }
 
 class RefreshAction extends DashboardEvent {
-  final Completer<RefreshingStatus> completer;
+  final Completer<RefreshingStatus>? completer;
 
   const RefreshAction({
-    required this.completer,
+    this.completer,
   });
 }
 

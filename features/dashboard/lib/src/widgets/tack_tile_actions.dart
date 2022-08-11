@@ -29,6 +29,7 @@ class TackTileActions extends StatelessWidget {
           child: AppButton(
             labelKey: 'general.accept',
             icon: AppIconsTheme.edit,
+            withFeedback: true,
             onTap: () => _onAcceptButtonTap(context),
           ),
         ),

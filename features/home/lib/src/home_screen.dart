@@ -28,6 +28,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
+  static const double _iconSize = 28.0;
+
   late CupertinoTabController _tabController;
 
   @override
@@ -41,7 +43,6 @@ class HomeScreenState extends State<HomeScreen> {
 
   void changeTabIndex(HomeScreenTab tab) {
     _tabController.index = tab.tabIndex;
-    // setState(() {});
   }
 
   @override
@@ -55,16 +56,16 @@ class HomeScreenState extends State<HomeScreen> {
           tabBar: CupertinoTabBar(
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                activeIcon: AppIconsTheme.dashboardsActive(),
-                icon: AppIconsTheme.dashboardInactive(),
+                activeIcon: AppIconsTheme.dashboardsActive(size: _iconSize),
+                icon: AppIconsTheme.dashboardInactive(size: _iconSize),
               ),
               BottomNavigationBarItem(
-                activeIcon: AppIconsTheme.addActive(),
-                icon: AppIconsTheme.addInactive(),
+                activeIcon: AppIconsTheme.addActive(size: _iconSize),
+                icon: AppIconsTheme.addInactive(size: _iconSize),
               ),
               BottomNavigationBarItem(
-                activeIcon: AppIconsTheme.tacksActive(),
-                icon: AppIconsTheme.tacksInactive(),
+                activeIcon: AppIconsTheme.tacksActive(size: _iconSize),
+                icon: AppIconsTheme.tacksInactive(size: _iconSize),
               ),
             ],
             backgroundColor: AppTheme.navBarBackgroundColor,

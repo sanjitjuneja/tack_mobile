@@ -4,7 +4,6 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:domain/use_case.dart';
-import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
 
 part 'global_event.dart';
@@ -89,9 +88,6 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
     ChangeGroup event,
     Emitter<GlobalState> emit,
   ) async {
-    if (state.groups.length < 2) return;
-
-    HapticFeedbackManager.heavyImpact();
     final Group? newGroup = await _appRouter.pushForResult(
       ChangeGroupDrawer.page(
         state.groups,

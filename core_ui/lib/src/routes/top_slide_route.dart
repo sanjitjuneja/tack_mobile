@@ -1,3 +1,4 @@
+import 'package:core/core.dart';
 import 'package:core_ui/src/theme/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,27 +43,37 @@ class _TopSlideRouteBody<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color barrierColor = AppTheme.barrierColor;
-
     return AnimatedBuilder(
       animation: route.animation!,
       child: route.builder!(context),
       builder: (_, Widget? child) {
         final double animationValue = route.animation!.value;
 
-        return GestureDetector(
-          onTap: () => AppRouter.of(context).popWithResult(null),
-          child: Container(
-            color: barrierColor.withOpacity(
-              barrierColor.opacity * animationValue,
+        return Stack(
+          children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                if (!route.isDismissible) return;
+
+                if (isVoid(T)) {
+                  AppRouter.of(context).pop();
+                } else {
+                  AppRouter.of(context).popWithResult(null);
+                }
+              },
+              child: Container(
+                color: route.modalBarrierColor.withOpacity(
+                  route.modalBarrierColor.opacity * animationValue,
+                ),
+              ),
             ),
-            child: ClipRect(
+            ClipRect(
               child: CustomSingleChildLayout(
                 delegate: _TopSlideRouteLayout(animationValue),
                 child: child,
               ),
             ),
-          ),
+          ],
         );
       },
     );
@@ -75,14 +86,15 @@ class TopSlideRoute<T> extends PopupRoute<T> {
   TopSlideRoute({
     required this.builder,
     this.barrierLabel,
-    this.modalBarrierColor,
+    Color? modalBarrierColor,
     this.isDismissible = true,
     this.transitionAnimationDuration,
     RouteSettings? settings,
-  }) : super(settings: settings);
+  })  : modalBarrierColor = modalBarrierColor ?? AppTheme.barrierColor,
+        super(settings: settings);
 
   final WidgetBuilder? builder;
-  final Color? modalBarrierColor;
+  final Color modalBarrierColor;
   final bool isDismissible;
   final Duration? transitionAnimationDuration;
 
@@ -95,7 +107,7 @@ class TopSlideRoute<T> extends PopupRoute<T> {
       transitionAnimationDuration ?? _defaultAnimationDuration;
 
   @override
-  bool get barrierDismissible => isDismissible;
+  bool get barrierDismissible => false;
 
   @override
   final String? barrierLabel;

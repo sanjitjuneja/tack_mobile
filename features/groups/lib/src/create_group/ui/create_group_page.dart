@@ -6,7 +6,7 @@ import 'package:navigation/navigation.dart';
 import 'package:groups/src/create_group/bloc/create_group_bloc.dart';
 import 'package:groups/src/create_group/ui/create_group_screen.dart';
 
-class CreateGroup {
+class CreateGroupFeature {
   static const String routeName = '/createGroup';
 
   static Page<Group> page() {
@@ -16,7 +16,7 @@ class CreateGroup {
 
 class _CreateGroupPage extends Page<Group> {
   @override
-  String get name => CreateGroup.routeName;
+  String get name => CreateGroupFeature.routeName;
 
   const _CreateGroupPage();
 

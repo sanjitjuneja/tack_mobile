@@ -10,12 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  data:
-    path: ../data
-  domain:
-    path: ../domain
-  navigation:
-    path: ../navigation
 
   intl: ^0.17.0
   get_it: ^7.2.0
@@ -31,6 +25,15 @@ dependencies:
   share_plus: ^4.0.10
   url_launcher: ^6.1.5
   flutter_multi_formatter: ^2.5.1
+
+  data:
+    path: ../data
+  domain:
+    path: ../domain
+  core_ui:
+    path: ../core_ui
+  navigation:
+    path: ../navigation
 
 dev_dependencies:
   flutter_test:

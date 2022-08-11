@@ -6,6 +6,8 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'widgets/app_drawer_scroll_container.dart';
+
 class AppDrawerWidget extends StatelessWidget {
   const AppDrawerWidget({
     super.key,
@@ -21,55 +23,50 @@ class AppDrawerWidget extends StatelessWidget {
         ),
       ),
     );
-    children.insert(5, const AppDivider(height: 2));
+    children.add(
+      SideBarTileWidget(
+        titleKey: 'drawer.logOut',
+        leadingIcon: AppIconsTheme.logout,
+        interfaceColor: AppTheme.errorColor,
+        isNeedChevron: false,
+        onPressed: () => _onLogOutPressed(context),
+      ),
+    );
+    children.insert(4, const AppDivider(height: 2));
+    children.insert(8, const AppDivider(height: 2));
 
-    return Container(
+    return ColoredBox(
       color: AppTheme.primaryColor,
       child: Column(
         children: <Widget>[
           const AppDrawerHeader(),
           Expanded(
-            child: CupertinoScrollbar(
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  children: <Widget>[
-                    ListView.separated(
-                      padding: const EdgeInsets.symmetric(vertical: 20.0),
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (_, int index) => children[index],
-                      separatorBuilder: (_, __) => const SizedBox(height: 18),
-                      itemCount: children.length,
-                    ),
-                    const SizedBox(height: 20),
-                    SideBarTileWidget(
-                      titleKey: 'drawer.logOut',
-                      leadingIcon: AppIconsTheme.logout,
-                      interfaceColor: AppTheme.errorColor,
-                      isNeedChevron: false,
-                      onPressed: () => _onLogOutPressed(context),
-                    ),
-                  ],
+            child: AppDrawerScrollContainer(
+              children: <Widget>[
+                ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  itemBuilder: (_, int index) => children[index],
+                  separatorBuilder: (_, __) => const SizedBox(height: 18),
+                  itemCount: children.length,
                 ),
-              ),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: TextWithHighlight(
+                    text: FlutterI18n.translate(context, 'drawer.note'),
+                    textStyle: AppTextTheme.manrope13Medium.copyWith(
+                      color: AppTheme.grassColor,
+                    ),
+                    textAlign: TextAlign.center,
+                    onLinkTap: (String? url) => _onLinkTap(context, url),
+                  ),
+                ),
+                const SizedBox(height: 16),
+              ],
             ),
           ),
-          SafeArea(
-            top: false,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: TextWithHighlight(
-                text: FlutterI18n.translate(context, 'drawer.note'),
-                textStyle: AppTextTheme.manrope13Medium.copyWith(
-                  color: AppTheme.grassColor,
-                ),
-                textAlign: TextAlign.center,
-                onLinkTap: (String? url) => _onLinkTap(context, url),
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
         ],
       ),
     );

@@ -9,16 +9,14 @@ class InviteMembersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: CupertinoPageScaffold(
+    return CupertinoPageScaffold(
+      backgroundColor: AppTheme.secondaryBackgroundColor,
+      navigationBar: AppNavigationBar(
         backgroundColor: AppTheme.secondaryBackgroundColor,
-        navigationBar: AppNavigationBar(
-          backgroundColor: AppTheme.secondaryBackgroundColor,
-          withResult: false,
-        ),
-        child: const SafeArea(
-          child: InviteMembersForm(),
-        ),
+        withResult: false,
+      ),
+      child: const SafeArea(
+        child: InviteMembersForm(),
       ),
     );
   }
