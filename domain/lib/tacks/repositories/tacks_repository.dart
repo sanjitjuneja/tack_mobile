@@ -23,7 +23,21 @@ abstract class TacksRepository {
 
   Future<Tack> updateTack(UpdateTackPayload payload);
 
+  Future<void> startTackByRunner(StartTackPayload payload);
+
+  Future<void> cancelTackByTacker(CancelTackPayload payload);
+
+  Future<void> cancelTackByRunner(CancelTackPayload payload);
+
+  Future<void> completeTackByTacker(CompleteTackPayload payload);
+
+  Future<void> completeTackByRunner(CompleteTackPayload payload);
+
+  Future<List<Offer>> getTackOffers(TackOffersPayload payload);
+
   Future<void> makeOffer(MakeOfferPayload payload);
+
+  Future<void> cancelOffer(CancelOfferPayload payload);
 
   Future<void> rateTack(RateTackPayload payload);
 }

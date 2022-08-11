@@ -114,7 +114,7 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
 
     final XFile? xFile = await FileManager.pickImage(
       imageSource,
-      imageQuality: 15,
+      imageQuality: 5,
     );
     if (xFile == null) return;
 

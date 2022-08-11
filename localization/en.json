@@ -24,7 +24,7 @@
     "tackUpdate": {
       "title": ""
     },
-    "tackCanceled": {
+    "tackCancel": {
       "title": "Tack Cancelled",
       "message": ""
     }
@@ -35,6 +35,9 @@
       "message": "",
       "mainButtonLabel": "Yes",
       "secondaryButtonLabel": "No"
+    },
+    "cancelOffer": {
+      "message": "Are you sure want to <colored>Cancel Offer</colored>\n <highlight>{tackName}</highlight>"
     },
     "cancelTackTacker": {
       "message": "Are you sure want to <colored>Cancel</colored>\n <highlight>{tackName}</highlight>"
@@ -123,10 +126,12 @@
   "drawer": {
     "options": {
       "account": "Account",
-      "previousTacks": "Previous Tacks",
       "groups": "My Groups",
       "invitations": "My Invitations",
+      "previousTacks": "Previous Tacks",
+      "deposit": "Deposit",
       "withdraw": "Withdraw",
+      "paymentSettings": "Payment Settings",
       "customerSupport": "Customer Support",
       "termsAndConditions": "Terms & Conditions",
       "privacyPolicy": "Privacy Policy"
@@ -159,9 +164,9 @@
       "first": "Tacker",
       "second": "Runner"
     },
-    "chooseRunnerButton": "Choose Runner",
-    "beginTackButton": "Begin Tack",
-    "pendingReview": "Review Pending",
+    "chooseRunnerButton": "Choose",
+    "beginTackButton": "Begin",
+    "pendingReview": "Review",
     "cancelOfferButton": "Cancel Offer",
     "offerExpiresIn": "Offer Expires In",
     "empty": {
@@ -206,7 +211,7 @@
     "leaveButton": "Leave",
     "inviteMembersButton": "Invite Members",
     "muteNotificationsButton": "Mute Notifications",
-    "unMuteNotificationButton": "Un Mute Notifications",
+    "unMuteNotificationsButton": "Un Mute Notifications",
     "declineButton": "Decline",
     "joinButton": "Join"
   },

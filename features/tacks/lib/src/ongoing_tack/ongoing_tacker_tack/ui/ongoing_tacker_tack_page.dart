@@ -3,20 +3,21 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
+import 'package:tacks/src/ongoing_tack/models/ongoing_tacker_screen_result.dart';
 import 'package:tacks/src/ongoing_tack/ongoing_tacker_tack/bloc/ongoing_tacker_tack_bloc.dart';
 import 'package:tacks/src/ongoing_tack/ongoing_tacker_tack/ui/ongoing_tacker_tack_screen.dart';
 
 class OngoingTackerTack {
   static const String routeName = '/ongoingTack';
 
-  static Page<Group> page({
+  static Page<OngoingTackerScreenResult> page({
     required Tack tack,
   }) {
     return _OngoingTackerTackPage(tack: tack);
   }
 }
 
-class _OngoingTackerTackPage extends Page<Group> {
+class _OngoingTackerTackPage extends Page<OngoingTackerScreenResult> {
   final Tack tack;
 
   @override
@@ -27,14 +28,16 @@ class _OngoingTackerTackPage extends Page<Group> {
   });
 
   @override
-  Route<Group> createRoute(BuildContext context) {
-    return CupertinoPageRoute<Group>(
+  Route<OngoingTackerScreenResult> createRoute(BuildContext context) {
+    return CupertinoPageRoute<OngoingTackerScreenResult>(
       settings: this,
       builder: (_) => BlocProvider<OngoingTackerTackBloc>(
         create: (_) {
           return OngoingTackerTackBloc(
             tack: tack,
             appRouter: AppRouter.of(context),
+            cancelTackTackerUseCase: appLocator.get<CancelTackTackerUseCase>(),
+            completeTackUseCase: appLocator.get<CompleteTackTackerUseCase>(),
           );
         },
         child: const OngoingTackerTackScreen(),

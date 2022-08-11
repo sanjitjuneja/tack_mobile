@@ -1,0 +1,4 @@
+enum OngoingRunnerScreenResult {
+  cancel,
+  complete,
+}

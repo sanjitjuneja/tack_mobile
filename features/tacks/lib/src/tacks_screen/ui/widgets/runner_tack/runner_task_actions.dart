@@ -100,11 +100,21 @@ class RunnerTackActions extends StatelessWidget {
         AppCircleAvatarWidget(runnerTack.tack.group.imageUrl),
         const SizedBox(width: 10),
         Expanded(
-          child: AppButton(
-            labelKey: labelKey,
-            icon: icon,
-            onTap: onTap,
+          child: Text(
+            runnerTack.tack.group.name,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextTheme.manrope16Bold
+                .copyWith(color: AppTheme.textHeavyHintColor),
           ),
+        ),
+        const SizedBox(width: 6),
+        AppButton(
+          labelKey: labelKey,
+          icon: icon,
+          constraints: const BoxConstraints(minWidth: 120),
+          expanded: false,
+          onTap: onTap,
         ),
       ],
     );
