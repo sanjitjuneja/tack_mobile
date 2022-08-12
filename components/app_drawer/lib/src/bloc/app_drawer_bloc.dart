@@ -9,6 +9,7 @@ import 'package:domain/use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:groups/groups.dart';
 import 'package:navigation/navigation.dart';
+import 'package:payment_settings/payment_settings.dart';
 
 part 'app_drawer_event.dart';
 
@@ -79,7 +80,7 @@ class AppDrawerBloc extends Bloc<AppDrawerEvent, AppDrawerState> {
         // TODO: Handle this case.
         break;
       case GoToOption.paymentSettings:
-        // TODO: Handle this case.
+        _appRouter.push(PaymentSettingsFeature.page());
         break;
       case GoToOption.customerSupport:
         _appRouter.push(CustomerSupport.page());

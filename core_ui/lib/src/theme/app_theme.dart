@@ -34,6 +34,7 @@ class AppTheme {
   static Color get warningColor => AppColors.gamboge;
 
   static Color get dividerColor => AppColors.solitude;
+  static Color get dividerSecondaryColor => AppColors.osloGray;
   static Color get drawerAccessoryColor => AppColors.athensGrey;
   static Color get barrierColor => AppColors.blackPearl31;
   static Color get shadowColor => AppColors.black25;

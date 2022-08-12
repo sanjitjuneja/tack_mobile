@@ -18,10 +18,12 @@ class AppDivider extends StatelessWidget {
   final Axis axis;
   final double? width;
   final double? height;
+  final Color? color;
 
   const AppDivider({
     super.key,
     this.axis = Axis.horizontal,
+    this.color,
     this.width,
     this.height,
   });
@@ -29,7 +31,7 @@ class AppDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppTheme.dividerColor,
+      color: color ?? AppTheme.dividerColor,
       height: axis == Axis.vertical ? height : height ?? 1,
       width: axis == Axis.horizontal ? width : width ?? 1,
     );
