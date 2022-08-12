@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:account/account.dart';
 import 'package:app_drawer/src/models/go_to_option.dart';
 import 'package:core/core.dart';
@@ -9,10 +8,9 @@ import 'package:domain/use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:groups/groups.dart';
 import 'package:navigation/navigation.dart';
-import 'package:payment_settings/payment_settings.dart';
+import 'package:payment/payment.dart';
 
 part 'app_drawer_event.dart';
-
 part 'app_drawer_state.dart';
 
 class AppDrawerBloc extends Bloc<AppDrawerEvent, AppDrawerState> {
@@ -104,7 +102,6 @@ class AppDrawerBloc extends Bloc<AppDrawerEvent, AppDrawerState> {
   @override
   Future<void> close() {
     _userSubscription.cancel();
-
     return super.close();
   }
 }

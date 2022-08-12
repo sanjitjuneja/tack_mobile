@@ -1,8 +1,8 @@
 import 'package:core/core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
+import '../bloc/payment_settings_bloc.dart';
 import 'payment_settings_screen.dart';
-import '/src/bloc/payment_settings_bloc.dart';
 
 class PaymentSettingsFeature {
   static const String routeName = '/paymentSettings';
