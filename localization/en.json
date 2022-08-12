@@ -454,5 +454,10 @@
     "digitalWallets": "Digital Wallets",
     "addPaymentMethod": "Add Payment Method",
     "privacyInfo": "Tack does not store any of your payment info"
+  },
+  "addPaymentMethodScreen": {
+    "title": "Add Payment Method",
+    "addBank": "Add Bank",
+    "addCard": "Credit/Debit Card"
   }
 }

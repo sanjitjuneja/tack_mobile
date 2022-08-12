@@ -54,6 +54,8 @@ class AppIconsTheme {
   static const String _applePayKey = '${_svgPath}apple_pay.svg';
   static const String _bankKey = '${_svgPath}bank.svg';
   static const String _lockKey = '${_svgPath}lock.svg';
+  static const String _cardKey = '${_svgPath}card.svg';
+  static const String _chevronRightRoundedKey = '${_svgPath}chevron_right_rounded.svg';
 
   /// Bottom Navigation bar
   static AppIcon get dashboardsActive => AppIcon(_dashboardActiveKey);
@@ -101,4 +103,6 @@ class AppIconsTheme {
   static AppIcon get morganChase => AppIcon(_morganChaseKey);
   static AppIcon get applePay => AppIcon(_applePayKey);
   static AppIcon get lock => AppIcon(_lockKey);
+  static AppIcon get card => AppIcon(_cardKey);
+  static AppIcon get chevronRightRounded => AppIcon(_chevronRightRoundedKey);
 }
