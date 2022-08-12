@@ -5,7 +5,7 @@ class Tack extends Equatable {
   final String title;
   final double price;
   final String description;
-  final Duration estimatedTime;
+  final Duration? estimatedTime;
   final bool allowCounterOffers;
   final TackStatus status;
   final TackUser tacker;

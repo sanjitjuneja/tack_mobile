@@ -23,6 +23,7 @@ class TimeSection extends StatelessWidget {
       children: <Widget>[
         SectionHeaderWidget(
           labelKey: '${_localizationPath}title',
+          isRequired: state.timeEstimationData.isRequired,
         ),
         const SizedBox(height: 12),
         Flexible(
@@ -32,8 +33,8 @@ class TimeSection extends StatelessWidget {
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 90),
                 child: AppTextField(
-                  placeholder: '${_localizationPath}placeholder',
                   initialText: state.timeEstimationData.timeEstimation,
+                  placeholder: '${_localizationPath}placeholder',
                   padding: const EdgeInsets.symmetric(
                     horizontal: 6.0,
                     vertical: 10.0,

@@ -1,9 +1,9 @@
 part of 'add_edit_tack_bloc.dart';
 
 class AddEditTackState {
-  final Group? group;
   final Tack? tack;
   final bool isAdd;
+  final GroupData groupData;
   final TitleData titleData;
   final PriceData priceData;
   final DescriptionData descriptionData;
@@ -11,17 +11,14 @@ class AddEditTackState {
   final CounterOfferData counterOfferData;
 
   bool get isReadyToProceed {
-    final bool isAllValid = <bool>[
+    return <bool>[
+      groupData.isValid,
       titleData.isValid,
       priceData.isValid,
       descriptionData.isValid,
       timeEstimationData.isValid,
       counterOfferData.isValid,
     ].every((bool element) => element == true);
-
-    if (isAdd) return isAllValid && group != null;
-
-    return isAllValid && isAnyDataChanged;
   }
 
   bool get isAnyDataChanged {
@@ -29,15 +26,15 @@ class AddEditTackState {
       titleData.isDataChanged(tack?.title),
       priceData.isDataChanged(tack?.price),
       descriptionData.isDataChanged(tack?.description),
-      timeEstimationData.isDataChanged(tack?.estimatedTime.inSeconds),
+      timeEstimationData.isDataChanged(tack?.estimatedTime?.inSeconds),
       counterOfferData.isDataChanged(tack?.allowCounterOffers),
     ].any((bool element) => element == true);
   }
 
   const AddEditTackState({
-    required this.group,
     required this.tack,
     required this.isAdd,
+    required this.groupData,
     required this.titleData,
     required this.priceData,
     required this.descriptionData,
@@ -52,9 +49,12 @@ class AddEditTackState {
     bool isAdd,
   ) {
     return AddEditTackState(
-      group: group,
       tack: tack,
       isAdd: isAdd,
+      groupData: GroupData(
+        group: group,
+        isRequired: true,
+      ),
       titleData: TitleData(
         maxLength: 100,
         isRequired: true,
@@ -75,32 +75,43 @@ class AddEditTackState {
           TimeEstimationIn.min: 60,
           TimeEstimationIn.hour: 24,
         },
-        isRequired: true,
-        timeInSeconds: templateTack?.estimatedTime.inSeconds ??
-            tack?.estimatedTime.inSeconds,
+        isRequired: false,
+        timeInSeconds: templateTack?.estimatedTime?.inSeconds ??
+            tack?.estimatedTime?.inSeconds,
       ),
       counterOfferData: CounterOfferData(
-        isRequired: true,
+        isRequired: false,
         allow: templateTack?.allowCounterOffers ?? tack?.allowCounterOffers,
       ),
     );
   }
 
   AddEditTackState copyWith({
+    Group? group,
     String? title,
     String? price,
     String? description,
     String? timeEstimation,
     TimeEstimationIn? timeEstimationIn,
     bool? allowCounterOffer,
+    bool? isValidationEnabled,
   }) {
     return AddEditTackState(
-      group: group,
       tack: tack,
       isAdd: isAdd,
-      titleData: titleData.copyWith(title: title),
-      priceData: priceData.copyWith(price: price),
-      descriptionData: descriptionData.copyWith(description: description),
+      groupData: groupData.copyWith(group: group),
+      titleData: titleData.copyWith(
+        title: title,
+        isValidationEnabled: isValidationEnabled,
+      ),
+      priceData: priceData.copyWith(
+        price: price,
+        isValidationEnabled: isValidationEnabled,
+      ),
+      descriptionData: descriptionData.copyWith(
+        description: description,
+        isValidationEnabled: isValidationEnabled,
+      ),
       timeEstimationData: timeEstimationData.copyWith(
         timeEstimation: timeEstimation,
         timeEstimationIn: timeEstimationIn,
@@ -111,9 +122,9 @@ class AddEditTackState {
 
   AddEditTackState clear() {
     return AddEditTackState(
-      group: group,
       tack: tack,
       isAdd: isAdd,
+      groupData: groupData.empty(),
       titleData: titleData.empty(),
       priceData: priceData.empty(),
       descriptionData: descriptionData.empty(),

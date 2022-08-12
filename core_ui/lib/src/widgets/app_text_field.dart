@@ -16,6 +16,7 @@ class AppTextField extends StatefulWidget {
   final Function()? onTap;
   final bool? forceFocus;
   final bool isInvalid;
+  final String? errorTextKey;
   final bool shouldObscure;
   final bool hasDecoration;
   final bool hasShadow;
@@ -27,6 +28,7 @@ class AppTextField extends StatefulWidget {
   final TextAlign textAlign;
   final Iterable<String>? autofillHints;
   final void Function(String)? onTextChange;
+  final void Function(TextEditingController)? onFocusLost;
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
@@ -42,6 +44,7 @@ class AppTextField extends StatefulWidget {
     this.onTap,
     this.forceFocus,
     this.isInvalid = false,
+    this.errorTextKey,
     this.shouldObscure = false,
     this.hasDecoration = true,
     this.hasShadow = true,
@@ -54,6 +57,7 @@ class AppTextField extends StatefulWidget {
     bool shouldShowCursor = true,
     this.autofillHints,
     this.onTextChange,
+    this.onFocusLost,
     this.textInputAction,
     this.keyboardType,
     this.inputFormatters,
@@ -99,8 +103,8 @@ class _AppTextFieldState extends State<AppTextField> {
     final bool didUpdateInitialText =
         oldWidget.initialText != widget.initialText;
 
-    if (didUpdateInitialText && (widget.initialText == null ||
-        widget.initialText!.isEmpty)) {
+    if (didUpdateInitialText &&
+        (widget.initialText == null || widget.initialText!.isEmpty)) {
       _controller.text = '';
     }
 
@@ -109,59 +113,83 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoTextField(
-      suffix: widget.suffix,
-      textAlignVertical: TextAlignVertical.center,
-      decoration: widget.hasDecoration
-          ? BoxDecoration(
-              color: widget.backgroundColor ??
-                  AppTheme.textFieldPrimaryBackgroundColor,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: widget.hasShadow
-                  ? <BoxShadow>[
-                      BoxShadow(
-                        color: AppTheme.shadowColor,
-                        offset: const Offset(0, 4),
-                        blurRadius: 4,
-                      ),
-                    ]
-                  : null,
-            )
-          : null,
-      obscureText: widget.shouldObscure,
-      readOnly: _isReadOnly,
-      controller: _controller,
-      cursorColor: AppTheme.textPrimaryColor,
-      padding: widget.padding ??
-          const EdgeInsets.only(
-            left: 20,
-            right: 10,
-            top: 23,
-            bottom: 23,
-          ),
-      placeholder: <String>[
-        FlutterI18n.translate(context, widget.placeholder),
-        (widget.isRequired ? '*' : '')
-      ].join(''),
-      scrollPadding: const EdgeInsets.all(30),
-      minLines: widget.minLines,
-      maxLines: widget.maxLines,
-      style: widget.isDisabled
-          ? AppTextTheme.manrope16Regular.copyWith(
-              color: AppTheme.textPrimaryColor,
-            )
-          : AppTextTheme.manrope16Regular.copyWith(
-              color: AppTheme.textPrimaryColor,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Focus(
+          canRequestFocus: widget.onFocusLost == null,
+          onFocusChange: (bool hasFocus) {
+            if (!hasFocus) widget.onFocusLost?.call(_controller);
+          },
+          child: CupertinoTextField(
+            suffix: widget.suffix,
+            textAlignVertical: TextAlignVertical.center,
+            decoration: widget.hasDecoration
+                ? BoxDecoration(
+                    color: widget.backgroundColor ??
+                        AppTheme.textFieldPrimaryBackgroundColor,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: widget.isInvalid
+                          ? AppTheme.errorColor
+                          : AppTheme.transparentColor,
+                    ),
+                    boxShadow: widget.hasShadow
+                        ? <BoxShadow>[
+                            BoxShadow(
+                              color: AppTheme.shadowColor,
+                              offset: const Offset(0, 4),
+                              blurRadius: 4,
+                            ),
+                          ]
+                        : null,
+                  )
+                : null,
+            obscureText: widget.shouldObscure,
+            readOnly: _isReadOnly,
+            controller: _controller,
+            cursorColor: AppTheme.textPrimaryColor,
+            padding: widget.padding ??
+                const EdgeInsets.only(
+                  left: 20,
+                  right: 10,
+                  top: 23,
+                  bottom: 23,
+                ),
+            placeholder: <String>[
+              FlutterI18n.translate(context, widget.placeholder),
+              if (widget.isRequired) '*',
+            ].join(' '),
+            scrollPadding: const EdgeInsets.all(30),
+            minLines: widget.minLines,
+            maxLines: widget.maxLines,
+            style: widget.isDisabled
+                ? AppTextTheme.manrope16Regular.copyWith(
+                    color: AppTheme.textPrimaryColor,
+                  )
+                : AppTextTheme.manrope16Regular.copyWith(
+                    color: AppTheme.textPrimaryColor,
+                  ),
+            textAlign: widget.textAlign,
+            autofillHints: widget.autofillHints,
+            textInputAction: widget.textInputAction,
+            keyboardType: widget.keyboardType,
+            inputFormatters: widget.inputFormatters,
+            placeholderStyle: AppTextTheme.manrope16Regular.copyWith(
+              color: AppTheme.textHintColor,
             ),
-      textAlign: widget.textAlign,
-      autofillHints: widget.autofillHints,
-      onChanged: (String text) => widget.onTextChange?.call(text),
-      textInputAction: widget.textInputAction,
-      keyboardType: widget.keyboardType,
-      inputFormatters: widget.inputFormatters,
-      placeholderStyle: AppTextTheme.manrope16Regular.copyWith(
-        color: AppTheme.textHintColor,
-      ),
+            onChanged: (String text) => widget.onTextChange?.call(text),
+          ),
+        ),
+        if (widget.errorTextKey != null && widget.isInvalid) ...<Widget>[
+          const SizedBox(height: 4),
+          Text(
+            FlutterI18n.translate(context, widget.errorTextKey!),
+            style: AppTextTheme.manrope14Medium
+                .copyWith(color: AppTheme.errorColor),
+          ),
+        ],
+      ],
     );
   }
 }

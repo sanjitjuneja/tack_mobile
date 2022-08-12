@@ -110,7 +110,12 @@ abstract class ApiProviderCore {
     try {
       final Response response = await request;
 
-      return parser(response.data!);
+      if (response.data is Map<String, dynamic>) {
+        return parser(response.data!);
+      } else {
+        /// TODO: fix. String is not Map<String, dynamic> for response with 204 code (DELETE).
+        return parser(<String, dynamic>{});
+      }
     } on DioError catch (e) {
       return _errorHandler.handleError(e);
     }

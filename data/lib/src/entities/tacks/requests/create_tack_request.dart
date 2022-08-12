@@ -6,7 +6,7 @@ class CreateTackRequest extends JsonSerializable {
   final int price;
   final String description;
   @JsonKey(name: 'estimation_time_seconds')
-  final int estimationTimeSeconds;
+  final int? estimationTimeSeconds;
   @JsonKey(name: 'allow_counter_offer')
   final bool allowCounterOffer;
   final int group;

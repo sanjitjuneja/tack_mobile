@@ -1,6 +1,6 @@
-part of group_drawer;
+part of pick_group;
 
-class SelectableGroup with AppSelectableItem, EquatableMixin {
+class _SelectableGroup with AppSelectableItem, EquatableMixin {
   final Group group;
 
   @override
@@ -9,7 +9,7 @@ class SelectableGroup with AppSelectableItem, EquatableMixin {
   @override
   String? get imagePath => group.imageUrl;
 
-  const SelectableGroup(this.group);
+  const _SelectableGroup(this.group);
 
   @override
   List<Object> get props => <Object>[group.id];

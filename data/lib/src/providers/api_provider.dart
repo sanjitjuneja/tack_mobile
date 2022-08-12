@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:data/src/entities/entities.dart';
+import 'package:data/src/entities/global/global.dart';
 import 'package:data/src/mappers/mappers.dart';
 import 'package:data/src/providers/api_provider_core.dart';
 import 'package:data/src/providers/session_provider.dart';
@@ -341,18 +342,19 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
-  Future<List<domain.Tack>> getGroupTacks(GroupTacksRequest request) async {
-    return get<GroupTacksResponse>(
+  Future<domain.PaginationModel<domain.Tack>> getGroupTacks(
+    GroupTacksRequest request,
+  ) async {
+    return get<PaginationEntity<TackEntity>>(
       ApiQuery(
         endpoint: BaseUrlConstants.groupsTacksPath,
         id: request.groupId,
         body: null,
-        params: null,
+        params: request.queryParameters,
       ),
-      parser: GroupTacksResponse.fromJson,
+      parser: PaginationEntity<TackEntity>.fromJson,
     ).then(
-      (GroupTacksResponse response) =>
-          mapper.tackMapper.fromList(response.results),
+      mapper.paginationMapper<TackEntity, domain.Tack>().fromEntity,
     );
   }
 
@@ -401,18 +403,19 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
-  Future<List<domain.Offer>> getTackOffers(GetTackOffersRequest request) async {
-    return get<GroupOffersResponse>(
+  Future<domain.PaginationModel<domain.Offer>> getTackOffers(
+    GetTackOffersRequest request,
+  ) async {
+    return get<PaginationEntity<OfferEntity>>(
       ApiQuery(
         endpoint: BaseUrlConstants.tackOffersPath,
         id: request.tackId,
         body: null,
-        params: null,
+        params: request.queryParameters,
       ),
-      parser: GroupOffersResponse.fromJson,
+      parser: PaginationEntity<OfferEntity>.fromJson,
     ).then(
-      (GroupOffersResponse response) =>
-          mapper.offerMapper.fromList(response.results),
+      mapper.paginationMapper<OfferEntity, domain.Offer>().fromEntity,
     );
   }
 

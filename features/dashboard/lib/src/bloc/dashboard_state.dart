@@ -2,29 +2,23 @@ part of 'dashboard_bloc.dart';
 
 class DashboardState {
   final Group group;
-  final List<Tack> tacks;
+  final PaginationModel<Tack> tacksData;
   final bool isLoading;
-  final bool canLoadMore;
 
-  bool get hasData => tacks.isNotEmpty;
-
-  const DashboardState({
+  DashboardState({
     required this.group,
-    List<Tack>? tacks,
     this.isLoading = false,
-    this.canLoadMore = true,
-  }) : tacks = tacks ?? const <Tack>[];
+    PaginationModel<Tack>? tacksData,
+  }) : tacksData = tacksData ?? PaginationModel<Tack>.empty();
 
   DashboardState copyWith({
-    List<Tack>? tacks,
+    PaginationModel<Tack>? tacksData,
     bool? isLoading,
-    bool? canLoadMore,
   }) {
     return DashboardState(
       group: group,
-      tacks: tacks ?? this.tacks,
+      tacksData: tacksData ?? this.tacksData,
       isLoading: isLoading ?? false,
-      canLoadMore: canLoadMore ?? this.canLoadMore,
     );
   }
 }

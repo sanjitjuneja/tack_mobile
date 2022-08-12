@@ -4,7 +4,7 @@ class CreateTackPayload extends Equatable {
   final String title;
   final int price;
   final String description;
-  final int estimatedTime;
+  final int? estimatedTime;
   final bool shouldAllowCounterOffers;
   final int groupId;
 
@@ -18,7 +18,7 @@ class CreateTackPayload extends Equatable {
   }) : price = (price * 100).toInt();
 
   @override
-  List<Object> get props => <Object>[
+  List<Object?> get props => <Object?>[
         title,
         price,
         description,

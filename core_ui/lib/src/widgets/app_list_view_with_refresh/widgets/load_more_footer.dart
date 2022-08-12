@@ -1,13 +1,19 @@
 part of app_list_view_with_refresh;
 
 class _LoadMoreFooter extends StatelessWidget {
-  const _LoadMoreFooter();
+  final Color? indicatorColor;
+  final ProgressIndicatorSize indicatorSize;
+
+  const _LoadMoreFooter({
+    required this.indicatorColor,
+    required this.indicatorSize,
+  });
 
   @override
   Widget build(BuildContext context) {
     return CustomFooter(
       loadStyle: LoadStyle.ShowWhenLoading,
-      height: 50,
+      height: indicatorSize.size + indicatorSize.size / 4,
       builder: (_, LoadStatus? status) {
         if (status == LoadStatus.failed) {
           return Center(
@@ -22,7 +28,8 @@ class _LoadMoreFooter extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: AppProgressIndicator(
               backgroundColor: AppTheme.transparentColor,
-              indicatorSize: ProgressIndicatorSize.medium,
+              indicatorSize: indicatorSize,
+              indicatorColor: indicatorColor,
               expand: false,
             ),
           );

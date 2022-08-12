@@ -47,58 +47,57 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: MediaQuery.removePadding(
-        context: context,
-        removeBottom: true,
-        child: CupertinoTabScaffold(
-          controller: _tabController,
-          tabBar: CupertinoTabBar(
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                activeIcon: AppIconsTheme.dashboardsActive(size: _iconSize),
-                icon: AppIconsTheme.dashboardInactive(size: _iconSize),
-              ),
-              BottomNavigationBarItem(
-                activeIcon: AppIconsTheme.addActive(size: _iconSize),
-                icon: AppIconsTheme.addInactive(size: _iconSize),
-              ),
-              BottomNavigationBarItem(
-                activeIcon: AppIconsTheme.tacksActive(size: _iconSize),
-                icon: AppIconsTheme.tacksInactive(size: _iconSize),
-              ),
-            ],
-            backgroundColor: AppTheme.navBarBackgroundColor,
-            activeColor: AppTheme.navBarActiveIconColor,
-            inactiveColor: AppTheme.navBarInactiveIconColor,
-            height: 85,
-            border: null,
-          ),
-          tabBuilder: (_, int index) {
-            switch (index) {
-              case HomeScreenTab.dashboardTabIndex:
-                return CupertinoTabView(
-                  builder: (_) {
-                    return const DashboardScreen();
-                  },
-                );
-              case HomeScreenTab.addTabIndex:
-                return CupertinoTabView(
-                  builder: (_) {
-                    return const CreateTackScreen();
-                  },
-                );
-              case HomeScreenTab.tacksTabIndex:
-                return CupertinoTabView(
-                  builder: (_) {
-                    return const TacksScreen();
-                  },
-                );
-              default:
-                return const CupertinoTabView();
-            }
-          },
+    return MediaQuery.removePadding(
+      context: context,
+      removeBottom: true,
+      child: CupertinoTabScaffold(
+        resizeToAvoidBottomInset: false,
+        controller: _tabController,
+        tabBar: CupertinoTabBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              activeIcon: AppIconsTheme.dashboardsActive(size: _iconSize),
+              icon: AppIconsTheme.dashboardInactive(size: _iconSize),
+            ),
+            BottomNavigationBarItem(
+              activeIcon: AppIconsTheme.addActive(size: _iconSize),
+              icon: AppIconsTheme.addInactive(size: _iconSize),
+            ),
+            BottomNavigationBarItem(
+              activeIcon: AppIconsTheme.tacksActive(size: _iconSize),
+              icon: AppIconsTheme.tacksInactive(size: _iconSize),
+            ),
+          ],
+          backgroundColor: AppTheme.navBarBackgroundColor,
+          activeColor: AppTheme.navBarActiveIconColor,
+          inactiveColor: AppTheme.navBarInactiveIconColor,
+          height: 85,
+          border: null,
         ),
+        tabBuilder: (_, int index) {
+          switch (index) {
+            case HomeScreenTab.dashboardTabIndex:
+              return CupertinoTabView(
+                builder: (_) {
+                  return const DashboardScreen();
+                },
+              );
+            case HomeScreenTab.addTabIndex:
+              return CupertinoTabView(
+                builder: (_) {
+                  return const CreateTackScreen();
+                },
+              );
+            case HomeScreenTab.tacksTabIndex:
+              return CupertinoTabView(
+                builder: (_) {
+                  return const TacksScreen();
+                },
+              );
+            default:
+              return const CupertinoTabView();
+          }
+        },
       ),
     );
   }

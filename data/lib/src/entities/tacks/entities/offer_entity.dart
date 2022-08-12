@@ -8,13 +8,12 @@ part of tacks_entities;
 class OfferEntity extends JsonSerializable {
   final int id;
   final int tack;
-  final double? price;
+  final int? price;
   @JsonKey(name: 'offer_type')
   final String offerType;
   @JsonKey(name: 'is_accepted')
   final bool isAccepted;
-  @JsonKey(ignore: true)
-  final TackUserEntity? runner;
+  final TackUserEntity runner;
   @JsonKey(name: 'creation_time')
   final DateTime creationTime;
   @JsonKey(name: 'lifetime_seconds')
@@ -26,7 +25,7 @@ class OfferEntity extends JsonSerializable {
     required this.price,
     required this.offerType,
     required this.isAccepted,
-    this.runner,
+    required this.runner,
     required this.creationTime,
     required this.lifeTime,
   });

@@ -4,10 +4,10 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'package:groups/src/bloc/groups_bloc.dart';
+import 'package:groups/src/my_groups/bloc/my_groups_bloc.dart';
 import 'package:groups/src/my_groups/ui/widgets/group_tile/group_tile.dart';
-import 'package:groups/src/my_groups/ui/widgets/my_groups_list_footer_widget.dart';
 
-import '../bloc/groups_bloc.dart';
 
 class MyGroupsForm extends StatelessWidget {
   const MyGroupsForm({
@@ -18,40 +18,45 @@ class MyGroupsForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GroupsBloc, GroupsState>(
       builder: (_, GroupsState state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const PageHeaderWidget(
-              titleKey: 'groupsScreen.title',
-              descriptionKey: 'groupsScreen.description',
-            ),
-            const SizedBox(height: 4),
-            Expanded(
-              child: AppListViewWithRefresh(
-                enableRefresh: true,
-                enableLoad: state.canLoadMore,
-                isLoading: state.isLoading,
-                hasData: state.hasData,
-                emptyWidget: EmptyWidget(
-                  svgIcon: AppIconsTheme.people,
-                  descriptionKey: 'groupsScreen.empty.description',
-                  footer: const GroupsListFooterWidget(),
-                ),
-                onRefresh: _onRefreshAction,
-                onLoad: _onLoadMoreAction,
-                footerWidget: const GroupsListFooterWidget(),
-                itemCount: state.groups.length,
-                itemBuilder: (_, int index) {
-                  return GroupTile(
-                    group: state.groups[index],
-                  );
-                },
+        return PageContainerWithAddButton(
+          onAddButtonPressed: _onCreateGroupButtonPressed,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const PageHeaderWidget(
+                titleKey: 'groupsScreen.title',
+                descriptionKey: 'groupsScreen.description',
               ),
-            ),
-          ],
+              const SizedBox(height: 4),
+              Expanded(
+                child: AppListViewWithRefresh(
+                  enableRefresh: true,
+                  enableLoad: state.canLoadMore,
+                  isLoading: state.isLoading,
+                  hasData: state.hasData,
+                  emptyWidget: EmptyWidget(
+                    svgIcon: AppIconsTheme.people,
+                    descriptionKey: 'groupsScreen.empty.description',
+                  ),
+                  onRefresh: _onRefreshAction,
+                  onLoad: _onLoadMoreAction,
+                  itemCount: state.groups.length,
+                  itemBuilder: (_, int index) {
+                    return GroupTile(
+                      group: state.groups[index],
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
+  }
+
+  void _onCreateGroupButtonPressed(BuildContext context) {
+    BlocProvider.of<MyGroupsBloc>(context).add(CreateGroup());
   }
 
   void _onRefreshAction(

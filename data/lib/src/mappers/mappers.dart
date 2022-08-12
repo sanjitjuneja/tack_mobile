@@ -1,7 +1,10 @@
 library mappers;
 
 import 'package:data/src/entities/entities.dart';
+import 'package:data/src/entities/global/global.dart';
 import 'package:domain/domain.dart' as domain;
+
+part 'global/pagination_mapper.dart';
 
 part 'groups/group_invitation_mapper.dart';
 part 'groups/group_invite_link_mapper.dart';

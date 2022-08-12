@@ -2,10 +2,12 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:domain/use_case.dart';
+import 'package:groups/groups.dart';
 import 'package:navigation/navigation.dart';
 
 import 'package:tacks/src/add_edit_tack/models/counter_offer_option_data.dart';
 import 'package:tacks/src/add_edit_tack/models/description_data.dart';
+import 'package:tacks/src/add_edit_tack/models/group_data.dart';
 import 'package:tacks/src/add_edit_tack/models/price_data.dart';
 import 'package:tacks/src/add_edit_tack/models/time_estimation_data.dart';
 import 'package:tacks/src/add_edit_tack/models/title_data.dart';
@@ -40,7 +42,10 @@ class AddEditTackBloc extends Bloc<AddEditTackEvent, AddEditTackState> {
         ) {
     on<CreateTackRequest>(_onCreateTackRequest);
     on<EditTackRequest>(_onEditTackRequest);
+
     on<ClearAction>(_onClearAction);
+
+    on<GroupChange>(_onGroupChange);
     on<TitleChange>(_onTitleChange);
     on<PriceChange>(_onPriceChange);
     on<DescriptionChange>(_onDescriptionChange);
@@ -53,18 +58,21 @@ class AddEditTackBloc extends Bloc<AddEditTackEvent, AddEditTackState> {
     CreateTackRequest event,
     Emitter<AddEditTackState> emit,
   ) async {
-    if (state.group == null) return;
+    if (!state.isReadyToProceed) {
+      return emit(state.copyWith(isValidationEnabled: true));
+    }
 
     try {
       _appRouter.push(ProgressDialog.page());
       final Tack newTack = await _createTackUseCase.execute(
         CreateTackPayload(
-            title: state.titleData.title,
-            price: state.priceData.parsedPrice,
-            description: state.descriptionData.description,
-            estimatedTime: state.timeEstimationData.timeInSeconds!,
-            shouldAllowCounterOffers: state.counterOfferData.allow,
-            groupId: state.group!.id),
+          title: state.titleData.title,
+          price: state.priceData.parsedPrice,
+          description: state.descriptionData.description,
+          estimatedTime: state.timeEstimationData.timeInSeconds,
+          shouldAllowCounterOffers: state.counterOfferData.allow,
+          groupId: state.groupData.group!.id,
+        ),
       );
       _appRouter.pop();
       _appRouter.popWithResult(newTack);
@@ -85,6 +93,12 @@ class AddEditTackBloc extends Bloc<AddEditTackEvent, AddEditTackState> {
     EditTackRequest event,
     Emitter<AddEditTackState> emit,
   ) async {
+    if (!state.isReadyToProceed) {
+      return emit(state.copyWith(isValidationEnabled: true));
+    } else if (!state.isAnyDataChanged) {
+      return _appRouter.popWithResult(null);
+    }
+
     try {
       _appRouter.push(ProgressDialog.page());
       final Tack newTack = await _editTackUseCase.execute(
@@ -93,7 +107,7 @@ class AddEditTackBloc extends Bloc<AddEditTackEvent, AddEditTackState> {
           title: state.titleData.title,
           price: state.priceData.parsedPrice,
           description: state.descriptionData.description,
-          estimatedTime: state.timeEstimationData.timeInSeconds!,
+          estimatedTime: state.timeEstimationData.timeInSeconds,
           shouldAllowCounterOffers: state.counterOfferData.allow,
         ),
       );
@@ -117,6 +131,17 @@ class AddEditTackBloc extends Bloc<AddEditTackEvent, AddEditTackState> {
     Emitter<AddEditTackState> emit,
   ) async {
     emit(state.clear());
+  }
+
+  Future<void> _onGroupChange(
+    GroupChange event,
+    Emitter<AddEditTackState> emit,
+  ) async {
+    final Group? group = await _appRouter.pushForResult(
+      PickGroupFeature.page(state.groupData.group),
+    );
+
+    if (group != null) emit(state.copyWith(group: group));
   }
 
   Future<void> _onTitleChange(

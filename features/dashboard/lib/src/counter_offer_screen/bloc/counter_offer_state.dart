@@ -13,11 +13,13 @@ class CounterOfferState {
 
   CounterOfferState copyWith({
     String? counterOffer,
+    bool? isValidationEnabled,
   }) {
     return CounterOfferState(
       tack: tack,
       counterOfferData: counterOfferData.copyWith(
         counterOfferValue: counterOffer,
+        isValidationEnabled: isValidationEnabled,
       ),
     );
   }

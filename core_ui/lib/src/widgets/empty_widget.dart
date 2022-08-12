@@ -7,6 +7,7 @@ class EmptyWidget extends StatelessWidget {
   final String? titleKey;
   final String? descriptionKey;
   final Widget? footer;
+  final EdgeInsets? footerPadding;
   final String? buttonLabelKey;
   final VoidCallback? onButtonTap;
 
@@ -15,6 +16,7 @@ class EmptyWidget extends StatelessWidget {
     required this.svgIcon,
     this.descriptionKey,
     this.footer,
+    this.footerPadding,
     this.buttonLabelKey,
     this.onButtonTap,
     this.titleKey,
@@ -78,7 +80,8 @@ class EmptyWidget extends StatelessWidget {
         if (footer != null) ...<Widget>[
           const SizedBox(height: 48),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28.0),
+            padding:
+                footerPadding ?? const EdgeInsets.symmetric(horizontal: 28.0),
             child: footer!,
           ),
         ],

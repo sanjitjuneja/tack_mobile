@@ -69,12 +69,17 @@ class TackHeaderWidget extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            const SizedBox(width: 6),
-            Text(
-              DurationUtility.durationFormatString(tack.estimatedTime, context),
-              style: AppTextTheme.manrope16Bold
-                  .copyWith(color: AppTheme.textHeavyHintColor),
-            ),
+            if (tack.estimatedTime != null) ...<Widget>[
+              const SizedBox(width: 6),
+              Text(
+                DurationUtility.durationFormatString(
+                  tack.estimatedTime!,
+                  context,
+                ),
+                style: AppTextTheme.manrope16Bold
+                    .copyWith(color: AppTheme.textHeavyHintColor),
+              ),
+            ],
           ],
         ),
       ],

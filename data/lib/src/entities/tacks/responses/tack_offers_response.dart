@@ -1,24 +1,24 @@
 part of tacks_entities;
 
 @JsonSerializable()
-class GroupOffersResponse extends JsonSerializable {
+class TackOffersResponse extends JsonSerializable {
   final int count;
   final String? previous;
   final String? next;
   final List<OfferEntity> results;
 
-  const GroupOffersResponse({
+  const TackOffersResponse({
     required this.count,
     required this.previous,
     required this.next,
     required this.results,
   });
 
-  factory GroupOffersResponse.fromJson(Map<String, dynamic> json) {
-    return _$GroupOffersResponseFromJson(json);
+  factory TackOffersResponse.fromJson(Map<String, dynamic> json) {
+    return _$TackOffersResponseFromJson(json);
   }
 
   @override
-  Map<String, dynamic> toJson() => _$GroupOffersResponseToJson(this);
+  Map<String, dynamic> toJson() => _$TackOffersResponseToJson(this);
 
 }

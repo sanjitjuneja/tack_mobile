@@ -24,6 +24,7 @@ class CreateTackScreen extends StatelessWidget {
       ),
       child: CupertinoPageScaffold(
         backgroundColor: AppTheme.primaryBackgroundColor,
+        resizeToAvoidBottomInset: false,
         navigationBar: AppNavigationBar(
           backgroundColor: AppTheme.primaryBackgroundColor,
           automaticallyImplyLeading: false,

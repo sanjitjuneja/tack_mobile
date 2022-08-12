@@ -9,7 +9,7 @@ class TackEntity extends JsonSerializable with ListParserMixin {
   final int price;
   final String description;
   @JsonKey(name: 'estimation_time_seconds')
-  final Duration estimationTime;
+  final Duration? estimationTime;
   @JsonKey(name: 'allow_counter_offer')
   final bool allowCounterOffer;
   final String status;

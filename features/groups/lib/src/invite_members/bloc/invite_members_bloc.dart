@@ -17,7 +17,10 @@ class InviteMembersBloc extends Bloc<InviteMembersEvent, InviteMembersState> {
   })  : _appRouter = appRouter,
         _loadGroupInviteLinkUseCase = loadGroupInviteLinkUseCase,
         super(
-          InviteMembersState(group: group),
+          InviteMembersState(
+            group: group,
+            isLoading: true,
+          ),
         ) {
     on<LoadLink>(_onLoadLink);
 

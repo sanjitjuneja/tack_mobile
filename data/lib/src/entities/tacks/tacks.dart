@@ -26,11 +26,11 @@ part 'requests/start_tack_request.dart';
 part 'requests/tacker_tacks_request.dart';
 part 'requests/update_tack_request.dart';
 
-part 'responses/group_offers_response.dart';
 part 'responses/group_popular_tacks_response.dart';
 part 'responses/group_tacks_response.dart';
 part 'responses/nearby_popular_tacks_response.dart';
 part 'responses/runner_tacks_response.dart';
+part 'responses/tack_offers_response.dart';
 part 'responses/tacker_tacks_response.dart';
 
 part 'tacks.g.dart';

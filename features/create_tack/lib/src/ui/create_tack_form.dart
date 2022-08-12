@@ -13,18 +13,9 @@ class CreateTackForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CreateTackBloc, CreateTackState>(
       builder: (_, CreateTackState state) {
-        return Scaffold(
-          backgroundColor: AppTheme.transparentColor,
-          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-          floatingActionButton: AppButton(
-            icon: AppIconsTheme.plus,
-            iconSize: 28,
-            withFeedback: true,
-            expanded: false,
-            shape: BoxShape.circle,
-            onTap: () => _onAddButtonPressed(context),
-          ),
-          body: DefaultTabController(
+        return PageContainerWithAddButton(
+          onAddButtonPressed: _onAddButtonPressed,
+          child: DefaultTabController(
             length: 2,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

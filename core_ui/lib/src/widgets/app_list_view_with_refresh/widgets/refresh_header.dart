@@ -1,11 +1,18 @@
 part of app_list_view_with_refresh;
 
 class _RefreshHeader extends StatelessWidget {
-  const _RefreshHeader();
+  final Color? indicatorColor;
+  final ProgressIndicatorSize indicatorSize;
+
+  const _RefreshHeader({
+    required this.indicatorColor,
+    required this.indicatorSize,
+  });
 
   @override
   Widget build(BuildContext context) {
     return CustomHeader(
+      height: indicatorSize.size + indicatorSize.size / 4,
       builder: (_, RefreshStatus? status) {
         if (status == RefreshStatus.completed) {
           return Center(
@@ -28,7 +35,8 @@ class _RefreshHeader extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 10),
             child: AppProgressIndicator(
               backgroundColor: AppTheme.transparentColor,
-              indicatorSize: ProgressIndicatorSize.medium,
+              indicatorSize: indicatorSize,
+              indicatorColor: indicatorColor,
               expand: false,
             ),
           );

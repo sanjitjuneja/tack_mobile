@@ -24,7 +24,7 @@ class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState> {
         _loadGroupInvitationsUseCase = loadGroupInvitationsUseCase,
         _acceptGroupInvitationUseCase = acceptGroupInvitationUseCase,
         super(
-          const InvitationsState(),
+          const InvitationsState(isLoading: true),
         ) {
     on<InitialLoad>(_onInitialLoad);
     on<RefreshAction>(_onRefreshAction);
@@ -40,7 +40,6 @@ class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState> {
     InitialLoad event,
     Emitter<InvitationsState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true));
     add(const RefreshAction());
   }
 
@@ -89,7 +88,10 @@ class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState> {
       GroupDetailsFeature.groupInvitationPage(invitation: event.invitation),
     );
 
-    __onResult(result: result);
+    __onResult(
+      result: result,
+      groupName: event.invitation.group.name,
+    );
   }
 
   Future<void> _onJoinGroup(
@@ -104,7 +106,10 @@ class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState> {
         ),
       );
       _appRouter.pop();
-      __onResult(result: GroupDetailsScreenResult.joinGroup);
+      __onResult(
+        result: GroupDetailsScreenResult.joinGroup,
+        groupName: event.invitation.group.name,
+      );
     } catch (e) {
       _appRouter.pop();
       _appRouter.pushForResult(
@@ -117,17 +122,37 @@ class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState> {
     }
   }
 
-  Future<void> __onResult({required GroupDetailsScreenResult? result}) async {
+  Future<void> __onResult({
+    required GroupDetailsScreenResult? result,
+    required String groupName,
+  }) async {
+    final TranslationParams translationParams =
+        <AlertPropertyKey, Map<String, String>>{
+      AlertPropertyKey.message: <String, String>{
+        'groupName': groupName,
+      },
+    };
+
     switch (result) {
       case GroupDetailsScreenResult.joinGroup:
         _appRouter.pushForResult(
           AppAlertDialog.page(
-            SuccessAlert(contentKey: 'otherAlerts.inGroupNow'),
+            SuccessAlert(
+              contentKey: 'otherAlert.inGroupNow',
+              translationParams: translationParams,
+            ),
           ),
         );
         break;
       case GroupDetailsScreenResult.declineInvitation:
-        // TODO: Handle this case.
+        _appRouter.pushForResult(
+          AppAlertDialog.page(
+            SuccessAlert(
+              contentKey: 'otherAlert.declineGroupInvite',
+              translationParams: translationParams,
+            ),
+          ),
+        );
         break;
       default:
         return;

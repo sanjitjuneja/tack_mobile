@@ -4,7 +4,7 @@ class TemplateTack extends Equatable {
   final String title;
   final double price;
   final String description;
-  final Duration estimatedTime;
+  final Duration? estimatedTime;
   final bool allowCounterOffers;
 
   const TemplateTack({
