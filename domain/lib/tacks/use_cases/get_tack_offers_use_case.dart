@@ -1,7 +1,7 @@
 part of tacks;
 
 class GetTackOffersUseCase
-    extends FutureUseCase<List<Offer>, TackOffersPayload> {
+    extends FutureUseCase<PaginationModel<Offer>, TackOffersPayload> {
   final TacksRepository _tacksRepository;
 
   GetTackOffersUseCase({
@@ -9,7 +9,7 @@ class GetTackOffersUseCase
   }) : _tacksRepository = tacksRepository;
 
   @override
-  Future<List<Offer>> execute(TackOffersPayload params) async {
+  Future<PaginationModel<Offer>> execute(TackOffersPayload params) async {
     return _tacksRepository.getTackOffers(params);
   }
 }

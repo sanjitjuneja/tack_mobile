@@ -17,7 +17,7 @@ abstract class TacksRepository {
 
   Future<List<Tack>> getTackerTacks();
 
-  Future<List<Tack>> getGroupTacks(GroupTacksPayload payload);
+  Future<PaginationModel<Tack>> getGroupTacks(GroupTacksPayload payload);
 
   Future<Tack> createTack(CreateTackPayload payload);
 
@@ -33,7 +33,7 @@ abstract class TacksRepository {
 
   Future<void> completeTackByRunner(CompleteTackPayload payload);
 
-  Future<List<Offer>> getTackOffers(TackOffersPayload payload);
+  Future<PaginationModel<Offer>> getTackOffers(TackOffersPayload payload);
 
   Future<void> makeOffer(MakeOfferPayload payload);
 

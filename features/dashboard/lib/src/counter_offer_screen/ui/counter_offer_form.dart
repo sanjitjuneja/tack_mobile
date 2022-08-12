@@ -15,50 +15,44 @@ class CounterOfferForm extends StatelessWidget {
         return Column(
           children: <Widget>[
             Expanded(
-              child: CupertinoScrollbar(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12.0,
-                    horizontal: 16.0,
+              child: AppScrollView(
+                children: <Widget>[
+                  Text(
+                    FlutterI18n.translate(
+                      context,
+                      'counterOfferScreen.tackDetails',
+                    ),
+                    style: AppTextTheme.manrope20Regular,
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        FlutterI18n.translate(
-                          context,
-                          'counterOfferScreen.tackDetails',
-                        ),
-                        style: AppTextTheme.manrope20Regular,
-                      ),
-                      const SizedBox(height: 18),
-                      TackTile(
-                        tack: state.tack,
-                        withActions: false,
-                      ),
-                      const SizedBox(height: 35),
-                      Text(
-                        FlutterI18n.translate(
-                          context,
-                          'counterOfferScreen.counterofferPrice',
-                        ),
-                        style: AppTextTheme.manrope20Regular,
-                      ),
-                      const SizedBox(height: 15),
-                      AppTextField(
-                        placeholder: 'general.price',
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true,
-                        ),
-                        inputFormatters: CurrencyUtility.dollarInputFormatters(
-                          maxValue: state.counterOfferData.maxValue,
-                        ),
-                        onTextChange: (String value) =>
-                            _onCounterOfferChange(context, value),
-                      ),
-                    ],
+                  const SizedBox(height: 18),
+                  TackTile(
+                    tack: state.tack,
+                    withActions: false,
                   ),
-                ),
+                  const SizedBox(height: 35),
+                  Text(
+                    FlutterI18n.translate(
+                      context,
+                      'counterOfferScreen.counterofferPrice',
+                    ),
+                    style: AppTextTheme.manrope20Regular,
+                  ),
+                  const SizedBox(height: 15),
+                  AppTextField(
+                    placeholder: 'general.price',
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
+                    isInvalid: state.counterOfferData.isInvalid,
+                    errorTextKey: 'counterOfferScreen.priceInvalid',
+                    inputFormatters: CurrencyUtility.dollarInputFormatters(
+                      maxValue: state.counterOfferData.maxValue,
+                    ),
+                    onTextChange: (String value) =>
+                        _onCounterOfferChange(context, value),
+                    onFocusLost: _onFocusLost,
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 10),
@@ -66,7 +60,6 @@ class CounterOfferForm extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 40),
               child: AppCircleButton(
                 margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                isDisabled: !state.isReadyToProceed,
                 labelKey: 'counterOfferScreen.sendOfferButton',
                 onTap: () => _onCounterOfferSendPress(context),
               ),
@@ -86,6 +79,18 @@ class CounterOfferForm extends StatelessWidget {
         counterOffer: const CurrencyFormatter().removeFormat(value),
       ),
     );
+  }
+
+  void _onFocusLost(TextEditingController controller) {
+    final String text = controller.text;
+    final String unformattedText = const CurrencyFormatter().removeFormat(text);
+
+    if (unformattedText.isNotEmpty) {
+      final double value = double.parse(unformattedText);
+      final String newText = CurrencyUtility.dollarFormat.format(value);
+
+      controller.text = newText;
+    }
   }
 
   void _onCounterOfferSendPress(BuildContext context) {

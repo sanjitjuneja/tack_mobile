@@ -23,23 +23,3 @@ class LoadMoreAction extends GroupsEvent {
     required this.completer,
   });
 }
-
-class OpenGroupDetails extends GroupsEvent {
-  final Group group;
-
-  const OpenGroupDetails({
-    required this.group,
-  });
-}
-
-class InviteMembers extends GroupsEvent {
-  final Group group;
-
-  const InviteMembers({
-    required this.group,
-  });
-}
-
-class OpenMyInvitations extends GroupsEvent {}
-
-class CreateGroup extends GroupsEvent {}

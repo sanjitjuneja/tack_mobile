@@ -77,9 +77,3 @@ extension OngoingTackToStepIndexViewExtension on Tack {
     }
   }
 }
-
-extension OngoingTackOfferToViewExtension on OfferType {
-  String get title {
-    return 'ongoingTackScreen.tacker.offer.$name';
-  }
-}

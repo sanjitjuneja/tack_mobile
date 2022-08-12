@@ -48,7 +48,7 @@ class TimeEstimationData {
     return timeInSeconds != oldTime || timeEstimationIn != oldTimeEstimationIn;
   }
 
-  int? get timeInSeconds => isValid
+  int? get timeInSeconds => timeEstimation.isNotEmpty
       ? timeEstimationIn.valueToTimeInSeconds(int.parse(timeEstimation))
       : null;
 

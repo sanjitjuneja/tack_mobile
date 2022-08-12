@@ -24,8 +24,10 @@ class CounterOfferBloc extends Bloc<CounterOfferEvent, CounterOfferState> {
         super(
           CounterOfferState(
             tack: tack,
-            counterOfferData: const CounterOfferData(
+            counterOfferData: CounterOfferData(
+              minValue: tack.price,
               maxValue: _maxCounterOfferValue,
+              isValidationEnabled: false,
               isRequired: true,
             ),
           ),
@@ -39,7 +41,10 @@ class CounterOfferBloc extends Bloc<CounterOfferEvent, CounterOfferState> {
     Emitter<CounterOfferState> emit,
   ) async {
     emit(
-      state.copyWith(counterOffer: event.counterOffer),
+      state.copyWith(
+        counterOffer: event.counterOffer,
+        isValidationEnabled: false,
+      ),
     );
   }
 
@@ -47,6 +52,13 @@ class CounterOfferBloc extends Bloc<CounterOfferEvent, CounterOfferState> {
     CounterOfferSend event,
     Emitter<CounterOfferState> emit,
   ) async {
+    emit(
+      state.copyWith(isValidationEnabled: true),
+    );
+    if (state.counterOfferData.isInvalid) {
+      return;
+    }
+
     try {
       _appRouter.push(ProgressDialog.page());
       await _makeOfferUseCase.execute(

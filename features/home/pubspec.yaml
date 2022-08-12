@@ -11,8 +11,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  groups:
-    path: ../groups
   core:
     path: ../../core
   domain:
@@ -27,6 +25,8 @@ dependencies:
     path: ../dashboard
   create_tack:
     path: ../create_tack
+  groups:
+    path: ../groups
   tacks:
     path: ../tacks
 

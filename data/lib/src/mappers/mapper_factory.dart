@@ -48,4 +48,20 @@ class MapperFactory {
 
   PhoneVerificationMapper get phoneVerificationMapper =>
       PhoneVerificationMapper();
+
+  PaginationMapper<S, C> paginationMapper<S, C>() => PaginationMapper<S, C>(
+        mapper: _factory<S, C>(),
+      );
+
+  Mapper<S, C> _factory<S, C>() {
+    if (S == TackEntity) {
+      return tackMapper as Mapper<S, C>;
+    }
+
+    if (S == OfferEntity) {
+      return offerMapper as Mapper<S, C>;
+    }
+
+    throw Exception('wrong type');
+  }
 }

@@ -3,7 +3,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:groups/src/my_groups/bloc/groups_bloc.dart';
+import 'package:groups/src/my_groups/bloc/my_groups_bloc.dart';
 
 class GroupTileActions extends StatelessWidget {
   final Group group;
@@ -41,10 +41,10 @@ class GroupTileActions extends StatelessWidget {
   }
 
   void _onInfoButtonPressed(BuildContext context) {
-    BlocProvider.of<GroupsBloc>(context).add(OpenGroupDetails(group: group));
+    BlocProvider.of<MyGroupsBloc>(context).add(OpenGroupDetails(group: group));
   }
 
   void _onInviteMembersButtonPressed(BuildContext context) {
-    BlocProvider.of<GroupsBloc>(context).add(InviteMembers(group: group));
+    BlocProvider.of<MyGroupsBloc>(context).add(InviteMembers(group: group));
   }
 }

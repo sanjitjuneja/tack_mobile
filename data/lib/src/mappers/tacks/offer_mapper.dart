@@ -1,6 +1,6 @@
 part of mappers;
 
-class OfferMapper implements Mapper<OfferEntity, domain.Offer> {
+class OfferMapper extends Mapper<OfferEntity, domain.Offer> {
   final OfferTypeMapper offerTypeMapper;
   final TackUserMapper tackUserMapper;
 
@@ -14,8 +14,8 @@ class OfferMapper implements Mapper<OfferEntity, domain.Offer> {
     return domain.Offer(
       id: entity.id,
       tackId: entity.tack,
-      runner: tackUserMapper.fromEntity(entity.runner),
-      price: entity.price ?? 0,
+      runner: tackUserMapper.fromEntity(entity.runner)!,
+      price: entity.price != null ? entity.price! / 100 : null,
       type: offerTypeMapper.fromEntity(entity.offerType),
       isAccepted: entity.isAccepted,
       createdAt: entity.creationTime,
@@ -28,8 +28,8 @@ class OfferMapper implements Mapper<OfferEntity, domain.Offer> {
     return OfferEntity(
       id: item.id,
       tack: item.tackId,
-      runner: tackUserMapper.toEntity(item.runner),
-      price: item.price,
+      runner: tackUserMapper.toEntity(item.runner)!,
+      price: item.price != null ? (item.price! * 100).toInt() : null,
       offerType: offerTypeMapper.toEntity(item.type),
       isAccepted: item.isAccepted,
       creationTime: item.createdAt,

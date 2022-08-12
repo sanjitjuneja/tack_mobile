@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 
 class _TopSlideRouteLayout extends SingleChildLayoutDelegate {
-  final double progress;
+  final double _progress;
+  final BoxConstraints? _constraints;
 
-  _TopSlideRouteLayout(this.progress);
+  _TopSlideRouteLayout(this._progress, this._constraints,);
 
   @override
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
@@ -15,7 +16,7 @@ class _TopSlideRouteLayout extends SingleChildLayoutDelegate {
       minWidth: constraints.maxWidth,
       maxWidth: constraints.maxWidth,
       minHeight: 0.0,
-      maxHeight: constraints.maxHeight * 0.37,
+      maxHeight: _constraints?.maxHeight ?? constraints.maxHeight * 0.37,
     );
   }
 
@@ -23,13 +24,13 @@ class _TopSlideRouteLayout extends SingleChildLayoutDelegate {
   Offset getPositionForChild(Size size, Size childSize) {
     return Offset(
       0,
-      -childSize.height + childSize.height * progress,
+      -childSize.height + childSize.height * _progress,
     );
   }
 
   @override
   bool shouldRelayout(_TopSlideRouteLayout oldDelegate) {
-    return progress != oldDelegate.progress;
+    return _progress != oldDelegate._progress;
   }
 }
 
@@ -45,7 +46,7 @@ class _TopSlideRouteBody<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: route.animation!,
-      child: route.builder!(context),
+      child: route.builder(context),
       builder: (_, Widget? child) {
         final double animationValue = route.animation!.value;
 
@@ -69,7 +70,10 @@ class _TopSlideRouteBody<T> extends StatelessWidget {
             ),
             ClipRect(
               child: CustomSingleChildLayout(
-                delegate: _TopSlideRouteLayout(animationValue),
+                delegate: _TopSlideRouteLayout(
+                  animationValue,
+                  route.constraints,
+                ),
                 child: child,
               ),
             ),
@@ -83,8 +87,15 @@ class _TopSlideRouteBody<T> extends StatelessWidget {
 class TopSlideRoute<T> extends PopupRoute<T> {
   static const Duration _defaultAnimationDuration = Duration(milliseconds: 300);
 
+  final WidgetBuilder builder;
+  final BoxConstraints? constraints;
+  final Color modalBarrierColor;
+  final bool isDismissible;
+  final Duration? transitionAnimationDuration;
+
   TopSlideRoute({
     required this.builder,
+    this.constraints,
     this.barrierLabel,
     Color? modalBarrierColor,
     this.isDismissible = true,
@@ -92,11 +103,6 @@ class TopSlideRoute<T> extends PopupRoute<T> {
     RouteSettings? settings,
   })  : modalBarrierColor = modalBarrierColor ?? AppTheme.barrierColor,
         super(settings: settings);
-
-  final WidgetBuilder? builder;
-  final Color modalBarrierColor;
-  final bool isDismissible;
-  final Duration? transitionAnimationDuration;
 
   @override
   Duration get transitionDuration =>

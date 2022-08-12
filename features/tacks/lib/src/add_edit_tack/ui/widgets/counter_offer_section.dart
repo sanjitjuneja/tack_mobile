@@ -32,11 +32,13 @@ class _CounterOfferSectionState extends State<CounterOfferSection> {
       children: <Widget>[
         Row(
           children: <Widget>[
-            SectionHeaderWidget(
-              labelKey: '${_localizationPath}title',
+            Flexible(
+              child: SectionHeaderWidget(
+                labelKey: '${_localizationPath}title',
+                isRequired: widget.state.counterOfferData.isRequired,
+              ),
             ),
             const SizedBox(width: 10),
-            const Spacer(),
             ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 150),
               child: DefaultTabController(

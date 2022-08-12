@@ -61,11 +61,14 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   }
 
   @override
-  Future<List<domain.Tack>> getGroupTacks(
+  Future<domain.PaginationModel<domain.Tack>> getGroupTacks(
     domain.GroupTacksPayload payload,
   ) async {
     return _apiProvider.getGroupTacks(
-      GroupTacksRequest(groupId: payload.groupId),
+      GroupTacksRequest(
+        groupId: payload.groupId,
+        queryParameters: payload.nextPage?.queryParameters,
+      ),
     );
   }
 
@@ -145,12 +148,13 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   }
 
   @override
-  Future<List<domain.Offer>> getTackOffers(
+  Future<domain.PaginationModel<domain.Offer>> getTackOffers(
     domain.TackOffersPayload payload,
   ) async {
     return _apiProvider.getTackOffers(
       GetTackOffersRequest(
         tackId: payload.tack.id,
+        queryParameters: payload.nextPage?.queryParameters,
       ),
     );
   }

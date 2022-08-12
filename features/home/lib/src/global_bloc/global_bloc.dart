@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:core/core.dart';
-import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:domain/use_case.dart';
+import 'package:groups/groups.dart';
 import 'package:navigation/navigation.dart';
 
 part 'global_event.dart';
@@ -89,10 +89,7 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
     Emitter<GlobalState> emit,
   ) async {
     final Group? newGroup = await _appRouter.pushForResult(
-      ChangeGroupDrawer.page(
-        state.groups,
-        state.currentGroup,
-      ),
+      PickGroupDrawerFeature.page(state.currentGroup),
     );
 
     if (newGroup != null) {

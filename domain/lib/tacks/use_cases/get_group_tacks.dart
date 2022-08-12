@@ -1,7 +1,7 @@
 part of tacks;
 
 class GetGroupTacksUseCase
-    extends FutureUseCase<List<Tack>, GroupTacksPayload> {
+    extends FutureUseCase<PaginationModel<Tack>, GroupTacksPayload> {
   final TacksRepository _tacksRepository;
 
   GetGroupTacksUseCase({
@@ -9,7 +9,7 @@ class GetGroupTacksUseCase
   }) : _tacksRepository = tacksRepository;
 
   @override
-  Future<List<Tack>> execute(GroupTacksPayload params) async {
+  Future<PaginationModel<Tack>> execute(GroupTacksPayload params) async {
     return _tacksRepository.getGroupTacks(params);
   }
 }

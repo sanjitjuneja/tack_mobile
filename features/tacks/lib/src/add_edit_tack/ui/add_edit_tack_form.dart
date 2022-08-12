@@ -9,6 +9,8 @@ import 'package:tacks/src/add_edit_tack/ui/widgets/price_section.dart';
 import 'package:tacks/src/add_edit_tack/ui/widgets/time_section.dart';
 import 'package:tacks/src/add_edit_tack/ui/widgets/title_section.dart';
 
+import 'widgets/group_section.dart';
+
 class AddEditTackForm extends StatelessWidget {
   const AddEditTackForm({
     super.key,
@@ -30,12 +32,14 @@ class AddEditTackForm extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                      GroupSection(state: state),
+                      const SizedBox(height: 34),
                       TitleSection(state: state),
                       const SizedBox(height: 12),
                       PriceSection(state: state),
                       const SizedBox(height: 12),
                       DescriptionSection(state: state),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 34),
                       TimeSection(state: state),
                       const SizedBox(height: 12),
                       CounterOfferSection(state: state),
@@ -50,14 +54,12 @@ class AddEditTackForm extends StatelessWidget {
               child: state.isAdd
                   ? AppCircleButton(
                       margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                      isDisabled: !state.isReadyToProceed,
                       labelKey: 'addEditTackScreen.createTackButton',
                       withFeedback: true,
                       onTap: () => _onCreateTackPressed(context),
                     )
                   : AppCircleButton(
                       margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                      isDisabled: !state.isReadyToProceed,
                       labelKey: 'addEditTackScreen.updateTackButton',
                       onTap: () => _onEditTackPressed(context),
                     ),

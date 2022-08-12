@@ -16,26 +16,28 @@ class PriceSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        SectionHeaderWidget(
-          labelKey: '${_localizationPath}title',
+    return AppTextField(
+      initialText: state.priceData.price,
+      placeholder: '${_localizationPath}placeholder',
+      isRequired: state.priceData.isRequired,
+      isInvalid: state.priceData.isInvalid,
+      errorTextKey: 'validationErrors.fieldRequired',
+      suffix: Padding(
+        padding: const EdgeInsets.only(right: 16.0),
+        child: Text(
+          FlutterI18n.translate(context, '${_localizationPath}suffix'),
+          style: AppTextTheme.manrope14Regular
+              .copyWith(color: AppTheme.textSecondaryColor),
         ),
-        const SizedBox(height: 12),
-        AppTextField(
-          placeholder: '${_localizationPath}placeholder',
-          initialText: state.priceData.price,
-          keyboardType: const TextInputType.numberWithOptions(
-            decimal: true,
-          ),
-          inputFormatters:
-              CurrencyUtility.dollarInputFormatters(maxValue: 1000),
-          hasShadow: false,
-          backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
-          onTextChange: (String value) => _onPriceChange(context, value),
-        ),
-      ],
+      ),
+      keyboardType: const TextInputType.numberWithOptions(
+        decimal: true,
+      ),
+      inputFormatters: CurrencyUtility.dollarInputFormatters(maxValue: 1000),
+      hasShadow: false,
+      backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
+      onTextChange: (String value) => _onPriceChange(context, value),
+      onFocusLost: _onFocusLost,
     );
   }
 
@@ -46,5 +48,17 @@ class PriceSection extends StatelessWidget {
     BlocProvider.of<AddEditTackBloc>(context).add(
       PriceChange(const CurrencyFormatter().removeFormat(value)),
     );
+  }
+
+  void _onFocusLost(TextEditingController controller) {
+    final String text = controller.text;
+    final String unformattedText = const CurrencyFormatter().removeFormat(text);
+
+    if (unformattedText.isNotEmpty) {
+      final double value = double.parse(unformattedText);
+      final String newText = CurrencyUtility.dollarFormat.format(value);
+
+      controller.text = newText;
+    }
   }
 }

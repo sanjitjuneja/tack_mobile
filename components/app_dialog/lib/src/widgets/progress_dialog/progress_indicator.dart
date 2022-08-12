@@ -31,7 +31,8 @@ class AppProgressIndicator extends StatelessWidget {
               size: indicatorSize.size,
               progressStrokeWidth: indicatorSize.strokeWidth,
               backStrokeWidth: 0,
-              progressColor: indicatorColor ?? AppTheme.progressInterfaceLightColor,
+              progressColor:
+                  indicatorColor ?? AppTheme.progressInterfaceLightColor,
             ),
             if (messageKey != null) ...<Widget>[
               const SizedBox(height: 28),

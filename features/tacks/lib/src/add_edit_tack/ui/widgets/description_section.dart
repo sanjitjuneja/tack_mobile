@@ -18,33 +18,21 @@ class DescriptionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        SectionHeaderWidget(
-          labelKey: '${_localizationPath}title',
-        ),
-        const SizedBox(height: 12),
-        AppTextField(
-          placeholder: '${_localizationPath}placeholder',
-          initialText: state.descriptionData.description,
-          minLines: 3,
-          keyboardType: TextInputType.text,
-          textInputAction: TextInputAction.next,
-          hasShadow: false,
-          backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
-          inputFormatters: <TextInputFormatter>[
-            WordsLengthFormatter(state.descriptionData.maxWords),
-          ],
-          onTextChange: (String value) => _onDescriptionChange(context, value),
-        ),
-        const SizedBox(height: 4),
-        TextFieldFooter(
-          labelKey: '${_localizationPath}footerText',
-          content: state.descriptionData.wordsLeft.toString(),
-          maxContent: state.descriptionData.maxWords.toString(),
-        ),
+    return AppTextField(
+      initialText: state.descriptionData.description,
+      placeholder: '${_localizationPath}placeholder',
+      isRequired: state.descriptionData.isRequired,
+      isInvalid: state.descriptionData.isInvalid,
+      errorTextKey: 'validationErrors.fieldRequired',
+      minLines: 3,
+      keyboardType: TextInputType.text,
+      textInputAction: TextInputAction.done,
+      hasShadow: false,
+      backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
+      inputFormatters: <TextInputFormatter>[
+        WordsLengthFormatter(state.descriptionData.maxWords),
       ],
+      onTextChange: (String value) => _onDescriptionChange(context, value),
     );
   }
 

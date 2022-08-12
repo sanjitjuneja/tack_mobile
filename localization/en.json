@@ -3,6 +3,9 @@
     "couldNotLaunchURL": "Could not launch URL",
     "tackIsNotAvailable": "Sorry, this Tack is no longer available"
   },
+  "validationErrors": {
+    "fieldRequired": "Field Required"
+  },
   "errorAlert": {
     "defaultAlert": {
       "title": "Warning",
@@ -47,7 +50,7 @@
       "message": "Are you sure want to <colored>Cancel</colored>\n <highlight>{tackName}</highlight>"
     },
     "declineGroupInvite": {
-      "message": "Are you sure want to <colored>Leave</colored>\n <highlight>{groupName}</highlight>"
+      "message": "Are you sure want to <colored>Decline</colored>\n <highlight>{groupName}</highlight>"
     },
     "leaveGroup": {
       "message": "Are you sure want to <colored>Leave</colored>\n <highlight>{groupName}</highlight>"
@@ -72,8 +75,14 @@
       "message": "Need someone to Re-string my Fender Strat...",
       "mainButtonLabel": "Begin Tack"
     },
+    "declineGroupInvite": {
+      "message": "Declined request to join \n<highlight>{groupName}</highlight>"
+    },
     "inGroupNow": {
       "message": "You are now a member of \n <highlight-colored>{groupName}</highlight-colored>"
+    },
+    "noMoreGroupMember": {
+      "message": "You are no longer a member of \n<highlight>{groupName}</highlight>"
     },
     "groupCreated": {
       "title": "New Group Created",
@@ -154,6 +163,7 @@
   "counterOfferScreen": {
     "tackDetails": "Tack Details",
     "counterofferPrice": "Counteroffer Price",
+    "priceInvalid": "Counter price must be greater than listed price",
     "sendOfferButton": "Send Offer"
   },
   "tacksScreen": {
@@ -318,11 +328,12 @@
     },
     "priceSection": {
       "title": "Price",
-      "placeholder": "Price"
+      "placeholder": "Price",
+      "suffix": "0 Transaction Fee"
     },
     "descriptionSection": {
       "title": "Description",
-      "placeholder": "Type here...",
+      "placeholder": "Description",
       "footerText": "Words Remaining"
     },
     "timeSection": {
@@ -411,10 +422,7 @@
         "button": "Send Payment & Complete",
         "note": "NOTE: Tack is automatically marked as complete and payment is sent after 12 hours"
       },
-      "offer": {
-        "offer": "Offers",
-        "counterOffer": "Counter Offers"
-      }
+      "offers": "Offers ({count})"
     },
     "runner": {
       "pendingStart": {
@@ -441,6 +449,9 @@
     "commentPlaceholder": "Type your explanation here...",
     "commentFooterText": "Words Remaining",
     "confirmButtonLabel": "Complete Tack"
+  },
+  "pickGroupScreen": {
+    "title": "Select Group"
   },
   "paymentSettingsScreen": {
     "title": "Payment Settings",

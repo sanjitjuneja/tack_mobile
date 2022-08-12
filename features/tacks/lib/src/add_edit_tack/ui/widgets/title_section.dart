@@ -17,34 +17,22 @@ class TitleSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        SectionHeaderWidget(
-          labelKey: '${_localizationPath}title',
-        ),
-        const SizedBox(height: 12),
-        AppTextField(
-          placeholder: '${_localizationPath}placeholder',
-          initialText: state.titleData.title,
-          keyboardType: TextInputType.text,
-          textInputAction: TextInputAction.next,
-          hasShadow: false,
-          backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
-          inputFormatters: <TextInputFormatter>[
-            LengthLimitingTextInputFormatter(
-              state.titleData.maxLength,
-            ),
-          ],
-          onTextChange: (String value) => _onTitleChange(context, value),
-        ),
-        const SizedBox(height: 4),
-        TextFieldFooter(
-          labelKey: '${_localizationPath}footerText',
-          content: state.titleData.charactersLeft.toString(),
-          maxContent: state.titleData.maxLength.toString(),
+    return AppTextField(
+      initialText: state.titleData.title,
+      placeholder: '${_localizationPath}placeholder',
+      isRequired: state.titleData.isRequired,
+      isInvalid: state.titleData.isInvalid,
+      errorTextKey: 'validationErrors.fieldRequired',
+      keyboardType: TextInputType.text,
+      textInputAction: TextInputAction.next,
+      hasShadow: false,
+      backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
+      inputFormatters: <TextInputFormatter>[
+        LengthLimitingTextInputFormatter(
+          state.titleData.maxLength,
         ),
       ],
+      onTextChange: (String value) => _onTitleChange(context, value),
     );
   }
 

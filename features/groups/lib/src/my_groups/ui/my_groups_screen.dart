@@ -2,6 +2,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'my_groups_form.dart';
+import 'widgets/navigation_bar_action.dart';
 
 class MyGroupsScreen extends StatelessWidget {
   const MyGroupsScreen({super.key});
@@ -13,6 +14,9 @@ class MyGroupsScreen extends StatelessWidget {
       navigationBar: AppNavigationBar(
         backgroundColor: AppTheme.primaryBackgroundColor,
         withResult: false,
+        actions: const <Widget>[
+          NavigationBarAction(),
+        ],
       ),
       child: const SafeArea(
         child: MyGroupsForm(),

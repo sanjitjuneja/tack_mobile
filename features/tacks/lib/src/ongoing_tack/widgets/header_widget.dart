@@ -24,33 +24,36 @@ class HeaderWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: Text(
-                DurationUtility.durationFormatString(
-                  tack.estimatedTime,
-                  context,
+        if (tack.estimatedTime != null) ...<Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  DurationUtility.durationFormatString(
+                    tack.estimatedTime!,
+                    context,
+                  ),
+                  maxLines: 1,
+                  style: AppTextTheme.manrope28Bold
+                      .copyWith(color: AppTheme.textSecondaryColor),
                 ),
-                maxLines: 1,
-                style: AppTextTheme.manrope28Bold
-                    .copyWith(color: AppTheme.textSecondaryColor),
               ),
-            ),
-            Text(
-              FlutterI18n.translate(
-                context,
-                'ongoingTackScreen.estimatedTackTime',
+              Text(
+                FlutterI18n.translate(
+                  context,
+                  'ongoingTackScreen.estimatedTackTime',
+                ),
+                textAlign: TextAlign.end,
+                style: AppTextTheme.manrope14SemiBold.copyWith(
+                  color: AppTheme.textSecondaryColor.withOpacity(0.67),
+                ),
               ),
-              textAlign: TextAlign.end,
-              style: AppTextTheme.manrope14SemiBold.copyWith(
-                color: AppTheme.textSecondaryColor.withOpacity(0.67),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 20),
+            ],
+          ),
+          const SizedBox(height: 10),
+        ],
+        const SizedBox(height: 10),
         StepsWithProgressWidget(
           stepsCount: stepsCount,
           currentStep: currentStep,

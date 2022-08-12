@@ -4,13 +4,14 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:tacks/src/ongoing_tack/ongoing_tacker_tack/bloc/ongoing_tacker_tack_bloc.dart';
-import 'package:tacks/src/ongoing_tack/ongoing_tacker_tack/ui/widgets/ongoing_tacker_tack_offer/ongoing_tacker_tack_offer_details_widget.dart';
-import 'package:tacks/src/ongoing_tack/ongoing_tacker_tack/ui/widgets/ongoing_tacker_tack_offer/ongoing_tacker_tack_offer_user_widget.dart';
 
-class OngoingTackerTackOfferWidget extends StatelessWidget {
+import 'ongoing_tacker_tack_offer_details_widget.dart';
+import 'ongoing_tacker_tack_offer_user_widget.dart';
+
+class OngoingTackerTackOfferTile extends StatelessWidget {
   final Offer offer;
 
-  const OngoingTackerTackOfferWidget({
+  const OngoingTackerTackOfferTile({
     super.key,
     required this.offer,
   });
@@ -21,9 +22,11 @@ class OngoingTackerTackOfferWidget extends StatelessWidget {
       onTap: () => _onOfferPressed(context),
       pressedOpacity: 0.85,
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 8.0,
+        padding: const EdgeInsets.only(
+          left: 16,
+          top: 8,
+          right: 8,
+          bottom: 8,
         ),
         decoration: BoxDecoration(
           color: AppTheme.primaryColor,

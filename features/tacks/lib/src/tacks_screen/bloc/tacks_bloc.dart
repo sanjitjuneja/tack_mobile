@@ -31,7 +31,12 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
         _getTackerTacksUseCase = getTackerTacksUseCase,
         _getRunnerTacksUseCase = getRunnerTacksUseCase,
         _cancelOfferUseCase = cancelOfferUseCase,
-        super(const TacksState()) {
+        super(
+          const TacksState(
+            tackerTacksState: TackerTacksState(isLoading: true),
+            runnerTacksState: RunnerTacksState(isLoading: true),
+          ),
+        ) {
     on<MoveToAddTab>(_onMoveToAddTab);
     on<MoveToHomeTab>(_onMoveToHomeTab);
 
@@ -65,12 +70,6 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
     InitialLoad event,
     Emitter<TacksState> emit,
   ) async {
-    emit(
-      state.copyWith(
-        tackerTacksState: state.tackerTacksState.copyWith(isLoading: true),
-        runnerTacksState: state.runnerTacksState.copyWith(isLoading: true),
-      ),
-    );
     add(const RefreshTackerTacks());
     add(const RefreshRunnerTacks());
   }

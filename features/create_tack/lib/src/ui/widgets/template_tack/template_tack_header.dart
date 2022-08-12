@@ -42,12 +42,16 @@ class TemplateTackHeader extends StatelessWidget {
         Row(
           children: <Widget>[
             Expanded(
-              child: Text(
-                DurationUtility.durationFormatString(
-                    tack.estimatedTime, context),
-                style: AppTextTheme.manrope16Bold
-                    .copyWith(color: AppTheme.textHeavyHintColor),
-              ),
+              child: tack.estimatedTime != null
+                  ? Text(
+                      DurationUtility.durationFormatString(
+                        tack.estimatedTime!,
+                        context,
+                      ),
+                      style: AppTextTheme.manrope16Bold
+                          .copyWith(color: AppTheme.textHeavyHintColor),
+                    )
+                  : const SizedBox(),
             ),
             const SizedBox(width: 6),
             Text(

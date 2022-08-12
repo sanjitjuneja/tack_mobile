@@ -31,9 +31,9 @@ class DashboardForm extends StatelessWidget {
               builder: (BuildContext blocContext, DashboardState state) {
                 return AppListViewWithRefresh(
                   enableRefresh: true,
-                  enableLoad: state.canLoadMore,
+                  enableLoad: state.tacksData.canLoadMore,
                   isLoading: state.isLoading,
-                  hasData: state.hasData,
+                  hasData: state.tacksData.hasData,
                   emptyWidget: EmptyWidget(
                     svgIcon: AppIconsTheme.people,
                     descriptionKey: 'dashboardScreen.noTacks.description',
@@ -43,10 +43,10 @@ class DashboardForm extends StatelessWidget {
                   ),
                   onRefresh: _onRefreshAction,
                   onLoad: _onLoadMoreAction,
-                  itemCount: state.tacks.length,
+                  itemCount: state.tacksData.results.length,
                   itemBuilder: (_, int index) {
                     return TackTile(
-                      tack: state.tacks[index],
+                      tack: state.tacksData.results[index],
                     );
                   },
                 );

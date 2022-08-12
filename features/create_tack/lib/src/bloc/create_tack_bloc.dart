@@ -29,7 +29,11 @@ class CreateTackBloc extends Bloc<CreateTackEvent, CreateTackState> {
         _getNearbyPopularTacksUseCase = getNearbyPopularTacksUseCase,
         _getGroupPopularTacksUseCase = getGroupPopularTacksUseCase,
         super(
-          CreateTackState(group: globalBloc.state.currentGroup),
+          CreateTackState(
+            group: globalBloc.state.currentGroup,
+            nearbyTacksState: const NearbyTacksState(isLoading: true),
+            groupTacksState: const GroupTacksState(isLoading: true),
+          ),
         ) {
     on<InitialLoad>(_onInitialLoad);
     on<GroupChanged>(_onGroupChanged);
@@ -50,13 +54,6 @@ class CreateTackBloc extends Bloc<CreateTackEvent, CreateTackState> {
     InitialLoad event,
     Emitter<CreateTackState> emit,
   ) async {
-    emit(
-      state.copyWith(
-        nearbyTacksState: state.nearbyTacksState.copyWith(isLoading: true),
-        groupTacksState: state.groupTacksState.copyWith(isLoading: true),
-      ),
-    );
-
     add(const RefreshNearbyTacks());
     add(const RefreshGroupTacks());
   }

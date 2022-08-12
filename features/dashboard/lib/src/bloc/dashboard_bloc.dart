@@ -25,7 +25,10 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         _getGroupTacksUseCase = getGroupTacksUseCase,
         _makeOfferUseCase = makeOfferUseCase,
         super(
-          DashboardState(group: selectedGroup),
+          DashboardState(
+            group: selectedGroup,
+            isLoading: true,
+          ),
         ) {
     on<GoToCreateTack>(_onGoToCreateTack);
 
@@ -59,16 +62,25 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     Emitter<DashboardState> emit,
   ) async {
     try {
-      final List<Tack> tacks = await _getGroupTacksUseCase.execute(
+      final PaginationModel<Tack> tacksData =
+          await _getGroupTacksUseCase.execute(
         GroupTacksPayload(groupId: state.group.id),
       );
 
       event.completer?.complete(RefreshingStatus.complete);
-      emit(state.copyWith(tacks: tacks));
+      emit(
+        state.copyWith(
+          tacksData: tacksData,
+        ),
+      );
     } catch (_) {
       event.completer?.complete(RefreshingStatus.failed);
       if (event.completer == null) {
-        emit(state.copyWith(tacks: <Tack>[]));
+        emit(
+          state.copyWith(
+            tacksData: PaginationModel.empty(),
+          ),
+        );
       }
     }
   }
@@ -78,12 +90,19 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     Emitter<DashboardState> emit,
   ) async {
     try {
-      final List<Tack> tacks = await _getGroupTacksUseCase.execute(
-        GroupTacksPayload(groupId: state.group.id),
+      final PaginationModel<Tack> tacksData =
+          await _getGroupTacksUseCase.execute(
+        GroupTacksPayload(
+          groupId: state.group.id,
+        ),
       );
 
       event.completer.complete(LoadingStatus.complete);
-      emit(state.copyWith(tacks: tacks));
+      emit(
+        state.copyWith(
+          tacksData: tacksData,
+        ),
+      );
     } catch (_) {
       event.completer.complete(LoadingStatus.failed);
     }

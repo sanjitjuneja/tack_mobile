@@ -7,7 +7,7 @@ class CurrencyUtility {
   static List<TextInputFormatter> dollarInputFormatters({double? maxValue}) =>
       <TextInputFormatter>[
         FilteringTextInputFormatter.allow(
-          RegExp(r'^\$?\d+\.?\d{0,2}'),
+          RegExp(r'^\$?\d+[\,\.]?\d{0,2}'),
         ),
         CurrencyFormatter(maxValue: maxValue),
       ];

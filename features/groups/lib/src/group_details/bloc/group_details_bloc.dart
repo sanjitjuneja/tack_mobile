@@ -43,6 +43,7 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
           GroupDetailsState(
             group: group,
             invitation: groupInvitation,
+            usersState: const GroupsUsersState(isLoading: true),
           ),
         ) {
     on<InitialLoad>(_onInitialLoad);
@@ -62,11 +63,6 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
     InitialLoad event,
     Emitter<GroupDetailsState> emit,
   ) async {
-    emit(
-      state.copyWith(
-        usersState: state.usersState.copyWith(isLoading: true),
-      ),
-    );
     add(const RefreshAction());
   }
 

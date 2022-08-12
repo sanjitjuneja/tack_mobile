@@ -16,6 +16,10 @@ class ClearAction extends AddEditTackEvent {
   const ClearAction();
 }
 
+class GroupChange extends AddEditTackEvent {
+  const GroupChange();
+}
+
 class TitleChange extends AddEditTackEvent {
   final String title;
 

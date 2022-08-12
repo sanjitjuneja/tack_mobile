@@ -1,29 +1,41 @@
 part of app_list_view_with_refresh;
 
 class AppListViewWithRefresh extends StatefulWidget {
-  final BuilderFunction itemBuilder;
+  final IndexedWidgetBuilder itemBuilder;
   final int itemCount;
+  final IndexedWidgetBuilder? separatorBuilder;
   final bool isLoading;
   final bool hasData;
   final Widget? emptyWidget;
+  final Widget? headerWidget;
   final Widget? footerWidget;
   final bool enableLoad;
   final bool enableRefresh;
   final LoadCallback? onLoad;
   final RefreshCallback? onRefresh;
+  final ProgressIndicatorSize refreshIndicatorSize;
+  final ProgressIndicatorSize loadingIndicatorSize;
+  final Color? indicatorColor;
+  final EdgeInsets? padding;
 
   const AppListViewWithRefresh({
     super.key,
     required this.itemBuilder,
     required this.itemCount,
+    this.separatorBuilder,
     this.isLoading = false,
     this.hasData = true,
     this.emptyWidget,
+    this.headerWidget,
     this.footerWidget,
     this.enableLoad = true,
     this.enableRefresh = true,
     this.onLoad,
     this.onRefresh,
+    this.refreshIndicatorSize = ProgressIndicatorSize.medium,
+    this.loadingIndicatorSize = ProgressIndicatorSize.big,
+    this.indicatorColor,
+    this.padding,
   });
 
   @override
@@ -57,22 +69,40 @@ class _AppListViewWithRefreshState extends State<AppListViewWithRefresh> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoScrollbar(
-      child: SmartRefresher(
-        enablePullDown: enableRefresh,
-        enablePullUp: enableLoad,
-        header: const _RefreshHeader(),
-        footer: const _LoadMoreFooter(),
-        controller: _refreshController,
-        onRefresh: _onRefresh,
-        onLoading: _onLoad,
-        child: _ContentBuilder(
-          isLoading: widget.isLoading,
-          hasData: widget.hasData,
-          itemBuilder: widget.itemBuilder,
-          itemCount: widget.itemCount,
-          emptyWidget: widget.emptyWidget,
-          footerWidget: widget.footerWidget,
+    final double headerTriggerDistance = widget.refreshIndicatorSize.size * 3;
+    final double footerTriggerDistance = widget.refreshIndicatorSize.size * 2;
+
+    return RefreshConfiguration(
+      headerTriggerDistance: headerTriggerDistance,
+      footerTriggerDistance: footerTriggerDistance,
+      child: CupertinoScrollbar(
+        child: SmartRefresher(
+          enablePullDown: enableRefresh,
+          enablePullUp: enableLoad,
+          header: _RefreshHeader(
+            indicatorColor: widget.indicatorColor,
+            indicatorSize: widget.refreshIndicatorSize,
+          ),
+          footer: _LoadMoreFooter(
+            indicatorColor: widget.indicatorColor,
+            indicatorSize: widget.refreshIndicatorSize,
+          ),
+          controller: _refreshController,
+          onRefresh: _onRefresh,
+          onLoading: _onLoad,
+          child: _ContentBuilder(
+            isLoading: widget.isLoading,
+            hasData: widget.hasData,
+            separatorBuilder: widget.separatorBuilder,
+            itemBuilder: widget.itemBuilder,
+            itemCount: widget.itemCount,
+            loadingIndicatorSize: widget.loadingIndicatorSize,
+            indicatorColor: widget.indicatorColor,
+            emptyWidget: widget.emptyWidget,
+            headerWidget: widget.headerWidget,
+            footerWidget: widget.footerWidget,
+            padding: widget.padding,
+          ),
         ),
       ),
     );

@@ -46,7 +46,7 @@ class SideBarTileWidget extends StatelessWidget {
               ),
             ),
             if (isNeedChevron)
-              AppIconsTheme.chevronRight.call(
+              AppIconsTheme.chevronRight(
                 color: AppTheme.iconPrimaryColor,
                 size: 28,
               ),

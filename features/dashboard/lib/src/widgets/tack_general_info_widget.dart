@@ -11,6 +11,7 @@ class TackGeneralInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Expanded(
           child: Text(
@@ -19,18 +20,16 @@ class TackGeneralInfoWidget extends StatelessWidget {
                 .copyWith(color: AppTheme.textHeavyHintColor),
           ),
         ),
-        Text(
-          // TODO: update logic.
-          FlutterI18n.translate(
-            context,
-            'time.minuteShort',
-            translationParams: <String, String>{
-              'count': tack.estimatedTime.inMinutes.toString(),
-            },
+        if (tack.estimatedTime != null) ...<Widget>[
+          Text(
+            DurationUtility.durationFormatString(
+              tack.estimatedTime!,
+              context,
+            ),
+            style: AppTextTheme.manrope16Bold
+                .copyWith(color: AppTheme.textHeavyHintColor),
           ),
-          style: AppTextTheme.manrope16Bold
-              .copyWith(color: AppTheme.textHeavyHintColor),
-        ),
+        ],
       ],
     );
   }
