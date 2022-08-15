@@ -470,5 +470,10 @@
     "title": "Add Payment Method",
     "addBank": "Add Bank",
     "addCard": "Credit/Debit Card"
+  },
+  "withdrawScreen": {
+    "withdraw": "Withdraw",
+    "instantPayout": "Instant\n 3% Fee (max $15)",
+    "regularPayout": "2-3 business days\n No Fee"
   }
 }

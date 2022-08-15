@@ -11,6 +11,7 @@ import 'package:navigation/navigation.dart';
 import 'package:payment/payment.dart';
 
 part 'app_drawer_event.dart';
+
 part 'app_drawer_state.dart';
 
 class AppDrawerBloc extends Bloc<AppDrawerEvent, AppDrawerState> {
@@ -75,7 +76,7 @@ class AppDrawerBloc extends Bloc<AppDrawerEvent, AppDrawerState> {
         // TODO: Handle this case.
         break;
       case GoToOption.withdraw:
-        // TODO: Handle this case.
+        _appRouter.push(WithdrawFeature.page());
         break;
       case GoToOption.paymentSettings:
         _appRouter.push(PaymentSettingsFeature.page());
