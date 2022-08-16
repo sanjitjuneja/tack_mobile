@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Features
   core:
     path: ../../core
   domain:
@@ -20,9 +21,6 @@ dependencies:
     path: ../../core_ui
   navigation:
     path: ../../navigation
-
-  # Features
-
 
 dev_dependencies:
   flutter_test:

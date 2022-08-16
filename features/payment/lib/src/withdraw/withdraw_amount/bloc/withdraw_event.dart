@@ -8,3 +8,6 @@ class ChangeWithdrawMethodTypeRequest extends WithdrawEvent {
   const ChangeWithdrawMethodTypeRequest();
 }
 
+class MakeWithdrawRequest extends WithdrawEvent {
+  const MakeWithdrawRequest();
+}

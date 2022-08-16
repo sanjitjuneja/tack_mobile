@@ -1,7 +1,7 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
-import '../widgets/withdraw_method_type.dart';
+import 'withdraw_method_type.dart';
 import '../bloc/withdraw_bloc.dart';
 
 class WithdrawMethod extends StatelessWidget {

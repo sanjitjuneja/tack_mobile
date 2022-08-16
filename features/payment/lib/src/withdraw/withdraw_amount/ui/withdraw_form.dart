@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import '../bloc/withdraw_bloc.dart';
 import '/src/widgets/payment_method_tile.dart';
 import '/src/widgets/tack_keyboard/bloc/tack_keyboard_bloc.dart';
-import '../../widgets/tack_keyboard/ui/tack_keyboard.dart';
+import '../../../widgets/tack_keyboard/ui/tack_keyboard.dart';
 import '/src/widgets/tack_button.dart';
 import '../widgets/withdraw_method.dart';
 import '../widgets/withdraw_method_type.dart';
@@ -86,7 +86,9 @@ class WithdrawForm extends StatelessWidget {
                     context,
                     'withdrawScreen.withdraw',
                   ),
-                  onTap: () {},
+                  onTap: () => BlocProvider.of<WithdrawBloc>(context).add(
+                    const MakeWithdrawRequest(),
+                  ),
                 ),
                 const SizedBox(height: 36),
               ],

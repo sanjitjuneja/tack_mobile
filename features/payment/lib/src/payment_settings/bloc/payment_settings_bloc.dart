@@ -17,10 +17,10 @@ class PaymentSettingsBloc
     on<AddPaymentMethodRequest>(_onAddPaymentMethodRequest);
   }
 
-  void _onAddPaymentMethodRequest(
+  Future<void> _onAddPaymentMethodRequest(
     AddPaymentMethodRequest event,
     Emitter<PaymentSettingsState> emit,
-  ) {
+  ) async {
     _appRouter.push(AddPaymentMethodFeature.page());
   }
 }

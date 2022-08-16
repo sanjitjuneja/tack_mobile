@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'package:navigation/navigation.dart';
+import 'package:payment/src/withdraw/withdraw_successful/ui/withdraw_successful_page.dart';
 import '../widgets/withdraw_method_type.dart';
 
 part 'withdraw_event.dart';
@@ -18,6 +19,7 @@ class WithdrawBloc extends Bloc<WithdrawEvent, WithdrawState> {
           ),
         ) {
     on<ChangeWithdrawMethodTypeRequest>(_onChangeWithdrawMethodTypeRequest);
+    on<MakeWithdrawRequest>(_onMakeWithdrawRequest);
   }
 
   Future<void> _onChangeWithdrawMethodTypeRequest(
@@ -30,6 +32,17 @@ class WithdrawBloc extends Bloc<WithdrawEvent, WithdrawState> {
             state.withdrawMethodType == WithdrawMethodType.instant
                 ? WithdrawMethodType.regular
                 : WithdrawMethodType.instant,
+      ),
+    );
+  }
+
+  Future<void> _onMakeWithdrawRequest(
+    MakeWithdrawRequest event,
+    Emitter<WithdrawState> emit,
+  ) async {
+    _appRouter.replace(
+      WithdrawSuccessfulFeature.page(
+        withdrawMethodType: state.withdrawMethodType,
       ),
     );
   }

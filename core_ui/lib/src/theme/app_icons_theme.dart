@@ -48,6 +48,7 @@ class AppIconsTheme {
   static const String _editPencilKey = '${_svgPath}edit_pencil.svg';
   static const String _plusKey = '${_svgPath}plus.svg';
   static const String _bankRoundedKey = '${_svgPath}bank_rounded.svg';
+  static const String _bankRoundedFilledKey = '${_svgPath}bank_rounded_filled.svg';
   static const String _addKey = '${_svgPath}add.svg';
   static const String _masterCardKey = '${_svgPath}master_card.svg';
   static const String _morganChaseKey = '${_svgPath}morgan_chase.svg';
@@ -97,6 +98,7 @@ class AppIconsTheme {
   static AppIcon get editPencil => AppIcon(_editPencilKey);
   static AppIcon get plus => AppIcon(_plusKey);
   static AppIcon get bankRounded => AppIcon(_bankRoundedKey);
+  static AppIcon get bankRoundedFilled => AppIcon(_bankRoundedFilledKey);
   static AppIcon get bank => AppIcon(_bankKey);
   static AppIcon get add => AppIcon(_addKey);
   static AppIcon get masterCard => AppIcon(_masterCardKey);
