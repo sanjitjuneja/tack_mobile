@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:home/home.dart';
+import 'package:home/src/deeplink_bloc/deeplink_bloc.dart';
 import 'package:navigation/navigation.dart';
 
 class FirstRouteFeature {
@@ -24,19 +25,38 @@ class FirstRoutePage extends Page<void> {
       builder: (BuildContext context) {
         return MultiBlocProvider(
           providers: <BlocProvider<dynamic>>[
+            BlocProvider<DeeplinkBloc>(
+              lazy: false,
+              create: (_) {
+                return DeeplinkBloc(
+                  appRouter: _appRouter,
+                  getLastDeeplinkUseCase:
+                      appLocator.get<GetLastDeeplinkUseCase>(),
+                  resetLastDeeplinkUseCase:
+                      appLocator.get<ResetLastDeeplinkUseCase>(),
+                  observeDeeplinkUseCase:
+                      appLocator.get<ObserveDeeplinkUseCase>(),
+                  getGroupInviteUseCase:
+                      appLocator.get<GetGroupInviteUseCase>(),
+                );
+              },
+            ),
             BlocProvider<GlobalBloc>(
-              create: (_) => GlobalBloc(
-                appRouter: _appRouter,
-                getCurrentUserUseCase: appLocator.get<GetCurrentUserUseCase>(),
-                observeUserUseCase: appLocator.get<ObserveUserUseCase>(),
-                getCurrentGroupUseCase:
-                    appLocator.get<GetCurrentGroupUseCase>(),
-                getGroupsUseCase: appLocator.get<GetGroupsUseCase>(),
-                observeCurrentGroupUseCase:
-                    appLocator.get<ObserveCurrentGroupUseCase>(),
-                observeGroupsUseCase: appLocator.get<ObserveGroupsUseCase>(),
-                selectGroupUseCase: appLocator.get<SelectGroupUseCase>(),
-              ),
+              create: (_) {
+                return GlobalBloc(
+                  appRouter: _appRouter,
+                  getCurrentUserUseCase:
+                      appLocator.get<GetCurrentUserUseCase>(),
+                  observeUserUseCase: appLocator.get<ObserveUserUseCase>(),
+                  getCurrentGroupUseCase:
+                      appLocator.get<GetCurrentGroupUseCase>(),
+                  getGroupsUseCase: appLocator.get<GetGroupsUseCase>(),
+                  observeCurrentGroupUseCase:
+                      appLocator.get<ObserveCurrentGroupUseCase>(),
+                  observeGroupsUseCase: appLocator.get<ObserveGroupsUseCase>(),
+                  selectGroupUseCase: appLocator.get<SelectGroupUseCase>(),
+                );
+              },
             ),
           ],
           child: Router(

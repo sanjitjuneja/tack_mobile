@@ -25,6 +25,7 @@ class BaseUrlConstants {
   static const String groupMutePath = '/groups/${ApiQuery.idKey}/mute/';
   static const String groupUnMutePath = '/groups/${ApiQuery.idKey}/unmute/';
   static const String groupInviteLinkPath = '/groups/${ApiQuery.idKey}/get_invite_link/';
+  static const String groupInvitePath = '/groups/invite/';
 
   static const String groupsTacksPath = '/groups/${ApiQuery.idKey}/tacks/';
 

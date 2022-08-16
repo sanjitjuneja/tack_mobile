@@ -8,13 +8,15 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'entities/group_entity.dart';
 part 'entities/group_invitation_entity.dart';
+part 'entities/group_invite_entity.dart';
 part 'entities/group_invite_link_entity.dart';
 
 part 'requests/accept_group_invitation_request.dart';
 part 'requests/create_group_request.dart';
 part 'requests/decline_group_invitation_request.dart';
 part 'requests/get_group_invitations_request.dart';
-part 'requests/get_group_invite_link.dart';
+part 'requests/get_group_invite_link_request.dart';
+part 'requests/get_group_invite_request.dart';
 part 'requests/get_group_members_request.dart';
 part 'requests/get_group_request.dart';
 part 'requests/get_groups_request.dart';
