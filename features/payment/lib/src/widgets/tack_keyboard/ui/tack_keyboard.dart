@@ -15,7 +15,7 @@ class TackKeyboard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 64),
           child: Column(
             children: <Widget>[
-              ...List.generate(
+              ...List<Widget>.generate(
                 4,
                 (rowIndex) => Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),

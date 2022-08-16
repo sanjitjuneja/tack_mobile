@@ -18,27 +18,18 @@ class WithdrawMethod extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<WithdrawBloc, WithdrawState>(
       builder: (context, state) {
+        final isSelected = withdrawMethodType != state.withdrawMethodType;
         return GestureDetector(
-          onTap: () {
-            if (withdrawMethodType != state.withdrawMethodType) {
-              BlocProvider.of<WithdrawBloc>(context).add(
-                const ChangeWithdrawMethodTypeRequest(),
-              );
-            }
-          },
+          onTap: () => _onTileTap(context: context, isSelected: isSelected),
           child: Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 16,
               vertical: 5,
             ),
             decoration: BoxDecoration(
-              color: withdrawMethodType == state.withdrawMethodType
-                  ? AppTheme.grassColor
-                  : AppTheme.primaryColor,
+              color: isSelected ? AppTheme.grassColor : AppTheme.primaryColor,
               border: Border.all(
-                color: withdrawMethodType == state.withdrawMethodType
-                    ? AppTheme.primaryColor
-                    : AppTheme.grassColor,
+                color: isSelected ? AppTheme.primaryColor : AppTheme.grassColor,
               ),
               borderRadius: const BorderRadius.all(
                 Radius.circular(12.0),
@@ -48,14 +39,23 @@ class WithdrawMethod extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: AppTextTheme.manrope14Medium.copyWith(
-                color: withdrawMethodType == state.withdrawMethodType
-                    ? AppTheme.primaryColor
-                    : AppTheme.grassColor,
+                color: isSelected ? AppTheme.primaryColor : AppTheme.grassColor,
               ),
             ),
           ),
         );
       },
     );
+  }
+
+  void _onTileTap({
+    required BuildContext context,
+    required bool isSelected,
+  }) {
+    if (isSelected) {
+      BlocProvider.of<WithdrawBloc>(context).add(
+        const ChangeWithdrawMethodTypeRequest(),
+      );
+    }
   }
 }

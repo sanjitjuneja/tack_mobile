@@ -16,21 +16,19 @@ class TackButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.translucent,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 56),
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 22),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(140),
-            color: AppTheme.grassColor,
-          ),
-          child: Center(
-            child: Text(
-              title,
-              maxLines: 1,
-              style: AppTextTheme.manrope16SemiBold.copyWith(
-                color: AppTheme.primaryColor,
-              ),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 56),
+        padding: const EdgeInsets.symmetric(vertical: 22),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(140),
+          color: AppTheme.grassColor,
+        ),
+        child: Center(
+          child: Text(
+            title,
+            maxLines: 1,
+            style: AppTextTheme.manrope16SemiBold.copyWith(
+              color: AppTheme.primaryColor,
             ),
           ),
         ),

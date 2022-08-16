@@ -53,7 +53,10 @@ class WithdrawSuccessfulForm extends StatelessWidget {
                     ),
                     const SizedBox(height: 36),
                     Text(
-                      '${FlutterI18n.translate(context, 'withdrawSuccessfulScreen.newTackBalance')} \$ 0.00',
+                      '${FlutterI18n.translate(
+                        context,
+                        'withdrawSuccessfulScreen.newTackBalance',
+                      )} \$ 0.00',
                       style: AppTextTheme.manrope20Bold.copyWith(
                         color: AppTheme.grassColor,
                       ),
@@ -65,14 +68,18 @@ class WithdrawSuccessfulForm extends StatelessWidget {
             const Spacer(),
             TackButton(
               title: 'Close',
-              onTap: () => BlocProvider.of<WithdrawSuccessfulBloc>(context).add(
-                const CloseRequest(),
-              ),
+              onTap: () => _onClosePress(context),
             ),
             const SizedBox(height: 100),
           ],
         );
       },
+    );
+  }
+
+  void _onClosePress(BuildContext context) {
+    BlocProvider.of<WithdrawSuccessfulBloc>(context).add(
+      const CloseRequest(),
     );
   }
 }
