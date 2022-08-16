@@ -1,7 +1,6 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:payment/src/widgets/tack_button.dart';
 import 'package:payment/src/withdraw/withdraw_amount/widgets/withdraw_method_type.dart';
 import '../bloc/withdraw_successful_bloc.dart';
 
@@ -66,9 +65,19 @@ class WithdrawSuccessfulForm extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            TackButton(
-              title: 'Close',
-              onTap: () => _onClosePress(context),
+            Row(
+              children: <Widget>[
+                const Spacer(),
+                Expanded(
+                  flex: 3,
+                  child: AppCircleButton(
+                    labelKey: 'withdrawSuccessfulScreen.close',
+                    expanded: false,
+                    onTap: () => _onClosePress(context),
+                  ),
+                ),
+                const Spacer(),
+              ],
             ),
             const SizedBox(height: 100),
           ],

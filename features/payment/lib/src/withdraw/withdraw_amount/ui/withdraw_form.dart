@@ -5,7 +5,6 @@ import '../bloc/withdraw_bloc.dart';
 import '/src/widgets/payment_method_tile.dart';
 import '/src/widgets/tack_keyboard/bloc/tack_keyboard_bloc.dart';
 import '../../../widgets/tack_keyboard/ui/tack_keyboard.dart';
-import '/src/widgets/tack_button.dart';
 import '../widgets/withdraw_method.dart';
 import '../widgets/withdraw_method_type.dart';
 
@@ -81,14 +80,21 @@ class WithdrawForm extends StatelessWidget {
                 const SizedBox(height: 44),
                 const TackKeyboard(),
                 const SizedBox(height: 24),
-                TackButton(
-                  title: FlutterI18n.translate(
-                    context,
-                    'withdrawScreen.withdraw',
-                  ),
-                  onTap: () => BlocProvider.of<WithdrawBloc>(context).add(
-                    const MakeWithdrawRequest(),
-                  ),
+                Row(
+                  children: <Widget>[
+                    const Spacer(),
+                    Expanded(
+                      flex: 3,
+                      child: AppCircleButton(
+                        labelKey: 'withdrawScreen.withdraw',
+                        expanded: false,
+                        onTap: () => BlocProvider.of<WithdrawBloc>(context).add(
+                          const MakeWithdrawRequest(),
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                  ],
                 ),
                 const SizedBox(height: 36),
               ],

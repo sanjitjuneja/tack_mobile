@@ -481,6 +481,7 @@
     "regularPayoutTitle": "We’re Working On\nYour Payout",
     "instantPayoutSubtitle": "This process can take up to 30 minutes",
     "regularPayoutSubtitle": "This process can take up to 3 business days",
-    "newTackBalance": "New Tack Balance:"
+    "newTackBalance": "New Tack Balance:",
+    "close": "Close"
   }
 }
