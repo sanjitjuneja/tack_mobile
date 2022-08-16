@@ -100,7 +100,9 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
   Future<void> _onGoToMyInvitations(
     GoToMyInvitations event,
     Emitter<GlobalState> emit,
-  ) async {}
+  ) async {
+    _appRouter.push(InvitationsFeature.page());
+  }
 
   @override
   Future<void> close() async {

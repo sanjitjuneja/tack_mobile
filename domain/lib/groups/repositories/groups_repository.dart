@@ -27,6 +27,8 @@ abstract class GroupsRepository {
 
   Future<GroupInviteLink> getGroupInviteLink(GetGroupInviteLinkPayload payload);
 
+  Future<GroupInvite> getGroupInvite(GetGroupInvitePayload payload);
+
   Future<List<TackUser>> getGroupMembers(GetGroupMembersPayload payload);
 
   Future<List<GroupInvitation>> getInvitations(

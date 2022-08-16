@@ -218,6 +218,19 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.groupInviteLinkMapper.fromEntity);
   }
 
+  Future<domain.GroupInvite> getGroupInvite({
+    required GetGroupInviteRequest request,
+  }) async {
+    return get<GroupInviteEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.groupInvitePath,
+        body: null,
+        params: request.params,
+      ),
+      parser: GroupInviteEntity.fromJson,
+    ).then(mapper.groupInviteMapper.fromEntity);
+  }
+
   Future<List<domain.TackUser>> getGroupMembers({
     required GetGroupMembersRequest request,
   }) async {

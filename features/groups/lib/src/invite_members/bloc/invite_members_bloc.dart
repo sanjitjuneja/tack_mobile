@@ -9,13 +9,16 @@ part 'invite_members_state.dart';
 class InviteMembersBloc extends Bloc<InviteMembersEvent, InviteMembersState> {
   final AppRouterDelegate _appRouter;
   final LoadGroupInviteLinkUseCase _loadGroupInviteLinkUseCase;
+  final CreateDeeplinkUseCase _createDeeplinkUseCase;
 
   InviteMembersBloc({
     required Group group,
     required AppRouterDelegate appRouter,
     required LoadGroupInviteLinkUseCase loadGroupInviteLinkUseCase,
+    required CreateDeeplinkUseCase createDeeplinkUseCase,
   })  : _appRouter = appRouter,
         _loadGroupInviteLinkUseCase = loadGroupInviteLinkUseCase,
+        _createDeeplinkUseCase = createDeeplinkUseCase,
         super(
           InviteMembersState(
             group: group,
@@ -41,7 +44,11 @@ class InviteMembersBloc extends Bloc<InviteMembersEvent, InviteMembersState> {
         GetGroupInviteLinkPayload(group: state.group),
       );
 
-      emit(state.copyWith(inviteLink: inviteLink));
+      final Uri deeplink = await _createDeeplinkUseCase.execute(
+        CreateDeeplinkPayload(url: inviteLink.link),
+      );
+
+      emit(state.copyWith(inviteLink: deeplink));
     } catch (_) {
       emit(state.copyWith(hasError: true));
     }
@@ -55,7 +62,7 @@ class InviteMembersBloc extends Bloc<InviteMembersEvent, InviteMembersState> {
 
     ClipboardManager.copyText(
       _appRouter.navigatorKey.currentContext!,
-      state.inviteLink!.link,
+      state.inviteLink.toString(),
     );
   }
 
@@ -65,6 +72,6 @@ class InviteMembersBloc extends Bloc<InviteMembersEvent, InviteMembersState> {
   ) async {
     if (!state.hasData) return;
 
-    ShareManager.shareText(state.inviteLink!.link);
+    ShareManager.shareText(state.inviteLink.toString());
   }
 }

@@ -40,6 +40,78 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607534419774:android:47483c442845110370e66f",
+        "android_client_info": {
+          "package_name": "com.tack_app.android.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607534419774-psmmfcmeagg4mk7ueg4i85bk3iro0gb9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA63ArBeJb69L8DlIZ17JhqUS9wjF2KY2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607534419774-psmmfcmeagg4mk7ueg4i85bk3iro0gb9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "607534419774-3shka4931b7m1ii0759j3goi4mt90ib1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tackApp.ios.dev"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607534419774:android:2d04a4509a2ad6e770e66f",
+        "android_client_info": {
+          "package_name": "com.tack_app.android.stage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607534419774-psmmfcmeagg4mk7ueg4i85bk3iro0gb9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA63ArBeJb69L8DlIZ17JhqUS9wjF2KY2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607534419774-psmmfcmeagg4mk7ueg4i85bk3iro0gb9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "607534419774-3shka4931b7m1ii0759j3goi4mt90ib1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tackApp.ios.dev"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

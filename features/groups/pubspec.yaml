@@ -22,7 +22,7 @@ dependencies:
     path: ../../navigation
   home:
     path: ../../features/home
-    
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
