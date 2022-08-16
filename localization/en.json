@@ -470,5 +470,18 @@
     "title": "Add Payment Method",
     "addBank": "Add Bank",
     "addCard": "Credit/Debit Card"
+  },
+  "withdrawScreen": {
+    "withdraw": "Withdraw",
+    "instantPayout": "Instant\n 3% Fee (max $15)",
+    "regularPayout": "2-3 business days\n No Fee"
+  },
+  "withdrawSuccessfulScreen": {
+    "instantPayoutTitle": "We’re Working On\nYour Instant Payout",
+    "regularPayoutTitle": "We’re Working On\nYour Payout",
+    "instantPayoutSubtitle": "This process can take up to 30 minutes",
+    "regularPayoutSubtitle": "This process can take up to 3 business days",
+    "newTackBalance": "New Tack Balance:",
+    "close": "Close"
   }
 }

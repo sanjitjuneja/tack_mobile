@@ -221,6 +221,12 @@ class AppTextTheme {
         fontFamily: _manropeFamily,
       );
 
+  static TextStyle get manrope36SemiBold => const TextStyle(
+    fontSize: 36,
+    fontWeight: FontWeight.w600,
+    fontFamily: _manropeFamily,
+  );
+
   static TextStyle get manrope12Bold => const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w700,
@@ -286,6 +292,12 @@ class AppTextTheme {
         fontWeight: FontWeight.w700,
         fontFamily: _manropeFamily,
       );
+
+  static TextStyle get manrope38Bold => const TextStyle(
+    fontSize: 38,
+    fontWeight: FontWeight.w700,
+    fontFamily: _manropeFamily,
+  );
 
   // Poppins font family
   static TextStyle get poppins12Medium => const TextStyle(

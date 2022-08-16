@@ -8,6 +8,7 @@ class PaymentMethodTile extends StatelessWidget {
   final String? subtitle;
   final VoidCallback? onTap;
   final bool isPrimary;
+  final bool isColored;
 
   const PaymentMethodTile({
     Key? key,
@@ -16,15 +17,30 @@ class PaymentMethodTile extends StatelessWidget {
     this.subtitle,
     this.onTap,
     this.isPrimary = false,
+    this.isColored = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: SizedBox(
+      child: Container(
         width: 375,
         height: 60,
+        decoration: isColored
+            ? BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: AppTheme.textFieldSecondaryBackgroundColor,
+                boxShadow: const [
+                  BoxShadow(
+                    color: AppColors.black25,
+                    offset: Offset(0.0, 4.0),
+                    spreadRadius: 0,
+                    blurRadius: 4.0,
+                  ),
+                ],
+              )
+            : null,
         child: Column(
           children: [
             Padding(
@@ -74,7 +90,7 @@ class PaymentMethodTile extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            const AppDivider(width: 335),
+            if (!isColored) const AppDivider(width: 335),
           ],
         ),
       ),
