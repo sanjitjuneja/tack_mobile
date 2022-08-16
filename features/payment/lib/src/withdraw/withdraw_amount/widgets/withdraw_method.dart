@@ -19,6 +19,7 @@ class WithdrawMethod extends StatelessWidget {
     return BlocBuilder<WithdrawBloc, WithdrawState>(
       builder: (context, state) {
         final isSelected = withdrawMethodType != state.withdrawMethodType;
+
         return GestureDetector(
           onTap: () => _onTileTap(context: context, isSelected: isSelected),
           child: Container(

@@ -14,41 +14,37 @@ class TackKeyboard extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 64),
           child: Column(
-            children: <Widget>[
-              ...List<Widget>.generate(
-                4,
-                (rowIndex) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      ...List<Widget>.generate(
-                        3,
-                        (symbolIndex) {
-                          final symbol =
-                              keyboardSymbols[(rowIndex * 3) + symbolIndex];
-                          return Padding(
-                            padding: EdgeInsets.only(
-                              left: symbol == '0' ? 15 : 0,
-                            ),
-                            child: _customDepositNumber(
-                              symbol: symbol,
-                              onTap: () {
-                                BlocProvider.of<TackKeyboardBloc>(context).add(
-                                  KeyboardInputEvent(
-                                    symbol: symbol,
-                                  ),
-                                );
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                    ],
+            children: List<Widget>.generate(
+              4,
+              (rowIndex) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List<Widget>.generate(
+                    3,
+                    (symbolIndex) {
+                      final symbol =
+                          keyboardSymbols[(rowIndex * 3) + symbolIndex];
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          left: symbol == '0' ? 15 : 0,
+                        ),
+                        child: _customDepositNumber(
+                          symbol: symbol,
+                          onTap: () {
+                            BlocProvider.of<TackKeyboardBloc>(context).add(
+                              KeyboardInputEvent(
+                                symbol: symbol,
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
-            ],
+            ),
           ),
         );
       },
