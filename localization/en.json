@@ -466,7 +466,17 @@
   },
   "addToTackBalanceFailedScreen": {
     "title": "Deposit Failed",
-    "description": "We were unable to successfuly process the deposit. Please try again in a few minutes.",
+    "description": "We were unable to successfully process the deposit. Please try again in a few minutes.",
+    "close": "Close"
+  },
+  "addPaymentMethodFailedScreen": {
+    "title": "Unable To Add",
+    "description": "We were unable to add the payment method to your account. Please try again in a few minutes.",
+    "close": "Close"
+  },
+  "withdrawFailedScreen": {
+    "title": "Withdraw Failed",
+    "description": "We were unable to successfully process the withdraw. Please try again in a few minutes.",
     "close": "Close"
   },
   "paymentSettingsScreen": {
