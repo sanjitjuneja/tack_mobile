@@ -16,6 +16,8 @@ class ActionSecondaryButton extends StatelessWidget {
     return AppCircleButton(
       labelKey: labelKey,
       type: AppButtonType.secondary,
+      borderColor: AppTheme.errorColor,
+      interfaceColor: AppTheme.errorColor,
       onTap: () => onTap(context),
     );
   }

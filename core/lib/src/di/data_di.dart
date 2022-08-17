@@ -238,6 +238,11 @@ class DataDI {
         apiProvider: appLocator.get<ApiProvider>(),
       ),
     );
+    appLocator.registerLazySingleton<AcceptOfferUseCase>(
+      () => AcceptOfferUseCase(
+        tacksRepository: appLocator.get<TacksRepository>(),
+      ),
+    );
     appLocator.registerLazySingleton<CancelOfferUseCase>(
       () => CancelOfferUseCase(
         tacksRepository: appLocator.get<TacksRepository>(),
@@ -352,6 +357,7 @@ class DataDI {
     appLocator.unregister<UnMuteGroupUseCase>();
 
     appLocator.unregister<TacksRepository>();
+    appLocator.unregister<AcceptOfferUseCase>();
     appLocator.unregister<CancelOfferUseCase>();
     appLocator.unregister<CancelTackRunnerUseCase>();
     appLocator.unregister<CancelTackTackerUseCase>();

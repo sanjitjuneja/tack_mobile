@@ -12,29 +12,44 @@ class TackerTacksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TacksBloc, TacksState>(
-      builder: (_, TacksState state) {
-        return AppListViewWithRefresh(
-          enableRefresh: true,
-          enableLoad: state.tackerTacksState.canLoadMore,
-          isLoading: state.tackerTacksState.isLoading,
-          hasData: state.tackerTacksState.hasData,
-          emptyWidget: EmptyWidget(
-            svgIcon: AppIconsTheme.tacksList,
-            descriptionKey: 'tacksScreen.empty.tackerTacks.description',
-            buttonLabelKey: 'tacksScreen.empty.tackerTacks.buttonLabel',
-            onButtonTap: () => _onEmptyStateButtonTap(context),
+    return Column(
+      children: <Widget>[
+        Text(
+          FlutterI18n.translate(
+            context,
+            'tacksScreen.tacker.subtitle',
           ),
-          onRefresh: _onRefreshAction,
-          onLoad: _onLoadMoreAction,
-          itemCount: state.tackerTacksState.tacks.length,
-          itemBuilder: (_, int index) {
-            return TackerTackWidget(
-              tack: state.tackerTacksState.tacks[index],
-            );
-          },
-        );
-      },
+          style: AppTextTheme.manrope13Medium
+              .copyWith(color: AppTheme.textHeavyHintColor),
+        ),
+        const SizedBox(height: 10),
+        Expanded(
+          child: BlocBuilder<TacksBloc, TacksState>(
+            builder: (_, TacksState state) {
+              return AppListViewWithRefresh(
+                enableRefresh: true,
+                enableLoad: state.tackerTacksState.canLoadMore,
+                isLoading: state.tackerTacksState.isLoading,
+                hasData: state.tackerTacksState.hasData,
+                emptyWidget: EmptyWidget(
+                  svgIcon: AppIconsTheme.tacksList,
+                  descriptionKey: 'tacksScreen.empty.tackerTacks.description',
+                  buttonLabelKey: 'tacksScreen.empty.tackerTacks.buttonLabel',
+                  onButtonTap: () => _onEmptyStateButtonTap(context),
+                ),
+                onRefresh: _onRefreshAction,
+                onLoad: _onLoadMoreAction,
+                itemCount: state.tackerTacksState.tacks.length,
+                itemBuilder: (_, int index) {
+                  return TackerTackWidget(
+                    tack: state.tackerTacksState.tacks[index],
+                  );
+                },
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 

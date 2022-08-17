@@ -4,7 +4,7 @@ import 'package:core/core.dart';
 import 'package:domain/authorization/authorization.dart';
 import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
-import 'package:splash/splash_feature.dart';
+import 'package:splash/splash.dart';
 
 part 'models/deeplink_destination.dart';
 part 'models/deeplink_intent.dart';

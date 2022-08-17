@@ -33,7 +33,7 @@ class MyGroupsBloc extends Bloc<MyGroupsEvent, MyGroupsState> {
     OpenGroupDetails event,
     Emitter<MyGroupsState> emit,
   ) async {
-    final GroupDetailsScreenResult result = await _appRouter.pushForResult(
+    final GroupDetailsScreenResult? result = await _appRouter.pushForResult(
       GroupDetailsFeature.groupPage(group: event.group),
     );
 
@@ -48,7 +48,9 @@ class MyGroupsBloc extends Bloc<MyGroupsEvent, MyGroupsState> {
     Emitter<MyGroupsState> emit,
   ) async {
     _appRouter.push(
-      InviteMembersFeature.page(group: event.group),
+      InviteMembersFeature.page(
+        group: event.group,
+      ),
     );
   }
 

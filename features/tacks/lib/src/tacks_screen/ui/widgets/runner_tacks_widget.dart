@@ -12,29 +12,44 @@ class RunnerTacksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TacksBloc, TacksState>(
-      builder: (_, TacksState state) {
-        return AppListViewWithRefresh(
-          enableRefresh: true,
-          enableLoad: state.runnerTacksState.canLoadMore,
-          isLoading: state.runnerTacksState.isLoading,
-          hasData: state.runnerTacksState.hasData,
-          emptyWidget: EmptyWidget(
-            svgIcon: AppIconsTheme.tacksList,
-            descriptionKey: 'tacksScreen.empty.runnerTacks.description',
-            buttonLabelKey: 'tacksScreen.empty.runnerTacks.buttonLabel',
-            onButtonTap: () => _onEmptyStateButtonTap(context),
+    return Column(
+      children: <Widget>[
+        Text(
+          FlutterI18n.translate(
+            context,
+            'tacksScreen.runner.subtitle',
           ),
-          onRefresh: _onRefreshAction,
-          onLoad: _onLoadMoreAction,
-          itemCount: state.runnerTacksState.tacks.length,
-          itemBuilder: (_, int index) {
-            return RunnerTackWidget(
-              runnerTack: state.runnerTacksState.tacks[index],
-            );
-          },
-        );
-      },
+          style: AppTextTheme.manrope13Medium
+              .copyWith(color: AppTheme.textHeavyHintColor),
+        ),
+        const SizedBox(height: 10),
+        Expanded(
+          child: BlocBuilder<TacksBloc, TacksState>(
+            builder: (_, TacksState state) {
+              return AppListViewWithRefresh(
+                enableRefresh: true,
+                enableLoad: state.runnerTacksState.canLoadMore,
+                isLoading: state.runnerTacksState.isLoading,
+                hasData: state.runnerTacksState.hasData,
+                emptyWidget: EmptyWidget(
+                  svgIcon: AppIconsTheme.tacksList,
+                  descriptionKey: 'tacksScreen.empty.runnerTacks.description',
+                  buttonLabelKey: 'tacksScreen.empty.runnerTacks.buttonLabel',
+                  onButtonTap: () => _onEmptyStateButtonTap(context),
+                ),
+                onRefresh: _onRefreshAction,
+                onLoad: _onLoadMoreAction,
+                itemCount: state.runnerTacksState.tacks.length,
+                itemBuilder: (_, int index) {
+                  return RunnerTackWidget(
+                    runnerTack: state.runnerTacksState.tacks[index],
+                  );
+                },
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 

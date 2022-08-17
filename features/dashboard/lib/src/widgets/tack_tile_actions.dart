@@ -10,38 +10,54 @@ class TackTileActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        if (tack.allowCounterOffers) ...<Widget>[
-          Expanded(
-            flex: 1,
-            child: AppButton(
-              labelKey: 'general.counter',
-              type: ButtonType.secondary,
-              withShadow: false,
-              onTap: () => _onCounterButtonTap(context),
+    return BlocBuilder<GlobalBloc, GlobalState>(
+        builder: (_, GlobalState state) {
+      final bool isOwnTack = state.user.id == tack.tacker.id;
+      if (isOwnTack) {
+        return AppButton(
+          labelKey: 'dashboardScreen.createdByYouButton',
+          withFeedback: true,
+          onTap: () => _onCreatedByMeButtonPressed(context),
+        );
+      } else {
+        return Row(
+          children: <Widget>[
+            if (tack.allowCounterOffers) ...<Widget>[
+              Expanded(
+                flex: 1,
+                child: AppButton(
+                  labelKey: 'general.counter',
+                  type: ButtonType.secondary,
+                  withShadow: false,
+                  onTap: () => _onCounterButtonPressed(context),
+                ),
+              ),
+              const SizedBox(width: 12),
+            ],
+            Expanded(
+              flex: 2,
+              child: AppButton(
+                labelKey: 'general.accept',
+                icon: AppIconsTheme.edit,
+                withFeedback: true,
+                onTap: () => _onAcceptButtonPressed(context),
+              ),
             ),
-          ),
-          const SizedBox(width: 12),
-        ],
-        Expanded(
-          flex: 2,
-          child: AppButton(
-            labelKey: 'general.accept',
-            icon: AppIconsTheme.edit,
-            withFeedback: true,
-            onTap: () => _onAcceptButtonTap(context),
-          ),
-        ),
-      ],
-    );
+          ],
+        );
+      }
+    });
   }
 
-  void _onCounterButtonTap(BuildContext context) {
+  void _onCreatedByMeButtonPressed(BuildContext context) {
+    BlocProvider.of<DashboardBloc>(context).add(OpenOwnOngoingTack(tack: tack));
+  }
+
+  void _onCounterButtonPressed(BuildContext context) {
     BlocProvider.of<DashboardBloc>(context).add(CounterOfferOpen(tack: tack));
   }
 
-  void _onAcceptButtonTap(BuildContext context) {
+  void _onAcceptButtonPressed(BuildContext context) {
     BlocProvider.of<DashboardBloc>(context).add(AcceptTack(tack: tack));
   }
 }

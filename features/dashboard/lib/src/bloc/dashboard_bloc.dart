@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:dashboard/src/counter_offer_screen/ui/counter_offer_page.dart';
 import 'package:domain/domain.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
+import 'package:tacks/tacks.dart';
+
+import '../counter_offer_screen/ui/counter_offer_page.dart';
 
 part 'dashboard_event.dart';
 
@@ -36,6 +38,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     on<RefreshAction>(_onRefreshAction);
     on<LoadMoreAction>(_onLoadMoreAction);
 
+    on<OpenOwnOngoingTack>(_onOpenOwnOngoingTack);
     on<CounterOfferOpen>(_onCounterOfferOpen);
     on<AcceptTack>(_onAcceptTack);
 
@@ -106,6 +109,13 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     } catch (_) {
       event.completer.complete(LoadingStatus.failed);
     }
+  }
+
+  Future<void> _onOpenOwnOngoingTack(
+    OpenOwnOngoingTack event,
+    Emitter<DashboardState> emit,
+  ) async {
+    _appRouter.push(OngoingTackerTack.page(tack: event.tack));
   }
 
   Future<void> _onCounterOfferOpen(

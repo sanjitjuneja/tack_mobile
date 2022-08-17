@@ -56,7 +56,7 @@ class _TacksFormState extends State<TacksForm> {
                   },
                 ),
               ),
-              const SizedBox(height: 17),
+              const SizedBox(height: 5),
               const Expanded(
                 child: TabBarView(
                   children: <Widget>[

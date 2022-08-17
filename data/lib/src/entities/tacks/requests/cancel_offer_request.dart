@@ -1,9 +1,9 @@
 part of tacks_entities;
 
 class CancelOfferRequest extends JsonSerializable {
-  final int tackId;
+  final int offerId;
 
   const CancelOfferRequest({
-    required this.tackId,
+    required this.offerId,
   });
 }

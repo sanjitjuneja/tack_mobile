@@ -5,6 +5,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/dashboard.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:home/home.dart';
 
 part 'tack_general_info_widget.dart';
 part 'tack_header_widget.dart';
