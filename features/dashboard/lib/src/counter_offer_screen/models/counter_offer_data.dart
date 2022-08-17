@@ -10,7 +10,7 @@ class CounterOfferData {
   bool get isInvalid {
     if (!isValidationEnabled) return false;
 
-    if (parsedPrice != null && parsedPrice! < minValue) return true;
+    if (parsedPrice != null && parsedPrice! <= minValue) return true;
 
     return false;
   }

@@ -3,6 +3,9 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 // TODO: rename.
 class KeyboardVisibilityWidget extends StatelessWidget {
+  static const Duration _paddingDuration = Duration(milliseconds: 200);
+  static const Duration _opacityDuration = Duration(milliseconds: 150);
+
   final Widget child;
   final EdgeInsets padding;
 
@@ -18,12 +21,12 @@ class KeyboardVisibilityWidget extends StatelessWidget {
       builder: (_, bool isKeyboardVisible) {
         return AnimatedPadding(
           padding: isKeyboardVisible ? padding.copyWith(bottom: 0) : padding,
-          duration: const Duration(milliseconds: 150),
+          duration: _paddingDuration,
           child: AnimatedCrossFade(
             crossFadeState: isKeyboardVisible
                 ? CrossFadeState.showSecond
                 : CrossFadeState.showFirst,
-            duration: const Duration(milliseconds: 300),
+            duration: _opacityDuration,
             firstChild: child,
             secondChild: const SizedBox(width: double.infinity),
           ),

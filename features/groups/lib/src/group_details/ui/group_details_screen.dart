@@ -13,7 +13,7 @@ class GroupDetailsScreen extends StatelessWidget {
       backgroundColor: AppTheme.primaryBackgroundColor,
       navigationBar: AppNavigationBar(
         backgroundColor: AppTheme.primaryBackgroundColor,
-        withResult: false,
+        withResult: true,
         actions: const <Widget>[
           GroupDetailsNavigationBarAction(),
         ],

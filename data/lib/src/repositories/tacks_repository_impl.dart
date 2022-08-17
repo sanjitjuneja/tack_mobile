@@ -130,8 +130,7 @@ class TacksRepositoryImpl implements domain.TacksRepository {
 
   @override
   Future<void> completeTackByTacker(domain.CompleteTackPayload payload) async {
-    // TODO: replace by canceling by tacker
-    return _apiProvider.completeTackByRunner(
+    return _apiProvider.completeTackByTacker(
       CompleteTackRequest(
         tackId: payload.tack.id,
       ),
@@ -172,7 +171,18 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   @override
   Future<void> cancelOffer(domain.CancelOfferPayload payload) async {
     return _apiProvider.cancelOffer(
-      CancelOfferRequest(tackId: payload.tack.id),
+      CancelOfferRequest(
+        offerId: payload.offer.id,
+      ),
+    );
+  }
+
+  @override
+  Future<void> acceptOffer(domain.AcceptOfferPayload payload) async {
+    return _apiProvider.acceptOffer(
+      AcceptOfferRequest(
+        offerId: payload.offer.id,
+      ),
     );
   }
 

@@ -1,12 +1,14 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:core_ui/src/theme/app_theme.dart';
+import 'package:core_ui/src/widgets/keyboard_overlay/keyboard_overlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 // TODO: refactor.
 class AppTextField extends StatefulWidget {
   final TextEditingController? controller;
+  final FocusNode? focusNode;
   final String? initialText;
   final String placeholder;
   final EdgeInsets? padding;
@@ -39,6 +41,7 @@ class AppTextField extends StatefulWidget {
     this.initialText,
     this.padding,
     this.controller,
+    this.focusNode,
     this.backgroundColor,
     this.isDisabled = false,
     this.onTap,
@@ -69,19 +72,34 @@ class AppTextField extends StatefulWidget {
 }
 
 class _AppTextFieldState extends State<AppTextField> {
+  static const List<TextInputType> _typesForOverlay = <TextInputType>[
+    TextInputType.numberWithOptions(decimal: true),
+    TextInputType.numberWithOptions(),
+  ];
+
   late TextEditingController _controller;
+  late FocusNode focusNode;
+  late bool shouldUseOverlay;
 
   bool get _isReadOnly => widget.onTap != null;
 
   @override
   void initState() {
+    super.initState();
+    focusNode = widget.focusNode ?? FocusNode();
+    shouldUseOverlay = _typesForOverlay.contains(widget.keyboardType);
+
     if (widget.initialText != null) {
       _controller = TextEditingController()..value = _initialFormattedText;
     } else {
       _controller = widget.controller ?? TextEditingController();
     }
 
-    super.initState();
+    focusNode.addListener(() {
+      if (focusNode.hasFocus) return;
+
+      widget.onFocusLost?.call(_controller);
+    });
   }
 
   TextEditingValue get _initialFormattedText {
@@ -116,13 +134,12 @@ class _AppTextFieldState extends State<AppTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Focus(
-          canRequestFocus: widget.onFocusLost == null,
-          onFocusChange: (bool hasFocus) {
-            if (!hasFocus) widget.onFocusLost?.call(_controller);
-          },
+        KeyboardOverlayWidget(
+          isEnabled: shouldUseOverlay,
+          focusNode: focusNode,
           child: CupertinoTextField(
             suffix: widget.suffix,
+            focusNode: focusNode,
             textAlignVertical: TextAlignVertical.center,
             decoration: widget.hasDecoration
                 ? BoxDecoration(
@@ -191,5 +208,10 @@ class _AppTextFieldState extends State<AppTextField> {
         ],
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

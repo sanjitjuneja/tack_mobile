@@ -9,12 +9,12 @@ class AppIconsTheme {
   static const String _svgPath = 'assets/svg/';
 
   /// Bottom Navigation bar
-  static const String _dashboardActiveKey = '${_navigationPath}dashboard_active.png';
-  static const String _dashboardInactiveKey = '${_navigationPath}dashboard_inactive.png';
-  static const String _addActiveKey = '${_navigationPath}add_active.png';
-  static const String _addInactiveKey = '${_navigationPath}add_inactive.png';
-  static const String _tacksActiveKey = '${_navigationPath}tacks_active.png';
-  static const String _tacksInactiveKey = '${_navigationPath}tacks_inactive.png';
+  static const String _dashboardActiveKey = '${_navigationPath}dashboard_active.svg';
+  static const String _dashboardInactiveKey = '${_navigationPath}dashboard_inactive.svg';
+  static const String _addActiveKey = '${_navigationPath}add_active.svg';
+  static const String _addInactiveKey = '${_navigationPath}add_inactive.svg';
+  static const String _tacksActiveKey = '${_navigationPath}tacks_active.svg';
+  static const String _tacksInactiveKey = '${_navigationPath}tacks_inactive.svg';
   ///
 
   static const String _chatKey = '${_basePath}chat.png';

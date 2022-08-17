@@ -28,6 +28,8 @@ dependencies:
     path: ../home
   groups:
     path: ../groups
+  tacks:
+    path: ../tacks
 
 dev_dependencies:
   flutter_test:

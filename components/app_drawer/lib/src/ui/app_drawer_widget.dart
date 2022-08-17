@@ -17,10 +17,12 @@ class AppDrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Widget> children = List<Widget>.from(
       GoToOption.values.map(
-        (GoToOption option) => SideBarTileWidget(
-          titleKey: option.titleKey,
-          onPressed: () => _onOptionPressed(context, option),
-        ),
+        (GoToOption option) {
+          return SideBarTileWidget(
+            titleKey: option.titleKey,
+            onPressed: () => _onOptionPressed(context, option),
+          );
+        },
       ),
     );
     children.add(
@@ -72,8 +74,13 @@ class AppDrawerWidget extends StatelessWidget {
     );
   }
 
-  void _onOptionPressed(BuildContext context, GoToOption option) {
-    BlocProvider.of<AppDrawerBloc>(context).add(GoTo(context, option));
+  void _onOptionPressed(
+    BuildContext context,
+    GoToOption option,
+  ) {
+    BlocProvider.of<AppDrawerBloc>(context).add(
+      GoTo(context, option),
+    );
   }
 
   void _onLogOutPressed(BuildContext context) {

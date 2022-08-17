@@ -32,10 +32,7 @@ class RunnerTackActions extends StatelessWidget {
                 withShadow: false,
                 padding:
                     const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                onTap: () {
-                  BlocProvider.of<TacksBloc>(context)
-                      .add(CancelTackOffer(tack: runnerTack.tack));
-                },
+                onTap: () => _onCancelButtonPressed(context),
               ),
             ),
             const SizedBox(width: 10),
@@ -118,5 +115,10 @@ class RunnerTackActions extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void _onCancelButtonPressed(BuildContext context) {
+    BlocProvider.of<TacksBloc>(context)
+        .add(CancelTackOffer(runnerTack: runnerTack));
   }
 }
