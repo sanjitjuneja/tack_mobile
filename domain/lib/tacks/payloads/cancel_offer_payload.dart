@@ -1,14 +1,14 @@
 part of tacks;
 
 class CancelOfferPayload extends Equatable {
-  final Tack tack;
+  final Offer offer;
 
   const CancelOfferPayload({
-    required this.tack,
+    required this.offer,
   });
 
   @override
   List<Object> get props => <Object>[
-    tack,
+    offer,
   ];
 }

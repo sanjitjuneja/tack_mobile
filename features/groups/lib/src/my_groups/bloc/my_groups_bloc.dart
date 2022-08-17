@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
-import 'package:groups/src/group_details/models/group_details_screen_result.dart';
-import 'package:groups/src/group_details/ui/group_details_page.dart';
 import 'package:navigation/navigation.dart';
 
-import '../../../groups.dart';
+import '../../create_group/ui/create_group_page.dart';
+import '../../group_details/models/group_details_screen_result.dart';
+import '../../group_details/ui/group_details_page.dart';
+import '../../invitations/ui/invitations_page.dart';
+import '../../invite_members/ui/invite_members_page.dart';
 
 part 'my_groups_event.dart';
 
@@ -31,7 +33,7 @@ class MyGroupsBloc extends Bloc<MyGroupsEvent, MyGroupsState> {
     OpenGroupDetails event,
     Emitter<MyGroupsState> emit,
   ) async {
-    final GroupDetailsScreenResult result = await _appRouter.pushForResult(
+    final GroupDetailsScreenResult? result = await _appRouter.pushForResult(
       GroupDetailsFeature.groupPage(group: event.group),
     );
 
@@ -45,7 +47,11 @@ class MyGroupsBloc extends Bloc<MyGroupsEvent, MyGroupsState> {
     InviteMembers event,
     Emitter<MyGroupsState> emit,
   ) async {
-    _appRouter.push(InviteMembersFeature.page(group: event.group));
+    _appRouter.push(
+      InviteMembersFeature.page(
+        group: event.group,
+      ),
+    );
   }
 
   Future<void> _onOpenMyInvitations(

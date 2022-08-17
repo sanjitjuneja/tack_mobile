@@ -9,12 +9,6 @@ class UserRepositoryImpl implements domain.UserRepository {
 
   late BehaviorSubject<domain.User> _userStreamController;
 
-  @override
-  Stream<domain.User> get userStream => _userStreamController.stream;
-
-  @override
-  domain.User get currentUser => _userStreamController.stream.value;
-
   UserRepositoryImpl({
     required ApiProvider apiProvider,
     required SharedPreferencesProvider sharedPreferencesProvider,
@@ -23,4 +17,10 @@ class UserRepositoryImpl implements domain.UserRepository {
     final domain.User user = _sharedPreferencesProvider.getUser()!;
     _userStreamController = BehaviorSubject<domain.User>.seeded(user);
   }
+
+  @override
+  Stream<domain.User> get userStream => _userStreamController.stream;
+
+  @override
+  domain.User get currentUser => _userStreamController.stream.value;
 }

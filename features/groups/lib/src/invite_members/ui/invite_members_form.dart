@@ -67,7 +67,7 @@ class InviteMembersForm extends StatelessWidget {
                             AppTheme.textFieldSecondaryBackgroundColor,
                         interfaceColor: AppTheme.textHeavyHintColor,
                         onTap: () => _onCopyButtonPressed(context),
-                        content: state.inviteLink!.link,
+                        content: state.inviteLink.toString(),
                       ),
                       const SizedBox(height: 14),
                       const InviteMembersDivider(),

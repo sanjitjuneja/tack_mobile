@@ -1,6 +1,8 @@
-import 'package:core/src/app_config.dart';
+import 'package:core/src/config/app_config.dart';
+import 'package:core/src/config/firebase_config_helper.dart';
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:navigation/navigation.dart';
 
 import 'app_di.dart';
@@ -10,6 +12,13 @@ final DataDI dataDI = DataDI();
 class DataDI {
   Future<void> setupPreLoginAppLocator(Flavor flavor) async {
     appLocator.registerSingleton<AppConfig>(AppConfig.fromFlavor(flavor));
+    appLocator.registerSingleton<FirebaseConfigHelper>(
+      FirebaseConfigHelper.fromFlavor(flavor),
+    );
+
+    await Firebase.initializeApp(
+      options: appLocator.get<FirebaseConfigHelper>().currentPlatformOptions,
+    );
 
     final MapperFactory mapperFactory = MapperFactory();
 
@@ -82,6 +91,34 @@ class DataDI {
         authRepository: appLocator.get<AuthRepository>(),
       ),
     );
+
+    final DeeplinkRepository deeplinkRepository = DeeplinkRepositoryImpl(
+      firebaseConfigHelper: appLocator.get<FirebaseConfigHelper>(),
+    );
+
+    appLocator.registerSingleton<DeeplinkRepository>(deeplinkRepository);
+    await deeplinkRepository.configure();
+
+    appLocator.registerLazySingleton<CreateDeeplinkUseCase>(
+      () => CreateDeeplinkUseCase(
+        deeplinkRepository: appLocator.get<DeeplinkRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<GetLastDeeplinkUseCase>(
+      () => GetLastDeeplinkUseCase(
+        deeplinkRepository: appLocator.get<DeeplinkRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<ObserveDeeplinkUseCase>(
+      () => ObserveDeeplinkUseCase(
+        deeplinkRepository: appLocator.get<DeeplinkRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<ResetLastDeeplinkUseCase>(
+      () => ResetLastDeeplinkUseCase(
+        deeplinkRepository: appLocator.get<DeeplinkRepository>(),
+      ),
+    );
   }
 
   Future<void> setupPostLoginAppLocator() async {
@@ -127,6 +164,11 @@ class DataDI {
     );
     appLocator.registerLazySingleton<GetCurrentGroupUseCase>(
       () => GetCurrentGroupUseCase(
+        groupsRepository: appLocator.get<GroupsRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<GetGroupInviteUseCase>(
+      () => GetGroupInviteUseCase(
         groupsRepository: appLocator.get<GroupsRepository>(),
       ),
     );
@@ -194,6 +236,11 @@ class DataDI {
     appLocator.registerSingleton<TacksRepository>(
       TacksRepositoryImpl(
         apiProvider: appLocator.get<ApiProvider>(),
+      ),
+    );
+    appLocator.registerLazySingleton<AcceptOfferUseCase>(
+      () => AcceptOfferUseCase(
+        tacksRepository: appLocator.get<TacksRepository>(),
       ),
     );
     appLocator.registerLazySingleton<CancelOfferUseCase>(
@@ -295,6 +342,7 @@ class DataDI {
     appLocator.unregister<CreateGroupUseCase>();
     appLocator.unregister<DeclineGroupInvitationUseCase>();
     appLocator.unregister<GetCurrentGroupUseCase>();
+    appLocator.unregister<GetGroupInviteUseCase>();
     appLocator.unregister<GetGroupsUseCase>();
     appLocator.unregister<LeaveGroupUseCase>();
     appLocator.unregister<LoadGroupInvitationsUseCase>();
@@ -309,6 +357,7 @@ class DataDI {
     appLocator.unregister<UnMuteGroupUseCase>();
 
     appLocator.unregister<TacksRepository>();
+    appLocator.unregister<AcceptOfferUseCase>();
     appLocator.unregister<CancelOfferUseCase>();
     appLocator.unregister<CancelTackRunnerUseCase>();
     appLocator.unregister<CancelTackTackerUseCase>();

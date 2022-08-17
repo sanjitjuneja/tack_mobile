@@ -9,14 +9,6 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   late BehaviorSubject<List<domain.Tack>> _tackerTacksStreamController;
   late BehaviorSubject<List<domain.RunnerTack>> _runnerTacksStreamController;
 
-  @override
-  ValueStream<List<domain.Tack>> get tackerTacksStream =>
-      _tackerTacksStreamController;
-
-  @override
-  ValueStream<List<domain.RunnerTack>> get runnerTacksStream =>
-      _runnerTacksStreamController;
-
   TacksRepositoryImpl({
     required ApiProvider apiProvider,
   }) : _apiProvider = apiProvider {
@@ -25,6 +17,14 @@ class TacksRepositoryImpl implements domain.TacksRepository {
     _runnerTacksStreamController =
         BehaviorSubject<List<domain.RunnerTack>>.seeded(<domain.RunnerTack>[]);
   }
+
+  @override
+  ValueStream<List<domain.Tack>> get tackerTacksStream =>
+      _tackerTacksStreamController;
+
+  @override
+  ValueStream<List<domain.RunnerTack>> get runnerTacksStream =>
+      _runnerTacksStreamController;
 
   @override
   Future<List<domain.TemplateTack>> nearbyPopularTacks(
@@ -130,8 +130,7 @@ class TacksRepositoryImpl implements domain.TacksRepository {
 
   @override
   Future<void> completeTackByTacker(domain.CompleteTackPayload payload) async {
-    // TODO: replace by canceling by tacker
-    return _apiProvider.completeTackByRunner(
+    return _apiProvider.completeTackByTacker(
       CompleteTackRequest(
         tackId: payload.tack.id,
       ),
@@ -172,7 +171,18 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   @override
   Future<void> cancelOffer(domain.CancelOfferPayload payload) async {
     return _apiProvider.cancelOffer(
-      CancelOfferRequest(tackId: payload.tack.id),
+      CancelOfferRequest(
+        offerId: payload.offer.id,
+      ),
+    );
+  }
+
+  @override
+  Future<void> acceptOffer(domain.AcceptOfferPayload payload) async {
+    return _apiProvider.acceptOffer(
+      AcceptOfferRequest(
+        offerId: payload.offer.id,
+      ),
     );
   }
 

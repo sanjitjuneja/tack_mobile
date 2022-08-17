@@ -4,7 +4,7 @@ class InviteMembersState {
   final Group group;
   final bool isLoading;
   final bool hasError;
-  final GroupInviteLink? inviteLink;
+  final Uri? inviteLink;
 
   bool get hasData => inviteLink != null;
 
@@ -18,7 +18,7 @@ class InviteMembersState {
   InviteMembersState copyWith({
     bool? isLoading,
     bool? hasError,
-    GroupInviteLink? inviteLink,
+    Uri? inviteLink,
   }) {
     return InviteMembersState(
       group: group,

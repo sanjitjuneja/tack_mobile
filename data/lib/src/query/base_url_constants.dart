@@ -15,6 +15,7 @@ class BaseUrlConstants {
 
   static const String offersPath = '/offers/';
   static const String offerCancelPath = '/offers/${ApiQuery.idKey}/';
+  static const String offerTestAcceptPath = '/offers/${ApiQuery.idKey}/test_accept/';
 
   static const String groupsPath = '/groups/';
   static const String groupsMePath = '/groups/me/';
@@ -25,6 +26,7 @@ class BaseUrlConstants {
   static const String groupMutePath = '/groups/${ApiQuery.idKey}/mute/';
   static const String groupUnMutePath = '/groups/${ApiQuery.idKey}/unmute/';
   static const String groupInviteLinkPath = '/groups/${ApiQuery.idKey}/get_invite_link/';
+  static const String groupInvitePath = '/groups/invite/';
 
   static const String groupsTacksPath = '/groups/${ApiQuery.idKey}/tacks/';
 
@@ -40,6 +42,7 @@ class BaseUrlConstants {
   static const String tackOffersPath = '/tacks/${ApiQuery.idKey}/offers/';
   static const String tackStartPath = '/tacks/${ApiQuery.idKey}/start_tack/';
   static const String tackCompletePath = '/tacks/${ApiQuery.idKey}/complete/';
+  static const String tackConfirmCompletePath = '/tacks/${ApiQuery.idKey}/confirm_complete/';
 
   static const String groupPopularTacksPath = 'groups/${ApiQuery.idKey}/popular_tacks/';
   static const String nearbyPopularTacksPath = 'tacks/nearby/';

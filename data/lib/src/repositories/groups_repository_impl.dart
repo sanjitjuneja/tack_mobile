@@ -10,19 +10,7 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
 
   late BehaviorSubject<List<domain.Group>> _groupsStreamController;
 
-  @override
-  Stream<List<domain.Group>> get groupsStream => _groupsStreamController.stream;
-
-  @override
-  List<domain.Group> get groups => _groupsStreamController.stream.value;
-
   late BehaviorSubject<domain.Group?> _groupStreamController;
-
-  @override
-  Stream<domain.Group?> get currentGroupStream => _groupStreamController.stream;
-
-  @override
-  domain.Group? get currentGroup => _groupStreamController.stream.value;
 
   GroupsRepositoryImpl({
     required ApiProvider apiProvider,
@@ -34,6 +22,18 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
     );
     _groupStreamController = BehaviorSubject<domain.Group?>.seeded(null);
   }
+
+  @override
+  Stream<List<domain.Group>> get groupsStream => _groupsStreamController.stream;
+
+  @override
+  List<domain.Group> get groups => _groupsStreamController.stream.value;
+
+  @override
+  Stream<domain.Group?> get currentGroupStream => _groupStreamController.stream;
+
+  @override
+  domain.Group? get currentGroup => _groupStreamController.stream.value;
 
   @override
   Future<void> initialLoad() async {
@@ -144,7 +144,20 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
     domain.GetGroupInviteLinkPayload payload,
   ) async {
     return _apiProvider.getGroupInviteLink(
-      request: GetGroupInviteLinkRequest(id: payload.group.id),
+      request: GetGroupInviteLinkRequest(
+        id: payload.group.id,
+      ),
+    );
+  }
+
+  @override
+  Future<domain.GroupInvite> getGroupInvite(
+    domain.GetGroupInvitePayload payload,
+  ) async {
+    return _apiProvider.getGroupInvite(
+      request: GetGroupInviteRequest(
+        params: payload.uri.queryParameters,
+      ),
     );
   }
 
@@ -153,7 +166,9 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
     domain.GetGroupMembersPayload payload,
   ) async {
     return _apiProvider.getGroupMembers(
-      request: GetGroupMembersRequest(id: payload.group.id),
+      request: GetGroupMembersRequest(
+        id: payload.group.id,
+      ),
     );
   }
 
@@ -177,7 +192,9 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
     );
 
     await selectGroup(
-      domain.SelectGroupPayload(group: payload.invitation.group),
+      domain.SelectGroupPayload(
+        group: payload.invitation.group,
+      ),
     );
   }
 

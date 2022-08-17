@@ -37,6 +37,7 @@ class _InviteMembersPage extends Page<void> {
             appRouter: AppRouter.of(context),
             loadGroupInviteLinkUseCase:
                 appLocator.get<LoadGroupInviteLinkUseCase>(),
+            createDeeplinkUseCase: appLocator.get<CreateDeeplinkUseCase>(),
           );
         },
         child: const InviteMembersScreen(),

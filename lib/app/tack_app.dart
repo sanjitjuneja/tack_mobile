@@ -21,6 +21,7 @@ class _TackAppState extends State<TackApp> {
   void initState() {
     globalAppRouter = appLocator.get<GlobalAppRouterDelegate>();
     routeInformationParser = appLocator.get<AppRouteInformationParser>();
+
     super.initState();
   }
 

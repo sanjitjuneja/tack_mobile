@@ -1,5 +1,8 @@
 library core;
 
+export 'src/config/app_config.dart';
+export 'src/config/firebase_config_helper.dart';
+
 export 'src/constants/constants.dart';
 export 'src/constants/void_type.dart';
 
@@ -30,9 +33,9 @@ export 'src/utils/internet_connectivity_service.dart';
 export 'src/utils/phone_call_utility.dart';
 export 'src/utils/text_utility.dart';
 
-export 'src/app_config.dart';
-
 export 'package:equatable/equatable.dart';
+export 'package:firebase_core/firebase_core.dart';
+export 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:flutter_i18n/flutter_i18n.dart';
 export 'package:flutter_i18n/loaders/decoders/base_decode_strategy.dart';

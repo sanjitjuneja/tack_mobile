@@ -13,6 +13,7 @@ part 'models/tack_user.dart';
 part 'models/tack_user_contacts.dart';
 part 'models/template_tack.dart';
 
+part 'payloads/accept_offer_payload.dart';
 part 'payloads/cancel_offer_payload.dart';
 part 'payloads/cancel_tack_payload.dart';
 part 'payloads/complete_tack_payload.dart';
@@ -28,6 +29,7 @@ part 'payloads/update_tack_payload.dart';
 
 part 'repositories/tacks_repository.dart';
 
+part 'use_cases/accept_offer_use_case.dart';
 part 'use_cases/cancel_offer_use_case.dart';
 part 'use_cases/cancel_tack_runner_use_case.dart';
 part 'use_cases/cancel_tack_tacker_use_case.dart';

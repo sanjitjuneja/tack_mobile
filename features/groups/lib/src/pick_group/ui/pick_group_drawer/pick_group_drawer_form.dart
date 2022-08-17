@@ -43,6 +43,10 @@ class _PickGroupDrawerForm extends StatelessWidget {
                     refreshIndicatorSize: ProgressIndicatorSize.small,
                     loadingIndicatorSize: ProgressIndicatorSize.medium,
                     indicatorColor: AppTheme.progressInterfaceDarkColor,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 16,
+                    ),
                     separatorBuilder: (_, __) => const AppDivider(),
                     itemBuilder: (_, int index) {
                       final _SelectableGroup selectableGroup = _SelectableGroup(
@@ -53,6 +57,8 @@ class _PickGroupDrawerForm extends StatelessWidget {
                         item: selectableGroup,
                         isSelected: selectedGroup == selectableGroup,
                         onItemTap: _onItemSelect,
+                        padding: const EdgeInsets.all(5),
+                        constraints: const BoxConstraints(minHeight: 50),
                       );
                     },
                     itemCount: state.groups.length,

@@ -16,10 +16,6 @@ class ContactRunner extends OngoingTackerTackEvent {
   const ContactRunner();
 }
 
-class LoadOffers extends OngoingTackerTackEvent {
-  const LoadOffers();
-}
-
 class SelectOffer extends OngoingTackerTackEvent {
   final Offer offer;
 
