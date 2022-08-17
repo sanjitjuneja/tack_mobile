@@ -73,10 +73,10 @@ class AppDrawerBloc extends Bloc<AppDrawerEvent, AppDrawerState> {
         _appRouter.push(PreviousTacksFeature.page());
         break;
       case GoToOption.deposit:
-        // TODO: Handle this case.
+        _appRouter.push(AddToTackBalanceAmountFeature.page());
         break;
       case GoToOption.withdraw:
-        _appRouter.push(WithdrawFeature.page());
+        _appRouter.push(WithdrawAmountFeature.page());
         break;
       case GoToOption.paymentSettings:
         _appRouter.push(PaymentSettingsFeature.page());

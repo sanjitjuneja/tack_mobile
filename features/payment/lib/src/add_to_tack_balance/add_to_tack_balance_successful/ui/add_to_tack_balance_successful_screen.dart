@@ -1,9 +1,9 @@
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
-import 'withdraw_form.dart';
+import 'add_to_tack_balance_successful_form.dart';
 
-class WithdrawScreen extends StatelessWidget {
-  const WithdrawScreen({Key? key}) : super(key: key);
+class AddToTackBalanceSuccessfulScreen extends StatelessWidget {
+  const AddToTackBalanceSuccessfulScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +12,10 @@ class WithdrawScreen extends StatelessWidget {
       navigationBar: AppNavigationBar(
         backgroundColor: AppTheme.secondaryBackgroundColor,
         withResult: false,
+        automaticallyImplyLeading: false,
       ),
       child: const SafeArea(
-        child: WithdrawForm(),
+        child: AddToTackBalanceSuccessfulForm(),
       ),
     );
   }

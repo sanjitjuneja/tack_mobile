@@ -1,21 +1,21 @@
 import 'package:core/core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
-import '../bloc/withdraw_bloc.dart';
+import '../bloc/withdraw_amount_bloc.dart';
 import '/src/widgets/tack_keyboard/bloc/tack_keyboard_bloc.dart';
-import 'withdraw_screen.dart';
+import 'withdraw_amount_screen.dart';
 
-class WithdrawFeature {
+class WithdrawAmountFeature {
   static const String routeName = '/withdraw';
 
-  static Page<void> page() => const WithdrawPage();
+  static Page<void> page() => const WithdrawAmountPage();
 }
 
-class WithdrawPage extends Page<void> {
+class WithdrawAmountPage extends Page<void> {
   @override
-  String get name => WithdrawFeature.routeName;
+  String get name => WithdrawAmountFeature.routeName;
 
-  const WithdrawPage();
+  const WithdrawAmountPage();
 
   @override
   Route<void> createRoute(BuildContext context) {
@@ -24,9 +24,9 @@ class WithdrawPage extends Page<void> {
       builder: (_) {
         return MultiBlocProvider(
           providers: <BlocProvider>[
-            BlocProvider<WithdrawBloc>(
+            BlocProvider<WithdrawAmountBloc>(
               create: (_) {
-                return WithdrawBloc(
+                return WithdrawAmountBloc(
                   appRouter: appLocator.get<AppRouterDelegate>(),
                 );
               },
@@ -35,7 +35,7 @@ class WithdrawPage extends Page<void> {
               create: (_) => TackKeyboardBloc(),
             ),
           ],
-          child: const WithdrawScreen(),
+          child: const WithdrawAmountScreen(),
         );
       },
     );

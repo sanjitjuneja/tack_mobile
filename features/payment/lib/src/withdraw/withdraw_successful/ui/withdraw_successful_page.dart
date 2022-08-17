@@ -6,7 +6,7 @@ import '../bloc/withdraw_successful_bloc.dart';
 import 'withdraw_successful_screen.dart';
 
 class WithdrawSuccessfulFeature {
-  static const String routeName = '/withdraw_successful';
+  static const String routeName = '/withdrawSuccessful';
 
   static Page<void> page({
     required WithdrawMethodType withdrawMethodType,

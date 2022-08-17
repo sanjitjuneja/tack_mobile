@@ -453,6 +453,22 @@
   "pickGroupScreen": {
     "title": "Select Group"
   },
+  "addToTackBalanceAmountScreen": {
+    "title": "Add Cash to Tack Balance",
+    "currentTackBalance": "Current Tack Balance:",
+    "newTackBalance": "New Tack Balance:",
+    "deposit": "Deposit"
+  },
+  "addToTackBalanceSuccessfulScreen": {
+    "newTackBalance": "New Tack Balance:",
+    "depositComplete": "Deposit Complete",
+    "close": "Close"
+  },
+  "addToTackBalanceFailedScreen": {
+    "title": "Deposit Failed",
+    "description": "We were unable to successfuly process the deposit. Please try again in a few minutes.",
+    "close": "Close"
+  },
   "paymentSettingsScreen": {
     "title": "Payment Settings",
     "tackBalance": "Tack Balance",
@@ -471,7 +487,7 @@
     "addBank": "Add Bank",
     "addCard": "Credit/Debit Card"
   },
-  "withdrawScreen": {
+  "withdrawAmountScreen": {
     "withdraw": "Withdraw",
     "instantPayout": "Instant\n 3% Fee (max $15)",
     "regularPayout": "2-3 business days\n No Fee"

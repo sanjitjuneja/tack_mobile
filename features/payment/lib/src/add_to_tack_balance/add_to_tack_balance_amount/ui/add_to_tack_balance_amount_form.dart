@@ -1,47 +1,32 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
-import '../bloc/withdraw_bloc.dart';
+import '../bloc/add_to_tack_balance_amount_bloc.dart';
 import '/src/widgets/payment_method_tile.dart';
 import '/src/widgets/tack_keyboard/bloc/tack_keyboard_bloc.dart';
 import '../../../widgets/tack_keyboard/ui/tack_keyboard.dart';
-import '../widgets/withdraw_method.dart';
-import '../widgets/withdraw_method_type.dart';
 
-class WithdrawForm extends StatelessWidget {
-  const WithdrawForm({Key? key}) : super(key: key);
+class AddToTackBalanceAmountForm extends StatelessWidget {
+  const AddToTackBalanceAmountForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WithdrawBloc, WithdrawState>(
+    return BlocBuilder<AddToTackBalanceAmountBloc, AddToTackBalanceAmountState>(
       builder: (context, withdrawState) {
         return BlocBuilder<TackKeyboardBloc, TackKeyboardState>(
           builder: (context, keyboardState) {
             return Column(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 28),
-                  child: Row(
-                    children: <Widget>[
-                      WithdrawMethod(
-                        withdrawMethodType: WithdrawMethodType.instant,
-                        title: FlutterI18n.translate(
-                          context,
-                          'withdrawScreen.instantPayout',
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      WithdrawMethod(
-                        withdrawMethodType: WithdrawMethodType.regular,
-                        title: FlutterI18n.translate(
-                          context,
-                          'withdrawScreen.regularPayout',
-                        ),
-                      ),
-                    ],
+                Center(
+                  child: Text(
+                    FlutterI18n.translate(
+                      context,
+                      'addToTackBalanceAmountScreen.title',
+                    ),
+                    style: AppTextTheme.manrope24SemiBold,
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 25),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 16.0,
@@ -63,7 +48,10 @@ class WithdrawForm extends StatelessWidget {
                 const AppDivider(width: 234),
                 RichText(
                   text: TextSpan(
-                    text: 'Max: ',
+                    text: FlutterI18n.translate(
+                      context,
+                      'addToTackBalanceAmountScreen.currentTackBalance',
+                    ),
                     style: AppTextTheme.manrope14Regular.copyWith(
                       color: AppColors.shuttleGray,
                     ),
@@ -84,13 +72,11 @@ class WithdrawForm extends StatelessWidget {
                   children: <Widget>[
                     const Spacer(),
                     Expanded(
-                      flex: 3,
+                      flex: 4,
                       child: AppCircleButton(
-                        labelKey: 'withdrawScreen.withdraw',
+                        labelKey: 'addToTackBalanceAmountScreen.deposit',
                         expanded: false,
-                        onTap: () => BlocProvider.of<WithdrawBloc>(context).add(
-                          const MakeWithdrawRequest(),
-                        ),
+                        onTap: () => _onDepositTap(context),
                       ),
                     ),
                     const Spacer(),
@@ -102,6 +88,12 @@ class WithdrawForm extends StatelessWidget {
           },
         );
       },
+    );
+  }
+
+  void _onDepositTap(BuildContext context) {
+    BlocProvider.of<AddToTackBalanceAmountBloc>(context).add(
+      const MakeAddToTackBalanceRequest(),
     );
   }
 }

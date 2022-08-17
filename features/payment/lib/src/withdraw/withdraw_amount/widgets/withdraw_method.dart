@@ -2,7 +2,7 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'withdraw_method_type.dart';
-import '../bloc/withdraw_bloc.dart';
+import '../bloc/withdraw_amount_bloc.dart';
 
 class WithdrawMethod extends StatelessWidget {
   final String title;
@@ -16,7 +16,7 @@ class WithdrawMethod extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WithdrawBloc, WithdrawState>(
+    return BlocBuilder<WithdrawAmountBloc, WithdrawAmountState>(
       builder: (context, state) {
         final isSelected = withdrawMethodType != state.withdrawMethodType;
 
@@ -54,8 +54,8 @@ class WithdrawMethod extends StatelessWidget {
     required bool isSelected,
   }) {
     if (isSelected) {
-      BlocProvider.of<WithdrawBloc>(context).add(
-        const ChangeWithdrawMethodTypeRequest(),
+      BlocProvider.of<WithdrawAmountBloc>(context).add(
+        const ChangeWithdrawAmountMethodTypeRequest(),
       );
     }
   }

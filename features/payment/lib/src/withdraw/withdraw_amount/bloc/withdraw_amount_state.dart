@@ -1,17 +1,17 @@
-part of 'withdraw_bloc.dart';
+part of 'withdraw_amount_bloc.dart';
 
-class WithdrawState {
+class WithdrawAmountState {
   final WithdrawMethodType withdrawMethodType;
 
-  const WithdrawState({
+  const WithdrawAmountState({
     required this.withdrawMethodType,
   });
 
-  WithdrawState copyWith({
+  WithdrawAmountState copyWith({
     WithdrawMethodType? withdrawMethodType,
     String? withdrawAmount,
   }) {
-    return WithdrawState(
+    return WithdrawAmountState(
       withdrawMethodType: withdrawMethodType ?? this.withdrawMethodType,
     );
   }

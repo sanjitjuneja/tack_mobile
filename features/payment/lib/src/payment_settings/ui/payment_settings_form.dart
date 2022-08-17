@@ -112,9 +112,7 @@ class PaymentSettingsForm extends StatelessWidget {
                   context,
                   'paymentSettingsScreen.addPaymentMethod',
                 ),
-                onTap: () => BlocProvider.of<PaymentSettingsBloc>(context).add(
-                  const AddPaymentMethodRequest(),
-                ),
+                onTap: () => _onAddPaymentMethod(context),
               ),
               const SizedBox(height: 28),
               Padding(
@@ -140,6 +138,12 @@ class PaymentSettingsForm extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  void _onAddPaymentMethod(BuildContext context) {
+    BlocProvider.of<PaymentSettingsBloc>(context).add(
+      const AddPaymentMethodRequest(),
     );
   }
 }
