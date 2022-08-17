@@ -55,9 +55,10 @@ class TackKeyboard extends StatelessWidget {
     required String symbol,
     required VoidCallback onTap,
   }) {
-    return GestureDetector(
+    return OpacityOnTapContainer(
       onTap: onTap,
-      behavior: HitTestBehavior.translucent,
+      feedbackType: HapticFeedbackType.heavy,
+      withFeedback: true,
       child: symbol != keyboardSymbols[11]
           ? Text(
               symbol,

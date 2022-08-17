@@ -47,23 +47,22 @@ class AddPaymentMethodForm extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Row(
-                children: <Widget>[
-                  AppIconsTheme.lock.svg(size: 15),
-                  const SizedBox(width: 5),
-                  Text(
-                    FlutterI18n.translate(
-                      context,
-                      'paymentSettingsScreen.privacyInfo',
-                    ),
-                    style: AppTextTheme.manrope13Medium.copyWith(
-                      color: AppTheme.textSecondaryColor,
-                    ),
+            Row(
+              children: <Widget>[
+                const Spacer(),
+                AppIconsTheme.lock.svg(size: 15),
+                const SizedBox(width: 5),
+                Text(
+                  FlutterI18n.translate(
+                    context,
+                    'paymentSettingsScreen.privacyInfo',
                   ),
-                ],
-              ),
+                  style: AppTextTheme.manrope13Medium.copyWith(
+                    color: AppTheme.textSecondaryColor,
+                  ),
+                ),
+                const Spacer(),
+              ],
             ),
             const SizedBox(height: 34),
           ],
