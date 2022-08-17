@@ -35,7 +35,7 @@ class PaymentSettingsForm extends StatelessWidget {
               ),
               const SizedBox(height: 30),
               Padding(
-                padding: const EdgeInsets.only(left: 17.0),
+                padding: const EdgeInsets.only(left: 18.0),
                 child: Text(
                   FlutterI18n.translate(
                     context,
@@ -58,7 +58,7 @@ class PaymentSettingsForm extends StatelessWidget {
               ),
               const SizedBox(height: 30),
               Padding(
-                padding: const EdgeInsets.only(left: 17.0),
+                padding: const EdgeInsets.only(left: 18.0),
                 child: Text(
                   FlutterI18n.translate(
                     context,
@@ -80,7 +80,7 @@ class PaymentSettingsForm extends StatelessWidget {
               ),
               const SizedBox(height: 30),
               Padding(
-                padding: const EdgeInsets.only(left: 17.0),
+                padding: const EdgeInsets.only(left: 18.0),
                 child: Text(
                   FlutterI18n.translate(
                     context,
@@ -96,7 +96,7 @@ class PaymentSettingsForm extends StatelessWidget {
               ),
               const SizedBox(height: 30),
               Padding(
-                padding: const EdgeInsets.only(left: 17.0),
+                padding: const EdgeInsets.only(left: 18.0),
                 child: Text(
                   FlutterI18n.translate(
                     context,
@@ -115,23 +115,22 @@ class PaymentSettingsForm extends StatelessWidget {
                 onTap: () => _onAddPaymentMethod(context),
               ),
               const SizedBox(height: 28),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: Row(
-                  children: <Widget>[
-                    AppIconsTheme.lock.svg(size: 15),
-                    const SizedBox(width: 5),
-                    Text(
-                      FlutterI18n.translate(
-                        context,
-                        'paymentSettingsScreen.privacyInfo',
-                      ),
-                      style: AppTextTheme.manrope13Medium.copyWith(
-                        color: AppTheme.textSecondaryColor,
-                      ),
+              Row(
+                children: <Widget>[
+                  const Spacer(),
+                  AppIconsTheme.lock.svg(size: 15),
+                  const SizedBox(width: 5),
+                  Text(
+                    FlutterI18n.translate(
+                      context,
+                      'paymentSettingsScreen.privacyInfo',
                     ),
-                  ],
-                ),
+                    style: AppTextTheme.manrope13Medium.copyWith(
+                      color: AppTheme.textSecondaryColor,
+                    ),
+                  ),
+                  const Spacer(),
+                ],
               ),
               const SizedBox(height: 34),
             ],

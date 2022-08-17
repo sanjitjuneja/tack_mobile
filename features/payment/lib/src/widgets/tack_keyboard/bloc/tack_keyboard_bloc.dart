@@ -47,7 +47,9 @@ class TackKeyboardBloc extends Bloc<TackKeyboardEvent, TackKeyboardState> {
         }
         break;
       case '0':
-        emit(state.copyWith(value: '${state.value}0'));
+        if (state.value.isNotEmpty) {
+          emit(state.copyWith(value: '${state.value}0'));
+        }
         break;
       case '<-':
         if (state.value.length == 1 || state.value.isEmpty) {

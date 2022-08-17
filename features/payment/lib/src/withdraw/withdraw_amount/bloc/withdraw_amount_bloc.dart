@@ -7,7 +7,8 @@ part 'withdraw_amount_event.dart';
 
 part 'withdraw_amount_state.dart';
 
-class WithdrawAmountBloc extends Bloc<WithdrawAmountEvent, WithdrawAmountState> {
+class WithdrawAmountBloc
+    extends Bloc<WithdrawAmountEvent, WithdrawAmountState> {
   final AppRouterDelegate _appRouter;
 
   WithdrawAmountBloc({
@@ -18,7 +19,8 @@ class WithdrawAmountBloc extends Bloc<WithdrawAmountEvent, WithdrawAmountState> 
             withdrawMethodType: WithdrawMethodType.instant,
           ),
         ) {
-    on<ChangeWithdrawAmountMethodTypeRequest>(_onChangeWithdrawAmountMethodTypeRequest);
+    on<ChangeWithdrawAmountMethodTypeRequest>(
+        _onChangeWithdrawAmountMethodTypeRequest);
     on<MakeWithdrawAmountRequest>(_onMakeWithdrawAmountRequest);
   }
 

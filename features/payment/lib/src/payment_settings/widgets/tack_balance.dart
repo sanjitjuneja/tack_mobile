@@ -52,46 +52,45 @@ class TackBalance extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 48),
-          Padding(
-            padding: const EdgeInsets.only(left: 56),
-            child: IntrinsicHeight(
-              child: Row(
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      AppIconsTheme.add.svg(size: 32),
-                      const SizedBox(height: 4),
-                      Text(
-                        FlutterI18n.translate(
-                          context,
-                          'paymentSettingsScreen.addCash',
-                        ),
-                        style: AppTextTheme.poppins14Medium,
+          IntrinsicHeight(
+            child: Row(
+              children: <Widget>[
+                const Spacer(),
+                Column(
+                  children: <Widget>[
+                    AppIconsTheme.add.svg(size: 32),
+                    const SizedBox(height: 4),
+                    Text(
+                      FlutterI18n.translate(
+                        context,
+                        'paymentSettingsScreen.addCash',
                       ),
-                    ],
-                  ),
-                  const SizedBox(width: 28),
-                  AppDivider(
-                    axis: Axis.vertical,
-                    height: 50,
-                    color: AppTheme.dividerSecondaryColor,
-                  ),
-                  const SizedBox(width: 28),
-                  Column(
-                    children: <Widget>[
-                      AppIconsTheme.bankRounded.svg(size: 32),
-                      const SizedBox(height: 4),
-                      Text(
-                        FlutterI18n.translate(
-                          context,
-                          'paymentSettingsScreen.payout',
-                        ),
-                        style: AppTextTheme.poppins14Medium,
+                      style: AppTextTheme.poppins14Medium,
+                    ),
+                  ],
+                ),
+                const SizedBox(width: 28),
+                AppDivider(
+                  axis: Axis.vertical,
+                  height: 50,
+                  color: AppTheme.dividerSecondaryColor,
+                ),
+                const SizedBox(width: 28),
+                Column(
+                  children: <Widget>[
+                    AppIconsTheme.bankRounded.svg(size: 32),
+                    const SizedBox(height: 4),
+                    Text(
+                      FlutterI18n.translate(
+                        context,
+                        'paymentSettingsScreen.payout',
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                      style: AppTextTheme.poppins14Medium,
+                    ),
+                  ],
+                ),
+                const Spacer(),
+              ],
             ),
           ),
         ],

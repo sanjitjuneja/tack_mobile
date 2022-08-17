@@ -35,6 +35,16 @@ class WithdrawMethod extends StatelessWidget {
               borderRadius: const BorderRadius.all(
                 Radius.circular(12.0),
               ),
+              boxShadow: isSelected
+                  ? const <BoxShadow>[
+                      BoxShadow(
+                        color: AppColors.black25,
+                        offset: Offset(0.0, 4.0),
+                        spreadRadius: 0.0,
+                        blurRadius: 4.0,
+                      ),
+                    ]
+                  : null,
             ),
             child: Text(
               title,
@@ -53,7 +63,7 @@ class WithdrawMethod extends StatelessWidget {
     required BuildContext context,
     required bool isSelected,
   }) {
-    if (isSelected) {
+    if (!isSelected) {
       BlocProvider.of<WithdrawAmountBloc>(context).add(
         const ChangeWithdrawAmountMethodTypeRequest(),
       );
