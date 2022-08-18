@@ -5,46 +5,86 @@ import '../bloc/tack_keyboard_bloc.dart';
 import '../utils/keyboard_symbols.dart';
 
 class TackKeyboard extends StatelessWidget {
-  const TackKeyboard({Key? key}) : super(key: key);
+  final String subtitleKey;
+  final double amount;
+  final ValueSetter<double> onTap;
+
+  const TackKeyboard({
+    Key? key,
+    required this.subtitleKey,
+    required this.amount,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TackKeyboardBloc, TackKeyboardState>(
+    return BlocConsumer<TackKeyboardBloc, TackKeyboardState>(
+      listener: (context, state) => onTap(double.tryParse(state.value) ?? 0),
       builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 64),
           child: Column(
-            children: List<Widget>.generate(
-              4,
-              (rowIndex) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: List<Widget>.generate(
-                    3,
-                    (symbolIndex) {
-                      final symbol =
-                          keyboardSymbols[(rowIndex * 3) + symbolIndex];
-                      return Padding(
-                        padding: EdgeInsets.only(
-                          left: symbol == '0' ? 15 : 0,
-                        ),
-                        child: _customDepositNumber(
-                          symbol: symbol,
-                          onTap: () {
-                            BlocProvider.of<TackKeyboardBloc>(context).add(
-                              KeyboardInputEvent(
-                                symbol: symbol,
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
+            children: <Widget>[
+              Text(
+                '\$ ${state.value.isNotEmpty ? state.value : '0.00'}',
+                style: AppTextTheme.manrope38Bold.copyWith(
+                  color: AppColors.fern,
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+              const AppDivider(width: 234),
+              RichText(
+                text: TextSpan(
+                  text: FlutterI18n.translate(
+                    context,
+                    subtitleKey,
+                  ),
+                  style: AppTextTheme.manrope14Regular.copyWith(
+                    color: AppColors.shuttleGray,
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: CurrencyUtility.dollarFormat.format(amount),
+                      style: AppTextTheme.manrope14Bold.copyWith(
+                        color: AppColors.fern,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 44),
+              ...List<Widget>.generate(
+                4,
+                (rowIndex) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: List<Widget>.generate(
+                      3,
+                      (symbolIndex) {
+                        final symbol =
+                            keyboardSymbols[(rowIndex * 3) + symbolIndex];
+                        return Padding(
+                          padding: EdgeInsets.only(
+                            left: symbol == '0' ? 15 : 0,
+                          ),
+                          child: _customDepositNumber(
+                            symbol: symbol,
+                            onTap: () {
+                              BlocProvider.of<TackKeyboardBloc>(context).add(
+                                KeyboardInputEvent(
+                                  symbol: symbol,
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
         );
       },

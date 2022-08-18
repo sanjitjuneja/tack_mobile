@@ -453,14 +453,14 @@
   "pickGroupScreen": {
     "title": "Select Group"
   },
-  "addToTackBalanceAmountScreen": {
+  "addToTackBalanceScreen": {
     "title": "Add Cash to Tack Balance",
-    "currentTackBalance": "Current Tack Balance:",
-    "newTackBalance": "New Tack Balance:",
+    "currentTackBalance": "Current Tack Balance: ",
+    "newTackBalance": "New Tack Balance: ",
     "deposit": "Deposit"
   },
   "addToTackBalanceSuccessfulScreen": {
-    "newTackBalance": "New Tack Balance:",
+    "newTackBalance": "New Tack Balance: {amount}",
     "depositComplete": "Deposit Complete",
     "close": "Close"
   },
@@ -497,8 +497,9 @@
     "addBank": "Add Bank",
     "addCard": "Credit/Debit Card"
   },
-  "withdrawAmountScreen": {
+  "withdrawScreen": {
     "withdraw": "Withdraw",
+    "max": "Max: ",
     "instantPayout": "Instant\n 3% Fee (max $15)",
     "regularPayout": "2-3 business days\n No Fee"
   },
@@ -507,7 +508,7 @@
     "regularPayoutTitle": "We’re Working On\nYour Payout",
     "instantPayoutSubtitle": "This process can take up to 30 minutes",
     "regularPayoutSubtitle": "This process can take up to 3 business days",
-    "newTackBalance": "New Tack Balance:",
+    "newTackBalance": "New Tack Balance: {amount}",
     "close": "Close"
   }
 }
