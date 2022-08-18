@@ -19,8 +19,10 @@ class TackKeyboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TackKeyboardBloc, TackKeyboardState>(
-      listener: (context, state) => onTap(double.tryParse(state.value) ?? 0),
-      builder: (context, state) {
+      listener: (BuildContext context, TackKeyboardState state) {
+        onTap(double.tryParse(state.value) ?? 0);
+      },
+      builder: (BuildContext context, TackKeyboardState state) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 64),
           child: Column(

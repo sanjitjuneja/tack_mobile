@@ -12,7 +12,7 @@ class PaymentSettingsForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PaymentSettingsBloc, PaymentSettingsState>(
-      builder: (context, PaymentSettingsState state) {
+      builder: (BuildContext context, PaymentSettingsState state) {
         return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

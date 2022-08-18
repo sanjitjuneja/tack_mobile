@@ -11,7 +11,7 @@ class AddToTackBalanceForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddToTackBalanceBloc, AddToTackBalanceState>(
-      builder: (context, AddToTackBalanceState state) {
+      builder: (BuildContext context, AddToTackBalanceState state) {
         return Column(
           children: <Widget>[
             Center(

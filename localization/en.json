@@ -510,5 +510,10 @@
     "regularPayoutSubtitle": "This process can take up to 3 business days",
     "newTackBalance": "New Tack Balance: {amount}",
     "close": "Close"
+  },
+  "addCreditCard": {
+    "title": "Add New Card",
+    "description": "Please add the following details",
+    "addPaymentMethod": "Add Payment Method"
   }
 }

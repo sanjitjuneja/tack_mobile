@@ -13,7 +13,7 @@ class WithdrawForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WithdrawBloc, WithdrawState>(
-      builder: (context, WithdrawState state) {
+      builder: (BuildContext context, WithdrawState state) {
         return Column(
           children: <Widget>[
             Padding(
