@@ -54,7 +54,7 @@ class WithdrawForm extends StatelessWidget {
             TackKeyboard(
               subtitleKey: 'withdrawScreen.max',
               amount: 50.0,
-              onTap: (double value) {},
+              onChanged: (double value) {},
             ),
             const SizedBox(height: 24),
             Row(

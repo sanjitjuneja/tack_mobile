@@ -40,7 +40,7 @@ class AddToTackBalanceForm extends StatelessWidget {
               subtitleKey:
               'addToTackBalanceScreen.currentTackBalance',
               amount: 50.00,
-              onTap: (double value) {},
+              onChanged: (double value) {},
             ),
             const SizedBox(height: 24),
             Row(

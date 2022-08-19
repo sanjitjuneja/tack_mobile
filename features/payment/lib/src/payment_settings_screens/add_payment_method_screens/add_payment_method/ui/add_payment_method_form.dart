@@ -33,7 +33,7 @@ class AddPaymentMethodForm extends StatelessWidget {
                   context,
                   'addPaymentMethodScreen.addBank',
                 ),
-                onTap: () {},
+                onTap: () => _onAddBankTileTap(context),
               ),
             ),
             const SizedBox(height: 18),
@@ -77,5 +77,9 @@ class AddPaymentMethodForm extends StatelessWidget {
     BlocProvider.of<AddPaymentMethodBloc>(context).add(
       const AddCreditCardRequest(),
     );
+  }
+
+  void _onAddBankTileTap(BuildContext context) {
+    //TODO(Alex H): Add bank logic
   }
 }

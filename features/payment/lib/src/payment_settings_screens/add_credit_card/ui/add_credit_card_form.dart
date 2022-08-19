@@ -9,7 +9,7 @@ class AddCreditCardForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddCreditCardBloc, AddCreditCardState>(
-      builder: (context, AddCreditCardState state) {
+      builder: (_, AddCreditCardState state) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
@@ -43,7 +43,7 @@ class AddCreditCardForm extends StatelessWidget {
                     child: AppCircleButton(
                       labelKey: 'addCreditCard.addPaymentMethod',
                       expanded: false,
-                      onTap: () {},
+                      onTap: () => _onAddCreditCardTileTap(context),
                     ),
                   ),
                   const Spacer(),
@@ -56,5 +56,9 @@ class AddCreditCardForm extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _onAddCreditCardTileTap(BuildContext context) {
+    //TODO(Alex H): Add credit card logic
   }
 }
