@@ -25,8 +25,8 @@ class PaymentMethodTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 375,
         height: 60,
+        padding: const EdgeInsets.only(left: 18.0),
         decoration: isColored
             ? BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
@@ -43,51 +43,45 @@ class PaymentMethodTile extends StatelessWidget {
             : null,
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 22.0,
-                top: 8.0,
-                right: 10,
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  leadingIcon(size: 35),
-                  const SizedBox(width: 26.0),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        title,
-                        style: AppTextTheme.poppins18Medium,
-                      ),
-                      if (subtitle != null)
-                        Text(
-                          subtitle ?? '',
-                          style: AppTextTheme.poppins12Medium.copyWith(
-                            color: AppColors.shuttleGray,
-                          ),
-                        ),
-                    ],
-                  ),
-                  const Spacer(),
-                  if (isPrimary)
+            const Spacer(),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                leadingIcon(size: 35),
+                const SizedBox(width: 26.0),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
                     Text(
-                      FlutterI18n.translate(
-                        context,
-                        'paymentSettingsScreen.primary',
-                      ),
-                      style: AppTextTheme.manrope14Regular.copyWith(
-                        color: AppTheme.textSecondaryColor,
-                      ),
+                      title,
+                      style: AppTextTheme.poppins18Medium,
                     ),
-                  const SizedBox(width: 18),
-                  AppIconsTheme.chevronRight(
-                    color: AppTheme.iconPrimaryColor,
-                    size: 20,
+                    if (subtitle != null)
+                      Text(
+                        subtitle ?? '',
+                        style: AppTextTheme.poppins12Medium.copyWith(
+                          color: AppColors.shuttleGray,
+                        ),
+                      ),
+                  ],
+                ),
+                const Spacer(),
+                if (isPrimary)
+                  Text(
+                    FlutterI18n.translate(
+                      context,
+                      'paymentSettingsScreen.primary',
+                    ),
+                    style: AppTextTheme.manrope14Regular.copyWith(
+                      color: AppTheme.textSecondaryColor,
+                    ),
                   ),
-                ],
-              ),
+                const SizedBox(width: 18),
+                AppIconsTheme.chevronRight(
+                  color: AppTheme.iconPrimaryColor,
+                  size: 20,
+                ),
+              ],
             ),
             const Spacer(),
             if (!isColored) const AppDivider(width: 335),
