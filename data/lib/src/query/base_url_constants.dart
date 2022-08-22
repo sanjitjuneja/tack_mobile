@@ -47,6 +47,7 @@ class BaseUrlConstants {
   static const String groupPopularTacksPath = 'groups/${ApiQuery.idKey}/popular_tacks/';
   static const String nearbyPopularTacksPath = 'tacks/nearby/';
 
-
   static const String reviews = '/reviews/';
+
+  static const String paymentIntent = 'payment/add-payment-method/';
 }

@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 import '../bloc/add_credit_card_bloc.dart';
@@ -24,6 +25,7 @@ class AddCreditCardPage extends Page<void> {
         create: (_) {
           return AddCreditCardBloc(
             appRouter: appLocator.get<AppRouterDelegate>(),
+            addCardUseCase: appLocator.get<AddCardUseCase>(),
           );
         },
         child: const AddCreditCardScreen(),

@@ -324,6 +324,17 @@ class DataDI {
       ),
     );
 
+    appLocator.registerSingleton<PaymentRepository>(
+      PaymentRepositoryImpl(
+        apiProvider: appLocator.get<ApiProvider>(),
+      ),
+    );
+    appLocator.registerLazySingleton<AddCardUseCase>(
+      () => AddCardUseCase(
+        paymentRepository: appLocator.get<PaymentRepository>(),
+      ),
+    );
+
     appLocator.registerLazySingleton<LogOutUseCase>(
       () => LogOutUseCase(
         globalAppRouter: appLocator.get<GlobalAppRouterDelegate>(),
@@ -374,6 +385,9 @@ class DataDI {
     appLocator.unregister<MakeOfferUseCase>();
     appLocator.unregister<RateTackUseCase>();
     appLocator.unregister<StartTackRunnerUseCase>();
+
+    appLocator.unregister<PaymentRepository>();
+    appLocator.unregister<AddCardUseCase>();
 
     appLocator.unregister<LogOutUseCase>();
   }
