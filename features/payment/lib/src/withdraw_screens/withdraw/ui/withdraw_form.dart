@@ -13,7 +13,7 @@ class WithdrawForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WithdrawBloc, WithdrawState>(
-      builder: (context, WithdrawState state) {
+      builder: (BuildContext context, WithdrawState state) {
         return Column(
           children: <Widget>[
             Padding(
@@ -54,7 +54,7 @@ class WithdrawForm extends StatelessWidget {
             TackKeyboard(
               subtitleKey: 'withdrawScreen.max',
               amount: 50.0,
-              onTap: (double value) {},
+              onChanged: (double value) {},
             ),
             const SizedBox(height: 24),
             Row(

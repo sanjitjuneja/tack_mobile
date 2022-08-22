@@ -1,6 +1,6 @@
 import 'package:core/core.dart';
 import 'package:navigation/navigation.dart';
-import '/src/add_payment_method_screens/add_payment_method/ui/add_payment_method_page.dart';
+import '../../add_payment_method_screens/add_payment_method/ui/add_payment_method_page.dart';
 
 part 'payment_settings_event.dart';
 

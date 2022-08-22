@@ -11,7 +11,7 @@ class AddToTackBalanceForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddToTackBalanceBloc, AddToTackBalanceState>(
-      builder: (context, AddToTackBalanceState state) {
+      builder: (BuildContext context, AddToTackBalanceState state) {
         return Column(
           children: <Widget>[
             Center(
@@ -40,7 +40,7 @@ class AddToTackBalanceForm extends StatelessWidget {
               subtitleKey:
               'addToTackBalanceScreen.currentTackBalance',
               amount: 50.00,
-              onTap: (double value) {},
+              onChanged: (double value) {},
             ),
             const SizedBox(height: 24),
             Row(

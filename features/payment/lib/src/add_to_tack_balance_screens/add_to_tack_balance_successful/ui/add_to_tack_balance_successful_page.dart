@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'add_to_tack_balance_successful_screen.dart';
 
 class AddToTackBalanceSuccessfulFeature {
-  static const String routeName = '/addToTackBalanceFailed';
+  static const String routeName = '/addToTackBalanceSuccessful';
 
   static Page<void> page() => const AddToTackBalanceSuccessfulPage();
 }

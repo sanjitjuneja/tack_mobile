@@ -1,6 +1,4 @@
-import 'package:core/core.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:navigation/navigation.dart';
 import 'withdraw_failed_screen.dart';
 
 class WithdrawFailedFeature {

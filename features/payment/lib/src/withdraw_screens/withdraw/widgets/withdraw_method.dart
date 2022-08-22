@@ -17,7 +17,7 @@ class WithdrawMethod extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WithdrawBloc, WithdrawState>(
-      builder: (context, WithdrawState state) {
+      builder: (BuildContext context, WithdrawState state) {
         final isSelected = withdrawMethodType != state.withdrawMethodType;
 
         return GestureDetector(

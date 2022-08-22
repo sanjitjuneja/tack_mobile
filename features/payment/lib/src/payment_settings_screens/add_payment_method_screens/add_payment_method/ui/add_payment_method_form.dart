@@ -11,7 +11,7 @@ class AddPaymentMethodForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddPaymentMethodBloc, AddPaymentMethodState>(
-      builder: (context, AddPaymentMethodState state) {
+      builder: (BuildContext context, AddPaymentMethodState state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -33,6 +33,7 @@ class AddPaymentMethodForm extends StatelessWidget {
                   context,
                   'addPaymentMethodScreen.addBank',
                 ),
+                onTap: () => _onAddBankTileTap(context),
               ),
             ),
             const SizedBox(height: 18),
@@ -44,6 +45,7 @@ class AddPaymentMethodForm extends StatelessWidget {
                   context,
                   'addPaymentMethodScreen.addCard',
                 ),
+                onTap: () => _onAddCreditCardTileTap(context),
               ),
             ),
             const Spacer(),
@@ -69,5 +71,15 @@ class AddPaymentMethodForm extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _onAddCreditCardTileTap(BuildContext context) {
+    BlocProvider.of<AddPaymentMethodBloc>(context).add(
+      const AddCreditCardRequest(),
+    );
+  }
+
+  void _onAddBankTileTap(BuildContext context) {
+    //TODO(Alex H): Add bank logic
   }
 }

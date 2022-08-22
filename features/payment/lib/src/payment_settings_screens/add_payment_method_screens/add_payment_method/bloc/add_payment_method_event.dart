@@ -4,3 +4,6 @@ abstract class AddPaymentMethodEvent {
   const AddPaymentMethodEvent();
 }
 
+class AddCreditCardRequest extends AddPaymentMethodEvent {
+  const AddCreditCardRequest();
+}
