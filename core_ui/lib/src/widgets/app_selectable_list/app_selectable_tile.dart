@@ -5,12 +5,16 @@ class AppBaseSelectableTile<T extends AppSelectableItem>
   final bool isSelected;
   final T item;
   final OnItemSelect<T> onItemTap;
+  final EdgeInsets? padding;
+  final BoxConstraints? constraints;
 
   const AppBaseSelectableTile({
     super.key,
     required this.item,
     required this.isSelected,
     required this.onItemTap,
+    this.padding,
+    this.constraints,
   });
 
   @override
@@ -18,13 +22,14 @@ class AppBaseSelectableTile<T extends AppSelectableItem>
     return OpacityOnTapContainer(
       onTap: () => onItemTap(item, context),
       child: Container(
-        padding: const EdgeInsets.only(
-          left: 0,
-          top: 10,
-          right: 10,
-          bottom: 10,
-        ),
-        constraints: const BoxConstraints(minHeight: 65),
+        padding: padding?.copyWith(left: 0, right: 10) ??
+            const EdgeInsets.only(
+              left: 0,
+              top: 10,
+              right: 10,
+              bottom: 10,
+            ),
+        constraints: constraints ?? const BoxConstraints(minHeight: 65),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[

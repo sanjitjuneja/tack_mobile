@@ -37,6 +37,7 @@ class _OngoingTackerTackPage extends Page<OngoingTackerScreenResult> {
             tack: tack,
             appRouter: AppRouter.of(context),
             cancelTackTackerUseCase: appLocator.get<CancelTackTackerUseCase>(),
+            acceptOfferUseCase: appLocator.get<AcceptOfferUseCase>(),
             completeTackUseCase: appLocator.get<CompleteTackTackerUseCase>(),
           );
         },

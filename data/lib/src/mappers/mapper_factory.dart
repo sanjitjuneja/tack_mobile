@@ -9,6 +9,11 @@ class MapperFactory {
   GroupInvitationMapper get groupInvitationMapper =>
       GroupInvitationMapper(groupMapper: groupMapper);
 
+  GroupInviteMapper get groupInviteMapper => GroupInviteMapper(
+        groupMapper: groupMapper,
+        groupInvitationMapper: groupInvitationMapper,
+      );
+
   TemplateTackMapper get templateTackMapper => const TemplateTackMapper();
 
   TackStatusMapper get tackStatusMapper => const TackStatusMapper();

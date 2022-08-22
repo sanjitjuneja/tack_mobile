@@ -39,9 +39,15 @@ class GroupDetailsActions extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Row(
             children: <Widget>[
-              Expanded(child: secondaryButton),
+              Expanded(
+                flex: 7,
+                child: secondaryButton,
+              ),
               const SizedBox(width: 8),
-              Expanded(child: primaryButton),
+              Expanded(
+                flex: 13,
+                child: primaryButton,
+              ),
             ],
           ),
         );

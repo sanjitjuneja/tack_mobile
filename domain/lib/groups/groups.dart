@@ -8,6 +8,7 @@ import 'package:domain/use_case.dart';
 
 part 'models/group.dart';
 part 'models/group_invitation.dart';
+part 'models/group_invite.dart';
 part 'models/group_invite_link.dart';
 
 part 'payloads/accept_group_invitation_payload.dart';
@@ -15,6 +16,7 @@ part 'payloads/create_group_payload.dart';
 part 'payloads/decline_group_invitation_payload.dart';
 part 'payloads/get_group_invitations_payload.dart';
 part 'payloads/get_group_invite_link_payload.dart';
+part 'payloads/get_group_invite_payload.dart';
 part 'payloads/get_group_members_payload.dart';
 part 'payloads/get_group_payload.dart';
 part 'payloads/get_groups_payload.dart';
@@ -29,6 +31,7 @@ part 'use_cases/accept_group_invitation_use_case.dart';
 part 'use_cases/create_group_use_case.dart';
 part 'use_cases/decline_group_invitation_use_case.dart';
 part 'use_cases/get_current_group_use_case.dart';
+part 'use_cases/get_group_invite_use_case.dart';
 part 'use_cases/get_groups_use_case.dart';
 part 'use_cases/leave_group_use_case.dart';
 part 'use_cases/load_group_invitations_use_case.dart';

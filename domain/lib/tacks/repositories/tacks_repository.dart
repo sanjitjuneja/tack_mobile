@@ -39,5 +39,7 @@ abstract class TacksRepository {
 
   Future<void> cancelOffer(CancelOfferPayload payload);
 
+  Future<void> acceptOffer(AcceptOfferPayload payload);
+
   Future<void> rateTack(RateTackPayload payload);
 }

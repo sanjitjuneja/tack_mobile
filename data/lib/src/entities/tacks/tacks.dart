@@ -11,6 +11,7 @@ part 'entities/tack_user_contacts_entity.dart';
 part 'entities/tack_user_entity.dart';
 part 'entities/template_tack_entity.dart';
 
+part 'requests/accept_offer_request.dart';
 part 'requests/cancel_offer_request.dart';
 part 'requests/cancel_tack_request.dart';
 part 'requests/complete_tack_request.dart';

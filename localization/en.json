@@ -1,4 +1,8 @@
 {
+  "urls": {
+    "termsAndConditions": "https://www.iubenda.com/terms-and-conditions/37710693",
+    "privacyPolicy": "https://www.iubenda.com/privacy-policy/37710693"
+  },
   "errors": {
     "couldNotLaunchURL": "Could not launch URL",
     "tackIsNotAvailable": "Sorry, this Tack is no longer available"
@@ -108,6 +112,7 @@
     "tack-0": "{count} Tacks",
     "tack-1": "{count} Tack",
     "tack-2": "{count} Tacks",
+    "done": "Done",
     "accept": "Accept",
     "apply": "Apply",
     "back": "Back",
@@ -148,8 +153,16 @@
     "logOut": "Logout",
     "note": "NOTE: This is an invite-only beta version of our\napp. Our official marketplace releases later this Fall. For more details, check out <a href=\"tackmarketplace.com\">tackmarketplace.com</a>"
   },
+  "homeScreen": {
+    "tabs": {
+      "dashboard": "Home",
+      "add": "Create",
+      "tacks": "My Tacks"
+    }
+  },
   "dashboardScreen": {
     "title": "Home Feed",
+    "createdByYouButton": "Created By You",
     "emptyNoGroupSelected": {
       "title": "Join A Group",
       "description": "You must be invited to a Tack group before creating or completing Tacks. If you were sent an invite link, please use it to view your invitation or click below to view your current invitations.",
@@ -173,6 +186,12 @@
     "tabs": {
       "first": "Tacker",
       "second": "Runner"
+    },
+    "tacker": {
+      "subtitle": "Created By You"
+    },
+    "runner": {
+      "subtitle": "Currently Completing"
     },
     "chooseRunnerButton": "Choose",
     "beginTackButton": "Begin",

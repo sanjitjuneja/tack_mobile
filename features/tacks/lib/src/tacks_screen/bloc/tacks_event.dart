@@ -53,9 +53,25 @@ class RefreshTackerTacks extends TacksEvent {
 }
 
 class CancelTackOffer extends TacksEvent {
-  final Tack tack;
+  final RunnerTack runnerTack;
 
   const CancelTackOffer({
+    required this.runnerTack,
+  });
+}
+
+class OpenTackerTack extends TacksEvent {
+  final Tack tack;
+
+  const OpenTackerTack({
+    required this.tack,
+  });
+}
+
+class OpenRunnerTack extends TacksEvent {
+  final Tack tack;
+
+  const OpenRunnerTack({
     required this.tack,
   });
 }

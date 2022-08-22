@@ -85,10 +85,16 @@ class AppDrawerBloc extends Bloc<AppDrawerEvent, AppDrawerState> {
         _appRouter.push(CustomerSupport.page());
         break;
       case GoToOption.termsAndConditions:
-        // TODO: Handle this case.
+        UrlManager.openUrlFromTranslation(
+          event.context,
+          translationKey: 'urls.${event.goTo.name}',
+        );
         break;
       case GoToOption.privacyPolicy:
-        // TODO: Handle this case.
+        UrlManager.openUrlFromTranslation(
+          event.context,
+          translationKey: 'urls.${event.goTo.name}',
+        );
         break;
     }
   }

@@ -1,9 +1,13 @@
+import 'package:core/core.dart';
 import 'package:core_ui/src/theme/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 
 class AppCircleAvatarWidget extends StatelessWidget {
+  static const Duration _fadeInDuration = Duration(milliseconds: 300);
+  static const Duration _fadeOutDuration = Duration(milliseconds: 500);
+
   final String? url;
   final AppIcon? placeholderIcon;
   final double diameter;
@@ -32,11 +36,10 @@ class AppCircleAvatarWidget extends StatelessWidget {
             : null,
         color: AppTheme.primaryColor,
       ),
-      child: url == null || Uri.parse(url!).path.isEmpty
-          ? placeholderIcon?.call() ?? AppIconsTheme.tack()
-          : CachedNetworkImage(
-              fadeInDuration: const Duration(milliseconds: 300),
-              fadeOutDuration: const Duration(milliseconds: 500),
+      child: UrlManager.isValidUrl(url)
+          ? CachedNetworkImage(
+              fadeInDuration: _fadeInDuration,
+              fadeOutDuration: _fadeOutDuration,
               imageUrl: url!,
               imageBuilder: (_, ImageProvider<Object> imageProvider) {
                 return Container(
@@ -53,7 +56,8 @@ class AppCircleAvatarWidget extends StatelessWidget {
                   placeholderIcon?.call() ?? AppIconsTheme.tack(),
               errorWidget: (_, __, ___) =>
                   placeholderIcon?.call() ?? AppIconsTheme.tack(),
-            ),
+            )
+          : placeholderIcon?.call() ?? AppIconsTheme.tack(),
     );
   }
 }

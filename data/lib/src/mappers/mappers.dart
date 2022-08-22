@@ -8,6 +8,7 @@ part 'global/pagination_mapper.dart';
 
 part 'groups/group_invitation_mapper.dart';
 part 'groups/group_invite_link_mapper.dart';
+part 'groups/group_invite_mapper.dart';
 part 'groups/group_mapper.dart';
 
 part 'phone_verification/sms_verification_mapper.dart';

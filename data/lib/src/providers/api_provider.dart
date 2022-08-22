@@ -218,6 +218,19 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.groupInviteLinkMapper.fromEntity);
   }
 
+  Future<domain.GroupInvite> getGroupInvite({
+    required GetGroupInviteRequest request,
+  }) async {
+    return get<GroupInviteEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.groupInvitePath,
+        body: null,
+        params: request.params,
+      ),
+      parser: GroupInviteEntity.fromJson,
+    ).then(mapper.groupInviteMapper.fromEntity);
+  }
+
   Future<List<domain.TackUser>> getGroupMembers({
     required GetGroupMembersRequest request,
   }) async {
@@ -396,10 +409,22 @@ class ApiProvider extends ApiProviderCore {
     return delete(
       ApiQuery(
         endpoint: BaseUrlConstants.offerCancelPath,
-        id: request.tackId,
+        id: request.offerId,
         body: null,
         params: null,
       ),
+    );
+  }
+
+  Future<void> acceptOffer(AcceptOfferRequest request) async {
+    return post<void>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.offerTestAcceptPath,
+        id: request.offerId,
+        body: null,
+        params: null,
+      ),
+      parser: (_) {},
     );
   }
 
@@ -446,6 +471,18 @@ class ApiProvider extends ApiProviderCore {
     return post<void>(
       ApiQuery(
         endpoint: BaseUrlConstants.tackCompletePath,
+        id: request.tackId,
+        body: null,
+        params: null,
+      ),
+      parser: (_) {},
+    );
+  }
+
+  Future<void> completeTackByTacker(CompleteTackRequest request) async {
+    return post<void>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.tackConfirmCompletePath,
         id: request.tackId,
         body: null,
         params: null,

@@ -1,10 +1,11 @@
+import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:navigation/navigation.dart';
-import 'package:tacks/src/ongoing_tack/ongoing_tacker_tack/ui/ongoing_tacker_tack_page.dart';
-import 'package:tacks/src/tacks_screen/ui/widgets/tack_header_widget.dart';
-import 'package:tacks/src/tacks_screen/ui/widgets/tacker_tack/tacker_tack_actions.dart';
+
+import '../../../bloc/tacks_bloc.dart';
+import '../tack_header_widget.dart';
+import 'tacker_tack_actions.dart';
 
 class TackerTackWidget extends StatelessWidget {
   final Tack tack;
@@ -49,6 +50,6 @@ class TackerTackWidget extends StatelessWidget {
   }
 
   void _onTap(BuildContext context) {
-    AppRouter.of(context).push(OngoingTackerTack.page(tack: tack));
+    BlocProvider.of<TacksBloc>(context).add(OpenTackerTack(tack: tack));
   }
 }

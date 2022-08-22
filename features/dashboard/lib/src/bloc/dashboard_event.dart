@@ -28,6 +28,14 @@ class LoadMoreAction extends DashboardEvent {
   });
 }
 
+class OpenOwnOngoingTack extends DashboardEvent {
+  final Tack tack;
+
+  const OpenOwnOngoingTack({
+    required this.tack,
+  });
+}
+
 class CounterOfferOpen extends DashboardEvent {
   final Tack tack;
 

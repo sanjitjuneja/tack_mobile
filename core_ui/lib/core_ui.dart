@@ -3,6 +3,7 @@ library core_ui;
 export 'src/helpers/widget_shadow_type.dart';
 
 export 'src/routes/left_slide_route.dart';
+export 'src/routes/opacity_route.dart';
 export 'src/routes/top_slide_route.dart';
 
 export 'src/theme/app_theme.dart';
