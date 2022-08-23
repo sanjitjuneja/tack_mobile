@@ -5,10 +5,15 @@ import '../entities/payment/payment.dart';
 
 class PaymentRepositoryImpl implements domain.PaymentRepository {
   final ApiProvider _apiProvider;
+  final AppConfig _appConfig;
 
   PaymentRepositoryImpl({
     required ApiProvider apiProvider,
-  }) : _apiProvider = apiProvider;
+    required AppConfig appConfig,
+  })  : _apiProvider = apiProvider,
+        _appConfig = appConfig {
+    Stripe.publishableKey = _appConfig.stripeKey;
+  }
 
   @override
   Future<SetupIntent> addCard() async {

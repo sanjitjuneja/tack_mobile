@@ -1,5 +1,3 @@
-import 'package:core/core.dart';
-
 enum Flavor {
   dev,
   staging,
@@ -20,29 +18,33 @@ class AppConfig {
 
   final Flavor flavor;
   final String baseUrl;
+  final String stripeKey;
 
-  AppConfig(
+  AppConfig._(
     this.flavor,
     this.baseUrl,
+    this.stripeKey,
   );
 
   factory AppConfig.fromFlavor(Flavor flavor) {
     String baseUrl;
+    String stripeKey;
+
     switch (flavor) {
       case Flavor.dev:
         baseUrl = developmentUrl;
-        Stripe.publishableKey = stripeDevelopmentKey;
+        stripeKey = stripeDevelopmentKey;
         break;
       case Flavor.staging:
         baseUrl = stagingUrl;
-        Stripe.publishableKey = stripeStagingKey;
+        stripeKey = stripeStagingKey;
         break;
       case Flavor.production:
         baseUrl = productionUrl;
-        Stripe.publishableKey = stripeProductionKey;
+        stripeKey = stripeProductionKey;
         break;
     }
 
-    return AppConfig(flavor, baseUrl);
+    return AppConfig._(flavor, baseUrl, stripeKey);
   }
 }

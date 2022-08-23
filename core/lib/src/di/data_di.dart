@@ -327,6 +327,7 @@ class DataDI {
     appLocator.registerSingleton<PaymentRepository>(
       PaymentRepositoryImpl(
         apiProvider: appLocator.get<ApiProvider>(),
+        appConfig: appLocator.get<AppConfig>(),
       ),
     );
     appLocator.registerLazySingleton<AddCardUseCase>(
