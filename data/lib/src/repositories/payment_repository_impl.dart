@@ -8,10 +8,7 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
 
   PaymentRepositoryImpl({
     required ApiProvider apiProvider,
-  }) : _apiProvider = apiProvider {
-    Stripe.publishableKey =
-        'pk_test_51KYDDWHUDqRuKWfqG347VI2pG1CgnOApLRuoqeZZ4A0ZHBuOh5QapxVwJ9XLh5pZREboD3HyvbZl97VI1TlZsVqr00gRuftswA';
-  }
+  }) : _apiProvider = apiProvider;
 
   @override
   Future<SetupIntent> addCard() async {
@@ -25,6 +22,7 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
         paymentMethodData: PaymentMethodData(),
       ),
     );
+
     return setupIntentResult;
   }
 }
