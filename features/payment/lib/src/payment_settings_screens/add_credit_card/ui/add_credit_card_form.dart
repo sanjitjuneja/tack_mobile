@@ -33,16 +33,27 @@ class AddCreditCardForm extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              const CardFormField(countryCode: 'US'),
+              CardFormField(
+                style: CardFormStyle(
+                  backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
+                  borderRadius: 16,
+                ),
+                enablePostalCode: false,
+                onCardChanged: (card) => _onCardChange(
+                  context: context,
+                  card: card,
+                ),
+              ),
               const Spacer(flex: 6),
               Row(
                 children: <Widget>[
                   const Spacer(),
                   Expanded(
-                    flex: 4,
+                    flex: 8,
                     child: AppCircleButton(
                       labelKey: 'addCreditCard.addPaymentMethod',
                       expanded: false,
+                      isDisabled: !state.card.complete,
                       onTap: () => _onAddCreditCardTileTap(context),
                     ),
                   ),
@@ -59,6 +70,17 @@ class AddCreditCardForm extends StatelessWidget {
   }
 
   void _onAddCreditCardTileTap(BuildContext context) {
-    //TODO(Alex H): Add credit card logic
+    BlocProvider.of<AddCreditCardBloc>(context).add(
+      const AddNewCreditCard(),
+    );
+  }
+
+  void _onCardChange({
+    required BuildContext context,
+    required CardFieldInputDetails? card,
+  }) {
+    BlocProvider.of<AddCreditCardBloc>(context).add(
+      AddCreditCardChange(card: card),
+    );
   }
 }

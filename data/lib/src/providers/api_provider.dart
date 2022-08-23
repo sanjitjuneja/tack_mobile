@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:data/src/entities/entities.dart';
 import 'package:data/src/entities/global/global.dart';
+import 'package:data/src/entities/payment/payment.dart';
 import 'package:data/src/mappers/mappers.dart';
 import 'package:data/src/providers/api_provider_core.dart';
 import 'package:data/src/providers/session_provider.dart';
@@ -499,6 +500,17 @@ class ApiProvider extends ApiProviderCore {
         params: null,
       ),
       parser: (_) {},
+    );
+  }
+
+  Future<SetupIntentEntity> fetchSetupIntentClientSecret() async {
+    return post<SetupIntentEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.paymentIntent,
+        body: null,
+        params: null,
+      ),
+      parser: SetupIntentEntity.fromJson,
     );
   }
 
