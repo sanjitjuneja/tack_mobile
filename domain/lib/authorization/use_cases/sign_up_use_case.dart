@@ -9,6 +9,6 @@ class SignUpUseCase extends FutureUseCase<void, SignUpByPhonePayload> {
 
   @override
   Future<User> execute(SignUpByPhonePayload params) async {
-    return _authRepository.signUp(params: params);
+    return _authRepository.signUp(payload: params);
   }
 }

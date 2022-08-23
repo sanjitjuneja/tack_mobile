@@ -65,7 +65,7 @@ class AccountInformationScreen extends StatelessWidget {
                                       color: AppTheme.p,
                                     ),
                                   ),
-                                  AppImagesTheme.fieldSuccessIcon,
+                                  AppIconsTheme.checkMarkFilled(),
                                 ],
                               )
                             ],
@@ -110,7 +110,7 @@ class AccountInformationScreen extends StatelessWidget {
                                       color: AppTheme.p,
                                     ),
                                   ),
-                                  AppImagesTheme.fieldSuccessIcon,
+                                  AppIconsTheme.checkMarkFilled(),
                                 ],
                               )
                             ],

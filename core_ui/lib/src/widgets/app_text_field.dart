@@ -1,22 +1,26 @@
 import 'package:core/core.dart';
-import 'package:core_ui/core_ui.dart';
-import 'package:core_ui/src/theme/app_theme.dart';
-import 'package:core_ui/src/widgets/keyboard_overlay/keyboard_overlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+
+import '../theme/app_theme.dart';
+import 'keyboard_overlay/keyboard_overlay.dart';
+import 'opacity_on_tap_container.dart';
 
 // TODO: refactor.
 class AppTextField extends StatefulWidget {
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final String? initialText;
-  final String placeholder;
+  final String? placeholder;
   final EdgeInsets? padding;
+  final TextStyle? textStyle;
   final Color? backgroundColor;
   final bool shouldShowCursor;
   final bool isDisabled;
+  final bool isReadOnly;
   final Function()? onTap;
-  final bool? forceFocus;
+  final bool autoFocus;
+  final bool shouldShowOverlayIfNeeded;
   final bool isInvalid;
   final String? errorTextKey;
   final bool shouldObscure;
@@ -26,6 +30,7 @@ class AppTextField extends StatefulWidget {
   final double? height;
   final int? minLines;
   final int? maxLines;
+  final Widget? prefix;
   final Widget? suffix;
   final TextAlign textAlign;
   final Iterable<String>? autofillHints;
@@ -34,18 +39,22 @@ class AppTextField extends StatefulWidget {
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
+  final double? scrollPadding;
 
   const AppTextField({
     super.key,
-    required this.placeholder,
+    this.placeholder,
     this.initialText,
     this.padding,
+    this.textStyle,
     this.controller,
     this.focusNode,
     this.backgroundColor,
     this.isDisabled = false,
+    this.isReadOnly = false,
     this.onTap,
-    this.forceFocus,
+    this.autoFocus = false,
+    this.shouldShowOverlayIfNeeded = true,
     this.isInvalid = false,
     this.errorTextKey,
     this.shouldObscure = false,
@@ -56,6 +65,7 @@ class AppTextField extends StatefulWidget {
     this.textAlign = TextAlign.left,
     this.minLines,
     this.maxLines,
+    this.prefix,
     this.suffix,
     bool shouldShowCursor = true,
     this.autofillHints,
@@ -64,6 +74,7 @@ class AppTextField extends StatefulWidget {
     this.textInputAction,
     this.keyboardType,
     this.inputFormatters,
+    this.scrollPadding,
   })  : shouldShowCursor = !isDisabled && (shouldShowCursor || onTap != null),
         isRequired = isRequired ?? false;
 
@@ -80,14 +91,17 @@ class _AppTextFieldState extends State<AppTextField> {
   late TextEditingController _controller;
   late FocusNode focusNode;
   late bool shouldUseOverlay;
+  late bool isObscureVisible;
 
-  bool get _isReadOnly => widget.onTap != null;
+  bool get _isReadOnly => widget.isReadOnly || widget.onTap != null;
 
   @override
   void initState() {
     super.initState();
     focusNode = widget.focusNode ?? FocusNode();
-    shouldUseOverlay = _typesForOverlay.contains(widget.keyboardType);
+    shouldUseOverlay = widget.shouldShowOverlayIfNeeded &&
+        _typesForOverlay.contains(widget.keyboardType);
+    isObscureVisible = !widget.shouldObscure;
 
     if (widget.initialText != null) {
       _controller = TextEditingController()..value = _initialFormattedText;
@@ -138,8 +152,25 @@ class _AppTextFieldState extends State<AppTextField> {
           isEnabled: shouldUseOverlay,
           focusNode: focusNode,
           child: CupertinoTextField(
-            suffix: widget.suffix,
+            prefix: widget.prefix,
+            suffix: widget.suffix != null
+                ? Padding(
+                    padding: const EdgeInsets.only(right: 20),
+                    child: widget.suffix,
+                  )
+                : (widget.shouldObscure
+                    ? Padding(
+                        padding: const EdgeInsets.only(right: 20),
+                        child: OpacityOnTapContainer(
+                          onTap: _changeObscureVisibility,
+                          child: isObscureVisible
+                              ? AppImagesTheme.visibilityOn
+                              : AppImagesTheme.visibilityOff,
+                        ),
+                      )
+                    : null),
             focusNode: focusNode,
+            autofocus: widget.autoFocus,
             textAlignVertical: TextAlignVertical.center,
             decoration: widget.hasDecoration
                 ? BoxDecoration(
@@ -162,7 +193,7 @@ class _AppTextFieldState extends State<AppTextField> {
                         : null,
                   )
                 : null,
-            obscureText: widget.shouldObscure,
+            obscureText: !isObscureVisible,
             readOnly: _isReadOnly,
             controller: _controller,
             cursorColor: AppTheme.textPrimaryColor,
@@ -174,17 +205,19 @@ class _AppTextFieldState extends State<AppTextField> {
                   bottom: 23,
                 ),
             placeholder: <String>[
-              FlutterI18n.translate(context, widget.placeholder),
-              if (widget.isRequired) '*',
+              if (widget.placeholder != null) ...<String>[
+                FlutterI18n.translate(context, widget.placeholder!),
+                if (widget.isRequired) '*',
+              ],
             ].join(' '),
-            scrollPadding: const EdgeInsets.all(30),
-            minLines: widget.minLines,
-            maxLines: widget.maxLines,
+            scrollPadding: EdgeInsets.all(widget.scrollPadding ?? 30),
+            minLines: widget.shouldObscure ? 1 : widget.minLines,
+            maxLines: widget.shouldObscure ? 1 : widget.maxLines,
             style: widget.isDisabled
-                ? AppTextTheme.manrope16Regular.copyWith(
-                    color: AppTheme.textPrimaryColor,
+                ? (widget.textStyle ?? AppTextTheme.manrope16Regular).copyWith(
+                    color: AppTheme.textHeavyHintColor,
                   )
-                : AppTextTheme.manrope16Regular.copyWith(
+                : (widget.textStyle ?? AppTextTheme.manrope16Regular).copyWith(
                     color: AppTheme.textPrimaryColor,
                   ),
             textAlign: widget.textAlign,
@@ -208,6 +241,10 @@ class _AppTextFieldState extends State<AppTextField> {
         ],
       ],
     );
+  }
+
+  void _changeObscureVisibility() {
+    setState(() => isObscureVisible = !isObscureVisible);
   }
 
   @override

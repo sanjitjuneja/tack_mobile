@@ -114,11 +114,19 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
 
   @override
   Future<void> leaveGroup(domain.LeaveGroupPayload payload) async {
-    return _apiProvider.leaveGroup(
+    await _apiProvider.leaveGroup(
       request: LeaveGroupRequest(
         id: payload.group.id,
       ),
     );
+
+    if (currentGroup?.id == payload.group.id) {
+      await selectGroup(
+        domain.SelectGroupPayload(
+          group: payload.group,
+        ),
+      );
+    }
   }
 
   @override

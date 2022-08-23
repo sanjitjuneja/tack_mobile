@@ -9,10 +9,7 @@ export 'src/constants/void_type.dart';
 export 'src/di/app_di.dart';
 export 'src/di/data_di.dart';
 
-export 'src/errors/app_exception.dart';
-export 'src/errors/backend_exception.dart';
-export 'src/errors/form_field_exception.dart';
-export 'src/errors/no_internet_exception.dart';
+export 'src/errors/errors.dart';
 
 export 'src/managers/clipboard_manager.dart';
 export 'src/managers/file_manager.dart';

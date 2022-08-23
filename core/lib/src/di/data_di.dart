@@ -63,17 +63,26 @@ class DataDI {
       ),
     );
 
+    appLocator.registerLazySingleton<ChangePasswordRecoveryUseCase>(
+      () => ChangePasswordRecoveryUseCase(
+        authRepository: appLocator.get<AuthRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<GetRecoverySmsCodeUseCase>(
+      () => GetRecoverySmsCodeUseCase(
+        authRepository: appLocator.get<AuthRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<GetSignUpSmsCodeUseCase>(
+      () => GetSignUpSmsCodeUseCase(
+        authRepository: appLocator.get<AuthRepository>(),
+      ),
+    );
     appLocator.registerLazySingleton<IsAuthorizedUseCase>(
       () => IsAuthorizedUseCase(
         authRepository: appLocator.get<AuthRepository>(),
       ),
     );
-    appLocator.registerLazySingleton<RequestSmsCodeUseCase>(
-      () => RequestSmsCodeUseCase(
-        authRepository: appLocator.get<AuthRepository>(),
-      ),
-    );
-
     appLocator.registerLazySingleton<SignInUseCase>(
       () => SignInUseCase(
         authRepository: appLocator.get<AuthRepository>(),

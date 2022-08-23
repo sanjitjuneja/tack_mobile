@@ -10,7 +10,7 @@ class UserEntity extends JsonSerializable {
   @JsonKey(name: 'last_name')
   final String lastName;
   @JsonKey(name: 'birthday')
-  final String birthDate;
+  final DateTime? birthDate;
   @JsonKey(name: 'profile_picture')
   final String? profilePicture;
   @JsonKey(name: 'tacks_rating')

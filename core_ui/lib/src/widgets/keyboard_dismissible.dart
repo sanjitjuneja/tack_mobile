@@ -12,6 +12,7 @@ class KeyboardDismissible extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: () => KeyboardUtility.hideKeyboard(context),
       child: child,
     );

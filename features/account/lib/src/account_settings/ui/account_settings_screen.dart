@@ -64,7 +64,7 @@ class AccountSettingsScreen extends StatelessWidget {
                               color: AppTheme.p,
                             ),
                           ),
-                          AppImagesTheme.fieldSuccessIcon,
+                          AppIconsTheme.checkMarkFilled(),
                         ],
                       ),
                     ],

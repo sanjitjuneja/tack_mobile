@@ -11,13 +11,9 @@ class InitialEvent extends SplashEvent {
 }
 
 class SignIn extends SplashEvent {
-  final AnimationController slidingPanelController;
-
-  const SignIn(this.slidingPanelController);
+  const SignIn();
 }
 
 class SignUp extends SplashEvent {
-  final AnimationController slidingPanelController;
-
-  const SignUp(this.slidingPanelController);
+  const SignUp();
 }

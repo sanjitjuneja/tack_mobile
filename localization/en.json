@@ -8,7 +8,28 @@
     "tackIsNotAvailable": "Sorry, this Tack is no longer available"
   },
   "validationErrors": {
-    "fieldRequired": "Field Required"
+    "fieldRequired": "Field Required",
+    "invalidLogin": "Provide a valid phone # or email address",
+    "emailAlreadyInUse": "Email already in use",
+    "emailInvalid": "Email not valid",
+    "wrongCredentials": "Incorrect User Credentials"
+  },
+  "passwordValidations": {
+    "length": {
+      "description": "8-16 characters",
+      "example": "(E.g: Ab12345678)"
+    },
+    "capitalLetter": {
+      "description": "At least 1 Capital Letter",
+      "example": "(E.g: ABCD)"
+    },
+    "number": {
+      "description": "At least 1 Digit",
+      "example": "(E.g: 12345)"
+    },
+    "passwordMatch": {
+      "description": "Passwords Match"
+    }
   },
   "errorAlert": {
     "defaultAlert": {
@@ -68,6 +89,14 @@
       "title": "",
       "message": "",
       "mainButtonLabel": "Close"
+    },
+    "sinUpComplete": {
+      "message": "Sign Up\nComplete",
+      "mainButtonLabel": "Sign In"
+    },
+    "recoveryPassword": {
+      "message": "Password successfully changed",
+      "mainButtonLabel": "Sign In"
     },
     "offerSent": {
       "title": "Offer Sent",
@@ -136,6 +165,64 @@
     "upToDate": "Up to date",
     "updateFailed": "Update failed!",
     "noGroupSelectedSubtitle": "No Group Selected"
+  },
+  "splashScreen": {
+    "signInButton": "Sign In",
+    "signUpButton": "Sign Up"
+  },
+  "signInScreen": {
+    "title": "Welcome Back",
+    "loginPlaceholder": "Email or Phone #",
+    "passwordPlaceholder": "Password",
+    "forgotPassword": "Forgot Password",
+    "signInButton": "Sign In",
+    "notRegisteredYet": "Don’t have an account? <colored>Sign Up</colored>"
+  },
+  "signUpScreen": {
+    "title": "Personal Information",
+    "firstNamePlaceholder": "First Name",
+    "lastNamePlaceholder": "Last Name",
+    "emailPlaceholder": "Email",
+    "newPasswordPlaceholder": "New Password",
+    "confirmPasswordPlaceholder": "Confirm Password",
+    "termsPrivacyAgreement": "Agree to <a href={termsConditionsLink}>Terms & Conditions</a> & <a href={privacyPolicyLink}>Privacy Policy</a>",
+    "nextButton": "Next"
+  },
+  "forgotPasswordScreen": {
+    "title": "Enter New Password",
+    "newPasswordPlaceholder": "New Password",
+    "confirmPasswordPlaceholder": "Confirm Password",
+    "submitButton": "Submit"
+  },
+  "phoneVerificationScreen": {
+    "title": "Enter Phone Number",
+    "verifyButton": "Verify"
+  },
+  "smsVerificationScreen": {
+    "signUp": {
+      "title": "Verify Phone Number",
+      "description": "Please enter the 6-digit code sent to <highlight>{phoneNumber}</highlight>",
+      "buttonLabel": "Next"
+    },
+    "recovery": {
+      "title": "Enter Recovery Code",
+      "description": "Please enter the 6-digit recovery code sent to <highlight>{phoneNumber}</highlight>",
+      "buttonLabel": "Next"
+    },
+    "loadingTitle": "Verifying Code",
+    "resendCode": "Resend Code"
+  },
+  "authErrorScreen": {
+    "notRegistered": {
+      "title": "Not Registered",
+      "description": "Your phone number is not registered within our system. Please re-try or Sign Up by clicking below.",
+      "button": "Sign Up"
+    },
+    "alreadyRegistered": {
+      "title": "Already Registered",
+      "description": "Your phone number is already registered within our system. Please Sign In by clicking below.",
+      "button": "Sign In"
+    }
   },
   "drawer": {
     "options": {
@@ -269,49 +356,6 @@
       "deleteButton": "Delete"
     }
   },
-  "signIn": {
-    "buttonSignIn": "Sign In",
-    "passwordHint": "Password",
-    "title": "Welcome Back",
-    "phone": "Phone #",
-    "password": "Password",
-    "forgotPassword": "Forgot Password",
-    "signIn": "Sign In",
-    "passwordConfirm": "Confirm Password"
-  },
-  "signUp": {
-    "title": "Sign Up",
-    "buttonSignUp": "Sign Up",
-    "primaryButton": "Verify",
-    "secondaryButton": "Next"
-  },
-  "thirdParty": {
-    "secDescription": "This is an invite-only beta version of our app. Our official marketplace releases later this Fall. For more details, check out tackmarketplace.com",
-    "description": "We temporarily use Venmo to process payments from both parties. Please connect to your Venmo account in order to recieve payments for completing Tacks or creating Tacks for others to complete. "
-  },
-  "personalInformation": {
-    "title": "Personal Information",
-    "firstName": "First Name",
-    "lastName": "Last Name",
-    "email": "Email Address",
-    "phoneNumber": "Phone Number",
-    "password": "Password",
-    "passwordConfirm": "Confirm Password",
-    "agreementTitle": "Agree to ",
-    "terms": "Terms & Conditions",
-    "privacy": "Privacy Policy",
-    "buttonTitle": "Next"
-  },
-  "forgotPassword": {
-    "title": "Enter New Password",
-    "newPassword": "New Password",
-    "confirmPassword": "Confirm Password",
-    "primaryButton": "Submit & Sign In",
-    "secondaryButton": "Submit"
-  },
-  "phoneVerification": {
-    "buttonText": "Verify"
-  },
   "createTackScreen": {
     "title": "Create Tack",
     "description": "Create custom Tack or select a popular template or frequent Tacks within your current group.",
@@ -397,14 +441,6 @@
     "copyLinkButtonLabel": "Copy Link",
     "shareLinkButtonLabel": "Share Link",
     "doneButtonLabel": "Done"
-  },
-  "smsVerification": {
-    "loadingTitle": "Verifying Code",
-    "title": "Verify Phone Number",
-    "description": "Please enter the 6-digit code sent to ",
-    "resendCode": "Resend Code",
-    "buttonPrimary": "Verify",
-    "buttonSecondary": "Next"
   },
   "ongoingTackScreen": {
     "cancelTackButton": "Cancel Tack",
@@ -508,22 +544,5 @@
   "errorScreen": {
     "title": "Already Registered",
     "description": "Your phone number is already registered within our system. Please Sign In by clicking below."
-  },
-  "passwordValidations": {
-    "length": {
-      "title": "8-16 characters",
-      "description": "(E.g: Ab12345678)"
-    },
-    "capitalLetter": {
-      "title": "At least 1 Capital Letter",
-      "description": "(E.g: ABCD)"
-    },
-    "number": {
-      "title": "At least 1 Digit",
-      "description": "(E.g: 12345)"
-    },
-    "passwordMatch": {
-      "title": "Passwords Match"
-    }
   }
 }

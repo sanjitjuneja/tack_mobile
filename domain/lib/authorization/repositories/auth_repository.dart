@@ -1,12 +1,16 @@
 part of authorization;
 
 abstract class AuthRepository {
-  Future<SmsCodeResult> requestSmsCode({
+  Future<PhoneVerificationResult> verifyPhoneNumber({
+    required VerifyPhoneNumberPayload params,
+  });
+
+  Future<SmsCodeResult> requestSignUpSmsCode({
     required RequestSmsCodePayload payload,
   });
 
-  Future<PhoneVerificationResult> verifyPhoneNumber({
-    required VerifyPhoneNumberPayload params,
+  Future<SmsCodeResult> requestRecoverySmsCode({
+    required RequestSmsCodePayload payload,
   });
 
   Future<User> signIn({
@@ -14,7 +18,11 @@ abstract class AuthRepository {
   });
 
   Future<User> signUp({
-    required SignUpByPhonePayload params,
+    required SignUpByPhonePayload payload,
+  });
+
+  Future<void> recoveryChangePassword({
+    required RecoveryChangePasswordPayload payload,
   });
 
   Future<bool> isAuthorized();

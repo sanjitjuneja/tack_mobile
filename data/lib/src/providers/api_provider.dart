@@ -96,9 +96,26 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.customerMapper.fromEntity);
   }
 
+  Future<void> recoveryChangePassword({
+    required RecoveryChangePasswordRequest request,
+  }) async {
+    return post<void>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.recoveryChangePasswordPath,
+        body: request.toJson(),
+        params: null,
+      ),
+      parser: (_) {},
+    );
+  }
+
   Future<domain.User> getUser() async {
     return get<UserEntity>(
-      ApiQuery(endpoint: BaseUrlConstants.userPath, body: null, params: null),
+      ApiQuery(
+        endpoint: BaseUrlConstants.userPath,
+        body: null,
+        params: null,
+      ),
       parser: UserEntity.fromJson,
     ).then(mapper.customerMapper.fromEntity);
   }

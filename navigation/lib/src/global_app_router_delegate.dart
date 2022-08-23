@@ -52,7 +52,7 @@ class GlobalAppRouterDelegate extends RouterDelegate<RouteConfiguration>
   }
 
   bool onPopPage(Route<dynamic> route, dynamic result) {
-    onPopResultDispatch();
+    onPopResultDispatch(pages);
     final bool didPop = route.didPop(result);
     if (!didPop) {
       return false;

@@ -44,7 +44,7 @@ class SessionProvider {
     final Session session = await _apiProvider.startSession(
       request: StartSessionRequest(
         password: payload.password,
-        phoneNumber: payload.phoneNumber,
+        phoneNumber: payload.login,
       ),
     );
     await _sharedPreferencesProvider.setSession(session);

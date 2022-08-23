@@ -88,9 +88,8 @@ class SharedPreferencesProvider {
   }
 
   bool isAllSetForLogin() {
-    final String? user = _sharedPreferences.getString(
-      SharedPreferencesKeys.user,
-    );
+    final domain.User? user = getUser();
+
     return <Object?>[
       user,
     ].every((Object? element) => element != null);

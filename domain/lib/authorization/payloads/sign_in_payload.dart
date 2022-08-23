@@ -1,11 +1,11 @@
 part of authorization;
 
 class SignInPayload {
+  final String login;
   final String password;
-  final String phoneNumber;
 
-  SignInPayload({
+  const SignInPayload({
+    required this.login,
     required this.password,
-    required this.phoneNumber,
   });
 }
