@@ -1,6 +1,6 @@
 part of payment;
 
-class AddCardUseCase extends FutureUseCase<void, NoParams> {
+class AddCardUseCase extends FutureUseCase<SetupIntent, AddCardPayload> {
   final PaymentRepository _paymentRepository;
 
   AddCardUseCase({
@@ -8,7 +8,7 @@ class AddCardUseCase extends FutureUseCase<void, NoParams> {
   }) : _paymentRepository = paymentRepository;
 
   @override
-  Future<SetupIntent> execute(NoParams params) async {
-    return _paymentRepository.addCard();
+  Future<SetupIntent> execute(AddCardPayload params) async {
+    return _paymentRepository.addCard(params);
   }
 }

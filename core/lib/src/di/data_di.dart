@@ -335,6 +335,11 @@ class DataDI {
         paymentRepository: appLocator.get<PaymentRepository>(),
       ),
     );
+    appLocator.registerLazySingleton<AddBankAccountUseCase>(
+      () => AddBankAccountUseCase(
+        paymentRepository: appLocator.get<PaymentRepository>(),
+      ),
+    );
 
     appLocator.registerLazySingleton<LogOutUseCase>(
       () => LogOutUseCase(
@@ -389,6 +394,7 @@ class DataDI {
 
     appLocator.unregister<PaymentRepository>();
     appLocator.unregister<AddCardUseCase>();
+    appLocator.unregister<AddBankAccountUseCase>();
 
     appLocator.unregister<LogOutUseCase>();
   }

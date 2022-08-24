@@ -27,7 +27,10 @@ dependencies:
   share_plus: ^4.0.10
   url_launcher: ^6.1.5
   flutter_multi_formatter: ^2.5.1
+
+  #Payment
   flutter_stripe: ^4.0.0
+  plaid_flutter: ^2.2.2
 
   data:
     path: ../data

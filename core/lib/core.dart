@@ -44,3 +44,4 @@ export 'package:image_picker/image_picker.dart';
 export 'package:rxdart/rxdart.dart';
 export 'package:shared_preferences/shared_preferences.dart';
 export 'package:flutter_stripe/flutter_stripe.dart';
+export 'package:plaid_flutter/plaid_flutter.dart';

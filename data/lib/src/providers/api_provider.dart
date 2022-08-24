@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:data/src/entities/entities.dart';
 import 'package:data/src/entities/global/global.dart';
-import 'package:data/src/entities/payment/payment.dart';
 import 'package:data/src/mappers/mappers.dart';
 import 'package:data/src/providers/api_provider_core.dart';
 import 'package:data/src/providers/session_provider.dart';
@@ -503,14 +502,46 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
-  Future<SetupIntentEntity> fetchSetupIntentClientSecret() async {
-    return post<SetupIntentEntity>(
+  Future<domain.PaymentSetupIntent> fetchSetupIntent({
+    required AddCardRequest request,
+  }) async {
+    return post<PaymentSetupIntentEntity>(
       ApiQuery(
         endpoint: BaseUrlConstants.paymentIntent,
         body: null,
         params: null,
       ),
-      parser: SetupIntentEntity.fromJson,
+      parser: PaymentSetupIntentEntity.fromJson,
+    ).then(mapper.paymentSetupIntentMapper.fromEntity);
+  }
+
+  Future<domain.Plaid> fetchPlaidEntity({
+    required AddBankAccountRequest request,
+  }) async {
+    return get<PlaidEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.plaidToken,
+        body: null,
+        params: null,
+      ),
+      parser: PlaidEntity.fromJson,
+    ).then(mapper.plaidMapper.fromEntity);
+  }
+
+  Future<List<domain.BankAccount>> getAddedBankAccounts({
+    required GetAddedBankAccountRequest request,
+  }) async {
+    return post<AddedBankAccountsResponse>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.addedBankAccounts,
+        body: request.toJson(),
+        params: null,
+      ),
+      parser: AddedBankAccountsResponse.fromJson,
+    ).then(
+      (AddedBankAccountsResponse response) => mapper.bankAccountMapper.fromList(
+        response.results,
+      ),
     );
   }
 

@@ -4,7 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
 class AddPaymentMethodFailedForm extends StatelessWidget {
-  const AddPaymentMethodFailedForm({Key? key}) : super(key: key);
+  final String? labelKey;
+
+  const AddPaymentMethodFailedForm({
+    Key? key,
+    this.labelKey,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +40,7 @@ class AddPaymentMethodFailedForm extends StatelessWidget {
                   child: Text(
                     FlutterI18n.translate(
                       context,
-                      'addPaymentMethodFailedScreen.description',
+                      labelKey ?? 'addPaymentMethodFailedScreen.description',
                     ),
                     textAlign: TextAlign.center,
                     style: AppTextTheme.manrope14Medium.copyWith(

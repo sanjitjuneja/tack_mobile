@@ -112,6 +112,11 @@ abstract class ApiProviderCore {
 
       if (response.data is Map<String, dynamic>) {
         return parser(response.data!);
+      } else if (response.data is List<dynamic>) {
+        //TODO: fix.
+        return parser(
+          <String, dynamic>{'results': response.data},
+        );
       } else {
         /// TODO: fix. String is not Map<String, dynamic> for response with 204 code (DELETE).
         return parser(<String, dynamic>{});
