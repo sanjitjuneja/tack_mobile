@@ -121,11 +121,11 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     Emitter<SignUpState> emit,
   ) async {
     if (!state.isReadyToProceed) {
-      emit(
-        state.copyWith(isValidationEnabled: true),
+      return emit(
+        state.copyWith(
+          isValidationEnabled: true,
+        ),
       );
-
-      return;
     }
 
     try {

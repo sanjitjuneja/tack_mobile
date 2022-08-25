@@ -18,7 +18,6 @@ class OldPasswordSection extends StatelessWidget {
         state.oldPasswordData.isValidationEnabled &&
             state.passwordsValidator.isNewAndOldIdentical;
 
-    print(state.oldPasswordData.isInvalid);
     return AppTextField(
       placeholder: 'changePasswordScreen.currentPasswordPlaceholder',
       shouldObscure: true,

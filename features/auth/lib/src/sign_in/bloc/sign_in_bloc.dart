@@ -64,9 +64,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     Emitter<SignInState> emit,
   ) async {
     if (!kDebugMode && !state.isReadyToProceed) {
-      emit(state.copyWith(isValidationEnabled: true));
-
-      return;
+      return emit(
+        state.copyWith(
+          isValidationEnabled: true,
+        ),
+      );
     }
 
     try {

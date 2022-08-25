@@ -44,7 +44,7 @@ class ChangePasswordBloc
         passwordsValidator: PasswordValidator.validate(
           password: state.passwordData.password,
           passwordConfirmation: state.passwordConfirmationData.password,
-          oldPassword: event.password
+          oldPassword: event.password,
         ),
       ),
     );
@@ -60,7 +60,7 @@ class ChangePasswordBloc
         passwordsValidator: PasswordValidator.validate(
           password: event.password,
           passwordConfirmation: state.passwordConfirmationData.password,
-          oldPassword: state.oldPasswordData.password
+          oldPassword: state.oldPasswordData.password,
         ),
       ),
     );
@@ -76,7 +76,7 @@ class ChangePasswordBloc
         passwordsValidator: PasswordValidator.validate(
           password: state.passwordData.password,
           passwordConfirmation: event.password,
-            oldPassword: state.oldPasswordData.password
+          oldPassword: state.oldPasswordData.password,
         ),
       ),
     );
@@ -87,11 +87,11 @@ class ChangePasswordBloc
     Emitter<ChangePasswordState> emit,
   ) async {
     if (!state.isReadyToProceed) {
-      emit(
-        state.copyWith(isValidationEnabled: true),
+      return emit(
+        state.copyWith(
+          isValidationEnabled: true,
+        ),
       );
-
-      return;
     }
 
     try {

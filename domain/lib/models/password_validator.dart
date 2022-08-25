@@ -50,10 +50,13 @@ class PasswordValidator {
     );
   }
 
-  bool get isValidationsPassed =>
-      isLengthValid &&
-      isContainCapital &&
-      isContainNumeric &&
-      isPasswordsMatch &&
-      !isNewAndOldIdentical;
+  bool get isValidationsPassed {
+    return <bool>[
+      isLengthValid,
+      isContainCapital,
+      isContainNumeric,
+      isPasswordsMatch,
+      !isNewAndOldIdentical,
+    ].every((element) => element == true);
+  }
 }

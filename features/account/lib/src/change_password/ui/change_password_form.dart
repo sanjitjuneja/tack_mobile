@@ -53,7 +53,8 @@ class ChangePasswordForm extends StatelessWidget {
   }
 
   void _onSubmitButtonPressed(BuildContext context) {
-    BlocProvider.of<ChangePasswordBloc>(context)
-        .add(const SubmitNewPasswordAction());
+    BlocProvider.of<ChangePasswordBloc>(context).add(
+      const SubmitNewPasswordAction(),
+    );
   }
 }

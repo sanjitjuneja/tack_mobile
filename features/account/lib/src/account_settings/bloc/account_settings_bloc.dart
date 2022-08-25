@@ -69,15 +69,13 @@ class AccountSettingsBloc
     Emitter<AccountSettingsState> emit,
   ) async {
     if (!state.isReadyToProceed) {
-      emit(
+      return emit(
         state.copyWith(isValidationEnabled: true),
       );
-
-      return;
     }
+
     if (!state.isAnyDataChanged) {
-      _appRouter.popWithResult(false);
-      return;
+      return _appRouter.popWithResult(false);
     }
 
     try {
