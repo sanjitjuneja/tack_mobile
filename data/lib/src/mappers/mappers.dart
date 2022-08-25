@@ -26,6 +26,10 @@ part 'tacks/template_tack_mapper.dart';
 part 'user/user_bank_account_mapper.dart';
 part 'user/user_mapper.dart';
 
+part 'payment/plaid_mapper.dart';
+part 'payment/bank_account_mapper.dart';
+part 'payment/payment_setup_intent_mapper.dart';
+
 part 'base_mapper.dart';
 
 part 'mapper_factory.dart';

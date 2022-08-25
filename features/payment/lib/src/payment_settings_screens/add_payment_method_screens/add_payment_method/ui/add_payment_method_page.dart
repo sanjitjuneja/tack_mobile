@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 import '../bloc/add_payment_method_bloc.dart';
@@ -24,6 +25,7 @@ class AddPaymentMethodPage extends Page<void> {
         create: (_) {
           return AddPaymentMethodBloc(
             appRouter: appLocator.get<AppRouterDelegate>(),
+            addBankAccountUseCase: appLocator.get<AddBankAccountUseCase>(),
           );
         },
         child: const AddPaymentMethodScreen(),

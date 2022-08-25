@@ -4,20 +4,32 @@ import 'add_payment_method_failed_screen.dart';
 class AddPaymentMethodFailedFeature {
   static const String routeName = '/addPaymentMethodFailed';
 
-  static Page<void> page() => const AddPaymentMethodFailedPage();
+  static Page<void> page({
+    String? labelKey,
+  }) {
+    return AddPaymentMethodFailedPage(
+      labelKey: labelKey,
+    );
+  }
 }
 
 class AddPaymentMethodFailedPage extends Page<void> {
+  final String? labelKey;
+
   @override
   String get name => AddPaymentMethodFailedFeature.routeName;
 
-  const AddPaymentMethodFailedPage();
+  const AddPaymentMethodFailedPage({
+    this.labelKey,
+  });
 
   @override
   Route<void> createRoute(BuildContext context) {
     return CupertinoPageRoute<void>(
       settings: this,
-      builder: (_) => const AddPaymentMethodFailedScreen(),
+      builder: (_) => AddPaymentMethodFailedScreen(
+        labelKey: labelKey,
+      ),
     );
   }
 }

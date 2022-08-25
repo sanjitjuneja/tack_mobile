@@ -491,6 +491,7 @@
   "addPaymentMethodFailedScreen": {
     "title": "Unable To Add",
     "description": "We were unable to add the payment method to your account. Please try again in a few minutes.",
+    "depositoryDescription": "We were unable to find a depository account linked with your bank. Please try again with a new bank.",
     "close": "Close"
   },
   "withdrawFailedScreen": {

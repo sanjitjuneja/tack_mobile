@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:core/core.dart';
+import '../entities/entities.dart';
 import 'package:domain/domain.dart' as domain;
 import '../../data.dart';
-import '../entities/payment/payment.dart';
 
 class PaymentRepositoryImpl implements domain.PaymentRepository {
   final ApiProvider _apiProvider;
@@ -16,9 +18,13 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
   }
 
   @override
-  Future<SetupIntent> addCard() async {
-    final SetupIntentEntity setupIntent =
-        await _apiProvider.fetchSetupIntentClientSecret();
+  Future<SetupIntent> addCard(
+    domain.AddCardPayload payload,
+  ) async {
+    final domain.PaymentSetupIntent setupIntent =
+        await _apiProvider.fetchSetupIntent(
+      request: const AddCardRequest(),
+    );
 
     final SetupIntent setupIntentResult =
         await Stripe.instance.confirmSetupIntent(
@@ -29,5 +35,46 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
     );
 
     return setupIntentResult;
+  }
+
+  @override
+  Future<List<domain.ConnectedBankAccount>?> addBankAccount(
+    domain.AddBankAccountPayload payload,
+  ) async {
+    final Completer<List<domain.ConnectedBankAccount>?> completer =
+        Completer<List<domain.ConnectedBankAccount>?>();
+
+    final domain.Plaid plaidEntity = await _apiProvider.fetchPlaidEntity(
+      request: const AddBankAccountRequest(),
+    );
+    final LinkConfiguration configuration = LinkTokenConfiguration(
+      token: plaidEntity.linkToken,
+    );
+
+    PlaidLink.onSuccess(
+      (String publicToken, LinkSuccessMetadata metadata) async {
+        try {
+          final List<domain.ConnectedBankAccount> bankAccounts =
+              await _apiProvider.getAddedBankAccounts(
+            request: GetAddedBankAccountRequest(
+              publicToken: publicToken,
+            ),
+          );
+          completer.complete(bankAccounts);
+        } catch (e) {
+          completer.complete(null);
+        }
+      },
+    );
+
+    PlaidLink.onExit(
+      (LinkError? error, LinkExitMetadata metadata) {
+        completer.complete(null);
+      },
+    );
+
+    PlaidLink.open(configuration: configuration);
+
+    return completer.future;
   }
 }

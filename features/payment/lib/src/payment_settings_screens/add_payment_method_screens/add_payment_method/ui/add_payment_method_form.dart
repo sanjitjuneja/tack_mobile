@@ -80,6 +80,8 @@ class AddPaymentMethodForm extends StatelessWidget {
   }
 
   void _onAddBankTileTap(BuildContext context) {
-    //TODO(Alex H): Add bank logic
+    BlocProvider.of<AddPaymentMethodBloc>(context).add(
+      const AddBankAccountRequest(),
+    );
   }
 }

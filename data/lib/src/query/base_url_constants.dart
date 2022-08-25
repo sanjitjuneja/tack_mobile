@@ -50,4 +50,6 @@ class BaseUrlConstants {
   static const String reviews = '/reviews/';
 
   static const String paymentIntent = 'payment/add-payment-method/';
+  static const String plaidToken = 'payment/get-link-token/';
+  static const String addedBankAccounts = 'payment/add-withdraw-method/';
 }
