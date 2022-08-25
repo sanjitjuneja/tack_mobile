@@ -1,27 +1,23 @@
-part of passwords_form_field;
+part of form_models;
 
-class PasswordData {
-  final bool Function(String) validator;
+class PasswordConfirmationData {
   final bool isValidationEnabled;
   final String password;
 
-  bool get isValid => validator(password);
+  bool get isValid => FieldValidator.isPasswordLengthValid(password);
 
   bool get isInvalid => isValidationEnabled ? !isValid : false;
 
-  const PasswordData({
-    required this.validator,
+  const PasswordConfirmationData({
     this.isValidationEnabled = false,
     this.password = '',
   });
 
-  PasswordData copyWith({
+  PasswordConfirmationData copyWith({
     String? password,
     bool? isValidationEnabled,
-    bool? hasError,
   }) {
-    return PasswordData(
-      validator: validator,
+    return PasswordConfirmationData(
       isValidationEnabled: isValidationEnabled ?? false,
       password: password ?? this.password,
     );

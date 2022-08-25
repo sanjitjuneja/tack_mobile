@@ -24,12 +24,8 @@ class ForgotPasswordBloc
         super(
           ForgotPasswordState(
             phoneVerificationData: phoneVerificationData,
-            passwordData: const PasswordData(
-              validator: FieldValidator.isPasswordLengthValid,
-            ),
-            passwordConfirmationData: const PasswordConfirmationData(
-              validator: FieldValidator.isPasswordLengthValid,
-            ),
+            passwordData: const PasswordData(),
+            passwordConfirmationData: const PasswordConfirmationData(),
             passwordsValidator: PasswordValidator.initial(),
           ),
         ) {

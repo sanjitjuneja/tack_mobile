@@ -93,7 +93,7 @@ class ApiProvider extends ApiProviderCore {
         body: request.toJson(),
       ),
       parser: UserEntity.fromJson,
-    ).then(mapper.customerMapper.fromEntity);
+    ).then(mapper.userMapper.fromEntity);
   }
 
   Future<void> recoveryChangePassword({
@@ -117,7 +117,33 @@ class ApiProvider extends ApiProviderCore {
         params: null,
       ),
       parser: UserEntity.fromJson,
-    ).then(mapper.customerMapper.fromEntity);
+    ).then(mapper.userMapper.fromEntity);
+  }
+
+  Future<domain.User> updateUserInfo({
+    required UpdateUserInfoRequest request,
+  }) async {
+    return patch<UserEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.userChangeBioPath,
+        body: request.toJson(),
+        params: null,
+      ),
+      parser: UserEntity.fromJson,
+    ).then(mapper.userMapper.fromEntity);
+  }
+
+  Future<Session> changePassword({
+    required ChangePasswordRequest request,
+  }) async {
+    return post<Session>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.userPasswordChangePath,
+        body: request.toJson(),
+        params: null,
+      ),
+      parser: Session.fromJson,
+    );
   }
 
   Future<domain.Group> getGroup({

@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'package:navigation/navigation.dart';
 import 'package:phone_verification/phone_verification.dart';
 
-import '../models/login_data.dart';
 import '../../forgot_password/ui/forgot_password_page.dart';
 import '../../sign_up/ui/sign_up_page.dart';
 
@@ -26,12 +25,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         _signInUseCase = signInUseCase,
         super(
           const SignInState(
-            loginData: LoginData(
-              validator: FieldValidator.validateLogin,
-            ),
-            passwordData: PasswordData(
-              validator: FieldValidator.isPasswordLengthValid,
-            ),
+            loginData: LoginData(),
+            passwordData: PasswordData(),
           ),
         ) {
     on<LoginChanged>(_onLoginChanged);

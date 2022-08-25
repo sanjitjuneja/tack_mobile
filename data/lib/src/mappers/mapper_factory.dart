@@ -45,7 +45,7 @@ class MapperFactory {
 
   UserBankAccountMapper get userBankAccountMapper => UserBankAccountMapper();
 
-  UserMapper get customerMapper => UserMapper(
+  UserMapper get userMapper => UserMapper(
         userBankAccountMapper: userBankAccountMapper,
       );
 

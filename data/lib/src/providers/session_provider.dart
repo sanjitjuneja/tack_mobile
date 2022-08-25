@@ -56,18 +56,23 @@ class SessionProvider {
     final Session session = await _apiProvider.refreshSession(
       request: RefreshSessionRequest(session: oldSession),
     );
-    await _apiProvider.endSession(
-      request: EndSessionRequest(session: oldSession),
-    );
+    await endSession(oldSession);
     await _sharedPreferencesProvider.setSession(session);
 
     return session;
   }
 
-  Future<void> endSession() async {
-    final Session session = _sharedPreferencesProvider.getSession()!;
-    await _apiProvider.endSession(
+  Future<void> endSession([Session? currentSession]) async {
+    final Session session =
+        currentSession ?? _sharedPreferencesProvider.getSession()!;
+
+    return _apiProvider.endSession(
       request: EndSessionRequest(session: session),
     );
+  }
+
+  Future<void> updateSession(Session session) async {
+    await endSession();
+    await _sharedPreferencesProvider.setSession(session);
   }
 }

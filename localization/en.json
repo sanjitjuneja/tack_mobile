@@ -10,6 +10,8 @@
   "validationErrors": {
     "fieldRequired": "Field Required",
     "invalidLogin": "Provide a valid phone # or email address",
+    "oldAndNewPasswordsIdentical": "Passwords should not be identical",
+    "wrongPassword": "Password is wrong",
     "emailAlreadyInUse": "Email already in use",
     "emailInvalid": "Email not valid",
     "wrongCredentials": "Incorrect User Credentials"
@@ -97,6 +99,12 @@
     "recoveryPassword": {
       "message": "Password successfully changed",
       "mainButtonLabel": "Sign In"
+    },
+    "userInfoChange": {
+      "message": "User info successfully changed"
+    },
+    "passwordChange": {
+      "message": "Password successfully changed"
     },
     "offerSent": {
       "title": "Offer Sent",
@@ -541,8 +549,23 @@
     "newTackBalance": "New Tack Balance:",
     "close": "Close"
   },
-  "errorScreen": {
-    "title": "Already Registered",
-    "description": "Your phone number is already registered within our system. Please Sign In by clicking below."
+  "accountInfoScreen": {
+    "title": "Account",
+    "changePasswordButton": "Change Password",
+    "deleteAccountButton": "Delete Account"
+  },
+  "accountSettingsScreen": {
+    "title": "Account",
+    "firstNamePlaceholder": "First Name",
+    "lastNamePlaceholder": "Last Name",
+    "emailPlaceholder": "Email",
+    "saveChangesButton": "Save Changes"
+  },
+  "changePasswordScreen": {
+    "title": "Change Password",
+    "currentPasswordPlaceholder": "Current Password",
+    "newPasswordPlaceholder": "New Password",
+    "confirmPasswordPlaceholder": "Confirm Password",
+    "setPasswordButton": "Set Password"
   }
 }

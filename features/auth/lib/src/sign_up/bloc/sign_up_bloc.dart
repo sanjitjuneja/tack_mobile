@@ -1,9 +1,5 @@
 import 'dart:async';
 
-import 'package:auth/src/sign_up/models/email_data.dart';
-import 'package:auth/src/sign_up/models/first_name_data.dart';
-import 'package:auth/src/sign_up/models/last_name_data.dart';
-import 'package:auth/src/sign_up/models/terms_data.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
@@ -31,12 +27,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
             lastNameData: const LastNameData(),
             emailData: const EmailData(),
             termsData: const TermsData(),
-            passwordData: const PasswordData(
-              validator: FieldValidator.isPasswordLengthValid,
-            ),
-            passwordConfirmationData: const PasswordConfirmationData(
-              validator: FieldValidator.isPasswordLengthValid,
-            ),
+            passwordData: const PasswordData(),
+            passwordConfirmationData: const PasswordConfirmationData(),
             passwordsValidator: PasswordValidator.initial(),
           ),
         ) {
