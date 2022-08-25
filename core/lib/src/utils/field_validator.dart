@@ -6,7 +6,7 @@ class FieldValidator {
 
   static const String _phoneNumberPattern = r'^\+?[0-9]{10,12}$';
   static const String _emailPattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-  static const String _digitsPattern = r'^\d+$';
+  static const String _digitsPattern = r'^\+?\d+$';
 
   static const String _containCapitalPattern = r'.*[A-Z].*';
   static const String _containNumericPattern = r'.*\d.*';
