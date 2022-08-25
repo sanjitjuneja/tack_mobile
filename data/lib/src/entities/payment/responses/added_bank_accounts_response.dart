@@ -2,7 +2,7 @@ part of payment_entities;
 
 @JsonSerializable()
 class AddedBankAccountsResponse extends JsonSerializable {
-  final List<BankAccountEntity> results;
+  final List<ConnectedBankAccountEntity> results;
 
   const AddedBankAccountsResponse({
     required this.results,

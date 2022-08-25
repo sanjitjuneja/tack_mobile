@@ -2,7 +2,7 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/payment/payment.dart';
 import 'package:navigation/navigation.dart';
-import 'package:payment/src/payment_settings_screens/add_payment_method_screens/add_payment_method_failed/ui/add_payment_method_failed_page.dart';
+import '../../add_payment_method_screens/add_payment_method_failed/ui/add_payment_method_failed_page.dart';
 
 part 'add_credit_card_event.dart';
 

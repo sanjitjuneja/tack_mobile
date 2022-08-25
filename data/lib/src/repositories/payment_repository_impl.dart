@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:core/core.dart';
-import 'package:data/src/entities/entities.dart';
+import '../entities/entities.dart';
 import 'package:domain/domain.dart' as domain;
 import '../../data.dart';
 
@@ -38,11 +38,11 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
   }
 
   @override
-  Future<List<domain.BankAccount>?> addBankAccount(
+  Future<List<domain.ConnectedBankAccount>?> addBankAccount(
     domain.AddBankAccountPayload payload,
   ) async {
-    final Completer<List<domain.BankAccount>?> completer =
-        Completer<List<domain.BankAccount>?>();
+    final Completer<List<domain.ConnectedBankAccount>?> completer =
+        Completer<List<domain.ConnectedBankAccount>?>();
 
     final domain.Plaid plaidEntity = await _apiProvider.fetchPlaidEntity(
       request: const AddBankAccountRequest(),
@@ -52,9 +52,9 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
     );
 
     PlaidLink.onSuccess(
-      (publicToken, metadata) async {
+      (String publicToken, LinkSuccessMetadata metadata) async {
         try {
-          final List<domain.BankAccount> bankAccounts =
+          final List<domain.ConnectedBankAccount> bankAccounts =
               await _apiProvider.getAddedBankAccounts(
             request: GetAddedBankAccountRequest(
               publicToken: publicToken,
@@ -68,7 +68,7 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
     );
 
     PlaidLink.onExit(
-      (error, metadata) {
+      (LinkError? error, LinkExitMetadata metadata) {
         completer.complete(null);
       },
     );

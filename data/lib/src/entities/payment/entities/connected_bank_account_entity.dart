@@ -1,7 +1,7 @@
 part of payment_entities;
 
 @JsonSerializable(createToJson: false)
-class BankAccountEntity extends JsonSerializable {
+class ConnectedBankAccountEntity extends JsonSerializable {
   @JsonKey(name: 'id')
   final String id;
   @JsonKey(name: 'bankName')
@@ -15,7 +15,7 @@ class BankAccountEntity extends JsonSerializable {
   @JsonKey(name: 'channels')
   final List<String> channels;
 
-  const BankAccountEntity({
+  const ConnectedBankAccountEntity({
     required this.id,
     required this.bankName,
     required this.status,
@@ -24,7 +24,7 @@ class BankAccountEntity extends JsonSerializable {
     required this.channels,
   });
 
-  factory BankAccountEntity.fromJson(Map<String, dynamic> json) {
-    return _$BankAccountEntityFromJson(json);
+  factory ConnectedBankAccountEntity.fromJson(Map<String, dynamic> json) {
+    return _$ConnectedBankAccountEntityFromJson(json);
   }
 }

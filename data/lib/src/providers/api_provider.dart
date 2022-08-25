@@ -528,7 +528,7 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.plaidMapper.fromEntity);
   }
 
-  Future<List<domain.BankAccount>> getAddedBankAccounts({
+  Future<List<domain.ConnectedBankAccount>> getAddedBankAccounts({
     required GetAddedBankAccountRequest request,
   }) async {
     return post<AddedBankAccountsResponse>(
@@ -539,7 +539,8 @@ class ApiProvider extends ApiProviderCore {
       ),
       parser: AddedBankAccountsResponse.fromJson,
     ).then(
-      (AddedBankAccountsResponse response) => mapper.bankAccountMapper.fromList(
+      (AddedBankAccountsResponse response) =>
+          mapper.connectedBankAccountMapper.fromList(
         response.results,
       ),
     );

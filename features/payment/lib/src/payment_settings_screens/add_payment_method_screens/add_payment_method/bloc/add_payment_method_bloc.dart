@@ -42,7 +42,8 @@ class AddPaymentMethodBloc
   ) async {
     try {
       _appRouter.push(ProgressDialog.page());
-      final bankAccounts = await _addBankAccountUseCase.execute(
+      final List<ConnectedBankAccount>? bankAccounts =
+          await _addBankAccountUseCase.execute(
         const AddBankAccountPayload(),
       );
       _appRouter.pop();

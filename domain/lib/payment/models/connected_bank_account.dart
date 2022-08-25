@@ -1,6 +1,6 @@
 part of payment;
 
-class BankAccount extends Equatable {
+class ConnectedBankAccount extends Equatable {
   final String id;
   final String bankName;
   final String status;
@@ -8,7 +8,7 @@ class BankAccount extends Equatable {
   final String bankAccountType;
   final List<String> channels;
 
-  const BankAccount({
+  const ConnectedBankAccount({
     required this.id,
     required this.bankName,
     required this.status,

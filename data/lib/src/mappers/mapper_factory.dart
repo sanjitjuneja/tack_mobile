@@ -51,7 +51,8 @@ class MapperFactory {
 
   PlaidMapper get plaidMapper => const PlaidMapper();
 
-  BankAccountMapper get bankAccountMapper => const BankAccountMapper();
+  ConnectedBankAccountMapper get connectedBankAccountMapper =>
+      const ConnectedBankAccountMapper();
 
   PaymentSetupIntentMapper get paymentSetupIntentMapper =>
       const PaymentSetupIntentMapper();

@@ -1,12 +1,12 @@
 part of mappers;
 
-class BankAccountMapper
-    implements Mapper<BankAccountEntity, domain.BankAccount> {
-  const BankAccountMapper();
+class ConnectedBankAccountMapper
+    implements Mapper<ConnectedBankAccountEntity, domain.ConnectedBankAccount> {
+  const ConnectedBankAccountMapper();
 
   @override
-  domain.BankAccount fromEntity(BankAccountEntity entity) {
-    return domain.BankAccount(
+  domain.ConnectedBankAccount fromEntity(ConnectedBankAccountEntity entity) {
+    return domain.ConnectedBankAccount(
       id: entity.id,
       bankName: entity.bankName,
       status: entity.status,
@@ -17,8 +17,8 @@ class BankAccountMapper
   }
 
   @override
-  BankAccountEntity toEntity(domain.BankAccount item) {
-    return BankAccountEntity(
+  ConnectedBankAccountEntity toEntity(domain.ConnectedBankAccount item) {
+    return ConnectedBankAccountEntity(
       id: item.id,
       bankName: item.bankName,
       status: item.status,
