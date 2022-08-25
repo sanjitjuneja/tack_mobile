@@ -13,13 +13,16 @@ part 'sign_up_state.dart';
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   final GlobalAppRouterDelegate _appRouter;
   final SignUpUseCase _signUpUseCase;
+  final SignInUseCase _signInUseCase;
 
   SignUpBloc({
     required PhoneVerificationData phoneVerificationData,
     required GlobalAppRouterDelegate appRouter,
     required SignUpUseCase signUpUseCase,
+    required SignInUseCase signInUseCase,
   })  : _appRouter = appRouter,
         _signUpUseCase = signUpUseCase,
+        _signInUseCase = signInUseCase,
         super(
           SignUpState(
             phoneVerificationData: phoneVerificationData,
@@ -138,6 +141,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           lastName: state.lastNameData.lastName,
           password: state.passwordData.password,
           phoneNumber: state.phoneVerificationData.phoneNumber,
+        ),
+      );
+      await _signInUseCase.execute(
+        SignInPayload(
+          password: state.passwordData.password,
+          login: state.phoneVerificationData.phoneNumber,
         ),
       );
       _appRouter.pop();

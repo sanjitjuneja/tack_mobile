@@ -1,0 +1,4 @@
+enum SignInScreenResult {
+  signIn,
+  signUp,
+}

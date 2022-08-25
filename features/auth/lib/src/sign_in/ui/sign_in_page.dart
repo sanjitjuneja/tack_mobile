@@ -6,23 +6,24 @@ import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 
 import '../bloc/sign_in_bloc.dart';
+import '../models/sign_in_screen_result.dart';
 import 'sign_in_screen.dart';
 
 class SignInFeature {
   static const String routeName = '/signIn';
 
-  static Page<bool?> page() => const SignInPage();
+  static Page<SignInScreenResult?> page() => const SignInPage();
 }
 
-class SignInPage extends Page<bool?> {
+class SignInPage extends Page<SignInScreenResult?> {
   const SignInPage();
 
   @override
   String get name => SignInFeature.routeName;
 
   @override
-  Route<bool?> createRoute(BuildContext context) {
-    return OpacityRoute<bool?>(
+  Route<SignInScreenResult?> createRoute(BuildContext context) {
+    return OpacityRoute<SignInScreenResult?>(
       settings: this,
       builder: (_) => BlocProvider<SignInBloc>(
         create: (_) {
