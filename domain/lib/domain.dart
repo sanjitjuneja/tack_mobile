@@ -2,7 +2,6 @@ library domain;
 
 export 'global/global.dart';
 export 'authorization/authorization.dart';
-export 'global/global.dart';
 export 'groups/groups.dart';
 export 'tacks/tacks.dart';
 export 'user/user.dart';

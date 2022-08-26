@@ -61,6 +61,8 @@ class AppIconsTheme {
   static const String _lockKey = '${_svgPath}lock.svg';
   static const String _cardKey = '${_svgPath}card.svg';
   static const String _chevronRightRoundedKey = '${_svgPath}chevron_right_rounded.svg';
+  static const String _checkmarkKey = '${_svgPath}checkmark.svg';
+  static const String _redCrossRoundedKey = '${_svgPath}red_cross_rounded.svg';
 
   /// Bottom Navigation bar
   static AppIcon get dashboardsActive => AppIcon(_dashboardActiveKey);
@@ -115,4 +117,6 @@ class AppIconsTheme {
   static AppIcon get lock => AppIcon(_lockKey);
   static AppIcon get card => AppIcon(_cardKey);
   static AppIcon get chevronRightRounded => AppIcon(_chevronRightRoundedKey);
+  static AppIcon get checkmark => AppIcon(_checkmarkKey);
+  static AppIcon get redCrossRounded => AppIcon(_redCrossRoundedKey);
 }

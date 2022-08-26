@@ -54,6 +54,14 @@ class MapperFactory {
         userBankAccountMapper: userBankAccountMapper,
       );
 
+  PlaidMapper get plaidMapper => const PlaidMapper();
+
+  ConnectedBankAccountMapper get connectedBankAccountMapper =>
+      const ConnectedBankAccountMapper();
+
+  PaymentSetupIntentMapper get paymentSetupIntentMapper =>
+      const PaymentSetupIntentMapper();
+
   SmsVerificationMapper get smsVerificationMapper => SmsVerificationMapper();
 
   PhoneVerificationMapper get phoneVerificationMapper =>
