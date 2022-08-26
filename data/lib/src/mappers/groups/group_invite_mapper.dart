@@ -2,19 +2,20 @@ part of mappers;
 
 class GroupInviteMapper
     implements Mapper<GroupInviteEntity, domain.GroupInvite> {
-  final GroupMapper groupMapper;
+  final GroupDetailsMapper groupDetailsMapper;
   final GroupInvitationMapper groupInvitationMapper;
 
   const GroupInviteMapper({
-    required this.groupMapper,
+    required this.groupDetailsMapper,
     required this.groupInvitationMapper,
   });
 
   @override
   domain.GroupInvite fromEntity(GroupInviteEntity entity) {
     return domain.GroupInvite(
-      group:
-          entity.group != null ? groupMapper.fromEntity(entity.group!) : null,
+      groupDetails: entity.groupDetails != null
+          ? groupDetailsMapper.fromEntity(entity.groupDetails!)
+          : null,
       invitation: entity.invitation != null
           ? groupInvitationMapper.fromEntity(entity.invitation!)
           : null,
@@ -24,7 +25,9 @@ class GroupInviteMapper
   @override
   GroupInviteEntity toEntity(domain.GroupInvite item) {
     return GroupInviteEntity(
-      group: item.group != null ? groupMapper.toEntity(item.group!) : null,
+      groupDetails: item.groupDetails != null
+          ? groupDetailsMapper.toEntity(item.groupDetails!)
+          : null,
       invitation: item.invitation != null
           ? groupInvitationMapper.toEntity(item.invitation!)
           : null,

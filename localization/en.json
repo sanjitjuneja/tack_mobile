@@ -93,8 +93,7 @@
       "mainButtonLabel": "Close"
     },
     "sinUpComplete": {
-      "message": "Sign Up\nComplete",
-      "mainButtonLabel": "Sign In"
+      "message": "Sign Up\nComplete"
     },
     "recoveryPassword": {
       "message": "Password successfully changed",

@@ -1,6 +1,7 @@
 part of groups;
 
-class LoadGroupsUseCase extends FutureUseCase<List<Group>, GetGroupsPayload> {
+class LoadGroupsUseCase
+    extends FutureUseCase<List<GroupDetails>, GetGroupsPayload> {
   final GroupsRepository _groupsRepository;
 
   LoadGroupsUseCase({
@@ -8,7 +9,7 @@ class LoadGroupsUseCase extends FutureUseCase<List<Group>, GetGroupsPayload> {
   }) : _groupsRepository = groupsRepository;
 
   @override
-  Future<List<Group>> execute(GetGroupsPayload params) async {
+  Future<List<GroupDetails>> execute(GetGroupsPayload params) async {
     return _groupsRepository.getGroups(params);
   }
 }

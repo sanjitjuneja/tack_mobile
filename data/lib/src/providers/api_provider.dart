@@ -160,7 +160,7 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.groupMapper.fromEntity);
   }
 
-  Future<List<domain.Group>> getGroups({
+  Future<List<domain.GroupDetails>> getGroups({
     required GetGroupsRequest request,
   }) async {
     return get<GetGroupsResponse>(
@@ -172,7 +172,7 @@ class ApiProvider extends ApiProviderCore {
       parser: GetGroupsResponse.fromJson,
     ).then(
       (GetGroupsResponse response) =>
-          mapper.groupMapper.fromList(response.results),
+          mapper.groupDetailsMapper.fromList(response.results),
     );
   }
 
@@ -219,32 +219,32 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
-  Future<domain.Group> muteGroup({
+  Future<domain.GroupDetails> muteGroup({
     required MuteGroupRequest request,
   }) async {
-    return post<GroupEntity>(
+    return post<GroupDetailsEntity>(
       ApiQuery(
         endpoint: BaseUrlConstants.groupMutePath,
         id: request.id,
         body: null,
         params: null,
       ),
-      parser: GroupEntity.fromJson,
-    ).then(mapper.groupMapper.fromEntity);
+      parser: GroupDetailsEntity.fromJson,
+    ).then(mapper.groupDetailsMapper.fromEntity);
   }
 
-  Future<domain.Group> unMuteGroup({
+  Future<domain.GroupDetails> unMuteGroup({
     required UnMuteGroupRequest request,
   }) async {
-    return post<GroupEntity>(
+    return post<GroupDetailsEntity>(
       ApiQuery(
         endpoint: BaseUrlConstants.groupUnMutePath,
         id: request.id,
         body: null,
         params: null,
       ),
-      parser: GroupEntity.fromJson,
-    ).then(mapper.groupMapper.fromEntity);
+      parser: GroupDetailsEntity.fromJson,
+    ).then(mapper.groupDetailsMapper.fromEntity);
   }
 
   Future<domain.GroupInviteLink> getGroupInviteLink({

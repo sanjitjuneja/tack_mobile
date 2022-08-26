@@ -37,8 +37,9 @@ class _SignUpPage extends Page<void> {
         return BlocProvider<SignUpBloc>(
           create: (BuildContext context) => SignUpBloc(
             phoneVerificationData: phoneVerificationData,
-            signUpUseCase: appLocator.get<SignUpUseCase>(),
             appRouter: appLocator.get<GlobalAppRouterDelegate>(),
+            signUpUseCase: appLocator.get<SignUpUseCase>(),
+            signInUseCase: appLocator.get<SignInUseCase>(),
           ),
           child: const SignUpScreen(),
         );

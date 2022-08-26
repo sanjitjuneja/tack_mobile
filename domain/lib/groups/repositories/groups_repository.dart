@@ -1,9 +1,9 @@
 part of groups;
 
 abstract class GroupsRepository {
-  Stream<List<Group>> get groupsStream;
+  Stream<List<GroupDetails>> get groupsStream;
 
-  List<Group> get groups;
+  List<GroupDetails> get groups;
 
   Stream<Group?> get currentGroupStream;
 
@@ -13,7 +13,7 @@ abstract class GroupsRepository {
 
   Future<Group> getGroup(GetGroupPayload payload);
 
-  Future<List<Group>> getGroups(GetGroupsPayload payload);
+  Future<List<GroupDetails>> getGroups(GetGroupsPayload payload);
 
   Future<void> selectGroup(SelectGroupPayload payload);
 
@@ -21,9 +21,9 @@ abstract class GroupsRepository {
 
   Future<void> leaveGroup(LeaveGroupPayload payload);
 
-  Future<Group> muteGroup(MuteGroupPayload payload);
+  Future<GroupDetails> muteGroup(MuteGroupPayload payload);
 
-  Future<Group> unMuteGroup(UnMuteGroupPayload payload);
+  Future<GroupDetails> unMuteGroup(UnMuteGroupPayload payload);
 
   Future<GroupInviteLink> getGroupInviteLink(GetGroupInviteLinkPayload payload);
 

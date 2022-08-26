@@ -30,8 +30,8 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
     required LeaveGroupUseCase leaveGroupUseCase,
     required MuteGroupUseCase muteGroupUseCase,
     required UnMuteGroupUseCase unMuteGroupUseCase,
-    required Group group,
-    GroupInvitation? groupInvitation,
+    required GroupDetails? groupDetails,
+    required GroupInvitation? groupInvitation,
   })  : _appRouter = appRouter,
         _loadGroupMembersUseCase = loadGroupMembersUseCase,
         _acceptGroupInvitationUseCase = acceptGroupInvitationUseCase,
@@ -41,7 +41,7 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
         _unMuteGroupUseCase = unMuteGroupUseCase,
         super(
           GroupDetailsState(
-            group: group,
+            groupDetails: groupDetails,
             invitation: groupInvitation,
             usersState: const GroupsUsersState(isLoading: true),
           ),
@@ -233,20 +233,24 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
 
     _appRouter.push(ProgressDialog.page());
     try {
-      final Group group;
+      final GroupDetails groupDetails;
 
-      if (state.group.isMuted) {
-        group = await _unMuteGroupUseCase.execute(
+      if (state.groupDetails!.isMuted) {
+        groupDetails = await _unMuteGroupUseCase.execute(
           UnMuteGroupPayload(group: state.group),
         );
       } else {
-        group = await _muteGroupUseCase.execute(
+        groupDetails = await _muteGroupUseCase.execute(
           MuteGroupPayload(group: state.group),
         );
       }
       _appRouter.pop();
 
-      emit(state.copyWith(group: group));
+      emit(
+        state.copyWith(
+          groupDetails: groupDetails,
+        ),
+      );
     } catch (e) {
       _appRouter.pop();
       _appRouter.pushForResult(
