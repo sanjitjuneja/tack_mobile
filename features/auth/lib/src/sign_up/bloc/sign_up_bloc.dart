@@ -1,9 +1,5 @@
 import 'dart:async';
 
-import 'package:auth/src/sign_up/models/email_data.dart';
-import 'package:auth/src/sign_up/models/first_name_data.dart';
-import 'package:auth/src/sign_up/models/last_name_data.dart';
-import 'package:auth/src/sign_up/models/terms_data.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
@@ -17,13 +13,16 @@ part 'sign_up_state.dart';
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   final GlobalAppRouterDelegate _appRouter;
   final SignUpUseCase _signUpUseCase;
+  final SignInUseCase _signInUseCase;
 
   SignUpBloc({
     required PhoneVerificationData phoneVerificationData,
     required GlobalAppRouterDelegate appRouter,
     required SignUpUseCase signUpUseCase,
+    required SignInUseCase signInUseCase,
   })  : _appRouter = appRouter,
         _signUpUseCase = signUpUseCase,
+        _signInUseCase = signInUseCase,
         super(
           SignUpState(
             phoneVerificationData: phoneVerificationData,
@@ -31,12 +30,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
             lastNameData: const LastNameData(),
             emailData: const EmailData(),
             termsData: const TermsData(),
-            passwordData: const PasswordData(
-              validator: FieldValidator.isPasswordLengthValid,
-            ),
-            passwordConfirmationData: const PasswordConfirmationData(
-              validator: FieldValidator.isPasswordLengthValid,
-            ),
+            passwordData: const PasswordData(),
+            passwordConfirmationData: const PasswordConfirmationData(),
             passwordsValidator: PasswordValidator.initial(),
           ),
         ) {
@@ -129,11 +124,11 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     Emitter<SignUpState> emit,
   ) async {
     if (!state.isReadyToProceed) {
-      emit(
-        state.copyWith(isValidationEnabled: true),
+      return emit(
+        state.copyWith(
+          isValidationEnabled: true,
+        ),
       );
-
-      return;
     }
 
     try {
@@ -146,6 +141,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           lastName: state.lastNameData.lastName,
           password: state.passwordData.password,
           phoneNumber: state.phoneVerificationData.phoneNumber,
+        ),
+      );
+      await _signInUseCase.execute(
+        SignInPayload(
+          password: state.passwordData.password,
+          login: state.phoneVerificationData.phoneNumber,
         ),
       );
       _appRouter.pop();

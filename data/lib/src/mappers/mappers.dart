@@ -6,6 +6,7 @@ import 'package:domain/domain.dart' as domain;
 
 part 'global/pagination_mapper.dart';
 
+part 'groups/group_details_mapper.dart';
 part 'groups/group_invitation_mapper.dart';
 part 'groups/group_invite_link_mapper.dart';
 part 'groups/group_invite_mapper.dart';

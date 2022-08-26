@@ -1,6 +1,6 @@
 part of groups;
 
-class MuteGroupUseCase extends FutureUseCase<Group, MuteGroupPayload> {
+class MuteGroupUseCase extends FutureUseCase<GroupDetails, MuteGroupPayload> {
   final GroupsRepository _groupsRepository;
 
   MuteGroupUseCase({
@@ -8,7 +8,7 @@ class MuteGroupUseCase extends FutureUseCase<Group, MuteGroupPayload> {
   }) : _groupsRepository = groupsRepository;
 
   @override
-  Future<Group> execute(MuteGroupPayload params) async {
+  Future<GroupDetails> execute(MuteGroupPayload params) async {
     return _groupsRepository.muteGroup(params);
   }
 }

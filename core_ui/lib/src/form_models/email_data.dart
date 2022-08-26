@@ -1,4 +1,4 @@
-import 'package:core/core.dart';
+part of form_models;
 
 class EmailData {
   final bool isValidationEnabled;
@@ -11,6 +11,12 @@ class EmailData {
   /// Used for UI
   bool get isInvalid =>
       isEmailAlreadyUsed || (isValidationEnabled ? !isValid : false);
+
+  bool isDataChanged(String? oldEmail) {
+    oldEmail ??= '';
+
+    return email != oldEmail;
+  }
 
   const EmailData({
     this.isValidationEnabled = false,
@@ -40,6 +46,7 @@ extension EmailViewError on EmailData {
     } else if (isInvalid) {
       return 'validationErrors.emailInvalid';
     }
+
     return null;
   }
 }

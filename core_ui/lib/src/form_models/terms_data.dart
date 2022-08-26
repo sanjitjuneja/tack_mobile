@@ -1,3 +1,5 @@
+part of form_models;
+
 class TermsData {
   final bool isValidationEnabled;
   final bool isAccepted;

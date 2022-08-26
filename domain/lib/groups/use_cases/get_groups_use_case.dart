@@ -1,6 +1,6 @@
 part of groups;
 
-class GetGroupsUseCase extends UseCase<List<Group>, NoParams> {
+class GetGroupsUseCase extends UseCase<List<GroupDetails>, NoParams> {
   final GroupsRepository _groupsRepository;
 
   GetGroupsUseCase({
@@ -8,7 +8,7 @@ class GetGroupsUseCase extends UseCase<List<Group>, NoParams> {
   }) : _groupsRepository = groupsRepository;
 
   @override
-  List<Group> execute(NoParams params) {
+  List<GroupDetails> execute(NoParams params) {
     return _groupsRepository.groups;
   }
 }

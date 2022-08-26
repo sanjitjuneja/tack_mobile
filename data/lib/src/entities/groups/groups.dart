@@ -6,6 +6,7 @@ import 'package:data/src/entities/tacks/tacks.dart';
 import 'package:data/src/helpers/entity_helper/entities_helpers.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+part 'entities/group_details_entity.dart';
 part 'entities/group_entity.dart';
 part 'entities/group_invitation_entity.dart';
 part 'entities/group_invite_entity.dart';

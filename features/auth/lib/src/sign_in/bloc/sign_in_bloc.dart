@@ -7,9 +7,9 @@ import 'package:flutter/foundation.dart';
 import 'package:navigation/navigation.dart';
 import 'package:phone_verification/phone_verification.dart';
 
-import '../models/login_data.dart';
 import '../../forgot_password/ui/forgot_password_page.dart';
 import '../../sign_up/ui/sign_up_page.dart';
+import '../models/sign_in_screen_result.dart';
 
 part 'sign_in_event.dart';
 
@@ -26,12 +26,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         _signInUseCase = signInUseCase,
         super(
           const SignInState(
-            loginData: LoginData(
-              validator: FieldValidator.validateLogin,
-            ),
-            passwordData: PasswordData(
-              validator: FieldValidator.isPasswordLengthValid,
-            ),
+            loginData: LoginData(),
+            passwordData: PasswordData(),
           ),
         ) {
     on<LoginChanged>(_onLoginChanged);
@@ -69,9 +65,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     Emitter<SignInState> emit,
   ) async {
     if (!kDebugMode && !state.isReadyToProceed) {
-      emit(state.copyWith(isValidationEnabled: true));
-
-      return;
+      return emit(
+        state.copyWith(
+          isValidationEnabled: true,
+        ),
+      );
     }
 
     try {
@@ -97,7 +95,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         ),
       );
       _appRouter.pop();
-      _appRouter.popWithResult(true);
+      _appRouter.popWithResult(SignInScreenResult.signIn);
     } on WrongCredentialsException catch (_) {
       _appRouter.pop();
       emit(
@@ -169,13 +167,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     );
 
     if (result == true) {
-      _appRouter.pushForResult(
-        AppAlertDialog.page(
-          SuccessAlert(
-            contentKey: 'otherAlert.sinUpComplete',
-          ),
-        ),
-      );
+      _appRouter.popWithResult(SignInScreenResult.signUp);
     }
   }
 }

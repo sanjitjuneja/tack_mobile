@@ -10,9 +10,9 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return KeyboardDismissible(
       child: CupertinoPageScaffold(
-        backgroundColor: AppTheme.positiveColor,
+        backgroundColor: AppTheme.secondaryBackgroundColor,
         navigationBar: AppNavigationBar(
-          backgroundColor: AppTheme.primaryColor,
+          backgroundColor: AppTheme.secondaryBackgroundColor,
           withResult: true,
         ),
         child: const SafeArea(

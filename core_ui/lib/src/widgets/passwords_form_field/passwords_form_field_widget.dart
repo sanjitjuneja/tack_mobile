@@ -3,7 +3,7 @@ part of passwords_form_field;
 class PasswordsFormField extends StatelessWidget {
   final String passwordPlaceholderKey;
   final String passwordConfirmationPlaceholderKey;
-  final PasswordValidator passwordValidator;
+  final PasswordValidator passwordsValidator;
   final PasswordData passwordData;
   final PasswordConfirmationData confirmationPasswordData;
   final void Function(BuildContext, String) onPasswordChanged;
@@ -13,7 +13,7 @@ class PasswordsFormField extends StatelessWidget {
     super.key,
     required this.passwordPlaceholderKey,
     required this.passwordConfirmationPlaceholderKey,
-    required this.passwordValidator,
+    required this.passwordsValidator,
     required this.passwordData,
     required this.confirmationPasswordData,
     required this.onPasswordChanged,
@@ -22,27 +22,34 @@ class PasswordsFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isNewAndOldIdentical = passwordData.isValidationEnabled &&
+        passwordsValidator.isNewAndOldIdentical;
+
     return Column(
       children: <Widget>[
         AppTextField(
           placeholder: passwordPlaceholderKey,
           shouldObscure: true,
           hasShadow: false,
-          isInvalid: passwordData.isInvalid,
-          errorTextKey: 'validationErrors.fieldRequired',
+          isInvalid: isNewAndOldIdentical || passwordData.isInvalid,
+          errorTextKey: isNewAndOldIdentical
+              ? 'validationErrors.oldAndNewPasswordsIdentical'
+              : 'validationErrors.fieldRequired',
           scrollPadding: 80,
           textInputAction: TextInputAction.next,
           keyboardType: TextInputType.visiblePassword,
           backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
           onTextChange: (String value) => onPasswordChanged(context, value),
         ),
-        PasswordValidationPointsWidget(passwordValidator: passwordValidator),
+        PasswordValidationPointsWidget(
+          passwordValidator: passwordsValidator,
+        ),
         const SizedBox(height: 10),
         AppTextField(
           placeholder: passwordConfirmationPlaceholderKey,
           shouldObscure: true,
           hasShadow: false,
-          isInvalid: passwordData.isInvalid,
+          isInvalid: confirmationPasswordData.isInvalid,
           errorTextKey: 'validationErrors.fieldRequired',
           scrollPadding: 50,
           textInputAction: TextInputAction.done,
@@ -52,7 +59,7 @@ class PasswordsFormField extends StatelessWidget {
               onPasswordConfirmationChanged(context, value),
         ),
         PasswordConfirmationValidationPointsWidget(
-          passwordValidator: passwordValidator,
+          passwordValidator: passwordsValidator,
         ),
       ],
     );

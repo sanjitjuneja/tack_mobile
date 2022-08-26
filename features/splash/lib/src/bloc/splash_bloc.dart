@@ -55,12 +55,21 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
   ) async {
     await _animateToEndPosition(state.slidingPanelController!);
 
-    final bool? result = await _globalAppRouter.pushForResult(
+    final SignInScreenResult? result = await _globalAppRouter.pushForResult(
       SignInFeature.page(),
     );
 
-    if (result == true) {
+    if (result != null) {
       _globalAppRouter.replace(FirstRouteFeature.page());
+      if (result == SignInScreenResult.signUp) {
+        _globalAppRouter.pushForResult(
+          AppAlertDialog.page(
+            SuccessAlert(
+              contentKey: 'otherAlert.sinUpComplete',
+            ),
+          ),
+        );
+      }
     } else {
       await _animateToInitialPosition(state.slidingPanelController!);
     }
@@ -88,6 +97,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
         );
 
         if (result == true) {
+          _globalAppRouter.replace(FirstRouteFeature.page());
           _globalAppRouter.pushForResult(
             AppAlertDialog.page(
               SuccessAlert(
@@ -95,6 +105,8 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
               ),
             ),
           );
+
+          return;
         }
       }
     }

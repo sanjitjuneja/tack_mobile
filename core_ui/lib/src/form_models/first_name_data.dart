@@ -1,3 +1,5 @@
+part of form_models;
+
 class FirstNameData {
   final bool isValidationEnabled;
   final String firstName;
@@ -7,6 +9,12 @@ class FirstNameData {
 
   /// Used for UI
   bool get isInvalid => isValidationEnabled ? !isValid : false;
+
+  bool isDataChanged(String? oldFirstName) {
+    oldFirstName ??= '';
+
+    return firstName != oldFirstName;
+  }
 
   const FirstNameData({
     this.isValidationEnabled = false,

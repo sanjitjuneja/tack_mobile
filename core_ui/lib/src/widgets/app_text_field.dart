@@ -11,6 +11,7 @@ class AppTextField extends StatefulWidget {
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final String? initialText;
+  final bool shouldUpdateInitialText;
   final String? placeholder;
   final EdgeInsets? padding;
   final TextStyle? textStyle;
@@ -45,6 +46,7 @@ class AppTextField extends StatefulWidget {
     super.key,
     this.placeholder,
     this.initialText,
+    this.shouldUpdateInitialText = false,
     this.padding,
     this.textStyle,
     this.controller,
@@ -134,10 +136,14 @@ class _AppTextFieldState extends State<AppTextField> {
   void didUpdateWidget(AppTextField oldWidget) {
     final bool didUpdateInitialText =
         oldWidget.initialText != widget.initialText;
+    final bool isInitialTextEmpty =
+        widget.initialText == null || widget.initialText!.isEmpty;
 
-    if (didUpdateInitialText &&
-        (widget.initialText == null || widget.initialText!.isEmpty)) {
-      _controller.text = '';
+    final bool shouldUpdateInitialText = didUpdateInitialText &&
+        (widget.shouldUpdateInitialText || isInitialTextEmpty);
+
+    if (shouldUpdateInitialText) {
+      _controller.text = widget.initialText ?? '';
     }
 
     super.didUpdateWidget(oldWidget);

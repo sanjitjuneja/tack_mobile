@@ -2,7 +2,7 @@ part of 'global_bloc.dart';
 
 class GlobalState {
   final User user;
-  final List<Group> groups;
+  final List<GroupDetails> groups;
   final Group? currentGroup;
 
   bool get canPickOtherGroup => groups.length > 1;
@@ -17,7 +17,7 @@ class GlobalState {
 
   GlobalState copyWith({
     User? user,
-    List<Group>? groups,
+    List<GroupDetails>? groups,
     Group? currentGroup,
   }) {
     return GlobalState(

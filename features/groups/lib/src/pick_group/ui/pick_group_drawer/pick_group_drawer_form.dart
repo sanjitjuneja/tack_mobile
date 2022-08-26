@@ -50,7 +50,7 @@ class _PickGroupDrawerForm extends StatelessWidget {
                     separatorBuilder: (_, __) => const AppDivider(),
                     itemBuilder: (_, int index) {
                       final _SelectableGroup selectableGroup = _SelectableGroup(
-                        state.groups[index],
+                        state.groups[index].group,
                       );
 
                       return AppBaseSelectableTile<_SelectableGroup>(

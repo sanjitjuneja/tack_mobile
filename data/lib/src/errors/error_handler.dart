@@ -42,7 +42,11 @@ class ErrorHandler {
   }
 
   Never _parseError(Map<String, dynamic> errors) {
+    // TODO: refactor after BE changes.
     final String value = errors.values.toString();
+    if (value.contains('Incorrect password')){
+      throw IncorrectPasswordException();
+    }
     if (value.contains('User with the given phone number is not found')) {
       throw UserNotRegisteredException();
     }

@@ -7,7 +7,6 @@ class Group extends Equatable {
   final String description;
   final String imageUrl;
   final bool isPublic;
-  final bool isMuted;
 
   const Group({
     required this.id,
@@ -16,7 +15,6 @@ class Group extends Equatable {
     required this.description,
     required this.imageUrl,
     required this.isPublic,
-    required this.isMuted,
   });
 
   @override
@@ -27,6 +25,5 @@ class Group extends Equatable {
         description,
         imageUrl,
         isPublic,
-        isMuted,
       ];
 }

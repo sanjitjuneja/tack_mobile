@@ -32,7 +32,7 @@ class ForgotPasswordForm extends StatelessWidget {
                         'forgotPasswordScreen.newPasswordPlaceholder',
                     passwordConfirmationPlaceholderKey:
                         'forgotPasswordScreen.confirmPasswordPlaceholder',
-                    passwordValidator: state.passwordsValidator,
+                    passwordsValidator: state.passwordsValidator,
                     passwordData: state.passwordData,
                     confirmationPasswordData: state.passwordConfirmationData,
                     onPasswordChanged: _onPasswordChanged,

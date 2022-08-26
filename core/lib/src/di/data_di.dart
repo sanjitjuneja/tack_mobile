@@ -134,6 +134,7 @@ class DataDI {
     appLocator.registerSingleton<UserRepository>(
       UserRepositoryImpl(
         apiProvider: appLocator.get<ApiProvider>(),
+        sessionProvider: appLocator.get<SessionProvider>(),
         sharedPreferencesProvider: appLocator.get<SharedPreferencesProvider>(),
       ),
     );
@@ -144,6 +145,16 @@ class DataDI {
     );
     appLocator.registerLazySingleton<ObserveUserUseCase>(
       () => ObserveUserUseCase(
+        userRepository: appLocator.get<UserRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<UpdateUserInfoUseCase>(
+      () => UpdateUserInfoUseCase(
+        userRepository: appLocator.get<UserRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<ChangePasswordUseCase>(
+      () => ChangePasswordUseCase(
         userRepository: appLocator.get<UserRepository>(),
       ),
     );
@@ -345,6 +356,8 @@ class DataDI {
     appLocator.unregister<UserRepository>();
     appLocator.unregister<GetCurrentUserUseCase>();
     appLocator.unregister<ObserveUserUseCase>();
+    appLocator.unregister<UpdateUserInfoUseCase>();
+    appLocator.unregister<ChangePasswordUseCase>();
 
     appLocator.unregister<GroupsRepository>();
     appLocator.unregister<AcceptGroupInvitationUseCase>();

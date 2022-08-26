@@ -24,12 +24,8 @@ class ForgotPasswordBloc
         super(
           ForgotPasswordState(
             phoneVerificationData: phoneVerificationData,
-            passwordData: const PasswordData(
-              validator: FieldValidator.isPasswordLengthValid,
-            ),
-            passwordConfirmationData: const PasswordConfirmationData(
-              validator: FieldValidator.isPasswordLengthValid,
-            ),
+            passwordData: const PasswordData(),
+            passwordConfirmationData: const PasswordConfirmationData(),
             passwordsValidator: PasswordValidator.initial(),
           ),
         ) {
@@ -74,11 +70,11 @@ class ForgotPasswordBloc
     Emitter<ForgotPasswordState> emit,
   ) async {
     if (!state.isReadyToProceed) {
-      emit(
-        state.copyWith(isValidationEnabled: true),
+      return emit(
+        state.copyWith(
+          isValidationEnabled: true,
+        ),
       );
-
-      return;
     }
 
     try {

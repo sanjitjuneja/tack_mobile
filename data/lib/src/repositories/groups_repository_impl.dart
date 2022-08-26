@@ -1,14 +1,15 @@
 import 'package:core/core.dart';
-import 'package:data/src/entities/entities.dart';
-import 'package:data/src/providers/api_provider.dart';
-import 'package:data/src/providers/shared_preferences_provider.dart';
 import 'package:domain/domain.dart' as domain;
+
+import '../entities/entities.dart';
+import '../providers/api_provider.dart';
+import '../providers/shared_preferences_provider.dart';
 
 class GroupsRepositoryImpl implements domain.GroupsRepository {
   final ApiProvider _apiProvider;
   final SharedPreferencesProvider _sharedPreferencesProvider;
 
-  late BehaviorSubject<List<domain.Group>> _groupsStreamController;
+  late BehaviorSubject<List<domain.GroupDetails>> _groupsStreamController;
 
   late BehaviorSubject<domain.Group?> _groupStreamController;
 
@@ -17,17 +18,18 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
     required SharedPreferencesProvider sharedPreferencesProvider,
   })  : _apiProvider = apiProvider,
         _sharedPreferencesProvider = sharedPreferencesProvider {
-    _groupsStreamController = BehaviorSubject<List<domain.Group>>.seeded(
-      <domain.Group>[],
+    _groupsStreamController = BehaviorSubject<List<domain.GroupDetails>>.seeded(
+      <domain.GroupDetails>[],
     );
     _groupStreamController = BehaviorSubject<domain.Group?>.seeded(null);
   }
 
   @override
-  Stream<List<domain.Group>> get groupsStream => _groupsStreamController.stream;
+  Stream<List<domain.GroupDetails>> get groupsStream =>
+      _groupsStreamController.stream;
 
   @override
-  List<domain.Group> get groups => _groupsStreamController.stream.value;
+  List<domain.GroupDetails> get groups => _groupsStreamController.stream.value;
 
   @override
   Stream<domain.Group?> get currentGroupStream => _groupStreamController.stream;
@@ -50,7 +52,8 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
     if (activeGroupId == null) return;
 
     final int groupIndex = _groupsStreamController.stream.value.indexWhere(
-      (domain.Group group) => group.id == activeGroupId,
+      (domain.GroupDetails groupDetails) =>
+          groupDetails.group.id == activeGroupId,
     );
 
     final domain.Group group;
@@ -60,7 +63,7 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
         domain.GetGroupPayload(id: activeGroupId),
       );
     } else {
-      group = _groupsStreamController.stream.value.elementAt(groupIndex);
+      group = _groupsStreamController.stream.value.elementAt(groupIndex).group;
     }
 
     _groupStreamController.add(group);
@@ -74,8 +77,10 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
   }
 
   @override
-  Future<List<domain.Group>> getGroups(domain.GetGroupsPayload payload) async {
-    final List<domain.Group> groups = await _apiProvider.getGroups(
+  Future<List<domain.GroupDetails>> getGroups(
+    domain.GetGroupsPayload payload,
+  ) async {
+    final List<domain.GroupDetails> groups = await _apiProvider.getGroups(
       request: const GetGroupsRequest(),
     );
     _groupsStreamController.add(groups);
@@ -130,7 +135,9 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
   }
 
   @override
-  Future<domain.Group> muteGroup(domain.MuteGroupPayload payload) async {
+  Future<domain.GroupDetails> muteGroup(
+    domain.MuteGroupPayload payload,
+  ) async {
     return _apiProvider.muteGroup(
       request: MuteGroupRequest(
         id: payload.group.id,
@@ -139,7 +146,9 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
   }
 
   @override
-  Future<domain.Group> unMuteGroup(domain.UnMuteGroupPayload payload) async {
+  Future<domain.GroupDetails> unMuteGroup(
+    domain.UnMuteGroupPayload payload,
+  ) async {
     return _apiProvider.unMuteGroup(
       request: UnMuteGroupRequest(
         id: payload.group.id,

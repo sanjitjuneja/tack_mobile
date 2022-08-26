@@ -2,11 +2,12 @@ part of groups_entities;
 
 @JsonSerializable()
 class GroupInviteEntity extends JsonSerializable {
-  final GroupEntity? group;
+  @JsonKey(name: 'group')
+  final GroupDetailsEntity? groupDetails;
   final GroupInvitationEntity? invitation;
 
   const GroupInviteEntity({
-    required this.group,
+    required this.groupDetails,
     required this.invitation,
   });
 
