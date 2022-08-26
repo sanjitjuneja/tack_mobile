@@ -5,7 +5,7 @@ class User {
   final String email;
   final String firstName;
   final String lastName;
-  final DateTime birthDate;
+  final DateTime? birthDate;
   final String? profilePicture;
   final double rating;
   final int tacksAmount;

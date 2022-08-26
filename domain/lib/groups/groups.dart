@@ -7,6 +7,7 @@ import 'package:domain/tacks/tacks.dart';
 import 'package:domain/use_case.dart';
 
 part 'models/group.dart';
+part 'models/group_details.dart';
 part 'models/group_invitation.dart';
 part 'models/group_invite.dart';
 part 'models/group_invite_link.dart';

@@ -5,6 +5,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 
 part 'groups_event.dart';
+
 part 'groups_state.dart';
 
 class GroupsBloc extends Bloc<GroupsEvent, GroupsState> {
@@ -35,15 +36,19 @@ class GroupsBloc extends Bloc<GroupsEvent, GroupsState> {
     Emitter<GroupsState> emit,
   ) async {
     try {
-      final List<Group> groups =
+      final List<GroupDetails> groups =
           await _loadGroupsUseCase.execute(const GetGroupsPayload());
 
       event.completer?.complete(RefreshingStatus.complete);
-      emit(state.copyWith(groups: groups));
+      emit(
+        state.copyWith(groups: groups),
+      );
     } catch (e) {
       event.completer?.complete(RefreshingStatus.failed);
       if (event.completer == null) {
-        emit(state.copyWith(groups: <Group>[]));
+        emit(
+          state.copyWith(groups: <GroupDetails>[]),
+        );
       }
     }
   }
@@ -53,8 +58,9 @@ class GroupsBloc extends Bloc<GroupsEvent, GroupsState> {
     Emitter<GroupsState> emit,
   ) async {
     try {
-      final List<Group> groups =
-          await _loadGroupsUseCase.execute(const GetGroupsPayload());
+      final List<GroupDetails> groups = await _loadGroupsUseCase.execute(
+        const GetGroupsPayload(),
+      );
 
       event.completer.complete(LoadingStatus.complete);
       emit(state.copyWith(groups: groups));

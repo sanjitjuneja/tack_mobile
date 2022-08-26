@@ -25,6 +25,8 @@ dependencies:
     path: ../auth
   home:
     path: ../home
+  phone_verification:
+    path: ../phone_verification
 
 dev_dependencies:
   flutter_test:

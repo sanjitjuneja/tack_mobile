@@ -1,11 +1,18 @@
 part of 'splash_bloc.dart';
 
-abstract class SplashState {}
+class SplashState {
+  final AnimationController? slidingPanelController;
 
-class SplashContent extends SplashState {
-  final bool? needToBackAnimation;
-
-  SplashContent({
-    this.needToBackAnimation,
+  const SplashState({
+    this.slidingPanelController,
   });
+
+  SplashState copyWith({
+    AnimationController? slidingPanelController,
+  }) {
+    return SplashState(
+      slidingPanelController:
+          slidingPanelController ?? this.slidingPanelController,
+    );
+  }
 }

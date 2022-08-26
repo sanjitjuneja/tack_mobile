@@ -15,10 +15,10 @@ class CreateGroupFeature {
 }
 
 class _CreateGroupPage extends Page<Group> {
+  const _CreateGroupPage();
+
   @override
   String get name => CreateGroupFeature.routeName;
-
-  const _CreateGroupPage();
 
   @override
   Route<Group> createRoute(BuildContext context) {

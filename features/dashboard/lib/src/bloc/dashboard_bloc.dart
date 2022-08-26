@@ -115,7 +115,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     OpenOwnOngoingTack event,
     Emitter<DashboardState> emit,
   ) async {
-    _appRouter.push(OngoingTackerTack.page(tack: event.tack));
+    _appRouter.pushForResult(OngoingTackerTack.page(tack: event.tack));
   }
 
   Future<void> _onCounterOfferOpen(

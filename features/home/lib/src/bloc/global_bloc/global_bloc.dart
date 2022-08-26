@@ -19,7 +19,7 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
 
   late StreamSubscription<User> _userSubscription;
   late StreamSubscription<Group?> _currentGroupSubscription;
-  late StreamSubscription<List<Group>> _groupsSubscription;
+  late StreamSubscription<List<GroupDetails>> _groupsSubscription;
 
   GlobalBloc({
     required AppRouterDelegate appRouter,
@@ -58,7 +58,7 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
       add(CurrentGroupChanged(group: event));
     });
     _groupsSubscription =
-        _observeGroupsUseCase.execute(NoParams()).listen((List<Group> event) {
+        _observeGroupsUseCase.execute(NoParams()).listen((List<GroupDetails> event) {
       add(GroupsChanged(groups: event));
     });
   }

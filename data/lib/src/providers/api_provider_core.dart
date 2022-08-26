@@ -79,14 +79,17 @@ abstract class ApiProviderCore {
   }
 
   @protected
-  Future<void> patch(ApiQuery query) async {
-    return _safeRequest<void>(
+  Future<T> patch<T>(
+    ApiQuery query, {
+    required Parser<T> parser,
+  }) async {
+    return _safeRequest<T>(
       request: _dio.patch(
         query.path,
         data: query.body,
         queryParameters: query.params,
       ),
-      parser: (_) {},
+      parser: parser,
     );
   }
 

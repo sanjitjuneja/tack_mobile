@@ -3,14 +3,19 @@ part of mappers;
 class MapperFactory {
   GroupMapper get groupMapper => const GroupMapper();
 
+  GroupDetailsMapper get groupDetailsMapper => GroupDetailsMapper(
+        groupMapper: groupMapper,
+      );
+
   GroupInviteLinkMapper get groupInviteLinkMapper =>
       const GroupInviteLinkMapper();
 
-  GroupInvitationMapper get groupInvitationMapper =>
-      GroupInvitationMapper(groupMapper: groupMapper);
+  GroupInvitationMapper get groupInvitationMapper => GroupInvitationMapper(
+        groupMapper: groupMapper,
+      );
 
   GroupInviteMapper get groupInviteMapper => GroupInviteMapper(
-        groupMapper: groupMapper,
+        groupDetailsMapper: groupDetailsMapper,
         groupInvitationMapper: groupInvitationMapper,
       );
 
@@ -45,7 +50,7 @@ class MapperFactory {
 
   UserBankAccountMapper get userBankAccountMapper => UserBankAccountMapper();
 
-  UserMapper get customerMapper => UserMapper(
+  UserMapper get userMapper => UserMapper(
         userBankAccountMapper: userBankAccountMapper,
       );
 

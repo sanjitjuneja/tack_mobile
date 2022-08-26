@@ -4,7 +4,7 @@ class VerifyPhoneNumberPayload {
   final String uuid;
   final String smsCode;
 
-  VerifyPhoneNumberPayload({
+  const VerifyPhoneNumberPayload({
     required this.uuid,
     required this.smsCode,
   });

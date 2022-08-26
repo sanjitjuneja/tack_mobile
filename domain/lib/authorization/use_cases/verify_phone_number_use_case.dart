@@ -1,7 +1,7 @@
 part of authorization;
 
 class VerifyPhoneNumberUseCase
-    extends FutureUseCase<void, VerifyPhoneNumberPayload> {
+    extends FutureUseCase<PhoneVerificationResult, VerifyPhoneNumberPayload> {
   final AuthRepository _authRepository;
 
   VerifyPhoneNumberUseCase({

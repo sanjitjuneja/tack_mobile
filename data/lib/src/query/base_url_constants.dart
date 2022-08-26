@@ -10,8 +10,11 @@ class BaseUrlConstants {
   static const String requestSmsCodeSignUpPath = 'signup/send-code/';
   static const String requestSmsCodeResetPasswordPath = 'recovery/send-code/';
   static const String verifyPhoneNumberPath = '/verify/sms-code/';
+  static const String recoveryChangePasswordPath = '/recovery/password-change/';
 
-  static const String userPath = 'users/me/';
+  static const String userPath = '/users/me/';
+  static const String userChangeBioPath = '/users/me/change_bio/';
+  static const String userPasswordChangePath = '/users/me/password-change/';
 
   static const String offersPath = '/offers/';
   static const String offerCancelPath = '/offers/${ApiQuery.idKey}/';

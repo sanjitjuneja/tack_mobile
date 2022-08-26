@@ -1,20 +1,20 @@
 part of 'groups_bloc.dart';
 
 class GroupsState {
-  final List<Group> groups;
+  final List<GroupDetails> groups;
   final bool isLoading;
   final bool canLoadMore;
 
   bool get hasData => groups.isNotEmpty;
 
   const GroupsState({
-    List<Group>? groups,
+    List<GroupDetails>? groups,
     this.isLoading = false,
     this.canLoadMore = true,
-  }) : groups = groups ?? const <Group>[];
+  }) : groups = groups ?? const <GroupDetails>[];
 
   GroupsState copyWith({
-    List<Group>? groups,
+    List<GroupDetails>? groups,
     bool? isLoading,
     bool? canLoadMore,
   }) {

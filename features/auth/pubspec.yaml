@@ -10,8 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  home:
-    path: ../home
+
   core:
     path: ../../core
   domain:
@@ -20,10 +19,14 @@ dependencies:
     path: ../../core_ui
   navigation:
     path: ../../navigation
-  forgot_password:
-    path: ../forgot_password
+
+  # Features
+  home:
+    path: ../home
   phone_verification:
     path: ../phone_verification
+  splash:
+    path: ../splash
 
 dev_dependencies:
   flutter_test:

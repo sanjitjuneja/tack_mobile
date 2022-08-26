@@ -5,10 +5,10 @@ abstract class MyGroupsEvent {
 }
 
 class OpenGroupDetails extends MyGroupsEvent {
-  final Group group;
+  final GroupDetails groupDetails;
 
   const OpenGroupDetails({
-    required this.group,
+    required this.groupDetails,
   });
 }
 

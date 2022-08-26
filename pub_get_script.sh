@@ -40,12 +40,6 @@ flutter clean && flutter clean cache && flutter pub get
 cd ../..
 printf '\n\n'
 
-printf "forgot_password pub get\n"
-cd features/forgot_password || exit
-flutter clean && flutter clean cache && flutter pub get
-cd ../..
-printf '\n\n'
-
 printf "groups pub get\n"
 cd features/groups || exit
 flutter clean && flutter clean cache && flutter pub get

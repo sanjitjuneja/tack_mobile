@@ -21,6 +21,7 @@ mixin PageStackController on ChangeNotifier {
   Future<T> pushForResult<T>(Page<dynamic> page) {
     _pageCompleters.add(PageCompleter<T>(pageId: page.hashCode));
     push(page);
+
     return _pageCompleters.last.completer.future as Future<T>;
   }
 
@@ -36,10 +37,14 @@ mixin PageStackController on ChangeNotifier {
     pop();
   }
 
-  void onPopResultDispatch() {
-    if (_pageCompleters.isNotEmpty &&
-        !_pageCompleters.last.completer.isCompleted) {
-      _pageCompleters.last.completer.complete(null);
+  void onPopResultDispatch(List<Page<dynamic>> pages) {
+    if (_pageCompleters.isEmpty) return;
+
+    if (pages.last.hashCode == _pageCompleters.last.pageId) {
+      if (!_pageCompleters.last.completer.isCompleted) {
+        _pageCompleters.last.completer.complete(null);
+      }
+      _pageCompleters.removeLast();
     }
   }
 
@@ -60,6 +65,12 @@ mixin PageStackController on ChangeNotifier {
     } else {
       push(page);
     }
+  }
+
+  Future<T> replaceForResult<T>(Page<dynamic> page) {
+    if (_pages.isNotEmpty) _pages.removeLast();
+
+    return pushForResult(page);
   }
 
   void replaceLastWith(List<Page<dynamic>> pages) {

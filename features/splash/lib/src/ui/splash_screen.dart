@@ -59,14 +59,14 @@ class _SplashScreenState extends State<SplashScreen>
                     child: Column(
                       children: <Widget>[
                         AppCircleButton(
-                          labelKey: 'signIn.buttonSignIn',
+                          labelKey: 'splashScreen.signInButton',
                           interfaceSize: AppInterfaceSize.big,
                           onTap: _onSignInPressed,
                           backgroundColor: AppTheme.grassColor,
                         ),
                         const SizedBox(height: 24),
                         AppCircleButton(
-                          labelKey: 'signUp.buttonSignUp',
+                          labelKey: 'splashScreen.signUpButton',
                           interfaceSize: AppInterfaceSize.big,
                           backgroundColor: AppTheme.buttonDisabledColor,
                           borderColor: AppTheme.buttonDisabledColor,
@@ -86,14 +86,10 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _onSignInPressed() {
-    BlocProvider.of<SplashBloc>(context).add(
-      SignIn(_panelController),
-    );
+    BlocProvider.of<SplashBloc>(context).add(const SignIn());
   }
 
   void _onSignUpPressed() {
-    BlocProvider.of<SplashBloc>(context).add(
-      SignUp(_panelController),
-    );
+    BlocProvider.of<SplashBloc>(context).add(const SignUp());
   }
 }

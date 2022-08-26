@@ -4,10 +4,9 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:groups/src/bloc/groups_bloc.dart';
-import 'package:groups/src/my_groups/bloc/my_groups_bloc.dart';
-import 'package:groups/src/my_groups/ui/widgets/group_tile/group_tile.dart';
-
+import '../../bloc/groups_bloc.dart';
+import '../bloc/my_groups_bloc.dart';
+import 'widgets/group_tile/group_tile.dart';
 
 class MyGroupsForm extends StatelessWidget {
   const MyGroupsForm({
@@ -43,7 +42,7 @@ class MyGroupsForm extends StatelessWidget {
                   itemCount: state.groups.length,
                   itemBuilder: (_, int index) {
                     return GroupTile(
-                      group: state.groups[index],
+                      groupDetails: state.groups[index],
                     );
                   },
                 ),
@@ -63,15 +62,17 @@ class MyGroupsForm extends StatelessWidget {
     BuildContext context,
     Completer<RefreshingStatus> completer,
   ) {
-    BlocProvider.of<GroupsBloc>(context)
-        .add(RefreshAction(completer: completer));
+    BlocProvider.of<GroupsBloc>(context).add(
+      RefreshAction(completer: completer),
+    );
   }
 
   void _onLoadMoreAction(
     BuildContext context,
     Completer<LoadingStatus> completer,
   ) {
-    BlocProvider.of<GroupsBloc>(context)
-        .add(LoadMoreAction(completer: completer));
+    BlocProvider.of<GroupsBloc>(context).add(
+      LoadMoreAction(completer: completer),
+    );
   }
 }

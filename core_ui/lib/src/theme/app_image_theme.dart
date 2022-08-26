@@ -39,8 +39,6 @@ class AppImagesTheme {
   static const String _keyRadioTrue = '${_basePath}radio_check_box_true.png';
   static const String _keyProfileAvatar = '${_basePath}profile_avatar.png';
   static const String _keyTemporaryAvatar = '${_basePath}temporary_avatar.png';
-  static const String _fieldValidationSuccessIcon =
-      '${_basePath}field_success.png';
 
   static ImageIcon get dashboard => const ImageIcon(
         AssetImage(
@@ -182,11 +180,6 @@ class AppImagesTheme {
 
   static Image get success => Image.asset(
         _successIcon,
-        package: packageCoreUI,
-      );
-
-  static Image get fieldSuccessIcon => Image.asset(
-        _fieldValidationSuccessIcon,
         package: packageCoreUI,
       );
 }

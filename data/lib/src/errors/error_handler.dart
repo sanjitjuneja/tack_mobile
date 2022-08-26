@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 import 'package:dio/dio.dart';
 
 class ErrorHandler {
+  // TODO: refactor error handler.
   Future<Never> handleError(DioError error) async {
     final Response<dynamic>? response = error.response;
     if (!await InternetConnectionService.isConnected) {
@@ -11,26 +12,20 @@ class ErrorHandler {
     } else {
       final int? statusCode = response.statusCode;
       if (statusCode != null) {
-        if (statusCode == 400) {
+        if (statusCode == 400 || statusCode == 401) {
           final Map<String, dynamic> errors =
               response.data as Map<String, dynamic>;
 
-          final Map<String, String> parsedErrors = <String, String>{};
-          for (int index = 0; index < errors.length; index++) {
-            final dynamic errorValue = errors.values.elementAt(index);
-            if (errorValue is List<dynamic>) {
-              parsedErrors[errors.keys.elementAt(index)] =
-                  errorValue.first.toString();
-            }
-          }
+          final Map<String, dynamic> parsedErrors = errors.map(
+            (String key, dynamic value) {
+              final MapEntry<String, dynamic> entry =
+                  MapEntry<String, dynamic>(key, value);
 
-          final bool isUserExisted = isUserExist(parsedErrors);
-          if (isUserExisted) {
-            throw ExistedUserException();
-          }
+              return entry;
+            },
+          );
 
-          //TODO: Add error parsing logic here
-          throw AppException('');
+          _parseError(parsedErrors);
         }
 
         if (statusCode == 401) {
@@ -46,12 +41,25 @@ class ErrorHandler {
     }
   }
 
-  bool isUserExist(Map<String, String> errors) {
-    if (errors.isNotEmpty) {
-      return errors.containsValue(
-        'User with this phone number already exists.',
-      );
+  Never _parseError(Map<String, dynamic> errors) {
+    // TODO: refactor after BE changes.
+    final String value = errors.values.toString();
+    if (value.contains('Incorrect password')){
+      throw IncorrectPasswordException();
     }
-    return false;
+    if (value.contains('User with the given phone number is not found')) {
+      throw UserNotRegisteredException();
+    }
+    if (value.contains('User with this email already exists.')) {
+      throw EmailAlreadyUsedException();
+    }
+    if (value.contains('User with this phone number already exists.')) {
+      throw ExistedUserException();
+    }
+    if (value.contains('No active account found with the given credentials')) {
+      throw WrongCredentialsException();
+    }
+
+    throw AppException('');
   }
 }
