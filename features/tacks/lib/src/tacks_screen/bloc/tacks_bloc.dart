@@ -200,13 +200,13 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
     OpenTackerTack event,
     Emitter<TacksState> emit,
   ) async {
-    _appRouter.push(OngoingTackerTack.page(tack: event.tack));
+    _appRouter.pushForResult(OngoingTackerTack.page(tack: event.tack));
   }
 
   Future<void> _onOpenRunnerTack(
     OpenRunnerTack event,
     Emitter<TacksState> emit,
   ) async {
-    _appRouter.push(OngoingRunnerTack.page(tack: event.tack));
+    _appRouter.pushForResult(OngoingRunnerTack.page(tack: event.tack));
   }
 }

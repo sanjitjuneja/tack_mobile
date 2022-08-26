@@ -20,6 +20,10 @@ dependencies:
   navigation: 
     path: ../../navigation
 
+  # Features
+  auth:
+    path: ../auth
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

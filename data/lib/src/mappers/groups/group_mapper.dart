@@ -12,7 +12,6 @@ class GroupMapper implements Mapper<GroupEntity, domain.Group> {
       description: entity.description,
       imageUrl: entity.imageUrl ?? '',
       isPublic: entity.isPublic,
-      isMuted: entity.isMuted,
     );
   }
 
@@ -25,7 +24,6 @@ class GroupMapper implements Mapper<GroupEntity, domain.Group> {
       description: item.description,
       imageUrl: item.imageUrl,
       isPublic: item.isPublic,
-      isMuted: item.isMuted,
     );
   }
 }

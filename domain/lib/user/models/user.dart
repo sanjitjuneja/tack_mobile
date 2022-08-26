@@ -2,9 +2,10 @@ part of user;
 
 class User {
   final int id;
+  final String email;
   final String firstName;
   final String lastName;
-  final DateTime birthDate;
+  final DateTime? birthDate;
   final String? profilePicture;
   final double rating;
   final int tacksAmount;
@@ -15,6 +16,7 @@ class User {
 
   User({
     required this.id,
+    required this.email,
     required this.firstName,
     required this.lastName,
     required this.birthDate,

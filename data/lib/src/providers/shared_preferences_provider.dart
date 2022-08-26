@@ -54,7 +54,7 @@ class SharedPreferencesProvider {
   }
 
   Future<bool> setUser(domain.User user) async {
-    final UserEntity userEntity = mapper.customerMapper.toEntity(user);
+    final UserEntity userEntity = mapper.userMapper.toEntity(user);
 
     return _sharedPreferences.setString(
       SharedPreferencesKeys.user,
@@ -71,7 +71,7 @@ class SharedPreferencesProvider {
 
     final UserEntity userEntity = UserEntity.fromJson(jsonDecode(data));
 
-    return mapper.customerMapper.fromEntity(userEntity);
+    return mapper.userMapper.fromEntity(userEntity);
   }
 
   Future<bool> setActiveGroupId(int? groupId) async {
@@ -88,9 +88,8 @@ class SharedPreferencesProvider {
   }
 
   bool isAllSetForLogin() {
-    final String? user = _sharedPreferences.getString(
-      SharedPreferencesKeys.user,
-    );
+    final domain.User? user = getUser();
+
     return <Object?>[
       user,
     ].every((Object? element) => element != null);

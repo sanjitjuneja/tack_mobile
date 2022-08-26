@@ -73,7 +73,7 @@ class OngoingTackerTackBloc
       );
       _appRouter.pop();
 
-      _appRouter.pushForResult(
+      await _appRouter.pushForResult(
         RateTackUser.page(
           tack: state.tack,
           isRateTacker: false,

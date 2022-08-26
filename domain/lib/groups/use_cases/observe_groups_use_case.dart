@@ -1,6 +1,6 @@
 part of groups;
 
-class ObserveGroupsUseCase extends StreamUseCase<List<Group>, NoParams> {
+class ObserveGroupsUseCase extends StreamUseCase<List<GroupDetails>, NoParams> {
   final GroupsRepository _groupsRepository;
 
   ObserveGroupsUseCase({
@@ -8,7 +8,7 @@ class ObserveGroupsUseCase extends StreamUseCase<List<Group>, NoParams> {
   }) : _groupsRepository = groupsRepository;
 
   @override
-  Stream<List<Group>> execute(NoParams params) {
+  Stream<List<GroupDetails>> execute(NoParams params) {
     return _groupsRepository.groupsStream;
   }
 }

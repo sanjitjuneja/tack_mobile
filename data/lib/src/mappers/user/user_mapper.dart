@@ -11,9 +11,10 @@ class UserMapper implements Mapper<UserEntity, domain.User> {
   domain.User fromEntity(UserEntity entity) {
     return domain.User(
       id: entity.id,
+      email: entity.email,
       firstName: entity.firstName,
       lastName: entity.lastName,
-      birthDate: DateTime.parse(entity.birthDate),
+      birthDate: entity.birthDate,
       profilePicture: entity.profilePicture,
       rating: entity.tacksRating,
       tacksAmount: entity.tacksAmount,
@@ -26,9 +27,10 @@ class UserMapper implements Mapper<UserEntity, domain.User> {
   UserEntity toEntity(domain.User item) {
     return UserEntity(
       id: item.id,
+      email: item.email,
       firstName: item.firstName,
       lastName: item.lastName,
-      birthDate: item.birthDate.toIso8601String(),
+      birthDate: item.birthDate,
       profilePicture: item.profilePicture,
       tacksRating: item.rating,
       tacksAmount: item.tacksAmount,

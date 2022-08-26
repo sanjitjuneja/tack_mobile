@@ -36,11 +36,11 @@ class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
     on<ResetLastDeeplinkAction>(_onResetLastDeeplinkAction);
     on<DeeplinkAction>(_onDeeplinkAction);
 
-    _deeplinkSubscription = _observeDeeplinkUseCase
-        .execute(NoParams())
-        .listen((DeeplinkIntent? event) {
-      add(DeeplinkAction(intent: event));
-    });
+    _deeplinkSubscription = _observeDeeplinkUseCase.execute(NoParams()).listen(
+      (DeeplinkIntent? event) {
+        if (event != null) add(DeeplinkAction(intent: event));
+      },
+    );
 
     add(const InitialCheck());
   }
@@ -50,7 +50,7 @@ class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
     Emitter<DeeplinkState> emit,
   ) async {
     final DeeplinkIntent? intent = _getLastDeeplinkUseCase.execute(NoParams());
-    add(DeeplinkAction(intent: intent));
+    if (intent != null) add(DeeplinkAction(intent: intent));
   }
 
   Future<void> _onResetLastDeeplinkAction(
@@ -64,16 +64,16 @@ class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
     DeeplinkAction event,
     Emitter<DeeplinkState> emit,
   ) async {
-    if (event.intent == null) return;
+    add(const ResetLastDeeplinkAction());
 
-    switch (event.intent!.destination) {
+    switch (event.intent.destination) {
       case DeeplinkDestination.invite:
         if (_appRouter.pages
             .any((element) => element.name == InvitationsFeature.routeName)) {
           return;
         }
         __onGroupInvite(
-          event.intent!,
+          event.intent,
           emit,
         );
         break;
@@ -96,10 +96,10 @@ class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
       _appRouter.pop();
       final GroupDetailsScreenResult? result;
 
-      if (groupInvite.group != null) {
+      if (groupInvite.groupDetails != null) {
         result = await _appRouter.pushForResult(
           GroupDetailsFeature.groupPage(
-            group: groupInvite.group!,
+            groupDetails: groupInvite.groupDetails!,
           ),
         );
       } else {
@@ -112,7 +112,7 @@ class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
 
       __onInviteResult(
         result: result,
-        group: groupInvite.group ?? groupInvite.invitation!.group,
+        group: groupInvite.groupDetails?.group ?? groupInvite.invitation!.group,
       );
     } catch (e) {
       _appRouter.pop();

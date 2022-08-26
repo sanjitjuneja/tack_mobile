@@ -34,6 +34,10 @@ class AppIconsTheme {
   /// SVG
   static const String _chevronLeftKey = '${_svgPath}chevron_left.svg';
   static const String _chevronRightKey = '${_svgPath}chevron_right.svg';
+
+  static const String _pointKey = '${_svgPath}point.svg';
+  static const String _checkMarkFilledKey = '${_svgPath}check_mark_filled.svg';
+  static const String _checkMarkKey = '${_svgPath}check_mark.svg';
   static const String _crossKey = '${_svgPath}cross.svg';
   static const String _logoutKey = '${_svgPath}logout.svg';
 
@@ -86,6 +90,10 @@ class AppIconsTheme {
   /// SVG
   static AppIcon get chevronLeft => AppIcon(_chevronLeftKey);
   static AppIcon get chevronRight => AppIcon(_chevronRightKey);
+
+  static AppIcon get point => AppIcon(_pointKey);
+  static AppIcon get checkMarkFilled => AppIcon(_checkMarkFilledKey);
+  static AppIcon get checkMark => AppIcon(_checkMarkKey);
   static AppIcon get cross => AppIcon(_crossKey);
   static AppIcon get logout => AppIcon(_logoutKey);
 

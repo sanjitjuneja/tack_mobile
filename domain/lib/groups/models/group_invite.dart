@@ -1,17 +1,17 @@
 part of groups;
 
 class GroupInvite extends Equatable {
-  final Group? group;
+  final GroupDetails? groupDetails;
   final GroupInvitation? invitation;
 
   const GroupInvite({
-    required this.group,
+    required this.groupDetails,
     required this.invitation,
   });
 
   @override
   List<Object?> get props => <Object?>[
-        group,
+        groupDetails,
         invitation,
       ];
 }

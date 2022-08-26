@@ -4,12 +4,13 @@ part of user_entities;
 @DoubleConverter()
 class UserEntity extends JsonSerializable {
   final int id;
+  final String email;
   @JsonKey(name: 'first_name')
   final String firstName;
   @JsonKey(name: 'last_name')
   final String lastName;
   @JsonKey(name: 'birthday')
-  final String birthDate;
+  final DateTime? birthDate;
   @JsonKey(name: 'profile_picture')
   final String? profilePicture;
   @JsonKey(name: 'tacks_rating')
@@ -23,6 +24,7 @@ class UserEntity extends JsonSerializable {
 
   const UserEntity({
     required this.id,
+    required this.email,
     required this.firstName,
     required this.lastName,
     required this.birthDate,

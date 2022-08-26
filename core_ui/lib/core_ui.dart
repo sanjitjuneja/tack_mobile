@@ -1,5 +1,7 @@
 library core_ui;
 
+export 'src/form_models/form_models.dart';
+
 export 'src/helpers/widget_shadow_type.dart';
 
 export 'src/routes/left_slide_route.dart';
@@ -12,6 +14,7 @@ export 'src/utilities/keyboard_utility.dart';
 
 export 'src/widgets/app_list_view_with_refresh/app_list_view_with_refresh.dart';
 export 'src/widgets/app_selectable_list/app_selectable_list.dart';
+export 'src/widgets/passwords_form_field/passwords_form_field.dart';
 export 'src/widgets/steps_with_progress/steps_with_progress.dart';
 
 export 'src/widgets/app_button_type.dart';
@@ -28,25 +31,17 @@ export 'src/widgets/container_with_separator.dart';
 export 'src/widgets/search_field_widget.dart';
 export 'src/widgets/app_tab_switcher_widget.dart';
 export 'src/widgets/app_button.dart';
-export 'src/widgets/tack_list_widget.dart';
-export 'src/widgets/tack_statistic_widget.dart';
-export 'src/widgets/tack_time_widget.dart';
 export 'src/widgets/lifter_widget.dart';
 export 'src/widgets/app_form_field.dart';
-export 'src/widgets/phone_number_text_field.dart';
 export 'src/widgets/rate_widget.dart';
 export 'src/widgets/resizing_scrollable_layout.dart';
-export 'src/widgets/verify_code_field.dart';
 export 'src/widgets/custom_check_box.dart';
 export 'src/widgets/slide_panel.dart';
 export 'src/widgets/imaged_button.dart';
 export 'src/widgets/app_interface_size.dart';
 export 'src/widgets/rounded_custom_button.dart';
-export 'src/widgets/term_conditions_resolver.dart';
-export 'src/widgets/list_error_widget.dart';
-export 'src/widgets/information_field.dart';
 export 'src/widgets/required_marker_widget.dart';
-export 'src/widgets/phone_verification_widget.dart';
+export 'src/widgets/rounded_list_marker.dart';
 
 export 'src/widgets/drawer_accessory_widget.dart';
 export 'src/widgets/empty_widget.dart';
@@ -68,9 +63,12 @@ export 'src/widgets/time_ticker_inherited.dart';
 export 'src/widgets/timer_ticker_widget.dart';
 
 export 'src/widgets/user_stats_widget.dart';
+export 'src/widgets/validation_point_list_widget.dart';
+export 'src/widgets/validation_point_widget.dart';
 
 export 'package:app_dialog/app_dialog.dart';
 export 'package:app_drawer/app_drawer.dart';
 export 'package:image_cropper/image_cropper.dart';
 export 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 export 'package:grouped_list/grouped_list.dart';
+export 'package:pin_code_fields/pin_code_fields.dart';

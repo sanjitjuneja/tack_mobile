@@ -11,42 +11,44 @@ class TackTileActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GlobalBloc, GlobalState>(
-        builder: (_, GlobalState state) {
-      final bool isOwnTack = state.user.id == tack.tacker.id;
-      if (isOwnTack) {
-        return AppButton(
-          labelKey: 'dashboardScreen.createdByYouButton',
-          withFeedback: true,
-          onTap: () => _onCreatedByMeButtonPressed(context),
-        );
-      } else {
-        return Row(
-          children: <Widget>[
-            if (tack.allowCounterOffers) ...<Widget>[
+      builder: (_, GlobalState state) {
+        final bool isOwnTack = state.user.id == tack.tacker.id;
+
+        if (isOwnTack) {
+          return AppButton(
+            labelKey: 'dashboardScreen.createdByYouButton',
+            withFeedback: true,
+            onTap: () => _onCreatedByMeButtonPressed(context),
+          );
+        } else {
+          return Row(
+            children: <Widget>[
+              if (tack.allowCounterOffers) ...<Widget>[
+                Expanded(
+                  flex: 1,
+                  child: AppButton(
+                    labelKey: 'general.counter',
+                    type: ButtonType.secondary,
+                    withShadow: false,
+                    onTap: () => _onCounterButtonPressed(context),
+                  ),
+                ),
+                const SizedBox(width: 12),
+              ],
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: AppButton(
-                  labelKey: 'general.counter',
-                  type: ButtonType.secondary,
-                  withShadow: false,
-                  onTap: () => _onCounterButtonPressed(context),
+                  labelKey: 'general.accept',
+                  icon: AppIconsTheme.edit,
+                  withFeedback: true,
+                  onTap: () => _onAcceptButtonPressed(context),
                 ),
               ),
-              const SizedBox(width: 12),
             ],
-            Expanded(
-              flex: 2,
-              child: AppButton(
-                labelKey: 'general.accept',
-                icon: AppIconsTheme.edit,
-                withFeedback: true,
-                onTap: () => _onAcceptButtonPressed(context),
-              ),
-            ),
-          ],
-        );
-      }
-    });
+          );
+        }
+      },
+    );
   }
 
   void _onCreatedByMeButtonPressed(BuildContext context) {

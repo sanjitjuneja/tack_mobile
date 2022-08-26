@@ -21,7 +21,7 @@ class CurrentGroupChanged extends GlobalEvent {
 }
 
 class GroupsChanged extends GlobalEvent {
-  final List<Group> groups;
+  final List<GroupDetails> groups;
 
   const GroupsChanged({
     required this.groups,

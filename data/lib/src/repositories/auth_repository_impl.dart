@@ -1,10 +1,10 @@
 import 'package:core/core.dart';
-import 'package:data/src/entities/entities.dart';
-import 'package:data/src/providers/api_provider.dart';
-import 'package:data/src/providers/session_provider.dart';
-import 'package:data/src/providers/shared_preferences_provider.dart';
 import 'package:domain/domain.dart' as domain;
-import 'package:domain/user/user.dart';
+
+import '../entities/entities.dart';
+import '../providers/api_provider.dart';
+import '../providers/session_provider.dart';
+import '../providers/shared_preferences_provider.dart';
 
 class AuthRepositoryImpl implements domain.AuthRepository {
   final ApiProvider _apiProvider;
@@ -20,20 +20,6 @@ class AuthRepositoryImpl implements domain.AuthRepository {
         _sharedPreferencesProvider = sharedPreferencesProvider;
 
   @override
-  Future<domain.SmsCodeResult> requestSmsCode({
-    required domain.RequestSmsCodePayload payload,
-  }) async {
-    final SmsCodeRequest request =
-        SmsCodeRequest(phoneNumber: payload.phoneNumber);
-
-    if (payload.phoneVerificationType == domain.PhoneVerificationType.signUp) {
-      return _apiProvider.requestSighUpSmsCode(request: request);
-    } else {
-      return _apiProvider.requestResetPasswordSmsCode(request: request);
-    }
-  }
-
-  @override
   Future<domain.PhoneVerificationResult> verifyPhoneNumber({
     required domain.VerifyPhoneNumberPayload params,
   }) async {
@@ -46,6 +32,28 @@ class AuthRepositoryImpl implements domain.AuthRepository {
   }
 
   @override
+  Future<domain.SmsCodeResult> requestSignUpSmsCode({
+    required domain.RequestSmsCodePayload payload,
+  }) async {
+    return _apiProvider.requestSighUpSmsCode(
+      request: SmsCodeRequest(
+        phoneNumber: payload.phoneNumber,
+      ),
+    );
+  }
+
+  @override
+  Future<domain.SmsCodeResult> requestRecoverySmsCode({
+    required domain.RequestSmsCodePayload payload,
+  }) async {
+    return _apiProvider.requestResetPasswordSmsCode(
+      request: SmsCodeRequest(
+        phoneNumber: payload.phoneNumber,
+      ),
+    );
+  }
+
+  @override
   Future<domain.User> signIn({
     required domain.SignInPayload payload,
   }) async {
@@ -53,7 +61,7 @@ class AuthRepositoryImpl implements domain.AuthRepository {
       payload: payload,
     );
 
-    final User user = await _apiProvider.getUser();
+    final domain.User user = await _apiProvider.getUser();
     await _sharedPreferencesProvider.setUser(user);
     await _sharedPreferencesProvider.setActiveGroupId(user.activeGroup);
 
@@ -65,32 +73,50 @@ class AuthRepositoryImpl implements domain.AuthRepository {
 
   @override
   Future<domain.User> signUp({
-    required SignUpByPhonePayload params,
+    required domain.SignUpByPhonePayload payload,
   }) async {
     return _apiProvider.signUp(
       request: RegisterUserByPhoneRequest(
-        uuid: params.uuid,
+        uuid: payload.uuid,
         user: UserRequest(
-          password: params.password,
-          firstName: params.firstName,
-          lastName: params.lastName,
-          phoneNumber: params.phoneNumber,
+          password: payload.password,
+          firstName: payload.firstName,
+          lastName: payload.lastName,
+          email: payload.email,
+          phoneNumber: payload.phoneNumber,
         ),
       ),
     );
   }
 
   @override
-  Future<bool> isAuthorized() async {
-    final bool isAuthorized = _sharedPreferencesProvider.isAuthorized();
-    final bool isSessionValid = await _sessionProvider.isSessionValid();
-    final bool isAllSetForLogin = _sharedPreferencesProvider.isAllSetForLogin();
+  Future<void> recoveryChangePassword({
+    required domain.RecoveryChangePasswordPayload payload,
+  }) async {
+    return _apiProvider.recoveryChangePassword(
+      request: RecoveryChangePasswordRequest(
+        uuid: payload.uuid,
+        newPassword: payload.password,
+      ),
+    );
+  }
 
-    return <bool>[
-      isAuthorized,
-      isSessionValid,
-      isAllSetForLogin,
-    ].every((bool element) => element == true);
+  @override
+  Future<bool> isAuthorized() async {
+    try {
+      final bool isAuthorized = _sharedPreferencesProvider.isAuthorized();
+      final bool isSessionValid = await _sessionProvider.isSessionValid();
+      final bool isAllSetForLogin =
+          _sharedPreferencesProvider.isAllSetForLogin();
+
+      return <bool>[
+        isAuthorized,
+        isSessionValid,
+        isAllSetForLogin,
+      ].every((bool element) => element == true);
+    } catch (_) {
+      return false;
+    }
   }
 
   @override

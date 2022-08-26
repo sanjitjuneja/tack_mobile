@@ -2,6 +2,7 @@ part of user_entities;
 
 @JsonSerializable(createFactory: false)
 class UserRequest extends JsonSerializable {
+  final String email;
   @JsonKey(name: 'first_name')
   final String firstName;
   @JsonKey(name: 'last_name')
@@ -11,6 +12,7 @@ class UserRequest extends JsonSerializable {
   final String password;
 
   const UserRequest({
+    required this.email,
     required this.firstName,
     required this.lastName,
     required this.password,

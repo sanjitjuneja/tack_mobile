@@ -3,14 +3,14 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:groups/src/my_groups/bloc/my_groups_bloc.dart';
+import '../../../bloc/my_groups_bloc.dart';
 
 class GroupTileActions extends StatelessWidget {
-  final Group group;
+  final GroupDetails groupDetails;
 
   const GroupTileActions({
     super.key,
-    required this.group,
+    required this.groupDetails,
   });
 
   @override
@@ -41,10 +41,14 @@ class GroupTileActions extends StatelessWidget {
   }
 
   void _onInfoButtonPressed(BuildContext context) {
-    BlocProvider.of<MyGroupsBloc>(context).add(OpenGroupDetails(group: group));
+    BlocProvider.of<MyGroupsBloc>(context).add(
+      OpenGroupDetails(groupDetails: groupDetails),
+    );
   }
 
   void _onInviteMembersButtonPressed(BuildContext context) {
-    BlocProvider.of<MyGroupsBloc>(context).add(InviteMembers(group: group));
+    BlocProvider.of<MyGroupsBloc>(context).add(
+      InviteMembers(group: groupDetails.group),
+    );
   }
 }

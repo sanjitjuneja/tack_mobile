@@ -46,75 +46,100 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
   Widget build(BuildContext context) {
     return Material(
       color: AppTheme.transparentColor,
-      child: TextField(
-        inputFormatters: widget.inputFormatters,
-        obscureText: _obscureText,
-        obscuringCharacter: '*',
-        controller: _textEditingController,
-        keyboardType: widget.keyboardType,
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: AppTheme.textFieldBackgroundColor,
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(16),
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(16),
-            ),
-            borderSide: BorderSide(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            height: 68,
+            decoration: BoxDecoration(
               color: AppTheme.textFieldBackgroundColor,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, top: 20, bottom: 15),
+              child: TextField(
+                inputFormatters: widget.inputFormatters,
+                keyboardType: widget.keyboardType,
+                focusNode: focusNode,
+                controller: _textEditingController,
+                cursorColor: AppTheme.accentColor,
+                obscureText: _obscureText,
+                cursorHeight: 24,
+                decoration: InputDecoration(
+                  suffixIcon: widget.suffixIcon ??
+                      (widget.showObscureButton
+                          ? Padding(
+                              padding: const EdgeInsets.only(right: 24),
+                              child: GestureDetector(
+                                onTap: _changePasswordVisibility,
+                                child: _obscureText
+                                    ? AppImagesTheme.visibilityOn
+                                    : AppImagesTheme.visibilityOff,
+                              ),
+                            )
+                          : null),
+                  filled: true,
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16),
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(16),
+                    ),
+                    borderSide: BorderSide(
+                      color: AppTheme.textFieldBackgroundColor,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(16),
+                    ),
+                    borderSide: BorderSide(
+                      color: AppTheme.textFieldBackgroundColor,
+                    ),
+                  ),
+                  labelText: widget.hintText,
+                  fillColor: AppTheme.textFieldBackgroundColor,
+                  labelStyle: AppTextTheme.manrope24Regular.copyWith(
+                    color: AppTheme.textHintColor,
+                  ),
+                  floatingLabelStyle: AppTextTheme.manrope19Medium.copyWith(
+                    height: 0.4,
+                    color: AppTheme.textHintColor,
+                  ),
+                  errorStyle: AppTextTheme.manrope14Medium.copyWith(
+                    color: AppTheme.errorColor,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(16),
+                    ),
+                    borderSide: BorderSide(
+                      color: AppTheme.textFieldBackgroundColor,
+                    ),
+                  ),
+                ),
+                style: AppTextTheme.manrope20Regular.copyWith(
+                  color: AppTheme.accentColor,
+                ),
+                onChanged: widget.onChanged,
+              ),
             ),
           ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(16),
+          if (widget.errorText != null) ...<Widget>{
+            Padding(
+              padding: const EdgeInsets.only(left: 10, top: 5),
+              child: Text(
+                widget.errorText!,
+                style: AppTextTheme.manrope14Medium.copyWith(
+                  color: AppTheme.errorColor,
+                ),
+              ),
             ),
-            borderSide: BorderSide(
-              color: AppTheme.textFieldBackgroundColor,
-            ),
-          ),
-          errorStyle: AppTextTheme.manrope14Medium.copyWith(
-            color: AppTheme.errorColor,
-          ),
-          labelText: widget.hintText,
-          labelStyle: AppTextTheme.manrope24Regular.copyWith(
-            color: AppTheme.textHintColor,
-          ),
-          floatingLabelStyle: AppTextTheme.manrope14Regular.copyWith(
-            height: 4,
-            color: AppTheme.textHintColor,
-          ),
-          suffixIcon: widget.suffixIcon ??
-              (widget.showObscureButton
-                  ? Padding(
-                      padding: const EdgeInsets.only(right: 24),
-                      child: GestureDetector(
-                        onTap: _changePasswordVisibility,
-                        child: _obscureText
-                            ? AppImagesTheme.visibilityOn
-                            : AppImagesTheme.visibilityOff,
-                      ),
-                    )
-                  : null),
-          errorText: widget.errorText,
-          errorMaxLines: 2,
-          focusedBorder: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(16),
-            ),
-            borderSide: BorderSide(
-              color: AppTheme.textFieldBackgroundColor,
-            ),
-          ),
-        ),
-        cursorColor: AppTheme.accentColor,
-        onChanged: widget.onChanged,
-        style: AppTextTheme.manrope20Regular.copyWith(
-          color: AppTheme.accentColor,
-        ),
+          }
+        ],
       ),
     );
   }

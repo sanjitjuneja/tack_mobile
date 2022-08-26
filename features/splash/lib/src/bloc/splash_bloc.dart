@@ -1,13 +1,14 @@
 import 'dart:async';
 
-import 'package:auth/sign_in/sign_in_feature.dart';
-import 'package:auth/sign_up/sign_up_feature.dart';
+import 'package:auth/auth.dart';
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:domain/use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
+import 'package:phone_verification/phone_verification.dart';
 
 part 'splash_event.dart';
 
@@ -22,7 +23,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     required IsAuthorizedUseCase isAuthorizedUseCase,
   })  : _globalAppRouter = globalAppRouter,
         _isAuthorizedUseCase = isAuthorizedUseCase,
-        super(SplashContent()) {
+        super(const SplashState()) {
     on<InitialEvent>(_onInitialEvent);
     on<SignIn>(_onSignIn);
     on<SignUp>(_onSignUp);
@@ -32,6 +33,8 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     InitialEvent event,
     Emitter<SplashState> emit,
   ) async {
+    emit(state.copyWith(slidingPanelController: event.slidingPanelController));
+
     final bool isAuthorized = await _isAuthorizedUseCase.execute(NoParams());
 
     if (isAuthorized) {
@@ -50,16 +53,25 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     SignIn event,
     Emitter<SplashState> emit,
   ) async {
-    await _animateToEndPosition(event.slidingPanelController);
+    await _animateToEndPosition(state.slidingPanelController!);
 
-    final bool? result = await _globalAppRouter.pushForResult(
+    final SignInScreenResult? result = await _globalAppRouter.pushForResult(
       SignInFeature.page(),
     );
 
-    if (result == true) {
+    if (result != null) {
       _globalAppRouter.replace(FirstRouteFeature.page());
+      if (result == SignInScreenResult.signUp) {
+        _globalAppRouter.pushForResult(
+          AppAlertDialog.page(
+            SuccessAlert(
+              contentKey: 'otherAlert.sinUpComplete',
+            ),
+          ),
+        );
+      }
     } else {
-      await _animateToInitialPosition(event.slidingPanelController);
+      await _animateToInitialPosition(state.slidingPanelController!);
     }
   }
 
@@ -67,12 +79,39 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     SignUp event,
     Emitter<SplashState> emit,
   ) async {
-    await _animateToEndPosition(event.slidingPanelController);
-    final bool? result = await _globalAppRouter.pushForResult(
-      SignUpFeature.page(),
+    await _animateToEndPosition(state.slidingPanelController!);
+    final PhoneVerificationScreenResult? phoneVerificationScreenResult =
+        await _globalAppRouter.pushForResult(
+      PhoneVerificationFeature.pageForSignUp(),
     );
 
-    await _animateToInitialPosition(event.slidingPanelController);
+    if (phoneVerificationScreenResult != null) {
+      if (phoneVerificationScreenResult.shouldOpenSignIn) {
+        add(const SignIn());
+      } else {
+        final bool? result = await _globalAppRouter.pushForResult(
+          SignUpFeature.page(
+            phoneVerificationData:
+                phoneVerificationScreenResult.phoneVerificationData!,
+          ),
+        );
+
+        if (result == true) {
+          _globalAppRouter.replace(FirstRouteFeature.page());
+          _globalAppRouter.pushForResult(
+            AppAlertDialog.page(
+              SuccessAlert(
+                contentKey: 'otherAlert.sinUpComplete',
+              ),
+            ),
+          );
+
+          return;
+        }
+      }
+    }
+
+    await _animateToInitialPosition(state.slidingPanelController!);
   }
 
   Future<void> _animateToInitialPosition(
