@@ -1,6 +1,6 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '/src/widgets/payment_method_tile.dart';
 import '/src/payment_settings_screens/payment_settings/widgets/tack_balance.dart';
@@ -27,74 +27,107 @@ class PaymentSettingsForm extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 25),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 13),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 13),
                 child: TackBalance(
                   tackBalance: 0.00,
+                  onAddCashTap: () => _onAddCash(context),
+                  onPayoutTap: () => _onPayout(context),
                 ),
               ),
               const SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.only(left: 18.0),
-                child: Text(
-                  FlutterI18n.translate(
-                    context,
-                    'paymentSettingsScreen.banks',
+              if (state.isLoading) ...<Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(50.0),
+                  child: AppProgressIndicator(
+                    indicatorSize: ProgressIndicatorSize.medium,
+                    backgroundColor: AppTheme.transparentColor,
+                    indicatorColor: AppTheme.progressInterfaceDarkColor,
                   ),
-                  style: AppTextTheme.manrope20Bold,
                 ),
-              ),
-              const SizedBox(height: 14),
-              PaymentMethodTile(
-                leadingIcon: AppIconsTheme.masterCard,
-                title: 'JP Morgan Chase',
-                subtitle: '*****8748',
-                isPrimary: true,
-              ),
-              PaymentMethodTile(
-                leadingIcon: AppIconsTheme.masterCard,
-                title: 'JP Morgan Chase',
-                subtitle: '*****8748',
-              ),
-              const SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.only(left: 18.0),
-                child: Text(
-                  FlutterI18n.translate(
-                    context,
-                    'paymentSettingsScreen.cards',
+              ] else if (state.hasError) ...<Widget>[
+                Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.only(top: 40.0),
+                  child: IconButton(
+                    onPressed: () => _onReloadButtonPressed(context),
+                    padding: EdgeInsets.zero,
+                    iconSize: 60,
+                    icon: Icon(
+                      Icons.refresh_rounded,
+                      color: AppTheme.progressInterfaceDarkColor,
+                    ),
                   ),
-                  style: AppTextTheme.manrope20Bold,
                 ),
-              ),
-              const SizedBox(height: 14),
-              PaymentMethodTile(
-                leadingIcon: AppIconsTheme.masterCard,
-                title: 'Mastercard',
-                subtitle: '*****4685',
-              ),
-              PaymentMethodTile(
-                leadingIcon: AppIconsTheme.masterCard,
-                title: 'JP Morgan Chase',
-                subtitle: '*****6448',
-              ),
-              const SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.only(left: 18.0),
-                child: Text(
-                  FlutterI18n.translate(
-                    context,
-                    'paymentSettingsScreen.digitalWallets',
+              ] else ...<Widget>[
+                if (state.bankAccounts.isNotEmpty) ...<Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18.0),
+                    child: Text(
+                      FlutterI18n.translate(
+                        context,
+                        'paymentSettingsScreen.banks',
+                      ),
+                      style: AppTextTheme.manrope20Bold,
+                    ),
                   ),
-                  style: AppTextTheme.manrope20Bold,
-                ),
-              ),
-              const SizedBox(height: 14),
-              PaymentMethodTile(
-                leadingIcon: AppIconsTheme.applePay,
-                title: 'Apple Pay',
-              ),
-              const SizedBox(height: 30),
+                  const SizedBox(height: 14),
+                  ...state.bankAccounts.map(
+                    (bankAccount) => PaymentMethodTile(
+                      leadingIcon: AppIconsTheme.bank,
+                      title: bankAccount.bankName,
+                      subtitle: bankAccount.bankAccountType,
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                ],
+                if (state.cards.isNotEmpty) ...<Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18.0),
+                    child: Text(
+                      FlutterI18n.translate(
+                        context,
+                        'paymentSettingsScreen.cards',
+                      ),
+                      style: AppTextTheme.manrope20Bold,
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  ...state.cards.map(
+                    (card) => PaymentMethodTile(
+                      leadingIcon: AppIconsTheme.card,
+                      title: card.cardData.brand,
+                      subtitle: '****${card.cardData.last4}',
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                ],
+                if (state.isApplePaySupported ||
+                    state.isGooglePaySupported) ...<Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18.0),
+                    child: Text(
+                      FlutterI18n.translate(
+                        context,
+                        'paymentSettingsScreen.digitalWallets',
+                      ),
+                      style: AppTextTheme.manrope20Bold,
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  if (state.isApplePaySupported)
+                    PaymentMethodTile(
+                      leadingIcon: AppIconsTheme.applePay,
+                      title: 'Apple Pay',
+                    ),
+                  if (state.isGooglePaySupported)
+                    PaymentMethodTile(
+                      leadingIcon: AppIconsTheme.applePay,
+                      title: 'Google Pay',
+                    ),
+                  const SizedBox(height: 30),
+                ],
+              ],
               Padding(
                 padding: const EdgeInsets.only(left: 18.0),
                 child: Text(
@@ -142,7 +175,25 @@ class PaymentSettingsForm extends StatelessWidget {
 
   void _onAddPaymentMethod(BuildContext context) {
     BlocProvider.of<PaymentSettingsBloc>(context).add(
-      const AddPaymentMethodRequest(),
+      const AddPaymentMethodAction(),
+    );
+  }
+
+  void _onReloadButtonPressed(BuildContext context) {
+    BlocProvider.of<PaymentSettingsBloc>(context).add(
+      const InitialLoad(),
+    );
+  }
+
+  void _onAddCash(BuildContext context) {
+    BlocProvider.of<PaymentSettingsBloc>(context).add(
+      const AddCashAction(),
+    );
+  }
+
+  void _onPayout(BuildContext context) {
+    BlocProvider.of<PaymentSettingsBloc>(context).add(
+      const PayoutAction(),
     );
   }
 }

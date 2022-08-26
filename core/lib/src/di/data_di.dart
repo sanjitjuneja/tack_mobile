@@ -341,6 +341,18 @@ class DataDI {
       ),
     );
 
+    appLocator.registerLazySingleton<GetConnectedBankAccountsUseCase>(
+      () => GetConnectedBankAccountsUseCase(
+        paymentRepository: appLocator.get<PaymentRepository>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<GetConnectedCardsUseCase>(
+      () => GetConnectedCardsUseCase(
+        paymentRepository: appLocator.get<PaymentRepository>(),
+      ),
+    );
+
     appLocator.registerLazySingleton<LogOutUseCase>(
       () => LogOutUseCase(
         globalAppRouter: appLocator.get<GlobalAppRouterDelegate>(),
@@ -395,6 +407,8 @@ class DataDI {
     appLocator.unregister<PaymentRepository>();
     appLocator.unregister<AddCardUseCase>();
     appLocator.unregister<AddBankAccountUseCase>();
+    appLocator.unregister<GetConnectedCardsUseCase>();
+    appLocator.unregister<GetConnectedBankAccountsUseCase>();
 
     appLocator.unregister<LogOutUseCase>();
   }

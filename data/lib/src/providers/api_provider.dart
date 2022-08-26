@@ -528,19 +528,55 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.plaidMapper.fromEntity);
   }
 
-  Future<List<domain.ConnectedBankAccount>> getAddedBankAccounts({
-    required GetAddedBankAccountRequest request,
+  Future<List<domain.ConnectedBankAccount>> getPlaidBankAccounts({
+    required GetPlaidBankAccountsRequest request,
   }) async {
-    return post<AddedBankAccountsResponse>(
+    return post<GetConnectedBankAccountsResponse>(
       ApiQuery(
-        endpoint: BaseUrlConstants.addedBankAccounts,
+        endpoint: BaseUrlConstants.plaidBankAccounts,
         body: request.toJson(),
         params: null,
       ),
-      parser: AddedBankAccountsResponse.fromJson,
+      parser: GetConnectedBankAccountsResponse.fromJson,
     ).then(
-      (AddedBankAccountsResponse response) =>
+      (GetConnectedBankAccountsResponse response) =>
           mapper.connectedBankAccountMapper.fromList(
+        response.results,
+      ),
+    );
+  }
+
+  Future<List<domain.ConnectedBankAccount>> getConnectedBankAccounts({
+    required GetConnectedBankAccountsRequest request,
+  }) async {
+    return get<GetConnectedBankAccountsResponse>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.connectedBankAccounts,
+        body: null,
+        params: null,
+      ),
+      parser: GetConnectedBankAccountsResponse.fromJson,
+    ).then(
+      (GetConnectedBankAccountsResponse response) =>
+          mapper.connectedBankAccountMapper.fromList(
+        response.results,
+      ),
+    );
+  }
+
+  Future<List<domain.ConnectedCard>> getConnectedCards({
+    required GetConnectedCardsRequest request,
+  }) async {
+    return get<GetConnectedCardsResponse>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.connectedCards,
+        body: null,
+        params: null,
+      ),
+      parser: GetConnectedCardsResponse.fromJson,
+    ).then(
+      (GetConnectedCardsResponse response) =>
+          mapper.connectedCardMapper.fromList(
         response.results,
       ),
     );

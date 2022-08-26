@@ -55,8 +55,8 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
       (String publicToken, LinkSuccessMetadata metadata) async {
         try {
           final List<domain.ConnectedBankAccount> bankAccounts =
-              await _apiProvider.getAddedBankAccounts(
-            request: GetAddedBankAccountRequest(
+              await _apiProvider.getPlaidBankAccounts(
+            request: GetPlaidBankAccountsRequest(
               publicToken: publicToken,
             ),
           );
@@ -76,5 +76,29 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
     PlaidLink.open(configuration: configuration);
 
     return completer.future;
+  }
+
+  @override
+  Future<List<domain.ConnectedBankAccount>> getConnectedBankAccounts(
+    domain.GetConnectedBankAccountsPayload payload,
+  ) async {
+    final List<domain.ConnectedBankAccount> bankAccounts =
+        await _apiProvider.getConnectedBankAccounts(
+      request: const GetConnectedBankAccountsRequest(),
+    );
+
+    return bankAccounts;
+  }
+
+  @override
+  Future<List<domain.ConnectedCard>> getConnectedCards(
+    domain.GetConnectedCardsPayload payload,
+  ) async {
+    final List<domain.ConnectedCard> cards =
+        await _apiProvider.getConnectedCards(
+      request: const GetConnectedCardsRequest(),
+    );
+
+    return cards;
   }
 }

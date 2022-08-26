@@ -4,10 +4,14 @@ import 'package:flutter/cupertino.dart';
 
 class TackBalance extends StatelessWidget {
   final double tackBalance;
+  final VoidCallback onAddCashTap;
+  final VoidCallback onPayoutTap;
 
   const TackBalance({
     Key? key,
     required this.tackBalance,
+    required this.onAddCashTap,
+    required this.onPayoutTap,
   }) : super(key: key);
 
   @override
@@ -56,18 +60,21 @@ class TackBalance extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 const Spacer(),
-                Column(
-                  children: <Widget>[
-                    AppIconsTheme.add.svg(size: 32),
-                    const SizedBox(height: 4),
-                    Text(
-                      FlutterI18n.translate(
-                        context,
-                        'paymentSettingsScreen.addCash',
+                GestureDetector(
+                  onTap: onAddCashTap,
+                  child: Column(
+                    children: <Widget>[
+                      AppIconsTheme.add.svg(size: 32),
+                      const SizedBox(height: 4),
+                      Text(
+                        FlutterI18n.translate(
+                          context,
+                          'paymentSettingsScreen.addCash',
+                        ),
+                        style: AppTextTheme.poppins14Medium,
                       ),
-                      style: AppTextTheme.poppins14Medium,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 const SizedBox(width: 28),
                 AppDivider(
@@ -76,18 +83,21 @@ class TackBalance extends StatelessWidget {
                   color: AppTheme.dividerSecondaryColor,
                 ),
                 const SizedBox(width: 28),
-                Column(
-                  children: <Widget>[
-                    AppIconsTheme.bankRounded.svg(size: 32),
-                    const SizedBox(height: 4),
-                    Text(
-                      FlutterI18n.translate(
-                        context,
-                        'paymentSettingsScreen.payout',
+                GestureDetector(
+                  onTap: onPayoutTap,
+                  child: Column(
+                    children: <Widget>[
+                      AppIconsTheme.bankRounded.svg(size: 32),
+                      const SizedBox(height: 4),
+                      Text(
+                        FlutterI18n.translate(
+                          context,
+                          'paymentSettingsScreen.payout',
+                        ),
+                        style: AppTextTheme.poppins14Medium,
                       ),
-                      style: AppTextTheme.poppins14Medium,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 const Spacer(),
               ],

@@ -8,12 +8,18 @@ import 'package:domain/use_case.dart';
 part 'models/connected_bank_account.dart';
 part 'models/plaid.dart';
 part 'models/payment_setup_intent.dart';
+part 'models/connected_card.dart';
+part 'models/connected_card_data.dart';
 
 part 'payloads/add_card_payload.dart';
 part 'payloads/add_bank_account_payload.dart';
 part 'payloads/get_added_bank_accounts_payload.dart';
+part 'payloads/get_connected_bank_accounts_payload.dart';
+part 'payloads/get_connected_cards_payload.dart';
 
 part 'repositories/payment_repository.dart';
 
 part 'use_cases/add_card_use_case.dart';
 part 'use_cases/add_bank_account_use_case.dart';
+part 'use_cases/get_connected_bank_accounts_use_case.dart';
+part 'use_cases/get_connected_cards_use_case.dart';

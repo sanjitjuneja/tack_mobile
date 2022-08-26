@@ -9,6 +9,7 @@ class PaymentMethodTile extends StatelessWidget {
   final VoidCallback? onTap;
   final bool isPrimary;
   final bool isColored;
+  final bool isTrailingArrow;
 
   const PaymentMethodTile({
     Key? key,
@@ -18,6 +19,7 @@ class PaymentMethodTile extends StatelessWidget {
     this.onTap,
     this.isPrimary = false,
     this.isColored = false,
+    this.isTrailingArrow = true,
   }) : super(key: key);
 
   @override
@@ -77,10 +79,11 @@ class PaymentMethodTile extends StatelessWidget {
                     ),
                   ),
                 const SizedBox(width: 18),
-                AppIconsTheme.chevronRight(
-                  color: AppTheme.iconPrimaryColor,
-                  size: 20,
-                ),
+                if (isTrailingArrow)
+                  AppIconsTheme.chevronRight(
+                    color: AppTheme.iconPrimaryColor,
+                    size: 20,
+                  ),
               ],
             ),
             const Spacer(),

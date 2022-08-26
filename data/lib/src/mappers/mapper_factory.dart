@@ -54,6 +54,10 @@ class MapperFactory {
   ConnectedBankAccountMapper get connectedBankAccountMapper =>
       const ConnectedBankAccountMapper();
 
+  ConnectedCardMapper get connectedCardMapper => const ConnectedCardMapper(
+        connectedCardDataMapper: ConnectedCardDataMapper(),
+      );
+
   PaymentSetupIntentMapper get paymentSetupIntentMapper =>
       const PaymentSetupIntentMapper();
 
