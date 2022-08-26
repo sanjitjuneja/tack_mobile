@@ -3,15 +3,15 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:groups/src/my_groups/bloc/my_groups_bloc.dart';
-import 'package:groups/src/my_groups/ui/widgets/group_tile/group_tile_actions.dart';
+import '../../../bloc/my_groups_bloc.dart';
+import 'group_tile_actions.dart';
 
 class GroupTile extends StatelessWidget {
-  final Group group;
+  final GroupDetails groupDetails;
 
   const GroupTile({
     super.key,
-    required this.group,
+    required this.groupDetails,
   });
 
   @override
@@ -39,7 +39,7 @@ class GroupTile extends StatelessWidget {
         child: Row(
           children: <Widget>[
             AppCircleAvatarWidget(
-              group.imageUrl,
+              groupDetails.group.imageUrl,
               isShadowBorder: false,
             ),
             const SizedBox(width: 12),
@@ -48,12 +48,12 @@ class GroupTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    group.name,
+                    groupDetails.group.name,
                     style: AppTextTheme.manrope16Bold
                         .copyWith(color: AppTheme.textPrimaryColor),
                   ),
                   const SizedBox(height: 6),
-                  GroupTileActions(group: group),
+                  GroupTileActions(groupDetails: groupDetails),
                 ],
               ),
             ),
@@ -66,6 +66,8 @@ class GroupTile extends StatelessWidget {
   }
 
   void _onTilePressed(BuildContext context) {
-    BlocProvider.of<MyGroupsBloc>(context).add(OpenGroupDetails(group: group));
+    BlocProvider.of<MyGroupsBloc>(context).add(
+      OpenGroupDetails(groupDetails: groupDetails),
+    );
   }
 }

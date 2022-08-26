@@ -34,12 +34,12 @@ class MyGroupsBloc extends Bloc<MyGroupsEvent, MyGroupsState> {
     Emitter<MyGroupsState> emit,
   ) async {
     final GroupDetailsScreenResult? result = await _appRouter.pushForResult(
-      GroupDetailsFeature.groupPage(group: event.group),
+      GroupDetailsFeature.groupPage(groupDetails: event.groupDetails),
     );
 
     __onResult(
       result: result,
-      groupName: event.group.name,
+      groupName: event.groupDetails.group.name,
     );
   }
 

@@ -5,7 +5,7 @@ class GetGroupsResponse extends JsonSerializable {
   final int count;
   final String? previous;
   final String? next;
-  final List<GroupEntity> results;
+  final List<GroupDetailsEntity> results;
 
   const GetGroupsResponse({
     required this.count,

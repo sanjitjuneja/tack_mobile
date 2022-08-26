@@ -13,7 +13,7 @@ class ResetLastDeeplinkAction extends DeeplinkEvent {
 }
 
 class DeeplinkAction extends DeeplinkEvent {
-  final DeeplinkIntent? intent;
+  final DeeplinkIntent intent;
 
   const DeeplinkAction({
     required this.intent,
