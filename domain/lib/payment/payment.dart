@@ -13,13 +13,17 @@ part 'models/connected_card_data.dart';
 
 part 'payloads/add_card_payload.dart';
 part 'payloads/add_bank_account_payload.dart';
-part 'payloads/get_added_bank_accounts_payload.dart';
-part 'payloads/get_connected_bank_accounts_payload.dart';
-part 'payloads/get_connected_cards_payload.dart';
+part 'payloads/fetch_added_bank_accounts_payload.dart';
+part 'payloads/fetch_connected_bank_accounts_payload.dart';
+part 'payloads/fetch_connected_cards_payload.dart';
+part 'payloads/fetch_is_apple_pay_supported_payload.dart';
+part 'payloads/fetch_is_google_pay_supported_payload.dart';
 
 part 'repositories/payment_repository.dart';
 
 part 'use_cases/add_card_use_case.dart';
 part 'use_cases/add_bank_account_use_case.dart';
-part 'use_cases/get_connected_bank_accounts_use_case.dart';
-part 'use_cases/get_connected_cards_use_case.dart';
+part 'use_cases/fetch_connected_bank_accounts_use_case.dart';
+part 'use_cases/fetch_connected_cards_use_case.dart';
+part 'use_cases/fetch_is_apple_pay_supported_use_case.dart';
+part 'use_cases/fetch_is_google_pay_supported_use_case.dart';

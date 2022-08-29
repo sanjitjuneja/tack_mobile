@@ -14,7 +14,7 @@ class ConnectedCardData extends Equatable {
   });
 
   @override
-  List<Object?> get props => <Object>[
+  List<Object?> get props => <Object?>[
         brand,
         last4,
         expYear,

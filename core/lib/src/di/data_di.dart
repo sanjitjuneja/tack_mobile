@@ -341,14 +341,26 @@ class DataDI {
       ),
     );
 
-    appLocator.registerLazySingleton<GetConnectedBankAccountsUseCase>(
-      () => GetConnectedBankAccountsUseCase(
+    appLocator.registerLazySingleton<FetchConnectedBankAccountsUseCase>(
+      () => FetchConnectedBankAccountsUseCase(
         paymentRepository: appLocator.get<PaymentRepository>(),
       ),
     );
 
-    appLocator.registerLazySingleton<GetConnectedCardsUseCase>(
-      () => GetConnectedCardsUseCase(
+    appLocator.registerLazySingleton<FetchConnectedCardsUseCase>(
+      () => FetchConnectedCardsUseCase(
+        paymentRepository: appLocator.get<PaymentRepository>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<FetchIsApplePaySupportedUseCase>(
+      () => FetchIsApplePaySupportedUseCase(
+        paymentRepository: appLocator.get<PaymentRepository>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<FetchIsGooglePaySupportedUseCase>(
+      () => FetchIsGooglePaySupportedUseCase(
         paymentRepository: appLocator.get<PaymentRepository>(),
       ),
     );
@@ -407,8 +419,8 @@ class DataDI {
     appLocator.unregister<PaymentRepository>();
     appLocator.unregister<AddCardUseCase>();
     appLocator.unregister<AddBankAccountUseCase>();
-    appLocator.unregister<GetConnectedCardsUseCase>();
-    appLocator.unregister<GetConnectedBankAccountsUseCase>();
+    appLocator.unregister<FetchConnectedCardsUseCase>();
+    appLocator.unregister<FetchConnectedBankAccountsUseCase>();
 
     appLocator.unregister<LogOutUseCase>();
   }

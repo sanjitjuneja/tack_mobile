@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:navigation/navigation.dart';
 import 'package:payment/payment.dart';
-import '../../add_payment_method_screens/add_payment_method/ui/add_payment_method_page.dart';
 import 'package:domain/payment/payment.dart';
 
 part 'payment_settings_event.dart';
@@ -13,16 +12,23 @@ part 'payment_settings_state.dart';
 class PaymentSettingsBloc
     extends Bloc<PaymentSettingsEvent, PaymentSettingsState> {
   final AppRouterDelegate _appRouter;
-  final GetConnectedBankAccountsUseCase _getConnectedBankAccountsUseCase;
-  final GetConnectedCardsUseCase _getConnectedCardsUseCase;
+  final FetchConnectedBankAccountsUseCase _fetchConnectedBankAccountsUseCase;
+  final FetchConnectedCardsUseCase _fetchConnectedCardsUseCase;
+  final FetchIsApplePaySupportedUseCase _fetchIsApplePaySupportedUseCase;
+  final FetchIsGooglePaySupportedUseCase _fetchIsGooglePaySupportedUseCase;
 
   PaymentSettingsBloc({
     required AppRouterDelegate appRouter,
-    required GetConnectedBankAccountsUseCase getConnectedBankAccountsUseCase,
-    required GetConnectedCardsUseCase getConnectedCardsUseCase,
+    required FetchConnectedBankAccountsUseCase
+        fetchConnectedBankAccountsUseCase,
+    required FetchConnectedCardsUseCase fetchConnectedCardsUseCase,
+    required FetchIsApplePaySupportedUseCase fetchIsApplePaySupportedUseCase,
+    required FetchIsGooglePaySupportedUseCase fetchIsGooglePaySupportedUseCase,
   })  : _appRouter = appRouter,
-        _getConnectedBankAccountsUseCase = getConnectedBankAccountsUseCase,
-        _getConnectedCardsUseCase = getConnectedCardsUseCase,
+        _fetchConnectedBankAccountsUseCase = fetchConnectedBankAccountsUseCase,
+        _fetchConnectedCardsUseCase = fetchConnectedCardsUseCase,
+        _fetchIsApplePaySupportedUseCase = fetchIsApplePaySupportedUseCase,
+        _fetchIsGooglePaySupportedUseCase = fetchIsGooglePaySupportedUseCase,
         super(
           const PaymentSettingsState(
             bankAccounts: <ConnectedBankAccount>[],
@@ -45,18 +51,21 @@ class PaymentSettingsBloc
     try {
       emit(state.copyWith(isLoading: true));
       final List<ConnectedBankAccount> bankAccounts =
-          await _getConnectedBankAccountsUseCase.execute(
-        const GetConnectedBankAccountsPayload(),
+          await _fetchConnectedBankAccountsUseCase.execute(
+        const FetchConnectedBankAccountsPayload(),
       );
-      final List<ConnectedCard> cards = await _getConnectedCardsUseCase.execute(
-        const GetConnectedCardsPayload(),
-      );
-      final bool isGooglePaySupported =
-          await Stripe.instance.isGooglePaySupported(
-        const IsGooglePaySupportedParams(),
+      final List<ConnectedCard> cards =
+          await _fetchConnectedCardsUseCase.execute(
+        const FetchConnectedCardsPayload(),
       );
       final bool isApplePaySupported =
-          Stripe.instance.isApplePaySupported.value;
+          await _fetchIsApplePaySupportedUseCase.execute(
+        const FetchIsApplePaySupportedPayload(),
+      );
+      final bool isGooglePaySupported =
+          await _fetchIsGooglePaySupportedUseCase.execute(
+        const FetchIsGooglePaySupportedPayload(),
+      );
 
       emit(
         state.copyWith(

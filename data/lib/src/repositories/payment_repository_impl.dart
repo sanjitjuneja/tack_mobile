@@ -55,8 +55,8 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
       (String publicToken, LinkSuccessMetadata metadata) async {
         try {
           final List<domain.ConnectedBankAccount> bankAccounts =
-              await _apiProvider.getPlaidBankAccounts(
-            request: GetPlaidBankAccountsRequest(
+              await _apiProvider.fetchPlaidBankAccounts(
+            request: FetchPlaidBankAccountsRequest(
               publicToken: publicToken,
             ),
           );
@@ -79,26 +79,47 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
   }
 
   @override
-  Future<List<domain.ConnectedBankAccount>> getConnectedBankAccounts(
-    domain.GetConnectedBankAccountsPayload payload,
+  Future<List<domain.ConnectedBankAccount>> fetchConnectedBankAccounts(
+    domain.FetchConnectedBankAccountsPayload payload,
   ) async {
     final List<domain.ConnectedBankAccount> bankAccounts =
-        await _apiProvider.getConnectedBankAccounts(
-      request: const GetConnectedBankAccountsRequest(),
+        await _apiProvider.fetchConnectedBankAccounts(
+      request: const FetchConnectedBankAccountsRequest(),
     );
 
     return bankAccounts;
   }
 
   @override
-  Future<List<domain.ConnectedCard>> getConnectedCards(
-    domain.GetConnectedCardsPayload payload,
+  Future<List<domain.ConnectedCard>> fetchConnectedCards(
+    domain.FetchConnectedCardsPayload payload,
   ) async {
     final List<domain.ConnectedCard> cards =
-        await _apiProvider.getConnectedCards(
-      request: const GetConnectedCardsRequest(),
+        await _apiProvider.fetchConnectedCards(
+      request: const FetchConnectedCardsRequest(),
     );
 
     return cards;
+  }
+
+  @override
+  bool fetchIsApplePaySupported(
+    domain.FetchIsApplePaySupportedPayload payload,
+  ) {
+    final bool isApplePaySupported = Stripe.instance.isApplePaySupported.value;
+
+    return isApplePaySupported;
+  }
+
+  @override
+  Future<bool> fetchIsGooglePaySupported(
+    domain.FetchIsGooglePaySupportedPayload payload,
+  ) async {
+    final bool isGooglePaySupported =
+        await Stripe.instance.isGooglePaySupported(
+      const IsGooglePaySupportedParams(),
+    );
+
+    return isGooglePaySupported;
   }
 }

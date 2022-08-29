@@ -8,6 +8,9 @@ class PaymentSettingsState {
   final bool isApplePaySupported;
   final bool isGooglePaySupported;
 
+  bool get digitalWalletsSupported =>
+      isApplePaySupported || isGooglePaySupported;
+
   const PaymentSettingsState({
     required this.bankAccounts,
     required this.cards,

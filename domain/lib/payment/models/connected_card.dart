@@ -12,7 +12,7 @@ class ConnectedCard extends Equatable {
   });
 
   @override
-  List<Object?> get props => <Object>[
+  List<Object?> get props => <Object?>[
         id,
         type,
         cardData,

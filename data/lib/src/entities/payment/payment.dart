@@ -10,11 +10,11 @@ part 'entities/connected_card_data_entity.dart';
 
 part 'requests/add_bank_account_request.dart';
 part 'requests/add_card_request.dart';
-part 'requests/get_plaid_bank_accounts_request.dart';
-part 'requests/get_connected_bank_accounts_request.dart';
-part 'requests/get_connected_cards_request.dart';
+part 'requests/fetch_plaid_bank_accounts_request.dart';
+part 'requests/fetch_connected_bank_accounts_request.dart';
+part 'requests/fetch_connected_cards_request.dart';
 
-part 'responses/get_connected_bank_accounts_response.dart';
-part 'responses/get_connected_cards_response.dart';
+part 'responses/fetch_connected_bank_accounts_response.dart';
+part 'responses/fetch_connected_cards_response.dart';
 
 part 'payment.g.dart';

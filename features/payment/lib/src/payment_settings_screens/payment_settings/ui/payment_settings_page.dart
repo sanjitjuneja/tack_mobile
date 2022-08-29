@@ -25,10 +25,14 @@ class PaymentSettingsPage extends Page<void> {
         create: (_) {
           return PaymentSettingsBloc(
             appRouter: appLocator.get<AppRouterDelegate>(),
-            getConnectedBankAccountsUseCase:
-                appLocator.get<GetConnectedBankAccountsUseCase>(),
-            getConnectedCardsUseCase:
-                appLocator.get<GetConnectedCardsUseCase>(),
+            fetchConnectedBankAccountsUseCase:
+                appLocator.get<FetchConnectedBankAccountsUseCase>(),
+            fetchConnectedCardsUseCase:
+                appLocator.get<FetchConnectedCardsUseCase>(),
+            fetchIsApplePaySupportedUseCase:
+                appLocator.get<FetchIsApplePaySupportedUseCase>(),
+            fetchIsGooglePaySupportedUseCase:
+                appLocator.get<FetchIsGooglePaySupportedUseCase>(),
           );
         },
         child: const PaymentSettingsScreen(),
