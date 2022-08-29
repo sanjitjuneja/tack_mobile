@@ -421,6 +421,8 @@ class DataDI {
     appLocator.unregister<AddBankAccountUseCase>();
     appLocator.unregister<FetchConnectedCardsUseCase>();
     appLocator.unregister<FetchConnectedBankAccountsUseCase>();
+    appLocator.unregister<FetchIsApplePaySupportedUseCase>();
+    appLocator.unregister<FetchIsGooglePaySupportedUseCase>();
 
     appLocator.unregister<LogOutUseCase>();
   }
