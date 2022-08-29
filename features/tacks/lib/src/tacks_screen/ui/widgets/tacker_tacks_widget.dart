@@ -4,8 +4,8 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:tacks/src/tacks_screen/bloc/tacks_bloc.dart';
-import 'package:tacks/src/tacks_screen/ui/widgets/tacker_tack/tacker_tack_widget.dart';
+import '../../bloc/tacks_bloc.dart';
+import 'tacker_tack/tacker_tack_widget.dart';
 
 class TackerTacksWidget extends StatelessWidget {
   const TackerTacksWidget({super.key});
@@ -28,9 +28,9 @@ class TackerTacksWidget extends StatelessWidget {
             builder: (_, TacksState state) {
               return AppListViewWithRefresh(
                 enableRefresh: true,
-                enableLoad: state.tackerTacksState.canLoadMore,
-                isLoading: state.tackerTacksState.isLoading,
-                hasData: state.tackerTacksState.hasData,
+                enableLoad: state.tackerTacksData.canLoadMore,
+                isLoading: state.isLoading,
+                hasData: state.tackerTacksData.hasData,
                 emptyWidget: EmptyWidget(
                   svgIcon: AppIconsTheme.tacksList,
                   descriptionKey: 'tacksScreen.empty.tackerTacks.description',
@@ -39,10 +39,10 @@ class TackerTacksWidget extends StatelessWidget {
                 ),
                 onRefresh: _onRefreshAction,
                 onLoad: _onLoadMoreAction,
-                itemCount: state.tackerTacksState.tacks.length,
+                itemCount: state.tackerTacksData.results.length,
                 itemBuilder: (_, int index) {
                   return TackerTackWidget(
-                    tack: state.tackerTacksState.tacks[index],
+                    tack: state.tackerTacksData.results[index],
                   );
                 },
               );

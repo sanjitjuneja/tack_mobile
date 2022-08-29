@@ -23,7 +23,7 @@ class DashboardForm extends StatelessWidget {
             key: ValueKey<Group>(state.currentGroup!),
             create: (_) => DashboardBloc(
               appRouter: appLocator.get<AppRouterDelegate>(),
-              getGroupTacksUseCase: appLocator.get<GetGroupTacksUseCase>(),
+              fetchGroupTacksUseCase: appLocator.get<FetchGroupTacksUseCase>(),
               makeOfferUseCase: appLocator.get<MakeOfferUseCase>(),
               selectedGroup: state.currentGroup!,
             ),

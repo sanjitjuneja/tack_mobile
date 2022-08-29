@@ -15,19 +15,19 @@ part 'create_tack_state.dart';
 
 class CreateTackBloc extends Bloc<CreateTackEvent, CreateTackState> {
   final AppRouterDelegate _appRouter;
-  final GetNearbyPopularTacksUseCase _getNearbyPopularTacksUseCase;
-  final GetGroupPopularTacksUseCase _getGroupPopularTacksUseCase;
+  final FetchNearbyPopularTacksUseCase _fetchNearbyPopularTacksUseCase;
+  final FetchGroupPopularTacksUseCase _fetchGroupPopularTacksUseCase;
 
   late StreamSubscription<GlobalState> _globalBlocSubscription;
 
   CreateTackBloc({
     required GlobalBloc globalBloc,
     required AppRouterDelegate appRouter,
-    required GetNearbyPopularTacksUseCase getNearbyPopularTacksUseCase,
-    required GetGroupPopularTacksUseCase getGroupPopularTacksUseCase,
+    required FetchNearbyPopularTacksUseCase fetchNearbyPopularTacksUseCase,
+    required FetchGroupPopularTacksUseCase fetchGroupPopularTacksUseCase,
   })  : _appRouter = appRouter,
-        _getNearbyPopularTacksUseCase = getNearbyPopularTacksUseCase,
-        _getGroupPopularTacksUseCase = getGroupPopularTacksUseCase,
+        _fetchNearbyPopularTacksUseCase = fetchNearbyPopularTacksUseCase,
+        _fetchGroupPopularTacksUseCase = fetchGroupPopularTacksUseCase,
         super(
           CreateTackState(
             group: globalBloc.state.currentGroup,
@@ -76,19 +76,25 @@ class CreateTackBloc extends Bloc<CreateTackEvent, CreateTackState> {
     Emitter<CreateTackState> emit,
   ) async {
     try {
-      final List<TemplateTack> tacks = await _getNearbyPopularTacksUseCase
-          .execute(const NearbyPopularTacksPayload());
+      final List<TemplateTack> tacks =
+          await _fetchNearbyPopularTacksUseCase.execute(
+        const FetchNearbyPopularTacksPayload(),
+      );
       event.completer?.complete(RefreshingStatus.complete);
       emit(
         state.copyWith(
-          nearbyTacksState: state.nearbyTacksState.copyWith(tacks: tacks),
+          nearbyTacksState: state.nearbyTacksState.copyWith(
+            tacks: tacks,
+          ),
         ),
       );
     } catch (e) {
       event.completer?.complete(RefreshingStatus.failed);
       if (event.completer == null) {
         emit(
-          state.copyWith(nearbyTacksState: const NearbyTacksState()),
+          state.copyWith(
+            nearbyTacksState: const NearbyTacksState(),
+          ),
         );
       }
     }
@@ -110,12 +116,18 @@ class CreateTackBloc extends Bloc<CreateTackEvent, CreateTackState> {
     }
 
     try {
-      final List<TemplateTack> tacks = await _getGroupPopularTacksUseCase
-          .execute(GroupPopularTacksPayload(groupId: state.group!.id));
+      final List<TemplateTack> tacks =
+          await _fetchGroupPopularTacksUseCase.execute(
+        FetchGroupPopularTacksPayload(
+          groupId: state.group!.id,
+        ),
+      );
       event.completer?.complete(RefreshingStatus.complete);
       emit(
         state.copyWith(
-          groupTacksState: state.groupTacksState.copyWith(tacks: tacks),
+          groupTacksState: state.groupTacksState.copyWith(
+            tacks: tacks,
+          ),
         ),
       );
     } catch (e) {

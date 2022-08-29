@@ -1,22 +1,27 @@
 part of 'tacks_bloc.dart';
 
 class TacksState {
-  final TackerTacksState tackerTacksState;
-  final RunnerTacksState runnerTacksState;
+  final PaginationModel<Tack> tackerTacksData;
+  final PaginationModel<RunnerTack> runnerTacksData;
+  final bool isLoading;
 
-  const TacksState({
-    TackerTacksState? tackerTacksState,
-    RunnerTacksState? runnerTacksState,
-  })  : tackerTacksState = tackerTacksState ?? const TackerTacksState(),
-        runnerTacksState = runnerTacksState ?? const RunnerTacksState();
+  TacksState({
+    PaginationModel<Tack>? tackerTacksData,
+    PaginationModel<RunnerTack>? runnerTacksData,
+    this.isLoading = false,
+  })  : tackerTacksData = tackerTacksData ?? PaginationModel<Tack>.empty(),
+        runnerTacksData =
+            runnerTacksData ?? PaginationModel<RunnerTack>.empty();
 
   TacksState copyWith({
-    TackerTacksState? tackerTacksState,
-    RunnerTacksState? runnerTacksState,
+    PaginationModel<Tack>? tackerTacksData,
+    PaginationModel<RunnerTack>? runnerTacksData,
+    bool? isLoading,
   }) {
     return TacksState(
-      tackerTacksState: tackerTacksState ?? this.tackerTacksState,
-      runnerTacksState: runnerTacksState ?? this.runnerTacksState,
+      tackerTacksData: tackerTacksData ?? this.tackerTacksData,
+      runnerTacksData: runnerTacksData ?? this.runnerTacksData,
+      isLoading: isLoading ?? false,
     );
   }
 }

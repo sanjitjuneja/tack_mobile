@@ -13,8 +13,8 @@ class GroupDetailsFrom extends StatelessWidget {
       children: const <Widget>[
         SizedBox(height: 20),
         Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 16.0),
-          child:  GroupInfoWidget(),
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          child: GroupInfoWidget(),
         ),
         SizedBox(height: 20),
         Expanded(

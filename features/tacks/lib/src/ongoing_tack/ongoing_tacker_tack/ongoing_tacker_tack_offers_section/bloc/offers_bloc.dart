@@ -9,12 +9,12 @@ part 'offers_event.dart';
 part 'offers_state.dart';
 
 class OffersBloc extends Bloc<OffersEvent, OffersState> {
-  final GetTackOffersUseCase _getTackOffersUseCase;
+  final FetchTackOffersUseCase _fetchTacksOffersUseCase;
 
   OffersBloc({
     required Tack tack,
-    required GetTackOffersUseCase getTackOffersUseCase,
-  })  : _getTackOffersUseCase = getTackOffersUseCase,
+    required FetchTackOffersUseCase fetchTacksOffersUseCase,
+  })  : _fetchTacksOffersUseCase = fetchTacksOffersUseCase,
         super(
           OffersState(
             tack: tack,
@@ -41,14 +41,16 @@ class OffersBloc extends Bloc<OffersEvent, OffersState> {
   ) async {
     try {
       final PaginationModel<Offer> offersData =
-          await _getTackOffersUseCase.execute(
-        TackOffersPayload(tack: state.tack),
+          await _fetchTacksOffersUseCase.execute(
+        FetchTackOffersPayload(tack: state.tack),
       );
 
       event.completer?.complete(RefreshingStatus.complete);
       emit(
         state.copyWith(
-          offersData: offersData,
+          offersData: state.offersData.more(
+            newPage: offersData,
+          ),
         ),
       );
     } catch (e) {
@@ -69,9 +71,11 @@ class OffersBloc extends Bloc<OffersEvent, OffersState> {
   ) async {
     try {
       final PaginationModel<Offer> offersData =
-          await _getTackOffersUseCase.execute(
-        TackOffersPayload(
+          await _fetchTacksOffersUseCase.execute(
+        FetchTackOffersPayload(
           tack: state.tack,
+          lastObjectId: state.offersData.results.lastOrNull?.id,
+          nextPage: state.offersData.next,
         ),
       );
 

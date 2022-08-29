@@ -16,7 +16,7 @@ class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
   final GetLastDeeplinkUseCase _getLastDeeplinkUseCase;
   final ResetLastDeeplinkUseCase _resetLastDeeplinkUseCase;
   final ObserveDeeplinkUseCase _observeDeeplinkUseCase;
-  final GetGroupInviteUseCase _getGroupInviteUseCase;
+  final FetchGroupInviteUseCase _fetchGroupInviteUseCase;
 
   late StreamSubscription<DeeplinkIntent?> _deeplinkSubscription;
 
@@ -25,12 +25,12 @@ class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
     required GetLastDeeplinkUseCase getLastDeeplinkUseCase,
     required ResetLastDeeplinkUseCase resetLastDeeplinkUseCase,
     required ObserveDeeplinkUseCase observeDeeplinkUseCase,
-    required GetGroupInviteUseCase getGroupInviteUseCase,
+    required FetchGroupInviteUseCase fetchGroupInviteUseCase,
   })  : _appRouter = appRouter,
         _getLastDeeplinkUseCase = getLastDeeplinkUseCase,
         _resetLastDeeplinkUseCase = resetLastDeeplinkUseCase,
         _observeDeeplinkUseCase = observeDeeplinkUseCase,
-        _getGroupInviteUseCase = getGroupInviteUseCase,
+        _fetchGroupInviteUseCase = fetchGroupInviteUseCase,
         super(const DeeplinkState()) {
     on<InitialCheck>(_onInitialCheck);
     on<ResetLastDeeplinkAction>(_onResetLastDeeplinkAction);
@@ -88,8 +88,8 @@ class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
   ) async {
     try {
       _appRouter.push(ProgressDialog.page());
-      final GroupInvite groupInvite = await _getGroupInviteUseCase.execute(
-        GetGroupInvitePayload(
+      final GroupInvite groupInvite = await _fetchGroupInviteUseCase.execute(
+        FetchGroupInvitePayload(
           uri: intent.link,
         ),
       );

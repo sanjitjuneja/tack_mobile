@@ -1,27 +1,22 @@
 part of 'invitations_bloc.dart';
 
 class InvitationsState {
-  final List<GroupInvitation> invitations;
+  final PaginationModel<GroupInvitation> invitationsData;
   final bool isLoading;
-  final bool canLoadMore;
 
-  bool get hasData => invitations.isNotEmpty;
-
-  const InvitationsState({
-    List<GroupInvitation>? invitations,
+  InvitationsState({
+    PaginationModel<GroupInvitation>? invitationsData,
     this.isLoading = false,
-    this.canLoadMore = true,
-  }) : invitations = invitations ?? const <GroupInvitation>[];
+  }) : invitationsData =
+            invitationsData ?? PaginationModel<GroupInvitation>.empty();
 
   InvitationsState copyWith({
-    List<GroupInvitation>? invitations,
+    PaginationModel<GroupInvitation>? invitationsData,
     bool? isLoading,
-    bool? canLoadMore,
   }) {
     return InvitationsState(
-      invitations: invitations ?? this.invitations,
+      invitationsData: invitationsData ?? this.invitationsData,
       isLoading: isLoading ?? false,
-      canLoadMore: canLoadMore ?? this.canLoadMore,
     );
   }
 }

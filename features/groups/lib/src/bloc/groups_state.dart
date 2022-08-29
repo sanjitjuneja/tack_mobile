@@ -1,27 +1,21 @@
 part of 'groups_bloc.dart';
 
 class GroupsState {
-  final List<GroupDetails> groups;
+  final PaginationModel<GroupDetails> groupsData;
   final bool isLoading;
-  final bool canLoadMore;
 
-  bool get hasData => groups.isNotEmpty;
-
-  const GroupsState({
-    List<GroupDetails>? groups,
+  GroupsState({
     this.isLoading = false,
-    this.canLoadMore = true,
-  }) : groups = groups ?? const <GroupDetails>[];
+    PaginationModel<GroupDetails>? groupsData,
+  }) : groupsData = groupsData ?? PaginationModel<GroupDetails>.empty();
 
   GroupsState copyWith({
-    List<GroupDetails>? groups,
+    PaginationModel<GroupDetails>? groupsData,
     bool? isLoading,
-    bool? canLoadMore,
   }) {
     return GroupsState(
-      groups: groups ?? this.groups,
+      groupsData: groupsData ?? this.groupsData,
       isLoading: isLoading ?? false,
-      canLoadMore: canLoadMore ?? this.canLoadMore,
     );
   }
 }

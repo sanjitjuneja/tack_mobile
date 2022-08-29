@@ -2,11 +2,13 @@ part of groups_entities;
 
 @JsonSerializable()
 class GroupDetailsEntity extends JsonSerializable {
+  final int id;
   final GroupEntity group;
   @JsonKey(name: 'is_muted')
   final bool isMuted;
 
   const GroupDetailsEntity({
+    required this.id,
     required this.group,
     required this.isMuted,
   });

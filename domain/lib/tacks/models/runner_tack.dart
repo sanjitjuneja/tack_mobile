@@ -1,6 +1,7 @@
 part of tacks;
 
 class RunnerTack extends Equatable {
+  final int id;
   final Tack tack;
   final Offer? offer;
 
@@ -9,12 +10,14 @@ class RunnerTack extends Equatable {
       tack.status != TackStatus.pendingAccept;
 
   const RunnerTack({
+    required this.id,
     required this.tack,
     required this.offer,
   });
 
   @override
   List<Object?> get props => <Object?>[
+        id,
         tack,
         offer,
       ];

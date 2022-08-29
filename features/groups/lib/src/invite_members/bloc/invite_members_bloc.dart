@@ -8,16 +8,16 @@ part 'invite_members_state.dart';
 
 class InviteMembersBloc extends Bloc<InviteMembersEvent, InviteMembersState> {
   final AppRouterDelegate _appRouter;
-  final LoadGroupInviteLinkUseCase _loadGroupInviteLinkUseCase;
+  final FetchGroupInviteLinkUseCase _fetchGroupInviteLinkUseCase;
   final CreateDeeplinkUseCase _createDeeplinkUseCase;
 
   InviteMembersBloc({
     required Group group,
     required AppRouterDelegate appRouter,
-    required LoadGroupInviteLinkUseCase loadGroupInviteLinkUseCase,
+    required FetchGroupInviteLinkUseCase fetchGroupInviteLinkUseCase,
     required CreateDeeplinkUseCase createDeeplinkUseCase,
   })  : _appRouter = appRouter,
-        _loadGroupInviteLinkUseCase = loadGroupInviteLinkUseCase,
+        _fetchGroupInviteLinkUseCase = fetchGroupInviteLinkUseCase,
         _createDeeplinkUseCase = createDeeplinkUseCase,
         super(
           InviteMembersState(
@@ -40,17 +40,29 @@ class InviteMembersBloc extends Bloc<InviteMembersEvent, InviteMembersState> {
     emit(state.copyWith(isLoading: true));
     try {
       final GroupInviteLink inviteLink =
-          await _loadGroupInviteLinkUseCase.execute(
-        GetGroupInviteLinkPayload(group: state.group),
+          await _fetchGroupInviteLinkUseCase.execute(
+        FetchGroupInviteLinkPayload(
+          group: state.group,
+        ),
       );
 
       final Uri deeplink = await _createDeeplinkUseCase.execute(
-        CreateDeeplinkPayload(url: inviteLink.link),
+        CreateDeeplinkPayload(
+          url: inviteLink.link,
+        ),
       );
 
-      emit(state.copyWith(inviteLink: deeplink));
+      emit(
+        state.copyWith(
+          inviteLink: deeplink,
+        ),
+      );
     } catch (_) {
-      emit(state.copyWith(hasError: true));
+      emit(
+        state.copyWith(
+          hasError: true,
+        ),
+      );
     }
   }
 
@@ -72,6 +84,8 @@ class InviteMembersBloc extends Bloc<InviteMembersEvent, InviteMembersState> {
   ) async {
     if (!state.hasData) return;
 
-    ShareManager.shareText(state.inviteLink.toString());
+    ShareManager.shareText(
+      state.inviteLink.toString(),
+    );
   }
 }

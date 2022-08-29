@@ -3,8 +3,8 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
-import 'package:groups/src/invitations/bloc/invitations_bloc.dart';
-import 'package:groups/src/invitations/ui/invitations_screen.dart';
+import '../bloc/invitations_bloc.dart';
+import 'invitations_screen.dart';
 
 class InvitationsFeature {
   static const String routeName = '/myInvitations';
@@ -28,8 +28,8 @@ class _InvitationsPage extends Page<void> {
         create: (_) {
           return InvitationsBloc(
             appRouter: AppRouter.of(context),
-            loadGroupInvitationsUseCase:
-                appLocator.get<LoadGroupInvitationsUseCase>(),
+            fetchGroupInvitationsUseCase:
+                appLocator.get<FetchGroupInvitationsUseCase>(),
             acceptGroupInvitationUseCase:
                 appLocator.get<AcceptGroupInvitationUseCase>(),
           );

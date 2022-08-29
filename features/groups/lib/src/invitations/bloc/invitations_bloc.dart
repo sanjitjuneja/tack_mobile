@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
-import 'package:groups/src/group_details/models/group_details_screen_result.dart';
-import 'package:groups/src/group_details/ui/group_details_page.dart';
 import 'package:navigation/navigation.dart';
+
+import '../../group_details/models/group_details_screen_result.dart';
+import '../../group_details/ui/group_details_page.dart';
 
 part 'invitations_event.dart';
 
@@ -13,18 +14,20 @@ part 'invitations_state.dart';
 
 class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState> {
   final AppRouterDelegate _appRouter;
-  final LoadGroupInvitationsUseCase _loadGroupInvitationsUseCase;
+  final FetchGroupInvitationsUseCase _fetchGroupInvitationsUseCase;
   final AcceptGroupInvitationUseCase _acceptGroupInvitationUseCase;
 
   InvitationsBloc({
     required AppRouterDelegate appRouter,
-    required LoadGroupInvitationsUseCase loadGroupInvitationsUseCase,
+    required FetchGroupInvitationsUseCase fetchGroupInvitationsUseCase,
     required AcceptGroupInvitationUseCase acceptGroupInvitationUseCase,
   })  : _appRouter = appRouter,
-        _loadGroupInvitationsUseCase = loadGroupInvitationsUseCase,
+        _fetchGroupInvitationsUseCase = fetchGroupInvitationsUseCase,
         _acceptGroupInvitationUseCase = acceptGroupInvitationUseCase,
         super(
-          const InvitationsState(isLoading: true),
+          InvitationsState(
+            isLoading: true,
+          ),
         ) {
     on<InitialLoad>(_onInitialLoad);
     on<RefreshAction>(_onRefreshAction);
@@ -48,17 +51,25 @@ class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState> {
     Emitter<InvitationsState> emit,
   ) async {
     try {
-      final List<GroupInvitation> invitations =
-          await _loadGroupInvitationsUseCase.execute(
-        const GetGroupInvitationsPayload(),
+      final PaginationModel<GroupInvitation> invitationsData =
+          await _fetchGroupInvitationsUseCase.execute(
+        const FetchGroupInvitationsPayload(),
       );
 
       event.completer?.complete(RefreshingStatus.complete);
-      emit(state.copyWith(invitations: invitations));
+      emit(
+        state.copyWith(
+          invitationsData: invitationsData,
+        ),
+      );
     } catch (_) {
       event.completer?.complete(RefreshingStatus.failed);
       if (event.completer == null) {
-        emit(state.copyWith(invitations: <GroupInvitation>[]));
+        emit(
+          state.copyWith(
+            invitationsData: PaginationModel.empty(),
+          ),
+        );
       }
     }
   }
@@ -68,13 +79,22 @@ class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState> {
     Emitter<InvitationsState> emit,
   ) async {
     try {
-      final List<GroupInvitation> invitations =
-          await _loadGroupInvitationsUseCase.execute(
-        const GetGroupInvitationsPayload(),
+      final PaginationModel<GroupInvitation> invitationsData =
+          await _fetchGroupInvitationsUseCase.execute(
+        FetchGroupInvitationsPayload(
+          lastObjectId: state.invitationsData.results.lastOrNull?.id,
+          nextPage: state.invitationsData.next,
+        ),
       );
 
       event.completer.complete(LoadingStatus.complete);
-      emit(state.copyWith(invitations: invitations));
+      emit(
+        state.copyWith(
+          invitationsData: state.invitationsData.more(
+            newPage: invitationsData,
+          ),
+        ),
+      );
     } catch (_) {
       event.completer.complete(LoadingStatus.failed);
     }

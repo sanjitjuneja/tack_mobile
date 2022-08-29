@@ -35,9 +35,9 @@ class _PickGroupDrawerForm extends StatelessWidget {
                 Flexible(
                   child: AppListViewWithRefresh(
                     enableRefresh: true,
-                    enableLoad: state.canLoadMore,
+                    enableLoad: state.groupsData.canLoadMore,
                     isLoading: state.isLoading,
-                    hasData: state.hasData,
+                    hasData: state.groupsData.hasData,
                     onRefresh: _onRefreshAction,
                     onLoad: _onLoadMoreAction,
                     refreshIndicatorSize: ProgressIndicatorSize.small,
@@ -50,7 +50,7 @@ class _PickGroupDrawerForm extends StatelessWidget {
                     separatorBuilder: (_, __) => const AppDivider(),
                     itemBuilder: (_, int index) {
                       final _SelectableGroup selectableGroup = _SelectableGroup(
-                        state.groups[index].group,
+                        state.groupsData.results[index].group,
                       );
 
                       return AppBaseSelectableTile<_SelectableGroup>(
@@ -61,7 +61,7 @@ class _PickGroupDrawerForm extends StatelessWidget {
                         constraints: const BoxConstraints(minHeight: 50),
                       );
                     },
-                    itemCount: state.groups.length,
+                    itemCount: state.groupsData.results.length,
                   ),
                 ),
                 const SizedBox(height: 12),

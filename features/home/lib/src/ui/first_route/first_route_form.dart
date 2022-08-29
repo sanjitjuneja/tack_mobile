@@ -28,7 +28,8 @@ class FirstRouteForm extends StatelessWidget {
               resetLastDeeplinkUseCase:
                   appLocator.get<ResetLastDeeplinkUseCase>(),
               observeDeeplinkUseCase: appLocator.get<ObserveDeeplinkUseCase>(),
-              getGroupInviteUseCase: appLocator.get<GetGroupInviteUseCase>(),
+              fetchGroupInviteUseCase:
+                  appLocator.get<FetchGroupInviteUseCase>(),
             );
           },
         ),

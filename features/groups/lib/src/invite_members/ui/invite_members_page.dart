@@ -3,8 +3,8 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
-import 'package:groups/src/invite_members/bloc/invite_members_bloc.dart';
-import 'package:groups/src/invite_members/ui/invite_members_screen.dart';
+import '../bloc/invite_members_bloc.dart';
+import 'invite_members_screen.dart';
 
 class InviteMembersFeature {
   static const String routeName = '/inviteMembers';
@@ -35,8 +35,8 @@ class _InviteMembersPage extends Page<void> {
           return InviteMembersBloc(
             group: group,
             appRouter: AppRouter.of(context),
-            loadGroupInviteLinkUseCase:
-                appLocator.get<LoadGroupInviteLinkUseCase>(),
+            fetchGroupInviteLinkUseCase:
+                appLocator.get<FetchGroupInviteLinkUseCase>(),
             createDeeplinkUseCase: appLocator.get<CreateDeeplinkUseCase>(),
           );
         },
