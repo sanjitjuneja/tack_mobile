@@ -571,19 +571,55 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.plaidMapper.fromEntity);
   }
 
-  Future<List<domain.ConnectedBankAccount>> getAddedBankAccounts({
-    required GetAddedBankAccountRequest request,
+  Future<List<domain.ConnectedBankAccount>> fetchPlaidBankAccounts({
+    required FetchPlaidBankAccountsRequest request,
   }) async {
-    return post<AddedBankAccountsResponse>(
+    return post<FetchConnectedBankAccountsResponse>(
       ApiQuery(
-        endpoint: BaseUrlConstants.addedBankAccounts,
+        endpoint: BaseUrlConstants.plaidBankAccounts,
         body: request.toJson(),
         params: null,
       ),
-      parser: AddedBankAccountsResponse.fromJson,
+      parser: FetchConnectedBankAccountsResponse.fromJson,
     ).then(
-      (AddedBankAccountsResponse response) =>
+      (FetchConnectedBankAccountsResponse response) =>
           mapper.connectedBankAccountMapper.fromList(
+        response.results,
+      ),
+    );
+  }
+
+  Future<List<domain.ConnectedBankAccount>> fetchConnectedBankAccounts({
+    required FetchConnectedBankAccountsRequest request,
+  }) async {
+    return get<FetchConnectedBankAccountsResponse>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.connectedBankAccounts,
+        body: null,
+        params: null,
+      ),
+      parser: FetchConnectedBankAccountsResponse.fromJson,
+    ).then(
+      (FetchConnectedBankAccountsResponse response) =>
+          mapper.connectedBankAccountMapper.fromList(
+        response.results,
+      ),
+    );
+  }
+
+  Future<List<domain.ConnectedCard>> fetchConnectedCards({
+    required FetchConnectedCardsRequest request,
+  }) async {
+    return get<FetchConnectedCardsResponse>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.connectedCards,
+        body: null,
+        params: null,
+      ),
+      parser: FetchConnectedCardsResponse.fromJson,
+    ).then(
+      (FetchConnectedCardsResponse response) =>
+          mapper.connectedCardMapper.fromList(
         response.results,
       ),
     );

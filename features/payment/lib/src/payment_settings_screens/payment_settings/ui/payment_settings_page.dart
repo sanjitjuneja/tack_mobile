@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:domain/payment/payment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 import '../bloc/payment_settings_bloc.dart';
@@ -24,6 +25,14 @@ class PaymentSettingsPage extends Page<void> {
         create: (_) {
           return PaymentSettingsBloc(
             appRouter: appLocator.get<AppRouterDelegate>(),
+            fetchConnectedBankAccountsUseCase:
+                appLocator.get<FetchConnectedBankAccountsUseCase>(),
+            fetchConnectedCardsUseCase:
+                appLocator.get<FetchConnectedCardsUseCase>(),
+            fetchIsApplePaySupportedUseCase:
+                appLocator.get<FetchIsApplePaySupportedUseCase>(),
+            fetchIsGooglePaySupportedUseCase:
+                appLocator.get<FetchIsGooglePaySupportedUseCase>(),
           );
         },
         child: const PaymentSettingsScreen(),

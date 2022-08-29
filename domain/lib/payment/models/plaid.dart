@@ -8,5 +8,5 @@ class Plaid extends Equatable {
   });
 
   @override
-  List<Object?> get props => <Object>[linkToken];
+  List<Object?> get props => <Object?>[linkToken];
 }

@@ -54,5 +54,7 @@ class BaseUrlConstants {
 
   static const String paymentIntent = 'payment/add-payment-method/';
   static const String plaidToken = 'payment/get-link-token/';
-  static const String addedBankAccounts = 'payment/add-withdraw-method/';
+  static const String plaidBankAccounts = 'payment/add-withdraw-method/';
+  static const String connectedBankAccounts = 'payment/get-withdraw-methods/';
+  static const String connectedCards = 'payment/get-payment-methods/';
 }

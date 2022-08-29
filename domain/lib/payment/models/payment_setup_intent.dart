@@ -8,5 +8,5 @@ class PaymentSetupIntent extends Equatable {
   });
 
   @override
-  List<Object?> get props => <Object>[clientSecret];
+  List<Object?> get props => <Object?>[clientSecret];
 }

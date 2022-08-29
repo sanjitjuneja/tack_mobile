@@ -9,6 +9,7 @@ class PaymentMethodTile extends StatelessWidget {
   final VoidCallback? onTap;
   final bool isPrimary;
   final bool isColored;
+  final bool hasTrailingArrow;
 
   const PaymentMethodTile({
     Key? key,
@@ -18,6 +19,7 @@ class PaymentMethodTile extends StatelessWidget {
     this.onTap,
     this.isPrimary = false,
     this.isColored = false,
+    this.hasTrailingArrow = true,
   }) : super(key: key);
 
   @override
@@ -25,8 +27,11 @@ class PaymentMethodTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 60,
-        padding: const EdgeInsets.only(left: 18.0),
+        padding: isColored
+            ? const EdgeInsets.symmetric(
+                horizontal: 16.0,
+              )
+            : null,
         decoration: isColored
             ? BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
@@ -42,8 +47,8 @@ class PaymentMethodTile extends StatelessWidget {
               )
             : null,
         child: Column(
-          children: [
-            const Spacer(),
+          children: <Widget>[
+            const SizedBox(height: 8),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -77,14 +82,15 @@ class PaymentMethodTile extends StatelessWidget {
                     ),
                   ),
                 const SizedBox(width: 18),
-                AppIconsTheme.chevronRight(
-                  color: AppTheme.iconPrimaryColor,
-                  size: 20,
-                ),
+                if (hasTrailingArrow)
+                  AppIconsTheme.chevronRight(
+                    color: AppTheme.iconPrimaryColor,
+                    size: 20,
+                  ),
               ],
             ),
-            const Spacer(),
-            if (!isColored) const AppDivider(width: 335),
+            const SizedBox(height: 8),
+            if (!isColored) const AppDivider(),
           ],
         ),
       ),

@@ -554,6 +554,8 @@
     "banks": "Banks",
     "cards": "Cards",
     "digitalWallets": "Digital Wallets",
+    "applePay": "Apple Pay",
+    "googlePay": "Google Pay",
     "addPaymentMethod": "Add Payment Method",
     "privacyInfo": "Tack does not store any of your payment info"
   },

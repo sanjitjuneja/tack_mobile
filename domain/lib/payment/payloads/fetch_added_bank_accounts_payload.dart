@@ -1,9 +1,9 @@
 part of payment;
 
-class GetAddedBankAccountPayload {
+class FetchAddedBankAccountPayload {
   final String publicToken;
 
-  const GetAddedBankAccountPayload({
+  const FetchAddedBankAccountPayload({
     required this.publicToken,
   });
 }
