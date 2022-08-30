@@ -2,17 +2,17 @@ part of 'dashboard_bloc.dart';
 
 class DashboardState {
   final Group group;
-  final PaginationModel<Tack> tacksData;
+  final PaginationModel<GroupTack> tacksData;
   final bool isLoading;
 
   DashboardState({
     required this.group,
     this.isLoading = false,
-    PaginationModel<Tack>? tacksData,
-  }) : tacksData = tacksData ?? PaginationModel<Tack>.empty();
+    PaginationModel<GroupTack>? tacksData,
+  }) : tacksData = tacksData ?? PaginationModel<GroupTack>.empty();
 
   DashboardState copyWith({
-    PaginationModel<Tack>? tacksData,
+    PaginationModel<GroupTack>? tacksData,
     bool? isLoading,
   }) {
     return DashboardState(

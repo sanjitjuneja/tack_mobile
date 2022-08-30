@@ -1,11 +1,12 @@
-import 'package:app_drawer/src/bloc/app_drawer_bloc.dart';
-import 'package:app_drawer/src/ui/app_drawer_widget.dart';
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:navigation/navigation.dart';
+
+import '../bloc/app_drawer_bloc.dart';
+import 'app_drawer_widget.dart';
 import 'widgets/app_drawer_close_button.dart';
 
 class AppDrawer {
@@ -36,6 +37,11 @@ class _AppDrawerPage extends Page<void> {
                 appRouterDelegate: appLocator.get<AppRouterDelegate>(),
                 getCurrentUserUseCase: appLocator.get<GetCurrentUserUseCase>(),
                 observeUserUseCase: appLocator.get<ObserveUserUseCase>(),
+                getUserBalanceUseCase: appLocator.get<GetUserBalanceUseCase>(),
+                observeUserBalanceUseCase:
+                    appLocator.get<ObserveUserBalanceUseCase>(),
+                fetchUserBalanceUseCase:
+                    appLocator.get<FetchUserBalanceUseCase>(),
                 logOutUseCase: appLocator.get<LogOutUseCase>(),
               );
             },

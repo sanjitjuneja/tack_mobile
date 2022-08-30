@@ -4,22 +4,22 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 
 class PageHeaderWithGroupWidget extends StatelessWidget {
-  final String titleKey;
+  final String subtitleKey;
+  final String? titleKey;
   final Group? group;
   final AppIcon? image;
-  final String? subtitleKey;
   final VoidCallback? onTap;
   final bool withFeedback;
 
   const PageHeaderWithGroupWidget({
     super.key,
-    required this.titleKey,
+    required this.subtitleKey,
+    this.titleKey,
     this.group,
     this.image,
-    this.subtitleKey,
     this.onTap,
     this.withFeedback = false,
-  }) : assert(group != null || subtitleKey != null);
+  }) : assert(group != null || titleKey != null);
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +41,13 @@ class PageHeaderWithGroupWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  FlutterI18n.translate(context, titleKey),
+                  group?.name ?? FlutterI18n.translate(context, titleKey!),
                   style: AppTextTheme.manrope18Regular.copyWith(
                     color: AppTheme.textPrimaryColor,
                   ),
                 ),
                 Text(
-                  group?.name ?? FlutterI18n.translate(context, subtitleKey!),
+                  FlutterI18n.translate(context, subtitleKey),
                   style: AppTextTheme.manrope11Regular.copyWith(
                     color: AppTheme.textHintColor,
                   ),

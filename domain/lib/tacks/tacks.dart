@@ -4,6 +4,7 @@ import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:domain/use_case.dart';
 
+part 'models/group_tack.dart';
 part 'models/offer.dart';
 part 'models/offer_type.dart';
 part 'models/runner_tack.dart';

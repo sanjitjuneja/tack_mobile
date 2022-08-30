@@ -65,7 +65,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     Emitter<DashboardState> emit,
   ) async {
     try {
-      final PaginationModel<Tack> tacksData =
+      final PaginationModel<GroupTack> tacksData =
           await _fetchGroupTacksUseCase.execute(
         FetchGroupTacksPayload(groupId: state.group.id),
       );
@@ -93,7 +93,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     Emitter<DashboardState> emit,
   ) async {
     try {
-      final PaginationModel<Tack> tacksData =
+      final PaginationModel<GroupTack> tacksData =
           await _fetchGroupTacksUseCase.execute(
         FetchGroupTacksPayload(
           groupId: state.group.id,
@@ -119,7 +119,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     OpenOwnOngoingTack event,
     Emitter<DashboardState> emit,
   ) async {
-    _appRouter.pushForResult(OngoingTackerTack.page(tack: event.tack));
+    _appRouter.pushForResult(
+      OngoingTackerTack.page(
+        tack: event.groupTack.tack,
+      ),
+    );
   }
 
   Future<void> _onCounterOfferOpen(
@@ -127,7 +131,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     Emitter<DashboardState> emit,
   ) async {
     final bool? result = await _appRouter.pushForResult(
-      CounterOffer.page(tack: event.tack),
+      CounterOffer.page(groupTack: event.groupTack),
     );
 
     if (result != null) {
@@ -146,7 +150,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       _appRouter.push(ProgressDialog.page());
       await _makeOfferUseCase.execute(
         MakeOfferPayload(
-          tackId: event.tack.id,
+          tackId: event.groupTack.tack.id,
         ),
       );
       _appRouter.pop();

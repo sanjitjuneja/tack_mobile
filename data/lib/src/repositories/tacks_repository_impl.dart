@@ -81,7 +81,7 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   }
 
   @override
-  Future<domain.PaginationModel<domain.Tack>> fetchGroupTacks(
+  Future<domain.PaginationModel<domain.GroupTack>> fetchGroupTacks(
     domain.FetchGroupTacksPayload payload,
   ) async {
     return _apiProvider.fetchGroupTacks(

@@ -2,10 +2,11 @@ part of mappers;
 
 class UserBankAccountMapper
     implements Mapper<UserBankAccountEntity, domain.UserBankAccount> {
+  const UserBankAccountMapper();
+
   @override
   domain.UserBankAccount fromEntity(UserBankAccountEntity entity) {
     return domain.UserBankAccount(
-      userId: entity.user,
       usdBalance: entity.usdBalance / 100,
     );
   }
@@ -13,7 +14,6 @@ class UserBankAccountMapper
   @override
   UserBankAccountEntity toEntity(domain.UserBankAccount item) {
     return UserBankAccountEntity(
-      user: item.userId,
       usdBalance: (item.usdBalance * 100).toInt(),
     );
   }

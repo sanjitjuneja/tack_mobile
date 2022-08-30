@@ -14,9 +14,4 @@ class SmsVerificationEntity extends JsonSerializable {
 
   @override
   Map<String, dynamic> toJson() => _$SmsVerificationEntityToJson(this);
-
-  @override
-  fromJson(Map<String, dynamic> parsedJson) {
-    return _$SmsVerificationEntityFromJson(parsedJson);
-  }
 }

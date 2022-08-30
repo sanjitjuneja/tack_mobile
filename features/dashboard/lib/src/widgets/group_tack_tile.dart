@@ -8,16 +8,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:home/home.dart';
 
 part 'tack_general_info_widget.dart';
+
 part 'tack_header_widget.dart';
+
 part 'tack_tile_actions.dart';
 
-class TackTile extends StatelessWidget {
-  final Tack tack;
+class GroupTackTile extends StatelessWidget {
+  final GroupTack groupTack;
   final bool withActions;
 
-  const TackTile({
+  const GroupTackTile({
     super.key,
-    required this.tack,
+    required this.groupTack,
     this.withActions = true,
   });
 
@@ -31,11 +33,13 @@ class TackTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TackHeaderWidget(
-            name: tack.title,
-            fee: tack.price,
+            name: groupTack.tack.title,
+            fee: groupTack.tack.price,
           ),
           const SizedBox(height: 10),
-          TackGeneralInfoWidget(tack: tack),
+          TackGeneralInfoWidget(
+            tack: groupTack.tack,
+          ),
         ],
       ),
       footer: Column(
@@ -44,14 +48,14 @@ class TackTile extends StatelessWidget {
         children: <Widget>[
           if (withActions) ...<Widget>[
             ExpandableText(
-              text: tack.description,
+              text: groupTack.tack.description,
               style: descriptionTextStyle,
             ),
             const SizedBox(height: 10),
-            TackTileActions(tack: tack),
+            TackTileActions(groupTack: groupTack),
           ] else
             Text(
-              tack.description,
+              groupTack.tack.description,
               style: descriptionTextStyle,
             ),
         ],

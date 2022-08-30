@@ -2,8 +2,8 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:tacks/src/ongoing_tack/ongoing_runner_tack/bloc/ongoing_runner_tack_bloc.dart';
-import 'package:tacks/src/ongoing_tack/ongoing_runner_tack/ui/ongoing_runner_tack_form.dart';
+import '../bloc/ongoing_runner_tack_bloc.dart';
+import 'ongoing_runner_tack_form.dart';
 
 class OngoingRunnerTackScreen extends StatelessWidget {
   const OngoingRunnerTackScreen({super.key});
@@ -15,10 +15,19 @@ class OngoingRunnerTackScreen extends StatelessWidget {
       navigationBar: AppNavigationBar(
         backgroundColor: AppTheme.backgroundColor,
         actions: <Widget>[
-          NavigationBarActionButton(
-            labelKey: 'ongoingTackScreen.contactTackerButton',
-            icon: AppIconsTheme.phone,
-            onTap: _onContactButtonPressed,
+          BlocBuilder<OngoingRunnerTackBloc, OngoingRunnerTackState>(
+            bloc: BlocProvider.of<OngoingRunnerTackBloc>(context),
+            builder: (_, OngoingRunnerTackState state) {
+              if (state.hasContactData) {
+                return NavigationBarActionButton(
+                  labelKey: 'ongoingTackScreen.contactTackerButton',
+                  icon: AppIconsTheme.phone,
+                  onTap: _onContactButtonPressed,
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
           ),
         ],
       ),

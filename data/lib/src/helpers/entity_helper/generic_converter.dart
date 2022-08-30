@@ -1,21 +1,26 @@
-import 'package:data/src/entities/entities.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../entities/entities.dart';
 
 class GenericConverter<T> implements JsonConverter<T, Object> {
   const GenericConverter();
 
   @override
   T fromJson(Object json) {
-    if (json is Map<String, dynamic> && T == GroupDetailsEntity){
+    if (json is Map<String, dynamic> && T == GroupDetailsEntity) {
       return GroupDetailsEntity.fromJson(json) as T;
     }
 
-    if (json is Map<String, dynamic> && T == GroupInvitationEntity){
+    if (json is Map<String, dynamic> && T == GroupInvitationEntity) {
       return GroupInvitationEntity.fromJson(json) as T;
     }
 
     if (json is Map<String, dynamic> && T == TackEntity) {
       return TackEntity.fromJson(json) as T;
+    }
+
+    if (json is Map<String, dynamic> && T == GroupTackEntity) {
+      return GroupTackEntity.fromJson(json) as T;
     }
 
     if (json is Map<String, dynamic> && T == RunnerTackEntity) {
@@ -45,6 +50,10 @@ class GenericConverter<T> implements JsonConverter<T, Object> {
 
     if (T is TackEntity) {
       return (object as TackEntity).toJson();
+    }
+
+    if (T is GroupTackEntity) {
+      return (object as GroupTackEntity).toJson();
     }
 
     if (T is RunnerTackEntity) {

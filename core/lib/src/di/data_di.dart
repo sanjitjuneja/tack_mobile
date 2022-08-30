@@ -131,13 +131,15 @@ class DataDI {
   }
 
   Future<void> setupPostLoginAppLocator() async {
-    appLocator.registerSingleton<UserRepository>(
-      UserRepositoryImpl(
-        apiProvider: appLocator.get<ApiProvider>(),
-        sessionProvider: appLocator.get<SessionProvider>(),
-        sharedPreferencesProvider: appLocator.get<SharedPreferencesProvider>(),
-      ),
+    final UserRepository userRepository = UserRepositoryImpl(
+      apiProvider: appLocator.get<ApiProvider>(),
+      sessionProvider: appLocator.get<SessionProvider>(),
+      sharedPreferencesProvider: appLocator.get<SharedPreferencesProvider>(),
     );
+
+    await userRepository.initialLoad();
+
+    appLocator.registerSingleton<UserRepository>(userRepository);
     appLocator.registerLazySingleton<GetCurrentUserUseCase>(
       () => GetCurrentUserUseCase(
         userRepository: appLocator.get<UserRepository>(),
@@ -155,6 +157,26 @@ class DataDI {
     );
     appLocator.registerLazySingleton<ChangePasswordUseCase>(
       () => ChangePasswordUseCase(
+        userRepository: appLocator.get<UserRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<FetchUserBalanceUseCase>(
+      () => FetchUserBalanceUseCase(
+        userRepository: appLocator.get<UserRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<GetUserBalanceUseCase>(
+      () => GetUserBalanceUseCase(
+        userRepository: appLocator.get<UserRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<ObserveUserBalanceUseCase>(
+      () => ObserveUserBalanceUseCase(
+        userRepository: appLocator.get<UserRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<FetchUserContactsUseCase>(
+      () => FetchUserContactsUseCase(
         userRepository: appLocator.get<UserRepository>(),
       ),
     );
@@ -375,6 +397,10 @@ class DataDI {
     appLocator.unregister<ObserveUserUseCase>();
     appLocator.unregister<UpdateUserInfoUseCase>();
     appLocator.unregister<ChangePasswordUseCase>();
+    appLocator.unregister<FetchUserBalanceUseCase>();
+    appLocator.unregister<GetUserBalanceUseCase>();
+    appLocator.unregister<ObserveUserBalanceUseCase>();
+    appLocator.unregister<FetchUserContactsUseCase>();
 
     appLocator.unregister<GroupsRepository>();
     appLocator.unregister<AcceptGroupInvitationUseCase>();

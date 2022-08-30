@@ -17,24 +17,37 @@ part 'app_drawer_state.dart';
 class AppDrawerBloc extends Bloc<AppDrawerEvent, AppDrawerState> {
   final AppRouterDelegate _appRouter;
   final ObserveUserUseCase _observeUserUseCase;
+  final ObserveUserBalanceUseCase _observeUserBalanceUseCase;
+  final FetchUserBalanceUseCase _fetchUserBalanceUseCase;
   final LogOutUseCase _logOutUseCase;
 
   late StreamSubscription<User> _userSubscription;
+  late StreamSubscription<UserBankAccount> _userBalanceSubscription;
 
   AppDrawerBloc({
     required AppRouterDelegate appRouterDelegate,
     required GetCurrentUserUseCase getCurrentUserUseCase,
     required ObserveUserUseCase observeUserUseCase,
+    required GetUserBalanceUseCase getUserBalanceUseCase,
+    required ObserveUserBalanceUseCase observeUserBalanceUseCase,
+    required FetchUserBalanceUseCase fetchUserBalanceUseCase,
     required LogOutUseCase logOutUseCase,
   })  : _appRouter = appRouterDelegate,
         _observeUserUseCase = observeUserUseCase,
+        _observeUserBalanceUseCase = observeUserBalanceUseCase,
+        _fetchUserBalanceUseCase = fetchUserBalanceUseCase,
         _logOutUseCase = logOutUseCase,
         super(
           AppDrawerState(
             user: getCurrentUserUseCase.execute(NoParams()),
+            userBalance: getUserBalanceUseCase.execute(NoParams()),
           ),
         ) {
+    on<FetchUserBalanceAction>(_onFetchUserBalanceAction);
+
     on<UserUpdate>(_onUserUpdate);
+    on<UserBalanceUpdate>(_onUserBalanceUpdate);
+
     on<GoTo>(_onGoTo);
     on<LogOut>(_onLogOut);
 
@@ -44,6 +57,26 @@ class AppDrawerBloc extends Bloc<AppDrawerEvent, AppDrawerState> {
         add(event);
       },
     );
+    _userBalanceSubscription =
+        _observeUserBalanceUseCase.execute(NoParams()).listen(
+      (UserBankAccount newUserBalance) {
+        final AppDrawerEvent event = UserBalanceUpdate(
+          userBalance: newUserBalance,
+        );
+        add(event);
+      },
+    );
+
+    add(const FetchUserBalanceAction());
+  }
+
+  Future<void> _onFetchUserBalanceAction(
+    FetchUserBalanceAction event,
+    Emitter<AppDrawerState> emit,
+  ) async {
+    try {
+      await _fetchUserBalanceUseCase.execute(const FetchUserBalancePayload());
+    } catch (_) {}
   }
 
   Future<void> _onUserUpdate(
@@ -52,6 +85,15 @@ class AppDrawerBloc extends Bloc<AppDrawerEvent, AppDrawerState> {
   ) async {
     emit(
       state.copyWith(user: event.user),
+    );
+  }
+
+  Future<void> _onUserBalanceUpdate(
+    UserBalanceUpdate event,
+    Emitter<AppDrawerState> emit,
+  ) async {
+    emit(
+      state.copyWith(userBalance: event.userBalance),
     );
   }
 
@@ -82,7 +124,7 @@ class AppDrawerBloc extends Bloc<AppDrawerEvent, AppDrawerState> {
         _appRouter.push(PaymentSettingsFeature.page());
         break;
       case GoToOption.customerSupport:
-        _appRouter.push(CustomerSupport.page());
+        _appRouter.push(CustomerSupportFeature.page());
         break;
       case GoToOption.termsAndConditions:
         UrlManager.openUrlFromTranslation(
@@ -109,6 +151,8 @@ class AppDrawerBloc extends Bloc<AppDrawerEvent, AppDrawerState> {
   @override
   Future<void> close() {
     _userSubscription.cancel();
+    _userBalanceSubscription.cancel();
+
     return super.close();
   }
 }

@@ -1,7 +1,8 @@
-import 'package:app_drawer/src/bloc/app_drawer_bloc.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
+
+import '../../bloc/app_drawer_bloc.dart';
 
 class AppDrawerHeader extends StatelessWidget {
   const AppDrawerHeader({super.key});
@@ -38,7 +39,9 @@ class AppDrawerHeader extends StatelessWidget {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      CurrencyUtility.dollarFormat.format(0.0),
+                      CurrencyUtility.dollarFormat.format(
+                        state.userBalance.usdBalance,
+                      ),
                       style: AppTextTheme.manrope26Bold
                           .copyWith(color: AppTheme.textSecondaryColor),
                     ),

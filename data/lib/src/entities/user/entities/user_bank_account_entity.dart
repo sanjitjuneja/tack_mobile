@@ -2,12 +2,10 @@ part of user_entities;
 
 @JsonSerializable()
 class UserBankAccountEntity extends JsonSerializable {
-  final int user;
   @JsonKey(name: 'usd_balance')
   final int usdBalance;
 
   const UserBankAccountEntity({
-    required this.user,
     required this.usdBalance,
   });
 

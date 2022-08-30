@@ -2,8 +2,8 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:tacks/src/ongoing_tack/ongoing_tacker_tack/bloc/ongoing_tacker_tack_bloc.dart';
-import 'package:tacks/src/ongoing_tack/ongoing_tacker_tack/ui/ongoing_tacker_tack_form.dart';
+import '../bloc/ongoing_tacker_tack_bloc.dart';
+import 'ongoing_tacker_tack_form.dart';
 
 class OngoingTackerTackScreen extends StatelessWidget {
   const OngoingTackerTackScreen({super.key});
@@ -23,12 +23,14 @@ class OngoingTackerTackScreen extends StatelessWidget {
                   labelKey: 'ongoingTackScreen.cancelTackButton',
                   onTap: _onCancelButtonPressed,
                 );
-              } else {
+              } else if (state.hasContactData) {
                 return NavigationBarActionButton(
                   labelKey: 'ongoingTackScreen.contactRunnerButton',
                   icon: AppIconsTheme.phone,
                   onTap: _onContactButtonPressed,
                 );
+              } else {
+                return const SizedBox.shrink();
               }
             },
           ),

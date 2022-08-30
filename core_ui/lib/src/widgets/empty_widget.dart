@@ -9,17 +9,21 @@ class EmptyWidget extends StatelessWidget {
   final Widget? footer;
   final EdgeInsets? footerPadding;
   final String? buttonLabelKey;
+  final String? secondButtonLabelKey;
   final VoidCallback? onButtonTap;
+  final VoidCallback? onSecondButtonTap;
 
   const EmptyWidget({
     super.key,
     required this.svgIcon,
+    this.titleKey,
     this.descriptionKey,
     this.footer,
     this.footerPadding,
     this.buttonLabelKey,
+    this.secondButtonLabelKey,
     this.onButtonTap,
-    this.titleKey,
+    this.onSecondButtonTap,
   });
 
   @override
@@ -92,6 +96,14 @@ class EmptyWidget extends StatelessWidget {
             labelKey: buttonLabelKey!,
             onTap: onButtonTap,
           ),
+          if (secondButtonLabelKey != null) ...<Widget>[
+            const SizedBox(height: 10),
+            AppCircleButton(
+              margin: const EdgeInsets.symmetric(horizontal: 48.0),
+              labelKey: secondButtonLabelKey!,
+              onTap: onSecondButtonTap,
+            ),
+          ],
         ],
         const Spacer(flex: 2),
       ],

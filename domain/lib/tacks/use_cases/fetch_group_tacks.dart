@@ -1,7 +1,7 @@
 part of tacks;
 
 class FetchGroupTacksUseCase
-    extends FutureUseCase<PaginationModel<Tack>, FetchGroupTacksPayload> {
+    extends FutureUseCase<PaginationModel<GroupTack>, FetchGroupTacksPayload> {
   final TacksRepository _tacksRepository;
 
   FetchGroupTacksUseCase({
@@ -9,7 +9,9 @@ class FetchGroupTacksUseCase
   }) : _tacksRepository = tacksRepository;
 
   @override
-  Future<PaginationModel<Tack>> execute(FetchGroupTacksPayload params) async {
+  Future<PaginationModel<GroupTack>> execute(
+    FetchGroupTacksPayload params,
+  ) async {
     return _tacksRepository.fetchGroupTacks(params);
   }
 }

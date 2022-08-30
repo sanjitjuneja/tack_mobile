@@ -16,16 +16,16 @@ class CounterOfferBloc extends Bloc<CounterOfferEvent, CounterOfferState> {
   final MakeOfferUseCase _makeOfferUseCase;
 
   CounterOfferBloc({
+    required GroupTack groupTack,
     required AppRouterDelegate appRouter,
     required MakeOfferUseCase makeOfferUseCase,
-    required Tack tack,
   })  : _appRouter = appRouter,
         _makeOfferUseCase = makeOfferUseCase,
         super(
           CounterOfferState(
-            tack: tack,
+            groupTack: groupTack,
             counterOfferData: CounterOfferData(
-              minValue: tack.price,
+              minValue: groupTack.tack.price,
               maxValue: _maxCounterOfferValue,
               isValidationEnabled: false,
               isRequired: true,
@@ -63,7 +63,7 @@ class CounterOfferBloc extends Bloc<CounterOfferEvent, CounterOfferState> {
       _appRouter.push(ProgressDialog.page());
       await _makeOfferUseCase.execute(
         MakeOfferPayload(
-          tackId: state.tack.id,
+          tackId: state.groupTack.tack.id,
           price: state.counterOfferData.parsedPrice,
         ),
       );

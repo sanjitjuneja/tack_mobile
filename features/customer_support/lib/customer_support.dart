@@ -1,3 +1,3 @@
 library customer_support;
 
-export 'customer_support_feature.dart';
+export 'src/ui/customer_support_page.dart';
