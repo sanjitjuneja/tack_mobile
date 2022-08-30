@@ -8,7 +8,7 @@ class SignUpByPhonePayload {
   final String lastName;
   final String phoneNumber;
 
-  SignUpByPhonePayload({
+  const SignUpByPhonePayload({
     required this.uuid,
     required this.email,
     required this.password,

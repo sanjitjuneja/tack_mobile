@@ -47,7 +47,8 @@ class _GroupDetailsPage extends Page<GroupDetailsScreenResult?> {
         create: (_) {
           return GroupDetailsBloc(
             appRouter: AppRouter.of(context),
-            loadGroupMembersUseCase: appLocator.get<LoadGroupMembersUseCase>(),
+            fetchGroupMembersUseCase:
+                appLocator.get<FetchGroupMembersUseCase>(),
             acceptGroupInvitationUseCase:
                 appLocator.get<AcceptGroupInvitationUseCase>(),
             declineGroupInvitationUseCase:

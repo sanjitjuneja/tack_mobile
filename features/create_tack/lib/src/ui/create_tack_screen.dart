@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
 
-import 'package:create_tack/src/bloc/create_tack_bloc.dart';
-import 'package:create_tack/src/ui/create_tack_form.dart';
+import '../bloc/create_tack_bloc.dart';
+import 'create_tack_form.dart';
 
 class CreateTackScreen extends StatelessWidget {
   const CreateTackScreen({super.key});
@@ -17,10 +17,10 @@ class CreateTackScreen extends StatelessWidget {
       create: (_) => CreateTackBloc(
         globalBloc: BlocProvider.of<GlobalBloc>(context),
         appRouter: appLocator.get<AppRouterDelegate>(),
-        getNearbyPopularTacksUseCase:
-            appLocator.get<GetNearbyPopularTacksUseCase>(),
-        getGroupPopularTacksUseCase:
-            appLocator.get<GetGroupPopularTacksUseCase>(),
+        fetchNearbyPopularTacksUseCase:
+            appLocator.get<FetchNearbyPopularTacksUseCase>(),
+        fetchGroupPopularTacksUseCase:
+            appLocator.get<FetchGroupPopularTacksUseCase>(),
       ),
       child: CupertinoPageScaffold(
         backgroundColor: AppTheme.primaryBackgroundColor,
@@ -34,8 +34,8 @@ class CreateTackScreen extends StatelessWidget {
               return Align(
                 alignment: Alignment.centerLeft,
                 child: PageHeaderWithGroupWidget(
-                  titleKey: 'createTackScreen.title',
-                  subtitleKey: 'general.noGroupSelectedSubtitle',
+                  titleKey: 'general.noGroupSelected',
+                  subtitleKey: 'createTackScreen.title',
                   group: state.currentGroup,
                   withFeedback: state.canPickOtherGroup,
                   onTap: state.canPickOtherGroup

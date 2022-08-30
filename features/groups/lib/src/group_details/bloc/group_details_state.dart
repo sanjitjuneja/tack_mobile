@@ -3,26 +3,30 @@ part of 'group_details_bloc.dart';
 class GroupDetailsState {
   final GroupDetails? groupDetails;
   final GroupInvitation? invitation;
-  final GroupsUsersState usersState;
+  final PaginationModel<TackUser> membersData;
+  final bool isLoading;
 
   bool get isInvitation => invitation != null;
 
   Group get group => groupDetails?.group ?? invitation!.group;
 
-  const GroupDetailsState({
+  GroupDetailsState({
     required this.groupDetails,
     required this.invitation,
-    GroupsUsersState? usersState,
-  }) : usersState = usersState ?? const GroupsUsersState();
+    PaginationModel<TackUser>? membersData,
+    this.isLoading = false,
+  }) : membersData = membersData ?? PaginationModel<TackUser>.empty();
 
   GroupDetailsState copyWith({
     GroupDetails? groupDetails,
-    GroupsUsersState? usersState,
+    PaginationModel<TackUser>? membersData,
+    bool? isLoading,
   }) {
     return GroupDetailsState(
       groupDetails: groupDetails ?? this.groupDetails,
       invitation: invitation,
-      usersState: usersState ?? this.usersState,
+      membersData: membersData ?? this.membersData,
+      isLoading: isLoading ?? false,
     );
   }
 }

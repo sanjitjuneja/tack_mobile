@@ -48,6 +48,7 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
 
     on<ChangeGroup>(_onChangeGroup);
     on<GoToMyInvitations>(_onGoToMyInvitations);
+    on<GoToMyGroups>(_onGoToMyGroups);
 
     _userSubscription =
         _observeUserUseCase.execute(NoParams()).listen((User event) {
@@ -57,8 +58,9 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
         _observeCurrentGroupUseCase.execute(NoParams()).listen((Group? event) {
       add(CurrentGroupChanged(group: event));
     });
-    _groupsSubscription =
-        _observeGroupsUseCase.execute(NoParams()).listen((List<GroupDetails> event) {
+    _groupsSubscription = _observeGroupsUseCase
+        .execute(NoParams())
+        .listen((List<GroupDetails> event) {
       add(GroupsChanged(groups: event));
     });
   }
@@ -93,7 +95,9 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
     );
 
     if (newGroup != null) {
-      _selectGroupUseCase.execute(SelectGroupPayload(group: newGroup));
+      _selectGroupUseCase.execute(
+        SelectGroupPayload(group: newGroup),
+      );
     }
   }
 
@@ -102,6 +106,13 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
     Emitter<GlobalState> emit,
   ) async {
     _appRouter.push(InvitationsFeature.page());
+  }
+
+  Future<void> _onGoToMyGroups(
+    GoToMyGroups event,
+    Emitter<GlobalState> emit,
+  ) async {
+    _appRouter.push(MyGroupsFeature.page());
   }
 
   @override

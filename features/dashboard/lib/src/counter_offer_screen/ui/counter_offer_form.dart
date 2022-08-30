@@ -2,8 +2,8 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:dashboard/src/counter_offer_screen/bloc/counter_offer_bloc.dart';
-import 'package:dashboard/src/widgets/tack_tile.dart';
+import '../bloc/counter_offer_bloc.dart';
+import '../../widgets/group_tack_tile.dart';
 
 class CounterOfferForm extends StatelessWidget {
   const CounterOfferForm({super.key});
@@ -25,8 +25,8 @@ class CounterOfferForm extends StatelessWidget {
                     style: AppTextTheme.manrope20Regular,
                   ),
                   const SizedBox(height: 18),
-                  TackTile(
-                    tack: state.tack,
+                  GroupTackTile(
+                    groupTack: state.groupTack,
                     withActions: false,
                   ),
                   const SizedBox(height: 35),

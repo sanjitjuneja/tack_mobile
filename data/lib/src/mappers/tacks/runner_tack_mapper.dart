@@ -12,6 +12,7 @@ class RunnerTackMapper implements Mapper<RunnerTackEntity, domain.RunnerTack> {
   @override
   domain.RunnerTack fromEntity(RunnerTackEntity entity) {
     return domain.RunnerTack(
+      id: entity.id,
       tack: tackMapper.fromEntity(entity.tack),
       offer:
           entity.offer == null ? null : offerMapper.fromEntity(entity.offer!),
@@ -21,6 +22,7 @@ class RunnerTackMapper implements Mapper<RunnerTackEntity, domain.RunnerTack> {
   @override
   RunnerTackEntity toEntity(domain.RunnerTack item) {
     return RunnerTackEntity(
+      id: item.id,
       tack: tackMapper.toEntity(item.tack),
       offer: item.offer == null ? null : offerMapper.toEntity(item.offer!),
     );

@@ -30,16 +30,16 @@ class _PickGroupForm extends StatelessWidget {
             Expanded(
               child: AppListViewWithRefresh(
                 enableRefresh: true,
-                enableLoad: state.canLoadMore,
+                enableLoad: state.groupsData.canLoadMore,
                 isLoading: state.isLoading,
-                hasData: state.hasData,
+                hasData: state.groupsData.hasData,
                 onRefresh: _onRefreshAction,
                 onLoad: _onLoadMoreAction,
                 indicatorColor: AppTheme.progressInterfaceDarkColor,
                 separatorBuilder: (_, __) => const AppDivider(),
                 itemBuilder: (_, int index) {
                   final _SelectableGroup selectableGroup = _SelectableGroup(
-                    state.groups[index].group,
+                    state.groupsData.results[index].group,
                   );
 
                   return AppBaseSelectableTile<_SelectableGroup>(
@@ -48,7 +48,7 @@ class _PickGroupForm extends StatelessWidget {
                     onItemTap: _onItemSelect,
                   );
                 },
-                itemCount: state.groups.length,
+                itemCount: state.groupsData.results.length,
               ),
             ),
           ],

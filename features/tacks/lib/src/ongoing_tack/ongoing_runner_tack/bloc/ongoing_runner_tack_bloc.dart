@@ -4,10 +4,10 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:navigation/navigation.dart';
-import 'package:tacks/src/ongoing_tack/models/ongoing_runner_screen_result.dart';
 
-import 'package:tacks/src/ongoing_tack/view_extensions/ongoing_tack_to_view_extension.dart';
-import 'package:tacks/src/rate_tack_user/ui/rate_tack_user_page.dart';
+import '../../models/ongoing_runner_screen_result.dart';
+import '../../view_extensions/ongoing_tack_to_view_extension.dart';
+import '../../../rate_tack_user/ui/rate_tack_user_page.dart';
 
 part 'ongoing_runner_tack_event.dart';
 
@@ -16,22 +16,27 @@ part 'ongoing_runner_tack_state.dart';
 class OngoingRunnerTackBloc
     extends Bloc<OngoingRunnerTackEvent, OngoingRunnerTackState> {
   final AppRouterDelegate _appRouter;
+  final FetchUserContactsUseCase _fetchUserContactsUseCase;
   final CancelTackRunnerUseCase _cancelTackUseCase;
   final CompleteTackRunnerUseCase _completeTackUseCase;
   final StartTackRunnerUseCase _startTackUseCase;
 
   static bool _hasInProgressRunnerTack(List<RunnerTack> tacks) {
-    return tacks.any((element) => element.tack.status == TackStatus.inProgress);
+    return tacks.any(
+      (element) => element.tack.status == TackStatus.inProgress,
+    );
   }
 
   OngoingRunnerTackBloc({
     required Tack tack,
     required AppRouterDelegate appRouter,
+    required FetchUserContactsUseCase fetchUserContactsUseCase,
     required CancelTackRunnerUseCase cancelTackRunnerUseCase,
     required CompleteTackRunnerUseCase completeTackUseCase,
     required StartTackRunnerUseCase startTackUseCase,
     required TacksRepository tacksRepository,
   })  : _appRouter = appRouter,
+        _fetchUserContactsUseCase = fetchUserContactsUseCase,
         _cancelTackUseCase = cancelTackRunnerUseCase,
         _completeTackUseCase = completeTackUseCase,
         _startTackUseCase = startTackUseCase,
@@ -46,9 +51,31 @@ class OngoingRunnerTackBloc
             ),
           ),
         ) {
+    on<FetchUserContactsAction>(_onFetchUserContactsAction);
+
     on<ActionPressed>(_onActionPressed);
     on<ContactTacker>(_onContactTacker);
     on<CancelTack>(_onCancelTack);
+
+    add(const FetchUserContactsAction());
+  }
+
+  Future<void> _onFetchUserContactsAction(
+    FetchUserContactsAction event,
+    Emitter<OngoingRunnerTackState> emit,
+  ) async {
+    try {
+      final UserContacts userContacts = await _fetchUserContactsUseCase.execute(
+        FetchUserContactsPayload(
+          tackId: state.tack.id,
+        ),
+      );
+      emit(
+        state.copyWith(
+          userContacts: userContacts,
+        ),
+      );
+    } catch (_) {}
   }
 
   Future<void> _onActionPressed(
@@ -116,9 +143,10 @@ class OngoingRunnerTackBloc
     ContactTacker event,
     Emitter<OngoingRunnerTackState> emit,
   ) async {
-    // TODO: refactor when BE will fix
-    // final String? phoneNumber = state.tack.tacker.contacts.phoneNumber;
-    // PhoneCallUtility.callNumber(phoneNumber);
+    if (!state.hasContactData) return;
+
+    final String phoneNumber = state.userContacts!.phoneNumber;
+    PhoneCallUtility.callNumber(phoneNumber);
   }
 
   Future<void> _onCancelTack(

@@ -1,11 +1,11 @@
-import 'package:app_drawer/src/bloc/app_drawer_bloc.dart';
-import 'package:app_drawer/src/models/go_to_option.dart';
-import 'package:app_drawer/src/ui/widgets/app_drawer_header.dart';
-import 'package:app_drawer/src/ui/widgets/app_drawer_tile_widget.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../bloc/app_drawer_bloc.dart';
+import '../models/go_to_option.dart';
+import 'widgets/app_drawer_header.dart';
+import 'widgets/app_drawer_tile_widget.dart';
 import 'widgets/app_drawer_scroll_container.dart';
 
 class AppDrawerWidget extends StatelessWidget {

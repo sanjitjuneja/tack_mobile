@@ -1,20 +1,25 @@
 part of tack_tile;
 
 class TackTileActions extends StatelessWidget {
-  final Tack tack;
+  final GroupTack groupTack;
 
   const TackTileActions({
     super.key,
-    required this.tack,
+    required this.groupTack,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GlobalBloc, GlobalState>(
       builder: (_, GlobalState state) {
-        final bool isOwnTack = state.user.id == tack.tacker.id;
+        final bool isMineOfferSent = groupTack.isMineOfferSent;
+        final bool isOwnTack = state.user.id == groupTack.tack.tacker.id;
 
-        if (isOwnTack) {
+        if (isMineOfferSent) {
+          return const AppButton(
+            labelKey: 'dashboardScreen.offerSentButton',
+          );
+        } else if (isOwnTack) {
           return AppButton(
             labelKey: 'dashboardScreen.createdByYouButton',
             withFeedback: true,
@@ -23,7 +28,7 @@ class TackTileActions extends StatelessWidget {
         } else {
           return Row(
             children: <Widget>[
-              if (tack.allowCounterOffers) ...<Widget>[
+              if (groupTack.tack.allowCounterOffers) ...<Widget>[
                 Expanded(
                   flex: 1,
                   child: AppButton(
@@ -52,14 +57,20 @@ class TackTileActions extends StatelessWidget {
   }
 
   void _onCreatedByMeButtonPressed(BuildContext context) {
-    BlocProvider.of<DashboardBloc>(context).add(OpenOwnOngoingTack(tack: tack));
+    BlocProvider.of<DashboardBloc>(context).add(
+      OpenOwnOngoingTack(groupTack: groupTack),
+    );
   }
 
   void _onCounterButtonPressed(BuildContext context) {
-    BlocProvider.of<DashboardBloc>(context).add(CounterOfferOpen(tack: tack));
+    BlocProvider.of<DashboardBloc>(context).add(
+      CounterOfferOpen(groupTack: groupTack),
+    );
   }
 
   void _onAcceptButtonPressed(BuildContext context) {
-    BlocProvider.of<DashboardBloc>(context).add(AcceptTack(tack: tack));
+    BlocProvider.of<DashboardBloc>(context).add(
+      AcceptTack(groupTack: groupTack),
+    );
   }
 }

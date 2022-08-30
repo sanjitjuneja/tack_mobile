@@ -171,7 +171,7 @@
     "andSymbol": " & ",
     "upToDate": "Up to date",
     "updateFailed": "Update failed!",
-    "noGroupSelectedSubtitle": "No Group Selected"
+    "noGroupSelected": "No Group Selected"
   },
   "splashScreen": {
     "signInButton": "Sign In",
@@ -257,10 +257,12 @@
   "dashboardScreen": {
     "title": "Home Feed",
     "createdByYouButton": "Created By You",
+    "offerSentButton": "Offer Sent",
     "emptyNoGroupSelected": {
-      "title": "Join A Group",
-      "description": "You must be invited to a Tack group before creating or completing Tacks. If you were sent an invite link, please use it to view your invitation or click below to view your current invitations.",
-      "labelButton": "My Invitations"
+      "title": "Join or Create Group",
+      "description": "You must create or join a Tack group before creating or completing Tacks. Please click below to view current group invitations or to create a new group.",
+      "labelPrimaryButton": "My Invitations",
+      "labelSecondaryButton": "Create New Group"
     },
     "noTacks": {
       "description": "Looks like this group doesn’t have any current Tacks. This will automatically populate as Tacks are created within this group. Create your own Tack below.",
@@ -601,5 +603,11 @@
     "newPasswordPlaceholder": "New Password",
     "confirmPasswordPlaceholder": "Confirm Password",
     "setPasswordButton": "Set Password"
+  },
+  "customerSupportScreen": {
+    "title": "Customer Support",
+    "descriptionTitle": "Please Contact The Following Number",
+    "contactNumber": "832-498-5095",
+    "description": "Our team will reach out to you as soon as possible with a response"
   }
 }

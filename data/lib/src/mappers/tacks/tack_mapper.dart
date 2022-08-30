@@ -21,8 +21,10 @@ class TackMapper implements Mapper<TackEntity, domain.Tack> {
       estimatedTime: entity.estimationTime,
       allowCounterOffers: entity.allowCounterOffer,
       status: tackStatusMapper.fromEntity(entity.status),
-      tacker: tackUserMapper.fromEntity(entity.tacker)!,
-      runner: tackUserMapper.fromEntity(entity.runner),
+      tacker: tackUserMapper.fromEntity(entity.tacker),
+      runner: entity.runner != null
+          ? tackUserMapper.fromEntity(entity.runner!)
+          : null,
       group: groupMapper.fromEntity(entity.group),
       completionMessage: entity.completionMessage,
       completionTime: entity.completionTime,
@@ -39,8 +41,9 @@ class TackMapper implements Mapper<TackEntity, domain.Tack> {
       estimationTime: item.estimatedTime,
       allowCounterOffer: item.allowCounterOffers,
       status: tackStatusMapper.toEntity(item.status),
-      tacker: tackUserMapper.toEntity(item.tacker)!,
-      runner: tackUserMapper.toEntity(item.tacker),
+      tacker: tackUserMapper.toEntity(item.tacker),
+      runner:
+          item.runner != null ? tackUserMapper.toEntity(item.runner!) : null,
       group: groupMapper.toEntity(item.group),
       completionMessage: item.completionMessage,
       completionTime: item.completionTime,

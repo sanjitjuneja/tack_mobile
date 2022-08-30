@@ -36,6 +36,10 @@ class MapperFactory {
         groupMapper: groupMapper,
       );
 
+  GroupTackMapper get groupTackMapper => GroupTackMapper(
+        tackMapper: tackMapper,
+      );
+
   OfferTypeMapper get offerTypeMapper => OfferTypeMapper();
 
   OfferMapper get offerMapper => OfferMapper(
@@ -48,7 +52,10 @@ class MapperFactory {
         offerMapper: offerMapper,
       );
 
-  UserBankAccountMapper get userBankAccountMapper => UserBankAccountMapper();
+  UserContactsMapper get userContactsMapper => const UserContactsMapper();
+
+  UserBankAccountMapper get userBankAccountMapper =>
+      const UserBankAccountMapper();
 
   UserMapper get userMapper => UserMapper(
         userBankAccountMapper: userBankAccountMapper,
@@ -76,12 +83,32 @@ class MapperFactory {
       );
 
   Mapper<S, C> _factory<S, C>() {
+    if (S == GroupDetailsEntity) {
+      return groupDetailsMapper as Mapper<S, C>;
+    }
+
+    if (S == GroupInvitationEntity) {
+      return groupInvitationMapper as Mapper<S, C>;
+    }
+
     if (S == TackEntity) {
       return tackMapper as Mapper<S, C>;
     }
 
+    if (S == GroupTackEntity) {
+      return groupTackMapper as Mapper<S, C>;
+    }
+
+    if (S == RunnerTackEntity) {
+      return runnerTackMapper as Mapper<S, C>;
+    }
+
     if (S == OfferEntity) {
       return offerMapper as Mapper<S, C>;
+    }
+
+    if (S == TackUserEntity) {
+      return tackUserMapper as Mapper<S, C>;
     }
 
     throw Exception('wrong type');

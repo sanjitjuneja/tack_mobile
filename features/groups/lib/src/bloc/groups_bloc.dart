@@ -15,7 +15,9 @@ class GroupsBloc extends Bloc<GroupsEvent, GroupsState> {
     required LoadGroupsUseCase loadGroupsUseCase,
   })  : _loadGroupsUseCase = loadGroupsUseCase,
         super(
-          const GroupsState(isLoading: true),
+          GroupsState(
+            isLoading: true,
+          ),
         ) {
     on<InitialLoad>(_onInitialLoad);
     on<RefreshAction>(_onRefreshAction);
@@ -36,18 +38,20 @@ class GroupsBloc extends Bloc<GroupsEvent, GroupsState> {
     Emitter<GroupsState> emit,
   ) async {
     try {
-      final List<GroupDetails> groups =
-          await _loadGroupsUseCase.execute(const GetGroupsPayload());
+      final PaginationModel<GroupDetails> groupsData =
+          await _loadGroupsUseCase.execute(const FetchGroupsPayload());
 
       event.completer?.complete(RefreshingStatus.complete);
       emit(
-        state.copyWith(groups: groups),
+        state.copyWith(groupsData: groupsData),
       );
     } catch (e) {
       event.completer?.complete(RefreshingStatus.failed);
       if (event.completer == null) {
         emit(
-          state.copyWith(groups: <GroupDetails>[]),
+          state.copyWith(
+            groupsData: PaginationModel.empty(),
+          ),
         );
       }
     }
@@ -58,12 +62,22 @@ class GroupsBloc extends Bloc<GroupsEvent, GroupsState> {
     Emitter<GroupsState> emit,
   ) async {
     try {
-      final List<GroupDetails> groups = await _loadGroupsUseCase.execute(
-        const GetGroupsPayload(),
+      final PaginationModel<GroupDetails> groupsData =
+          await _loadGroupsUseCase.execute(
+        FetchGroupsPayload(
+          lastObjectId: state.groupsData.results.lastOrNull?.id,
+          nextPage: state.groupsData.next,
+        ),
       );
 
       event.completer.complete(LoadingStatus.complete);
-      emit(state.copyWith(groups: groups));
+      emit(
+        state.copyWith(
+          groupsData: state.groupsData.more(
+            newPage: groupsData,
+          ),
+        ),
+      );
     } catch (e) {
       event.completer.complete(LoadingStatus.failed);
     }

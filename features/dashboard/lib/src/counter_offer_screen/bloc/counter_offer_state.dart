@@ -1,13 +1,13 @@
 part of 'counter_offer_bloc.dart';
 
 class CounterOfferState {
-  final Tack tack;
+  final GroupTack groupTack;
   final CounterOfferData counterOfferData;
 
   bool get isReadyToProceed => counterOfferData.isValid;
 
   const CounterOfferState({
-    required this.tack,
+    required this.groupTack,
     required this.counterOfferData,
   });
 
@@ -16,7 +16,7 @@ class CounterOfferState {
     bool? isValidationEnabled,
   }) {
     return CounterOfferState(
-      tack: tack,
+      groupTack: groupTack,
       counterOfferData: counterOfferData.copyWith(
         counterOfferValue: counterOffer,
         isValidationEnabled: isValidationEnabled,

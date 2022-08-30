@@ -11,9 +11,9 @@ abstract class GroupsRepository {
 
   Future<void> initialLoad();
 
-  Future<Group> getGroup(GetGroupPayload payload);
+  Future<Group> fetchGroup(FetchGroupPayload payload);
 
-  Future<List<GroupDetails>> getGroups(GetGroupsPayload payload);
+  Future<PaginationModel<GroupDetails>> fetchGroups(FetchGroupsPayload payload);
 
   Future<void> selectGroup(SelectGroupPayload payload);
 
@@ -25,14 +25,18 @@ abstract class GroupsRepository {
 
   Future<GroupDetails> unMuteGroup(UnMuteGroupPayload payload);
 
-  Future<GroupInviteLink> getGroupInviteLink(GetGroupInviteLinkPayload payload);
+  Future<GroupInviteLink> fetchGroupInviteLink(
+    FetchGroupInviteLinkPayload payload,
+  );
 
-  Future<GroupInvite> getGroupInvite(GetGroupInvitePayload payload);
+  Future<GroupInvite> fetchGroupInvite(FetchGroupInvitePayload payload);
 
-  Future<List<TackUser>> getGroupMembers(GetGroupMembersPayload payload);
+  Future<PaginationModel<TackUser>> fetchGroupMembers(
+    FetchGroupMembersPayload payload,
+  );
 
-  Future<List<GroupInvitation>> getInvitations(
-    GetGroupInvitationsPayload payload,
+  Future<PaginationModel<GroupInvitation>> fetchGroupInvitations(
+    FetchGroupInvitationsPayload payload,
   );
 
   Future<void> acceptGroupInvitation(AcceptGroupInvitationPayload payload);

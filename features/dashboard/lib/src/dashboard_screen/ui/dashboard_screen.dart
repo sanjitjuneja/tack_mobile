@@ -21,8 +21,8 @@ class DashboardScreen extends StatelessWidget {
             return Align(
               alignment: Alignment.centerLeft,
               child: PageHeaderWithGroupWidget(
-                titleKey: 'dashboardScreen.title',
-                subtitleKey: 'general.noGroupSelectedSubtitle',
+                titleKey: 'general.noGroupSelected',
+                subtitleKey: 'dashboardScreen.title',
                 group: state.currentGroup,
                 withFeedback: state.canPickOtherGroup,
                 onTap: state.canPickOtherGroup
