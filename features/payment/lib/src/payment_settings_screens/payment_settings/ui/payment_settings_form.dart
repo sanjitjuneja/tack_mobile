@@ -1,10 +1,12 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
 import '/src/widgets/payment_method_tile.dart';
 import '/src/payment_settings_screens/payment_settings/widgets/tack_balance.dart';
 import '../bloc/payment_settings_bloc.dart';
+import '../../widgets/payment_info_label.dart';
 
 class PaymentSettingsForm extends StatelessWidget {
   const PaymentSettingsForm({Key? key}) : super(key: key);
@@ -63,7 +65,14 @@ class PaymentSettingsForm extends StatelessWidget {
                 const SizedBox(height: 14),
                 ...state.bankAccounts.map(
                   (bankAccount) => PaymentMethodTile(
-                    leadingIcon: AppIconsTheme.bank,
+                    onTap: () =>
+                        _onPaymentMethodTile(context, bankAccount: bankAccount),
+                    leadingIcon: AppNetworkImageWidget(
+                      bankAccount.imageUrl,
+                      placeholderIcon: AppIconsTheme.bank,
+                      boxShape: BoxShape.rectangle,
+                      boxFit: BoxFit.fitWidth,
+                    ),
                     title: bankAccount.bankName,
                     subtitle: bankAccount.bankAccountType,
                   ),
@@ -81,7 +90,13 @@ class PaymentSettingsForm extends StatelessWidget {
                 const SizedBox(height: 14),
                 ...state.cards.map(
                   (card) => PaymentMethodTile(
-                    leadingIcon: AppIconsTheme.card,
+                    onTap: () => _onPaymentMethodTile(context, card: card),
+                    leadingIcon: AppNetworkImageWidget(
+                      card.cardData.imageUrl,
+                      placeholderIcon: AppIconsTheme.card,
+                      boxShape: BoxShape.rectangle,
+                      boxFit: BoxFit.fitWidth,
+                    ),
                     title: card.cardData.brand,
                     subtitle: '****${card.cardData.last4}',
                   ),
@@ -99,19 +114,21 @@ class PaymentSettingsForm extends StatelessWidget {
                 const SizedBox(height: 14),
                 if (state.isApplePaySupported)
                   PaymentMethodTile(
-                    leadingIcon: AppIconsTheme.applePay,
+                    leadingIcon: AppIconsTheme.applePay(size: 35),
                     title: FlutterI18n.translate(
                       context,
                       'paymentSettingsScreen.applePay',
                     ),
+                    hasTrailingArrow: false,
                   ),
                 if (state.isGooglePaySupported)
                   PaymentMethodTile(
-                    leadingIcon: AppIconsTheme.applePay,
+                    leadingIcon: AppIconsTheme.googlePay(size: 35),
                     title: FlutterI18n.translate(
                       context,
                       'paymentSettingsScreen.googlePay',
                     ),
+                    hasTrailingArrow: false,
                   ),
                 const SizedBox(height: 30),
               ],
@@ -125,7 +142,7 @@ class PaymentSettingsForm extends StatelessWidget {
             ),
             const SizedBox(height: 14),
             PaymentMethodTile(
-              leadingIcon: AppIconsTheme.bank,
+              leadingIcon: AppIconsTheme.bank(size: 35),
               title: FlutterI18n.translate(
                 context,
                 'paymentSettingsScreen.addPaymentMethod',
@@ -133,23 +150,7 @@ class PaymentSettingsForm extends StatelessWidget {
               onTap: () => _onAddPaymentMethod(context),
             ),
             const SizedBox(height: 28),
-            Row(
-              children: <Widget>[
-                const Spacer(),
-                AppIconsTheme.lock.svg(size: 15),
-                const SizedBox(width: 5),
-                Text(
-                  FlutterI18n.translate(
-                    context,
-                    'paymentSettingsScreen.privacyInfo',
-                  ),
-                  style: AppTextTheme.manrope13Medium.copyWith(
-                    color: AppTheme.textSecondaryColor,
-                  ),
-                ),
-                const Spacer(),
-              ],
-            ),
+            const PaymentInfoLabel(),
             const SizedBox(height: 34),
           ],
         );
@@ -178,6 +179,19 @@ class PaymentSettingsForm extends StatelessWidget {
   void _onPayout(BuildContext context) {
     BlocProvider.of<PaymentSettingsBloc>(context).add(
       const PayoutAction(),
+    );
+  }
+
+  void _onPaymentMethodTile(
+    BuildContext context, {
+    ConnectedCard? card,
+    ConnectedBankAccount? bankAccount,
+  }) {
+    BlocProvider.of<PaymentSettingsBloc>(context).add(
+      PaymentMethodDetailsAction(
+        card: card,
+        bankAccount: bankAccount,
+      ),
     );
   }
 }

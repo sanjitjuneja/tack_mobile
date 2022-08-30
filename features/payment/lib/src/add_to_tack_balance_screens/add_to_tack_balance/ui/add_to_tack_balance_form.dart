@@ -29,7 +29,7 @@ class AddToTackBalanceForm extends StatelessWidget {
                 horizontal: 16.0,
               ),
               child: PaymentMethodTile(
-                leadingIcon: AppIconsTheme.masterCard,
+                leadingIcon: AppIconsTheme.masterCard(size: 35),
                 title: 'JP Morgan Chase',
                 subtitle: '*****8748',
                 isColored: true,
@@ -37,8 +37,7 @@ class AddToTackBalanceForm extends StatelessWidget {
             ),
             const SizedBox(height: 45),
             TackKeyboard(
-              subtitleKey:
-              'addToTackBalanceScreen.currentTackBalance',
+              subtitleKey: 'addToTackBalanceScreen.currentTackBalance',
               amount: 50.00,
               onChanged: (double value) {},
             ),

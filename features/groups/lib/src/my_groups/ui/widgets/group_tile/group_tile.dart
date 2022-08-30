@@ -38,7 +38,7 @@ class GroupTile extends StatelessWidget {
         ),
         child: Row(
           children: <Widget>[
-            AppCircleAvatarWidget(
+            AppNetworkImageWidget(
               groupDetails.group.imageUrl,
               isShadowBorder: false,
             ),

@@ -11,6 +11,7 @@ class ConnectedCardDataMapper
       last4: entity.last4,
       expYear: entity.expYear,
       expMonth: entity.expMonth,
+      imageUrl: entity.imageUrl,
     );
   }
 
@@ -21,6 +22,7 @@ class ConnectedCardDataMapper
       last4: item.last4,
       expYear: item.expYear,
       expMonth: item.expMonth,
+      imageUrl: item.imageUrl,
     );
   }
 }

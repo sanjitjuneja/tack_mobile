@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../bloc/add_payment_method_bloc.dart';
 import '../widgets/add_payment_method_tile.dart';
+import '../../../widgets/payment_info_label.dart';
 
 class AddPaymentMethodForm extends StatelessWidget {
   const AddPaymentMethodForm({Key? key}) : super(key: key);
@@ -49,23 +50,7 @@ class AddPaymentMethodForm extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            Row(
-              children: <Widget>[
-                const Spacer(),
-                AppIconsTheme.lock.svg(size: 15),
-                const SizedBox(width: 5),
-                Text(
-                  FlutterI18n.translate(
-                    context,
-                    'paymentSettingsScreen.privacyInfo',
-                  ),
-                  style: AppTextTheme.manrope13Medium.copyWith(
-                    color: AppTheme.textSecondaryColor,
-                  ),
-                ),
-                const Spacer(),
-              ],
-            ),
+            const PaymentInfoLabel(),
             const SizedBox(height: 34),
           ],
         );

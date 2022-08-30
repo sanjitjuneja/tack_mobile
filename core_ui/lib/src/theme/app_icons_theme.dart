@@ -63,6 +63,8 @@ class AppIconsTheme {
   static const String _chevronRightRoundedKey = '${_svgPath}chevron_right_rounded.svg';
   static const String _checkmarkKey = '${_svgPath}checkmark.svg';
   static const String _redCrossRoundedKey = '${_svgPath}red_cross_rounded.svg';
+  static const String _googlePayKey = '${_svgPath}google_pay.svg';
+
 
   /// Bottom Navigation bar
   static AppIcon get dashboardsActive => AppIcon(_dashboardActiveKey);
@@ -114,6 +116,7 @@ class AppIconsTheme {
   static AppIcon get masterCard => AppIcon(_masterCardKey);
   static AppIcon get morganChase => AppIcon(_morganChaseKey);
   static AppIcon get applePay => AppIcon(_applePayKey);
+  static AppIcon get googlePay => AppIcon(_googlePayKey);
   static AppIcon get lock => AppIcon(_lockKey);
   static AppIcon get card => AppIcon(_cardKey);
   static AppIcon get chevronRightRounded => AppIcon(_chevronRightRoundedKey);

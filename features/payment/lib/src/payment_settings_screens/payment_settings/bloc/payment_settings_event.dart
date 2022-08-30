@@ -19,3 +19,13 @@ class PayoutAction extends PaymentSettingsEvent {
 class AddPaymentMethodAction extends PaymentSettingsEvent {
   const AddPaymentMethodAction();
 }
+
+class PaymentMethodDetailsAction extends PaymentSettingsEvent {
+  final ConnectedCard? card;
+  final ConnectedBankAccount? bankAccount;
+
+  const PaymentMethodDetailsAction({
+    this.card,
+    this.bankAccount,
+  });
+}

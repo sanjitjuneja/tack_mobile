@@ -31,7 +31,7 @@ class PageHeaderWithGroupWidget extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            AppCircleAvatarWidget(
+            AppNetworkImageWidget(
               group?.imageUrl,
               placeholderIcon: image,
             ),

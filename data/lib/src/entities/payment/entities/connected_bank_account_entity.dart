@@ -12,6 +12,8 @@ class ConnectedBankAccountEntity extends JsonSerializable {
   final String type;
   @JsonKey(name: 'bankAccountType')
   final String bankAccountType;
+  @JsonKey(name: 'image')
+  final String? imageUrl;
   @JsonKey(name: 'channels')
   final List<String> channels;
 
@@ -21,6 +23,7 @@ class ConnectedBankAccountEntity extends JsonSerializable {
     required this.status,
     required this.type,
     required this.bankAccountType,
+    required this.imageUrl,
     required this.channels,
   });
 

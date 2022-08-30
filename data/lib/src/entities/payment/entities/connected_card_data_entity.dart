@@ -10,12 +10,15 @@ class ConnectedCardDataEntity extends JsonSerializable {
   final int expYear;
   @JsonKey(name: 'exp_month')
   final int expMonth;
+  @JsonKey(name: 'image')
+  final String? imageUrl;
 
   const ConnectedCardDataEntity({
     required this.brand,
     required this.last4,
     required this.expYear,
     required this.expMonth,
+    required this.imageUrl,
   });
 
   factory ConnectedCardDataEntity.fromJson(Map<String, dynamic> json) {

@@ -94,7 +94,7 @@ class RunnerTackActions extends StatelessWidget {
 
     return Row(
       children: <Widget>[
-        AppCircleAvatarWidget(runnerTack.tack.group.imageUrl),
+        AppNetworkImageWidget(runnerTack.tack.group.imageUrl),
         const SizedBox(width: 10),
         Expanded(
           child: Text(

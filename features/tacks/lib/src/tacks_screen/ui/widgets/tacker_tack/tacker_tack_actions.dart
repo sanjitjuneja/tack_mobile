@@ -45,7 +45,7 @@ class TackerTackActions extends StatelessWidget {
 
     return Row(
       children: <Widget>[
-        AppCircleAvatarWidget(tack.group.imageUrl),
+        AppNetworkImageWidget(tack.group.imageUrl),
         const SizedBox(width: 10),
         Expanded(
           child: Text(

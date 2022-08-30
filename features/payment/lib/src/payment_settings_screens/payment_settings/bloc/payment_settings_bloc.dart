@@ -40,6 +40,7 @@ class PaymentSettingsBloc
     on<AddCashAction>(_onAddCashAction);
     on<PayoutAction>(_onPayloadAction);
     on<AddPaymentMethodAction>(_onAddPaymentMethodAction);
+    on<PaymentMethodDetailsAction>(_onPaymentMethodDetailsAction);
 
     add(const InitialLoad());
   }
@@ -106,5 +107,17 @@ class PaymentSettingsBloc
     Emitter<PaymentSettingsState> emit,
   ) async {
     _appRouter.push(AddPaymentMethodFeature.page());
+  }
+
+  Future<void> _onPaymentMethodDetailsAction(
+    PaymentMethodDetailsAction event,
+    Emitter<PaymentSettingsState> emit,
+  ) async {
+    _appRouter.push(
+      PaymentMethodDetailsFeature.page(
+        card: event.card,
+        bankAccount: event.bankAccount,
+      ),
+    );
   }
 }

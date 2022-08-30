@@ -18,7 +18,7 @@ export 'src/widgets/passwords_form_field/passwords_form_field.dart';
 export 'src/widgets/steps_with_progress/steps_with_progress.dart';
 
 export 'src/widgets/app_button_type.dart';
-export 'src/widgets/app_circle_avatar.dart';
+export 'src/widgets/app_network_image.dart';
 export 'src/widgets/app_circle_button.dart';
 export 'src/widgets/app_divider.dart';
 export 'src/widgets/app_list_view.dart';
