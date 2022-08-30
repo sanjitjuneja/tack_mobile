@@ -22,6 +22,8 @@ dependencies:
     path: ../../navigation
 
   # Features
+  customer_support:
+    path: ../customer_support
   home:
     path: ../home
   groups:

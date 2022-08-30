@@ -4,12 +4,12 @@ import 'package:flutter/cupertino.dart';
 
 class PageHeaderWidget extends StatelessWidget {
   final String? titleKey;
-  final String descriptionKey;
+  final String? descriptionKey;
 
   const PageHeaderWidget({
     super.key,
-    required this.descriptionKey,
     this.titleKey,
+    this.descriptionKey,
   });
 
   @override
@@ -30,20 +30,24 @@ class PageHeaderWidget extends StatelessWidget {
                 color: AppTheme.textPrimaryColor,
               ),
             ),
+          ],
+          if (titleKey != null && descriptionKey != null) ...<Widget>[
             const SizedBox(height: 4),
           ],
-          SizedBox(
-            width: double.infinity,
-            child: Text(
-              FlutterI18n.translate(
-                context,
-                descriptionKey,
-              ),
-              style: AppTextTheme.manrope13Medium.copyWith(
-                color: AppTheme.textHeavyHintColor,
+          if (descriptionKey != null) ...<Widget>[
+            SizedBox(
+              width: double.infinity,
+              child: Text(
+                FlutterI18n.translate(
+                  context,
+                  descriptionKey!,
+                ),
+                style: AppTextTheme.manrope13Medium.copyWith(
+                  color: AppTheme.textHeavyHintColor,
+                ),
               ),
             ),
-          ),
+          ],
         ],
       ),
     );

@@ -25,6 +25,14 @@ abstract class TacksRepository {
     FetchGroupTacksPayload payload,
   );
 
+  Future<PaginationModel<Tack>> fetchCompletedTacks(
+    FetchCompletedTacksPayload payload,
+  );
+
+  Future<PaginationModel<Tack>> fetchCreatedTacks(
+    FetchCreatedTacksPayload payload,
+  );
+
   Future<Tack> createTack(CreateTackPayload payload);
 
   Future<Tack> updateTack(UpdateTackPayload payload);
