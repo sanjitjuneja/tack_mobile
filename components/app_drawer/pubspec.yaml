@@ -30,8 +30,7 @@ dependencies:
     path: ../../features/groups
   payment:
     path: ../../features/payment
-  tacks:
-    path: ../../features/tacks
+
 
 dev_dependencies:
   flutter_test:

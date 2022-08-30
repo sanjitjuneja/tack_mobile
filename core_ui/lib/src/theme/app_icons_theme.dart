@@ -63,7 +63,6 @@ class AppIconsTheme {
   static const String _chevronRightRoundedKey = '${_svgPath}chevron_right_rounded.svg';
   static const String _checkmarkKey = '${_svgPath}checkmark.svg';
   static const String _redCrossRoundedKey = '${_svgPath}red_cross_rounded.svg';
-  static const String _supportKey = '${_svgPath}support.svg';
 
   /// Bottom Navigation bar
   static AppIcon get dashboardsActive => AppIcon(_dashboardActiveKey);
@@ -120,5 +119,4 @@ class AppIconsTheme {
   static AppIcon get chevronRightRounded => AppIcon(_chevronRightRoundedKey);
   static AppIcon get checkmark => AppIcon(_checkmarkKey);
   static AppIcon get redCrossRounded => AppIcon(_redCrossRoundedKey);
-  static AppIcon get support => AppIcon(_supportKey);
 }

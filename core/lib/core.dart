@@ -24,7 +24,6 @@ export 'src/text_input_formatters/range_number_formatter.dart';
 export 'src/text_input_formatters/words_length_formatter.dart';
 
 export 'src/utils/currency_utils.dart';
-export 'src/utils/date_time_utility.dart';
 export 'src/utils/duration_utility.dart';
 export 'src/utils/field_validator.dart';
 export 'src/utils/internet_connectivity_service.dart';

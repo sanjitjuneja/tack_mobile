@@ -16,12 +16,8 @@ class InitialLoad extends TacksEvent {
   const InitialLoad();
 }
 
-class RefreshRunnerTacks extends TacksEvent {
-  final Completer<RefreshingStatus>? completer;
-
-  const RefreshRunnerTacks({
-    this.completer,
-  });
+class LoadMockedData extends TacksEvent {
+  const LoadMockedData();
 }
 
 class LoadRunnerTacks extends TacksEvent {
@@ -32,10 +28,10 @@ class LoadRunnerTacks extends TacksEvent {
   });
 }
 
-class RefreshTackerTacks extends TacksEvent {
+class RefreshRunnerTacks extends TacksEvent {
   final Completer<RefreshingStatus>? completer;
 
-  const RefreshTackerTacks({
+  const RefreshRunnerTacks({
     this.completer,
   });
 }
@@ -45,6 +41,14 @@ class LoadTackerTacks extends TacksEvent {
 
   const LoadTackerTacks({
     required this.completer,
+  });
+}
+
+class RefreshTackerTacks extends TacksEvent {
+  final Completer<RefreshingStatus>? completer;
+
+  const RefreshTackerTacks({
+    this.completer,
   });
 }
 

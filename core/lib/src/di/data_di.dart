@@ -350,16 +350,6 @@ class DataDI {
         tacksRepository: appLocator.get<TacksRepository>(),
       ),
     );
-    appLocator.registerLazySingleton<FetchCompletedTacksUseCase>(
-      () => FetchCompletedTacksUseCase(
-        tacksRepository: appLocator.get<TacksRepository>(),
-      ),
-    );
-    appLocator.registerLazySingleton<FetchCreatedTacksUseCase>(
-      () => FetchCreatedTacksUseCase(
-        tacksRepository: appLocator.get<TacksRepository>(),
-      ),
-    );
     appLocator.registerLazySingleton<MakeOfferUseCase>(
       () => MakeOfferUseCase(
         tacksRepository: appLocator.get<TacksRepository>(),
@@ -470,8 +460,6 @@ class DataDI {
     appLocator.unregister<FetchRunnerTacksUseCase>();
     appLocator.unregister<FetchTackOffersUseCase>();
     appLocator.unregister<FetchTackerTacksUseCase>();
-    appLocator.unregister<FetchCompletedTacksUseCase>();
-    appLocator.unregister<FetchCreatedTacksUseCase>();
     appLocator.unregister<MakeOfferUseCase>();
     appLocator.unregister<RateTackUseCase>();
     appLocator.unregister<StartTackRunnerUseCase>();

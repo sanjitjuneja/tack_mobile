@@ -20,8 +20,6 @@ part 'requests/cancel_offer_request.dart';
 part 'requests/cancel_tack_request.dart';
 part 'requests/complete_tack_request.dart';
 part 'requests/create_tack_request.dart';
-part 'requests/fetch_completed_tacks_request.dart';
-part 'requests/fetch_created_tacks_request.dart';
 part 'requests/fetch_runner_tacks_request.dart';
 part 'requests/fetch_tacker_tacks_request.dart';
 part 'requests/fetch_tack_offers_request.dart';

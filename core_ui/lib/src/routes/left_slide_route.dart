@@ -1,8 +1,8 @@
 import 'package:core/core.dart';
+import 'package:core_ui/src/theme/app_theme.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
-
-import '../theme/app_theme.dart';
 
 class _LeftSlideRouteLayout extends SingleChildLayoutDelegate {
   final double progress;

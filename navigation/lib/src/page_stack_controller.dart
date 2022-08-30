@@ -53,11 +53,6 @@ mixin PageStackController on ChangeNotifier {
     notifyListeners();
   }
 
-  void removeNamed(String routeName) {
-    _pages.removeWhere((element) => element.name == routeName);
-    notifyListeners();
-  }
-
   void remove(Page<dynamic> page) {
     _pages.remove(page);
     notifyListeners();
