@@ -7,6 +7,7 @@ import '../../helpers/entity_helper/entities_helpers.dart';
 import '../global/global.dart';
 import '../groups/groups.dart';
 
+part 'entities/group_tack_entity.dart';
 part 'entities/offer_entity.dart';
 part 'entities/runner_tack_entity.dart';
 part 'entities/tack_entity.dart';

@@ -29,25 +29,25 @@ class LoadMoreAction extends DashboardEvent {
 }
 
 class OpenOwnOngoingTack extends DashboardEvent {
-  final Tack tack;
+  final GroupTack groupTack;
 
   const OpenOwnOngoingTack({
-    required this.tack,
+    required this.groupTack,
   });
 }
 
 class CounterOfferOpen extends DashboardEvent {
-  final Tack tack;
+  final GroupTack groupTack;
 
   const CounterOfferOpen({
-    required this.tack,
+    required this.groupTack,
   });
 }
 
 class AcceptTack extends DashboardEvent {
-  final Tack tack;
+  final GroupTack groupTack;
 
   const AcceptTack({
-    required this.tack,
+    required this.groupTack,
   });
 }

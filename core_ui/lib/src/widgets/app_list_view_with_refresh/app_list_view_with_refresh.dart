@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:app_dialog/app_dialog.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/src/theme/app_theme.dart';
-import 'package:core_ui/src/widgets/app_list_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 

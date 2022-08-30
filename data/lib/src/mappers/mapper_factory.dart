@@ -36,6 +36,10 @@ class MapperFactory {
         groupMapper: groupMapper,
       );
 
+  GroupTackMapper get groupTackMapper => GroupTackMapper(
+        tackMapper: tackMapper,
+      );
+
   OfferTypeMapper get offerTypeMapper => OfferTypeMapper();
 
   OfferMapper get offerMapper => OfferMapper(
@@ -48,7 +52,10 @@ class MapperFactory {
         offerMapper: offerMapper,
       );
 
-  UserBankAccountMapper get userBankAccountMapper => UserBankAccountMapper();
+  UserContactsMapper get userContactsMapper => const UserContactsMapper();
+
+  UserBankAccountMapper get userBankAccountMapper =>
+      const UserBankAccountMapper();
 
   UserMapper get userMapper => UserMapper(
         userBankAccountMapper: userBankAccountMapper,
@@ -82,6 +89,10 @@ class MapperFactory {
 
     if (S == TackEntity) {
       return tackMapper as Mapper<S, C>;
+    }
+
+    if (S == GroupTackEntity) {
+      return groupTackMapper as Mapper<S, C>;
     }
 
     if (S == RunnerTackEntity) {

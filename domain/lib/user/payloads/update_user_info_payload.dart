@@ -5,7 +5,7 @@ class UpdateUserInfoPayload {
   final String? lastName;
   final String? email;
 
-  UpdateUserInfoPayload({
+  const UpdateUserInfoPayload({
     required this.firstName,
     required this.lastName,
     required this.email,

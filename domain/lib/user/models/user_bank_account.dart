@@ -1,11 +1,14 @@
 part of user;
 
-class UserBankAccount {
-  final int userId;
+class UserBankAccount extends Equatable {
   final double usdBalance;
 
   const UserBankAccount({
-    required this.userId,
     required this.usdBalance,
   });
+
+  @override
+  List<Object> get props => <Object>[
+        usdBalance,
+      ];
 }

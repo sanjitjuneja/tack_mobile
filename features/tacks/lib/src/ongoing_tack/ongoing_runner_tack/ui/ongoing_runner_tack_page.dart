@@ -3,9 +3,9 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
-import 'package:tacks/src/ongoing_tack/models/ongoing_runner_screen_result.dart';
-import 'package:tacks/src/ongoing_tack/ongoing_runner_tack/bloc/ongoing_runner_tack_bloc.dart';
-import 'package:tacks/src/ongoing_tack/ongoing_runner_tack/ui/ongoing_runner_tack_screen.dart';
+import '../../models/ongoing_runner_screen_result.dart';
+import '../bloc/ongoing_runner_tack_bloc.dart';
+import 'ongoing_runner_tack_screen.dart';
 
 class OngoingRunnerTack {
   static const String routeName = '/ongoingTack';
@@ -36,6 +36,8 @@ class _OngoingRunnerTackPage extends Page<OngoingRunnerScreenResult> {
           return OngoingRunnerTackBloc(
             tack: tack,
             appRouter: AppRouter.of(context),
+            fetchUserContactsUseCase:
+                appLocator.get<FetchUserContactsUseCase>(),
             cancelTackRunnerUseCase: appLocator.get<CancelTackRunnerUseCase>(),
             completeTackUseCase: appLocator.get<CompleteTackRunnerUseCase>(),
             startTackUseCase: appLocator.get<StartTackRunnerUseCase>(),

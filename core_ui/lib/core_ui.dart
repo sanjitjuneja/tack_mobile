@@ -28,8 +28,6 @@ export 'src/widgets/app_segment_controller.dart';
 export 'src/widgets/app_text_field.dart';
 export 'src/widgets/container_with_separator.dart';
 
-export 'src/widgets/search_field_widget.dart';
-export 'src/widgets/app_tab_switcher_widget.dart';
 export 'src/widgets/app_button.dart';
 export 'src/widgets/lifter_widget.dart';
 export 'src/widgets/app_form_field.dart';

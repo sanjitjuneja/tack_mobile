@@ -4,6 +4,10 @@ abstract class OngoingTackerTackEvent {
   const OngoingTackerTackEvent();
 }
 
+class FetchUserContactsAction extends OngoingTackerTackEvent {
+  const FetchUserContactsAction();
+}
+
 class ActionPressed extends OngoingTackerTackEvent {
   const ActionPressed();
 }

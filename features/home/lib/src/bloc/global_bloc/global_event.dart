@@ -35,3 +35,7 @@ class ChangeGroup extends GlobalEvent {
 class GoToMyInvitations extends GlobalEvent {
   const GoToMyInvitations();
 }
+
+class GoToMyGroups extends GlobalEvent {
+  const GoToMyGroups();
+}

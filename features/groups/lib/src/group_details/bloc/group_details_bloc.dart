@@ -84,7 +84,6 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
         ),
       );
     } catch (e) {
-      print(e);
       event.completer?.complete(RefreshingStatus.failed);
 
       if (event.completer == null) {

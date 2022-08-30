@@ -12,6 +12,7 @@ class UserRepositoryImpl implements domain.UserRepository {
   final SharedPreferencesProvider _sharedPreferencesProvider;
 
   late BehaviorSubject<domain.User> _userStreamController;
+  late BehaviorSubject<domain.UserBankAccount> _balanceStreamController;
 
   UserRepositoryImpl({
     required ApiProvider apiProvider,
@@ -22,6 +23,9 @@ class UserRepositoryImpl implements domain.UserRepository {
         _sharedPreferencesProvider = sharedPreferencesProvider {
     final domain.User user = _sharedPreferencesProvider.getUser()!;
     _userStreamController = BehaviorSubject<domain.User>.seeded(user);
+    _balanceStreamController = BehaviorSubject<domain.UserBankAccount>.seeded(
+      const domain.UserBankAccount(usdBalance: 0),
+    );
   }
 
   @override
@@ -29,6 +33,45 @@ class UserRepositoryImpl implements domain.UserRepository {
 
   @override
   domain.User get currentUser => _userStreamController.stream.value;
+
+  @override
+  Stream<domain.UserBankAccount> get balanceStream =>
+      _balanceStreamController.stream;
+
+  @override
+  domain.UserBankAccount get balance => _balanceStreamController.stream.value;
+
+  @override
+  Future<void> initialLoad() async {
+    // Handle of network error, no any action needed on error.
+    try {
+      await fetchUserBalance(const domain.FetchUserBalancePayload());
+    } catch (_) {}
+  }
+
+  @override
+  Future<domain.UserBankAccount> fetchUserBalance(
+    domain.FetchUserBalancePayload payload,
+  ) async {
+    final domain.UserBankAccount bankAccount =
+        await _apiProvider.fetchUserBalance(
+      request: const FetchUserBalanceRequest(),
+    );
+    _balanceStreamController.add(bankAccount);
+
+    return bankAccount;
+  }
+
+  @override
+  Future<domain.UserContacts> fetchUserContacts(
+    domain.FetchUserContactsPayload payload,
+  ) async {
+    return _apiProvider.fetchUserContacts(
+      request: FetchUserContactsRequest(
+        tackId: payload.tackId,
+      ),
+    );
+  }
 
   @override
   Future<domain.User> updateUserInfo(
@@ -51,7 +94,7 @@ class UserRepositoryImpl implements domain.UserRepository {
   Future<void> changePassword(
     domain.ChangePasswordPayload payload,
   ) async {
-    final Session session =await  _apiProvider.changePassword(
+    final Session session = await _apiProvider.changePassword(
       request: ChangePasswordRequest(
         oldPassword: payload.oldPassword,
         newPassword: payload.newPassword,

@@ -63,7 +63,6 @@ class PhoneVerificationBloc
 
       final String phoneNumber = state.phoneData.formattedData;
 
-      print(phoneNumber);
       switch (state.phoneVerificationType) {
         case PhoneVerificationType.signUp:
           result = await _getSignUpSmsCodeUseCase.execute(

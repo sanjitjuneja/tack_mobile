@@ -10,20 +10,20 @@ import 'my_groups_screen.dart';
 class MyGroupsFeature {
   static const String routeName = '/myGroups';
 
-  static Page<Group> page() {
+  static Page<void> page() {
     return const _MyGroupsPage();
   }
 }
 
-class _MyGroupsPage extends Page<Group> {
+class _MyGroupsPage extends Page<void> {
   @override
   String get name => MyGroupsFeature.routeName;
 
   const _MyGroupsPage();
 
   @override
-  Route<Group> createRoute(BuildContext context) {
-    return CupertinoPageRoute<Group>(
+  Route<void> createRoute(BuildContext context) {
+    return CupertinoPageRoute<void>(
       settings: this,
       builder: (_) => MultiBlocProvider(
         providers: <BlocProvider<dynamic>>[

@@ -3,9 +3,8 @@ import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:groups/src/create_group/bloc/create_group_bloc.dart';
-import 'package:groups/src/create_group/ui/widgets/group_photo_section/group_photo_section_button.dart';
-import 'package:core_ui/src/widgets/section_header_widget.dart';
+import '../../../bloc/create_group_bloc.dart';
+import 'group_photo_section_button.dart';
 
 class GroupPhotoSection extends StatelessWidget {
   final CreateGroupState state;

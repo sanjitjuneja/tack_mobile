@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:dashboard/src/bloc/dashboard_bloc.dart';
-import 'package:dashboard/src/widgets/tack_tile.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
+
+import '../../bloc/dashboard_bloc.dart';
+import '../../widgets/group_tack_tile.dart';
 
 class DashboardForm extends StatelessWidget {
   const DashboardForm({
@@ -38,15 +39,14 @@ class DashboardForm extends StatelessWidget {
                     svgIcon: AppIconsTheme.people,
                     descriptionKey: 'dashboardScreen.noTacks.description',
                     buttonLabelKey: 'dashboardScreen.noTacks.labelButton',
-                    onButtonTap: () =>
-                        _onNoTacksButtonPressed(blocContext),
+                    onButtonTap: () => _onNoTacksButtonPressed(blocContext),
                   ),
                   onRefresh: _onRefreshAction,
                   onLoad: _onLoadMoreAction,
                   itemCount: state.tacksData.results.length,
                   itemBuilder: (_, int index) {
-                    return TackTile(
-                      tack: state.tacksData.results[index],
+                    return GroupTackTile(
+                      groupTack: state.tacksData.results[index],
                     );
                   },
                 );
@@ -62,8 +62,11 @@ class DashboardForm extends StatelessWidget {
               descriptionKey:
                   'dashboardScreen.emptyNoGroupSelected.description',
               buttonLabelKey:
-                  'dashboardScreen.emptyNoGroupSelected.labelButton',
-              onButtonTap: () => _onNoGroupButtonPressed(context),
+                  'dashboardScreen.emptyNoGroupSelected.labelPrimaryButton',
+              secondButtonLabelKey:
+                  'dashboardScreen.emptyNoGroupSelected.labelSecondaryButton',
+              onButtonTap: () => _onMyInvitationsButtonPressed(context),
+              onSecondButtonTap: () => _onCreateGroupButtonPressed(context),
             ),
           );
         }
@@ -87,8 +90,12 @@ class DashboardForm extends StatelessWidget {
         .add(LoadMoreAction(completer: completer));
   }
 
-  void _onNoGroupButtonPressed(BuildContext context) {
+  void _onMyInvitationsButtonPressed(BuildContext context) {
     BlocProvider.of<GlobalBloc>(context).add(const GoToMyInvitations());
+  }
+
+  void _onCreateGroupButtonPressed(BuildContext context) {
+    BlocProvider.of<GlobalBloc>(context).add(const GoToMyGroups());
   }
 
   void _onNoTacksButtonPressed(BuildContext context) {

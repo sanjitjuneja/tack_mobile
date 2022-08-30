@@ -120,6 +120,33 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.userMapper.fromEntity);
   }
 
+  Future<domain.UserBankAccount> fetchUserBalance({
+    required FetchUserBalanceRequest request,
+  }) async {
+    return get<UserBankAccountEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.userBalancePath,
+        body: null,
+        params: null,
+      ),
+      parser: UserBankAccountEntity.fromJson,
+    ).then(mapper.userBankAccountMapper.fromEntity);
+  }
+
+  Future<domain.UserContacts> fetchUserContacts({
+    required FetchUserContactsRequest request,
+  }) async {
+    return get<UserContactsEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.userContactsPath,
+        id: request.tackId,
+        body: null,
+        params: null,
+      ),
+      parser: UserContactsEntity.fromJson,
+    ).then(mapper.userContactsMapper.fromEntity);
+  }
+
   Future<domain.User> updateUserInfo({
     required UpdateUserInfoRequest request,
   }) async {
@@ -398,19 +425,19 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
-  Future<domain.PaginationModel<domain.Tack>> fetchGroupTacks(
+  Future<domain.PaginationModel<domain.GroupTack>> fetchGroupTacks(
     FetchGroupsTacksRequest request,
   ) async {
-    return get<PaginationEntity<TackEntity>>(
+    return get<PaginationEntity<GroupTackEntity>>(
       ApiQuery(
         endpoint: BaseUrlConstants.groupsTacksPath,
         id: request.groupId,
         body: null,
         params: request.queryParameters,
       ),
-      parser: PaginationEntity<TackEntity>.fromJson,
+      parser: PaginationEntity<GroupTackEntity>.fromJson,
     ).then(
-      mapper.paginationMapper<TackEntity, domain.Tack>().fromEntity,
+      mapper.paginationMapper<GroupTackEntity, domain.GroupTack>().fromEntity,
     );
   }
 
