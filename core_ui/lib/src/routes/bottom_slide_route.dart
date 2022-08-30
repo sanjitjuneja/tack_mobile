@@ -4,11 +4,11 @@ import 'package:navigation/navigation.dart';
 
 import '../theme/app_theme.dart';
 
-class _TopSlideRouteLayout extends SingleChildLayoutDelegate {
+class _BottomSlideRouteLayout extends SingleChildLayoutDelegate {
   final double _progress;
   final BoxConstraints? _constraints;
 
-  _TopSlideRouteLayout(
+  _BottomSlideRouteLayout(
     this._progress,
     this._constraints,
   );
@@ -27,20 +27,20 @@ class _TopSlideRouteLayout extends SingleChildLayoutDelegate {
   Offset getPositionForChild(Size size, Size childSize) {
     return Offset(
       0,
-      -childSize.height + childSize.height * _progress,
+      size.height - childSize.height * _progress,
     );
   }
 
   @override
-  bool shouldRelayout(_TopSlideRouteLayout oldDelegate) {
+  bool shouldRelayout(_BottomSlideRouteLayout oldDelegate) {
     return _progress != oldDelegate._progress;
   }
 }
 
-class _TopSlideRouteBody<T> extends StatelessWidget {
-  final TopSlideRoute route;
+class _BottomSlideRouteBody<T> extends StatelessWidget {
+  final BottomSlideRoute route;
 
-  const _TopSlideRouteBody({
+  const _BottomSlideRouteBody({
     super.key,
     required this.route,
   });
@@ -73,7 +73,7 @@ class _TopSlideRouteBody<T> extends StatelessWidget {
             ),
             ClipRect(
               child: CustomSingleChildLayout(
-                delegate: _TopSlideRouteLayout(
+                delegate: _BottomSlideRouteLayout(
                   animationValue,
                   route.constraints,
                 ),
@@ -87,7 +87,7 @@ class _TopSlideRouteBody<T> extends StatelessWidget {
   }
 }
 
-class TopSlideRoute<T> extends PopupRoute<T> {
+class BottomSlideRoute<T> extends PopupRoute<T> {
   static const Duration _defaultAnimationDuration = Duration(milliseconds: 300);
 
   final WidgetBuilder builder;
@@ -96,7 +96,7 @@ class TopSlideRoute<T> extends PopupRoute<T> {
   final bool isDismissible;
   final Duration? transitionAnimationDuration;
 
-  TopSlideRoute({
+  BottomSlideRoute({
     required this.builder,
     this.constraints,
     this.barrierLabel,
@@ -135,7 +135,7 @@ class TopSlideRoute<T> extends PopupRoute<T> {
     Animation<double> animation,
     Animation<double> secondaryAnimation,
   ) {
-    return _TopSlideRouteBody<T>(
+    return _BottomSlideRouteBody<T>(
       route: this,
     );
   }

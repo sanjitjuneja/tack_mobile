@@ -609,5 +609,26 @@
     "descriptionTitle": "Please Contact The Following Number",
     "contactNumber": "832-498-5095",
     "description": "Our team will reach out to you as soon as possible with a response"
+  },
+  "previousTacksScreen": {
+    "title": "Previous Tacks",
+    "tabs": {
+      "first": "Created",
+      "second": "Completed"
+    },
+    "completedAt": "Completed: {completedAt}",
+    "empty": {
+      "createdTacks": {
+        "description": "Looks like you don’t haven’t created any previous Tacks. Go to the Create Tack page to create your first Tack.",
+        "buttonLabel": "Create Tack"
+      },
+      "completedTacks": {
+        "description": "Looks like you don’t haven’t completed any previous Tacks. Go to the Home Feed to find your first Tack to complete.",
+        "buttonLabel": "Home Feed"
+      }
+    }
+  },
+  "tackOptionsDrawer": {
+    "contactCustomerSupport": "Contact Customer Support"
   }
 }

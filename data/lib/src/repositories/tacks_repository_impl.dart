@@ -94,6 +94,30 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   }
 
   @override
+  Future<domain.PaginationModel<domain.Tack>> fetchCompletedTacks(
+    domain.FetchCompletedTacksPayload payload,
+  ) async {
+    return _apiProvider.fetchCompletedTacks(
+      FetchCompletedTacksRequest(
+        lastObjectId: payload.lastObjectId,
+        queryParameters: payload.queryParameters,
+      ),
+    );
+  }
+
+  @override
+  Future<domain.PaginationModel<domain.Tack>> fetchCreatedTacks(
+    domain.FetchCreatedTacksPayload payload,
+  ) async {
+    return _apiProvider.fetchCreatedTacks(
+      FetchCreatedTacksRequest(
+        lastObjectId: payload.lastObjectId,
+        queryParameters: payload.queryParameters,
+      ),
+    );
+  }
+
+  @override
   Future<domain.Tack> createTack(domain.CreateTackPayload payload) async {
     return _apiProvider.createTack(
       CreateTackRequest(
