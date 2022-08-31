@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:navigation/navigation.dart';
 import 'package:payment/payment.dart';
-import 'package:domain/payment/payment.dart';
+import 'package:domain/domain.dart';
 
 part 'payment_settings_event.dart';
 

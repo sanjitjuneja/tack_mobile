@@ -1,5 +1,5 @@
 import 'package:core/core.dart';
-import 'package:domain/payment/payment.dart';
+import 'package:domain/domain.dart';
 import 'package:navigation/navigation.dart';
 
 part 'payment_method_details_state.dart';
