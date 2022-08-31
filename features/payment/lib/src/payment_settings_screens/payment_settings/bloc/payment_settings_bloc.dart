@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:navigation/navigation.dart';
 import 'package:payment/payment.dart';
-import 'package:domain/payment/payment.dart';
+import 'package:domain/domain.dart';
 
 part 'payment_settings_event.dart';
 
@@ -40,6 +40,7 @@ class PaymentSettingsBloc
     on<AddCashAction>(_onAddCashAction);
     on<PayoutAction>(_onPayloadAction);
     on<AddPaymentMethodAction>(_onAddPaymentMethodAction);
+    on<PaymentMethodDetailsAction>(_onPaymentMethodDetailsAction);
 
     add(const InitialLoad());
   }
@@ -106,5 +107,24 @@ class PaymentSettingsBloc
     Emitter<PaymentSettingsState> emit,
   ) async {
     _appRouter.push(AddPaymentMethodFeature.page());
+  }
+
+  Future<void> _onPaymentMethodDetailsAction(
+    PaymentMethodDetailsAction event,
+    Emitter<PaymentSettingsState> emit,
+  ) async {
+    if (event.card != null) {
+      _appRouter.push(
+        PaymentMethodDetailsFeature.cardDetailsPage(
+          card: event.card!,
+        ),
+      );
+    } else {
+      _appRouter.push(
+        PaymentMethodDetailsFeature.bankDetailsPage(
+          bankAccount: event.bankAccount!,
+        ),
+      );
+    }
   }
 }

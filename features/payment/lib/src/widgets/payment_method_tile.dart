@@ -3,7 +3,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
 class PaymentMethodTile extends StatelessWidget {
-  final AppIcon leadingIcon;
+  final Widget leadingIcon;
   final String title;
   final String? subtitle;
   final VoidCallback? onTap;
@@ -26,6 +26,7 @@ class PaymentMethodTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
+      behavior: HitTestBehavior.opaque,
       child: Container(
         padding: isColored
             ? const EdgeInsets.symmetric(
@@ -52,7 +53,7 @@ class PaymentMethodTile extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                leadingIcon(size: 35),
+                leadingIcon,
                 const SizedBox(width: 26.0),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

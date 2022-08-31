@@ -32,7 +32,7 @@ class InvitationTile extends StatelessWidget {
         ),
         child: Row(
           children: <Widget>[
-            AppCircleAvatarWidget(
+            AppNetworkImageWidget(
               invitation.group.imageUrl,
               isShadowBorder: false,
             ),

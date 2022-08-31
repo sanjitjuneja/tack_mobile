@@ -30,7 +30,7 @@ class GroupSection extends StatelessWidget {
             ),
             child: Row(
               children: <Widget>[
-                AppCircleAvatarWidget(state.groupData.group?.imageUrl),
+                AppNetworkImageWidget(state.groupData.group?.imageUrl),
                 const SizedBox(width: 14),
                 Expanded(
                   child: Text(

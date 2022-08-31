@@ -7,3 +7,11 @@ abstract class AddToTackBalanceEvent {
 class MakeAddToTackBalanceRequest extends AddToTackBalanceEvent {
   const MakeAddToTackBalanceRequest();
 }
+
+class UpdateDepositAmountAction extends AddToTackBalanceEvent {
+  final double amount;
+
+  const UpdateDepositAmountAction({
+    required this.amount,
+  });
+}

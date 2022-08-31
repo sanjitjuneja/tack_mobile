@@ -1,6 +1,8 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../../widgets/payment_info_label.dart';
 import '../bloc/add_credit_card_bloc.dart';
 
 class AddCreditCardForm extends StatelessWidget {
@@ -61,7 +63,8 @@ class AddCreditCardForm extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              const SizedBox(height: 10),
+              const PaymentInfoLabel(),
+              const SizedBox(height: 34),
             ],
           ),
         );

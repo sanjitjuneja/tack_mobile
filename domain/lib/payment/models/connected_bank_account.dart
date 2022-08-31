@@ -6,6 +6,7 @@ class ConnectedBankAccount extends Equatable {
   final String status;
   final String type;
   final String bankAccountType;
+  final String? imageUrl;
   final List<String> channels;
 
   const ConnectedBankAccount({
@@ -14,6 +15,7 @@ class ConnectedBankAccount extends Equatable {
     required this.status,
     required this.type,
     required this.bankAccountType,
+    required this.imageUrl,
     required this.channels,
   });
 
@@ -24,6 +26,7 @@ class ConnectedBankAccount extends Equatable {
         status,
         type,
         bankAccountType,
+        imageUrl,
         channels,
       ];
 }

@@ -57,6 +57,7 @@ class AppIconsTheme {
   static const String _masterCardKey = '${_svgPath}master_card.svg';
   static const String _morganChaseKey = '${_svgPath}morgan_chase.svg';
   static const String _applePayKey = '${_svgPath}apple_pay.svg';
+  static const String _googlePayKey = '${_svgPath}google_pay.svg';
   static const String _bankKey = '${_svgPath}bank.svg';
   static const String _lockKey = '${_svgPath}lock.svg';
   static const String _cardKey = '${_svgPath}card.svg';
@@ -115,6 +116,7 @@ class AppIconsTheme {
   static AppIcon get masterCard => AppIcon(_masterCardKey);
   static AppIcon get morganChase => AppIcon(_morganChaseKey);
   static AppIcon get applePay => AppIcon(_applePayKey);
+  static AppIcon get googlePay => AppIcon(_googlePayKey);
   static AppIcon get lock => AppIcon(_lockKey);
   static AppIcon get card => AppIcon(_cardKey);
   static AppIcon get chevronRightRounded => AppIcon(_chevronRightRoundedKey);

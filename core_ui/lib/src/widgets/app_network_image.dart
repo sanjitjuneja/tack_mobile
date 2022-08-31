@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 
-class AppCircleAvatarWidget extends StatelessWidget {
+class AppNetworkImageWidget extends StatelessWidget {
   static const Duration _fadeInDuration = Duration(milliseconds: 300);
   static const Duration _fadeOutDuration = Duration(milliseconds: 500);
 
@@ -12,13 +12,17 @@ class AppCircleAvatarWidget extends StatelessWidget {
   final AppIcon? placeholderIcon;
   final double diameter;
   final bool isShadowBorder;
+  final BoxShape boxShape;
+  final BoxFit boxFit;
 
-  const AppCircleAvatarWidget(
+  const AppNetworkImageWidget(
     this.url, {
     super.key,
     this.placeholderIcon,
     this.diameter = 45.0,
     this.isShadowBorder = true,
+    this.boxShape = BoxShape.circle,
+    this.boxFit = BoxFit.cover,
   });
 
   @override
@@ -27,14 +31,14 @@ class AppCircleAvatarWidget extends StatelessWidget {
       width: diameter,
       height: diameter,
       decoration: BoxDecoration(
-        shape: BoxShape.circle,
+        shape: boxShape,
         border: isShadowBorder
             ? Border.all(
                 color: AppTheme.primaryColor,
                 width: 2,
               )
             : null,
-        color: AppTheme.primaryColor,
+        color: AppTheme.transparentColor,
       ),
       child: UrlManager.isValidUrl(url)
           ? CachedNetworkImage(
@@ -44,10 +48,10 @@ class AppCircleAvatarWidget extends StatelessWidget {
               imageBuilder: (_, ImageProvider<Object> imageProvider) {
                 return Container(
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
+                    shape: boxShape,
                     image: DecorationImage(
                       image: imageProvider,
-                      fit: BoxFit.cover,
+                      fit: boxFit,
                     ),
                   ),
                 );
