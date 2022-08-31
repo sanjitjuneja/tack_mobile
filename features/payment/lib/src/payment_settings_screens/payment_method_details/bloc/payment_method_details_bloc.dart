@@ -13,8 +13,15 @@ class PaymentMethodDetailsBloc
   PaymentMethodDetailsBloc({
     required AppRouterDelegate appRouter,
     required AddCardUseCase addCardUseCase,
+    required ConnectedCard? card,
+    required ConnectedBankAccount? bankAccount,
   })  : _appRouter = appRouter,
         super(
-          const PaymentMethodDetailsState(),
-        ) {}
+          PaymentMethodDetailsState(
+            card: card,
+            bankAccount: bankAccount,
+          ),
+        );
+
+
 }

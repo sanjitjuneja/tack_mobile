@@ -57,14 +57,13 @@ class AppIconsTheme {
   static const String _masterCardKey = '${_svgPath}master_card.svg';
   static const String _morganChaseKey = '${_svgPath}morgan_chase.svg';
   static const String _applePayKey = '${_svgPath}apple_pay.svg';
+  static const String _googlePayKey = '${_svgPath}google_pay.svg';
   static const String _bankKey = '${_svgPath}bank.svg';
   static const String _lockKey = '${_svgPath}lock.svg';
   static const String _cardKey = '${_svgPath}card.svg';
   static const String _chevronRightRoundedKey = '${_svgPath}chevron_right_rounded.svg';
   static const String _checkmarkKey = '${_svgPath}checkmark.svg';
   static const String _redCrossRoundedKey = '${_svgPath}red_cross_rounded.svg';
-  static const String _googlePayKey = '${_svgPath}google_pay.svg';
-
 
   /// Bottom Navigation bar
   static AppIcon get dashboardsActive => AppIcon(_dashboardActiveKey);

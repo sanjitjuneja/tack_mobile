@@ -14,7 +14,6 @@ class AppNetworkImageWidget extends StatelessWidget {
   final bool isShadowBorder;
   final BoxShape boxShape;
   final BoxFit boxFit;
-  final Color? imageBackgroundColor;
 
   const AppNetworkImageWidget(
     this.url, {
@@ -24,7 +23,6 @@ class AppNetworkImageWidget extends StatelessWidget {
     this.isShadowBorder = true,
     this.boxShape = BoxShape.circle,
     this.boxFit = BoxFit.cover,
-    this.imageBackgroundColor,
   });
 
   @override
@@ -40,7 +38,7 @@ class AppNetworkImageWidget extends StatelessWidget {
                 width: 2,
               )
             : null,
-        color: imageBackgroundColor ?? AppTheme.primaryColor,
+        color: AppTheme.transparentColor,
       ),
       child: UrlManager.isValidUrl(url)
           ? CachedNetworkImage(

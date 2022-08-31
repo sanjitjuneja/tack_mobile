@@ -8,28 +8,34 @@ import 'payment_method_details_screen.dart';
 class PaymentMethodDetailsFeature {
   static const String routeName = '/paymentMethodDetails';
 
-  static Page<void> page({
-    required ConnectedCard? card,
-    required ConnectedBankAccount? bankAccount,
+  static Page<void> cardDetailsPage({
+    required ConnectedCard card,
   }) {
-    return PaymentMethodDetailsPage(
+    return _PaymentMethodDetailsPage(
       card: card,
+    );
+  }
+
+  static Page<void> bankDetailsPage({
+    required ConnectedBankAccount bankAccount,
+  }) {
+    return _PaymentMethodDetailsPage(
       bankAccount: bankAccount,
     );
   }
 }
 
-class PaymentMethodDetailsPage extends Page<void> {
+class _PaymentMethodDetailsPage extends Page<void> {
   final ConnectedCard? card;
   final ConnectedBankAccount? bankAccount;
 
   @override
   String get name => PaymentMethodDetailsFeature.routeName;
 
-  const PaymentMethodDetailsPage({
-    required this.card,
-    required this.bankAccount,
-  });
+  const _PaymentMethodDetailsPage({
+    this.card,
+    this.bankAccount,
+  }) : assert(card != null || bankAccount != null);
 
   @override
   Route<void> createRoute(BuildContext context) {
@@ -40,12 +46,11 @@ class PaymentMethodDetailsPage extends Page<void> {
           return PaymentMethodDetailsBloc(
             appRouter: appLocator.get<AppRouterDelegate>(),
             addCardUseCase: appLocator.get<AddCardUseCase>(),
+            card: card,
+            bankAccount: bankAccount,
           );
         },
-        child: PaymentMethodDetailsScreen(
-          card: card,
-          bankAccount: bankAccount,
-        ),
+        child: const PaymentMethodDetailsScreen(),
       ),
     );
   }

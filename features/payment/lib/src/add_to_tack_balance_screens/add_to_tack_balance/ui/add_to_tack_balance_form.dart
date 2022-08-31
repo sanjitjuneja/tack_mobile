@@ -39,7 +39,9 @@ class AddToTackBalanceForm extends StatelessWidget {
             TackKeyboard(
               subtitleKey: 'addToTackBalanceScreen.currentTackBalance',
               amount: 50.00,
-              onChanged: (double value) {},
+              onChanged: (double amount) {
+                _onUpdateDepositAmountAction(context, amount: amount);
+              },
             ),
             const SizedBox(height: 24),
             Row(
@@ -60,6 +62,15 @@ class AddToTackBalanceForm extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+
+  void _onUpdateDepositAmountAction(
+    BuildContext context, {
+    required double amount,
+  }) {
+    BlocProvider.of<AddToTackBalanceBloc>(context).add(
+      UpdateDepositAmountAction(amount: amount),
     );
   }
 

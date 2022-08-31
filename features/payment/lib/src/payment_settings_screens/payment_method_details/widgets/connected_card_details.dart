@@ -30,50 +30,52 @@ class ConnectedCardDetails extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                card.cardData.brand,
-                style: AppTextTheme.manrope20Regular,
+      child: AspectRatio(
+        aspectRatio: 16 / 10,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  card.cardData.brand,
+                  style: AppTextTheme.manrope20Regular,
+                ),
+                AppNetworkImageWidget(
+                  card.cardData.imageUrl,
+                  placeholderIcon: AppIconsTheme.bank,
+                  boxShape: BoxShape.rectangle,
+                  boxFit: BoxFit.fitWidth,
+                  isShadowBorder: false,
+                  diameter: 35,
+                ),
+              ],
+            ),
+            const SizedBox(height: 14),
+            Text(
+              '****${card.cardData.last4}',
+              style: AppTextTheme.manrope18Regular.copyWith(
+                color: AppTheme.textHeavyHintColor,
               ),
-              AppNetworkImageWidget(
-                card.cardData.imageUrl,
-                placeholderIcon: AppIconsTheme.bank,
-                boxShape: BoxShape.rectangle,
-                boxFit: BoxFit.fitWidth,
-                isShadowBorder: false,
-                imageBackgroundColor: AppTheme.transparentColor,
-                diameter: 35,
+            ),
+            const SizedBox(height: 32),
+            Text(
+              FlutterI18n.translate(
+                context,
+                'paymentMethodDetailsScreen.expiryDate',
               ),
-            ],
-          ),
-          const SizedBox(height: 14),
-          Text(
-            '****${card.cardData.last4}',
-            style: AppTextTheme.manrope18Regular.copyWith(
-              color: AppColors.shuttleGray,
+              style: AppTextTheme.manrope16Regular.copyWith(
+                color: AppTheme.textHeavyHintColor,
+              ),
             ),
-          ),
-          const SizedBox(height: 32),
-          Text(
-            FlutterI18n.translate(
-              context,
-              'paymentMethodDetailsScreen.expiryDate',
+            const SizedBox(height: 12),
+            Text(
+              '${card.cardData.expMonth}/${card.cardData.expYear}',
+              style: AppTextTheme.manrope18Medium,
             ),
-            style: AppTextTheme.manrope16Regular.copyWith(
-              color: AppColors.shuttleGray,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            '${card.cardData.expMonth}/${card.cardData.expYear}',
-            style: AppTextTheme.manrope18Medium,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

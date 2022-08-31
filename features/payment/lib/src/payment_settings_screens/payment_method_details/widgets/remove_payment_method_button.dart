@@ -33,7 +33,7 @@ class RemovePaymentMethodButton extends StatelessWidget {
           children: <Widget>[
             AppIconsTheme.cross(
               size: 15,
-              color: AppTheme.primaryColor,
+              color: AppTheme.textBrightColor,
             ),
             const SizedBox(width: 10),
             Text(
@@ -44,7 +44,7 @@ class RemovePaymentMethodButton extends StatelessWidget {
                     : 'paymentMethodDetailsScreen.removeCard',
               ),
               style: AppTextTheme.manrope14Regular.copyWith(
-                color: AppTheme.primaryColor,
+                color: AppTheme.textBrightColor,
               ),
             ),
           ],

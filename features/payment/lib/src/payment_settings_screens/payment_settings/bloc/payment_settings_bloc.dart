@@ -113,11 +113,18 @@ class PaymentSettingsBloc
     PaymentMethodDetailsAction event,
     Emitter<PaymentSettingsState> emit,
   ) async {
-    _appRouter.push(
-      PaymentMethodDetailsFeature.page(
-        card: event.card,
-        bankAccount: event.bankAccount,
-      ),
-    );
+    if(event.card != null){
+      _appRouter.push(
+        PaymentMethodDetailsFeature.cardDetailsPage(
+          card: event.card!,
+        ),
+      );
+    }else{
+      _appRouter.push(
+        PaymentMethodDetailsFeature.bankDetailsPage(
+          bankAccount: event.bankAccount!,
+        ),
+      );
+    }
   }
 }

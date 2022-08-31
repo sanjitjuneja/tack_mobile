@@ -1,6 +1,7 @@
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ConnectedBankAccountDetails extends StatelessWidget {
   final ConnectedBankAccount bankAccount;
@@ -29,36 +30,39 @@ class ConnectedBankAccountDetails extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                bankAccount.bankName,
-                style: AppTextTheme.manrope20Regular,
-              ),
-              AppNetworkImageWidget(
-                bankAccount.imageUrl,
-                placeholderIcon: AppIconsTheme.bank,
-                boxShape: BoxShape.rectangle,
-                boxFit: BoxFit.fitWidth,
-                isShadowBorder: false,
-                imageBackgroundColor: AppTheme.transparentColor,
-                diameter: 35,
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text(
-            bankAccount.bankAccountType,
-            style: AppTextTheme.manrope16Regular.copyWith(
-              color: AppColors.shuttleGray,
+      child: AspectRatio(
+        aspectRatio: 16 / 10,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Text(
+                    bankAccount.bankName,
+                    style: AppTextTheme.manrope20Regular,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                AppNetworkImageWidget(
+                  bankAccount.imageUrl,
+                  placeholderIcon: AppIconsTheme.bank,
+                  boxShape: BoxShape.rectangle,
+                  boxFit: BoxFit.fitWidth,
+                  isShadowBorder: false,
+                  diameter: 35,
+                ),
+              ],
             ),
-          ),
-          const SizedBox(height: 96),
-        ],
+            const SizedBox(height: 8),
+            Text(
+              bankAccount.bankAccountType,
+              style: AppTextTheme.manrope16Regular.copyWith(
+                color: AppTheme.textHeavyHintColor,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
