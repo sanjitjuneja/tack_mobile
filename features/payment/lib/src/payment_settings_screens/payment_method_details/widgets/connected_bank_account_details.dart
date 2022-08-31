@@ -1,3 +1,4 @@
+import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,7 +32,7 @@ class ConnectedBankAccountDetails extends StatelessWidget {
         ],
       ),
       child: AspectRatio(
-        aspectRatio: 16 / 10,
+        aspectRatio: Constants.paymentMethodCardRatio,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

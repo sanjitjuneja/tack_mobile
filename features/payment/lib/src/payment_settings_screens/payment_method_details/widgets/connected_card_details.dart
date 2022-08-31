@@ -31,7 +31,7 @@ class ConnectedCardDetails extends StatelessWidget {
         ],
       ),
       child: AspectRatio(
-        aspectRatio: 16 / 10,
+        aspectRatio: Constants.paymentMethodCardRatio,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
