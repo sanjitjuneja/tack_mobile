@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:account/account.dart';
-import 'package:app_drawer/src/models/go_to_option.dart';
 import 'package:core/core.dart';
 import 'package:customer_support/customer_support.dart';
 import 'package:domain/domain.dart';
@@ -9,6 +8,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:groups/groups.dart';
 import 'package:navigation/navigation.dart';
 import 'package:payment/payment.dart';
+import 'package:tacks/tacks.dart';
+
+import '../models/go_to_option.dart';
 
 part 'app_drawer_event.dart';
 

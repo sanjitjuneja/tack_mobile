@@ -4,6 +4,7 @@ export 'src/form_models/form_models.dart';
 
 export 'src/helpers/widget_shadow_type.dart';
 
+export 'src/routes/bottom_slide_route.dart';
 export 'src/routes/left_slide_route.dart';
 export 'src/routes/opacity_route.dart';
 export 'src/routes/top_slide_route.dart';

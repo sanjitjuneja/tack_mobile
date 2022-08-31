@@ -2,19 +2,12 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
-import 'widgets/runner_tacks_widget.dart';
-import 'widgets/tacker_tacks_widget.dart';
+import 'widgets/completed_tacks_widget.dart';
+import 'widgets/created_tacks_widget.dart';
 
-class TacksForm extends StatefulWidget {
-  const TacksForm({
-    super.key,
-  });
+class PreviousTacksForm extends StatelessWidget {
+  const PreviousTacksForm({super.key});
 
-  @override
-  State<TacksForm> createState() => _TacksFormState();
-}
-
-class _TacksFormState extends State<TacksForm> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -22,31 +15,32 @@ class _TacksFormState extends State<TacksForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          const SizedBox(height: 10),
           const PageHeaderWidget(
-            descriptionKey: 'tacksScreen.description',
+            titleKey: 'previousTacksScreen.title',
           ),
-          const SizedBox(height: 17),
+          const SizedBox(height: 30),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 45.0),
+            padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: AppSegmentController(
               tabs: <int, String>{
                 0: FlutterI18n.translate(
                   context,
-                  'tacksScreen.tabs.first',
+                  'previousTacksScreen.tabs.first',
                 ),
                 1: FlutterI18n.translate(
                   context,
-                  'tacksScreen.tabs.second',
+                  'previousTacksScreen.tabs.second',
                 ),
               },
             ),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 10),
           const Expanded(
             child: TabBarView(
               children: <Widget>[
-                TackerTacksWidget(),
-                RunnerTacksWidget(),
+                CreatedTacksWidget(),
+                CompletedTacksWidget(),
               ],
             ),
           ),

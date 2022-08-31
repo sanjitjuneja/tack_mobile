@@ -441,6 +441,36 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
+  Future<domain.PaginationModel<domain.Tack>> fetchCompletedTacks(
+    FetchCompletedTacksRequest request,
+  ) async {
+    return get<PaginationEntity<TackEntity>>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.tacksPreviousMeRunnerPath,
+        body: null,
+        params: request.queryParameters,
+      ),
+      parser: PaginationEntity<TackEntity>.fromJson,
+    ).then(
+      mapper.paginationMapper<TackEntity, domain.Tack>().fromEntity,
+    );
+  }
+
+  Future<domain.PaginationModel<domain.Tack>> fetchCreatedTacks(
+    FetchCreatedTacksRequest request,
+  ) async {
+    return get<PaginationEntity<TackEntity>>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.tacksPreviousMeTackerPath,
+        body: null,
+        params: request.queryParameters,
+      ),
+      parser: PaginationEntity<TackEntity>.fromJson,
+    ).then(
+      mapper.paginationMapper<TackEntity, domain.Tack>().fromEntity,
+    );
+  }
+
   Future<domain.Tack> createTack(CreateTackRequest request) async {
     return post<TackEntity>(
       ApiQuery(
