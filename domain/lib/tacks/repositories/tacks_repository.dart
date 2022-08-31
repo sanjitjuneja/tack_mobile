@@ -5,19 +5,25 @@ abstract class TacksRepository {
 
   ValueStream<List<RunnerTack>> get runnerTacksStream;
 
-  Future<List<TemplateTack>> nearbyPopularTacks(
-    NearbyPopularTacksPayload payload,
+  Future<List<TemplateTack>> fetchNearbyPopularTacks(
+    FetchNearbyPopularTacksPayload payload,
   );
 
-  Future<List<TemplateTack>> groupPopularTacks(
-    GroupPopularTacksPayload payload,
+  Future<List<TemplateTack>> fetchGroupPopularTacks(
+    FetchGroupPopularTacksPayload payload,
   );
 
-  Future<List<RunnerTack>> getRunnerTacks();
+  Future<PaginationModel<RunnerTack>> fetchRunnerTacks(
+    FetchRunnerTacksPayload payload,
+  );
 
-  Future<List<Tack>> getTackerTacks();
+  Future<PaginationModel<Tack>> fetchTackerTacks(
+    FetchTackerTacksPayload payload,
+  );
 
-  Future<PaginationModel<Tack>> getGroupTacks(GroupTacksPayload payload);
+  Future<PaginationModel<GroupTack>> fetchGroupTacks(
+    FetchGroupTacksPayload payload,
+  );
 
   Future<Tack> createTack(CreateTackPayload payload);
 
@@ -33,7 +39,9 @@ abstract class TacksRepository {
 
   Future<void> completeTackByRunner(CompleteTackPayload payload);
 
-  Future<PaginationModel<Offer>> getTackOffers(TackOffersPayload payload);
+  Future<PaginationModel<Offer>> fetchTackOffers(
+    FetchTackOffersPayload payload,
+  );
 
   Future<void> makeOffer(MakeOfferPayload payload);
 

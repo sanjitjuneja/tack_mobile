@@ -11,6 +11,7 @@ part 'models/deeplink_intent.dart';
 part 'models/pagination_model.dart';
 
 part 'payloads/create_deeplink_payload.dart';
+part 'payloads/pagination_payload.dart';
 
 part 'repositories/deeplink_repository.dart';
 

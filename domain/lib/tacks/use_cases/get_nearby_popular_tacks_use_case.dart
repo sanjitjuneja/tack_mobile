@@ -1,15 +1,15 @@
 part of tacks;
 
-class GetNearbyPopularTacksUseCase
-    extends FutureUseCase<List<TemplateTack>, NearbyPopularTacksPayload> {
+class FetchNearbyPopularTacksUseCase
+    extends FutureUseCase<List<TemplateTack>, FetchNearbyPopularTacksPayload> {
   final TacksRepository _tacksRepository;
 
-  GetNearbyPopularTacksUseCase({
+  FetchNearbyPopularTacksUseCase({
     required TacksRepository tacksRepository,
   }) : _tacksRepository = tacksRepository;
 
   @override
-  Future<List<TemplateTack>> execute(NearbyPopularTacksPayload params) async {
-    return _tacksRepository.nearbyPopularTacks(params);
+  Future<List<TemplateTack>> execute(FetchNearbyPopularTacksPayload params) async {
+    return _tacksRepository.fetchNearbyPopularTacks(params);
   }
 }

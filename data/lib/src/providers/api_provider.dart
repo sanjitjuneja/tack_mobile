@@ -120,6 +120,33 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.userMapper.fromEntity);
   }
 
+  Future<domain.UserBankAccount> fetchUserBalance({
+    required FetchUserBalanceRequest request,
+  }) async {
+    return get<UserBankAccountEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.userBalancePath,
+        body: null,
+        params: null,
+      ),
+      parser: UserBankAccountEntity.fromJson,
+    ).then(mapper.userBankAccountMapper.fromEntity);
+  }
+
+  Future<domain.UserContacts> fetchUserContacts({
+    required FetchUserContactsRequest request,
+  }) async {
+    return get<UserContactsEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.userContactsPath,
+        id: request.tackId,
+        body: null,
+        params: null,
+      ),
+      parser: UserContactsEntity.fromJson,
+    ).then(mapper.userContactsMapper.fromEntity);
+  }
+
   Future<domain.User> updateUserInfo({
     required UpdateUserInfoRequest request,
   }) async {
@@ -146,8 +173,8 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
-  Future<domain.Group> getGroup({
-    required GetGroupRequest request,
+  Future<domain.Group> fetchGroup({
+    required FetchGroupRequest request,
   }) async {
     return get<GroupEntity>(
       ApiQuery(
@@ -160,19 +187,20 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.groupMapper.fromEntity);
   }
 
-  Future<List<domain.GroupDetails>> getGroups({
-    required GetGroupsRequest request,
+  Future<domain.PaginationModel<domain.GroupDetails>> fetchGroups({
+    required FetchGroupsRequest request,
   }) async {
-    return get<GetGroupsResponse>(
+    return get<PaginationEntity<GroupDetailsEntity>>(
       ApiQuery(
         endpoint: BaseUrlConstants.groupsMePath,
         body: null,
-        params: null,
+        params: request.queryParameters,
       ),
-      parser: GetGroupsResponse.fromJson,
+      parser: PaginationEntity<GroupDetailsEntity>.fromJson,
     ).then(
-      (GetGroupsResponse response) =>
-          mapper.groupDetailsMapper.fromList(response.results),
+      mapper
+          .paginationMapper<GroupDetailsEntity, domain.GroupDetails>()
+          .fromEntity,
     );
   }
 
@@ -247,8 +275,8 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.groupDetailsMapper.fromEntity);
   }
 
-  Future<domain.GroupInviteLink> getGroupInviteLink({
-    required GetGroupInviteLinkRequest request,
+  Future<domain.GroupInviteLink> fetchGroupInviteLink({
+    required FetchGroupInviteLinkRequest request,
   }) async {
     return get<GroupInviteLinkEntity>(
       ApiQuery(
@@ -261,8 +289,8 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.groupInviteLinkMapper.fromEntity);
   }
 
-  Future<domain.GroupInvite> getGroupInvite({
-    required GetGroupInviteRequest request,
+  Future<domain.GroupInvite> fetchGroupInvite({
+    required FetchGroupInviteRequest request,
   }) async {
     return get<GroupInviteEntity>(
       ApiQuery(
@@ -274,39 +302,36 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.groupInviteMapper.fromEntity);
   }
 
-  Future<List<domain.TackUser>> getGroupMembers({
-    required GetGroupMembersRequest request,
+  Future<domain.PaginationModel<domain.TackUser>> fetchGroupMembers({
+    required FetchGroupMembersRequest request,
   }) async {
-    return get<GetGroupMembersResponse>(
+    return get<PaginationEntity<TackUserEntity>>(
       ApiQuery(
         endpoint: BaseUrlConstants.groupMembersPath,
-        id: request.id,
+        id: request.groupId,
         body: null,
-        params: null,
+        params: request.queryParameters,
       ),
-      parser: GetGroupMembersResponse.fromJson,
+      parser: PaginationEntity<TackUserEntity>.fromJson,
     ).then(
-      (GetGroupMembersResponse response) {
-        return List<domain.TackUser>.from(
-          mapper.tackUserMapper.fromList(response.results),
-        );
-      },
+      mapper.paginationMapper<TackUserEntity, domain.TackUser>().fromEntity,
     );
   }
 
-  Future<List<domain.GroupInvitation>> getInvitations({
-    required GetGroupInvitationsRequest request,
+  Future<domain.PaginationModel<domain.GroupInvitation>> fetchGroupInvitations({
+    required FetchGroupInvitationsRequest request,
   }) async {
-    return get<GetGroupInvitationsResponse>(
+    return get<PaginationEntity<GroupInvitationEntity>>(
       ApiQuery(
         endpoint: BaseUrlConstants.invitationsMePath,
         body: null,
-        params: null,
+        params: request.queryParameters,
       ),
-      parser: GetGroupInvitationsResponse.fromJson,
+      parser: PaginationEntity<GroupInvitationEntity>.fromJson,
     ).then(
-      (GetGroupInvitationsResponse response) =>
-          mapper.groupInvitationMapper.fromList(response.results),
+      mapper
+          .paginationMapper<GroupInvitationEntity, domain.GroupInvitation>()
+          .fromEntity,
     );
   }
 
@@ -337,8 +362,8 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
-  Future<List<domain.TemplateTack>> getNearbyPopularTacks({
-    required NearbyPopularTacksRequest request,
+  Future<List<domain.TemplateTack>> fetchNearbyPopularTacks({
+    required FetchNearbyPopularTacksRequest request,
   }) async {
     return get<NearbyPopularTacksResponse>(
       ApiQuery(
@@ -353,8 +378,8 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
-  Future<List<domain.TemplateTack>> getGroupPopularTacks({
-    required GroupPopularTacksRequest request,
+  Future<List<domain.TemplateTack>> fetchGroupPopularTacks({
+    required FetchGroupPopularTacksRequest request,
   }) async {
     return get<GroupPopularTacksResponse>(
       ApiQuery(
@@ -370,47 +395,49 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
-  Future<List<domain.RunnerTack>> getRunnerTacks() async {
-    return get<RunnerTacksResponse>(
+  Future<domain.PaginationModel<domain.RunnerTack>> fetchRunnerTacks(
+    FetchRunnerTacksRequest request,
+  ) async {
+    return get<PaginationEntity<RunnerTackEntity>>(
       ApiQuery(
         endpoint: BaseUrlConstants.tacksMeRunnerPath,
         body: null,
-        params: null,
+        params: request.queryParameters,
       ),
-      parser: RunnerTacksResponse.fromJson,
+      parser: PaginationEntity<RunnerTackEntity>.fromJson,
     ).then(
-      (RunnerTacksResponse response) =>
-          mapper.runnerTackMapper.fromList(response.results),
+      mapper.paginationMapper<RunnerTackEntity, domain.RunnerTack>().fromEntity,
     );
   }
 
-  Future<List<domain.Tack>> getTackerTacks() async {
-    return get<TackerTacksResponse>(
-      ApiQuery(
-        endpoint: BaseUrlConstants.tacksMeTackerPath,
-        body: null,
-        params: null,
-      ),
-      parser: TackerTacksResponse.fromJson,
-    ).then(
-      (TackerTacksResponse response) =>
-          mapper.tackMapper.fromList(response.results),
-    );
-  }
-
-  Future<domain.PaginationModel<domain.Tack>> getGroupTacks(
-    GroupTacksRequest request,
+  Future<domain.PaginationModel<domain.Tack>> fetchTackerTacks(
+    FetchTackerTacksRequest request,
   ) async {
     return get<PaginationEntity<TackEntity>>(
       ApiQuery(
-        endpoint: BaseUrlConstants.groupsTacksPath,
-        id: request.groupId,
+        endpoint: BaseUrlConstants.tacksMeTackerPath,
         body: null,
         params: request.queryParameters,
       ),
       parser: PaginationEntity<TackEntity>.fromJson,
     ).then(
       mapper.paginationMapper<TackEntity, domain.Tack>().fromEntity,
+    );
+  }
+
+  Future<domain.PaginationModel<domain.GroupTack>> fetchGroupTacks(
+    FetchGroupsTacksRequest request,
+  ) async {
+    return get<PaginationEntity<GroupTackEntity>>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.groupsTacksPath,
+        id: request.groupId,
+        body: null,
+        params: request.queryParameters,
+      ),
+      parser: PaginationEntity<GroupTackEntity>.fromJson,
+    ).then(
+      mapper.paginationMapper<GroupTackEntity, domain.GroupTack>().fromEntity,
     );
   }
 
@@ -471,8 +498,8 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
-  Future<domain.PaginationModel<domain.Offer>> getTackOffers(
-    GetTackOffersRequest request,
+  Future<domain.PaginationModel<domain.Offer>> fetchTackOffers(
+    FetchTackOffersRequest request,
   ) async {
     return get<PaginationEntity<OfferEntity>>(
       ApiQuery(

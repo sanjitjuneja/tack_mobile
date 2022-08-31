@@ -30,19 +30,19 @@ class MyGroupsForm extends StatelessWidget {
               Expanded(
                 child: AppListViewWithRefresh(
                   enableRefresh: true,
-                  enableLoad: state.canLoadMore,
+                  enableLoad: state.groupsData.canLoadMore,
                   isLoading: state.isLoading,
-                  hasData: state.hasData,
+                  hasData: state.groupsData.hasData,
                   emptyWidget: EmptyWidget(
                     svgIcon: AppIconsTheme.people,
                     descriptionKey: 'groupsScreen.empty.description',
                   ),
                   onRefresh: _onRefreshAction,
                   onLoad: _onLoadMoreAction,
-                  itemCount: state.groups.length,
+                  itemCount: state.groupsData.results.length,
                   itemBuilder: (_, int index) {
                     return GroupTile(
-                      groupDetails: state.groups[index],
+                      groupDetails: state.groupsData.results[index],
                     );
                   },
                 ),

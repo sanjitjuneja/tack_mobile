@@ -4,7 +4,7 @@ class ChangePasswordPayload {
   final String oldPassword;
   final String newPassword;
 
-  ChangePasswordPayload({
+  const ChangePasswordPayload({
     required this.oldPassword,
     required this.newPassword,
   });

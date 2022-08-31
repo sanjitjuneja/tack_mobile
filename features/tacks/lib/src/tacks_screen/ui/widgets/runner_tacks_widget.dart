@@ -4,8 +4,8 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:tacks/src/tacks_screen/bloc/tacks_bloc.dart';
-import 'package:tacks/src/tacks_screen/ui/widgets/runner_tack/runner_task_widget.dart';
+import '../../bloc/tacks_bloc.dart';
+import 'runner_tack/runner_task_widget.dart';
 
 class RunnerTacksWidget extends StatelessWidget {
   const RunnerTacksWidget({super.key});
@@ -28,9 +28,9 @@ class RunnerTacksWidget extends StatelessWidget {
             builder: (_, TacksState state) {
               return AppListViewWithRefresh(
                 enableRefresh: true,
-                enableLoad: state.runnerTacksState.canLoadMore,
-                isLoading: state.runnerTacksState.isLoading,
-                hasData: state.runnerTacksState.hasData,
+                enableLoad: state.runnerTacksData.canLoadMore,
+                isLoading: state.isLoading,
+                hasData: state.runnerTacksData.hasData,
                 emptyWidget: EmptyWidget(
                   svgIcon: AppIconsTheme.tacksList,
                   descriptionKey: 'tacksScreen.empty.runnerTacks.description',
@@ -39,10 +39,10 @@ class RunnerTacksWidget extends StatelessWidget {
                 ),
                 onRefresh: _onRefreshAction,
                 onLoad: _onLoadMoreAction,
-                itemCount: state.runnerTacksState.tacks.length,
+                itemCount: state.runnerTacksData.results.length,
                 itemBuilder: (_, int index) {
                   return RunnerTackWidget(
-                    runnerTack: state.runnerTacksState.tacks[index],
+                    runnerTack: state.runnerTacksData.results[index],
                   );
                 },
               );

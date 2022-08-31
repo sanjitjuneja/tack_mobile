@@ -4,8 +4,8 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
-import 'package:tacks/src/tacks_screen/bloc/tacks_bloc.dart';
-import 'package:tacks/src/tacks_screen/ui/tacks_form.dart';
+import '../bloc/tacks_bloc.dart';
+import 'tacks_form.dart';
 
 class TacksScreen extends StatelessWidget {
   const TacksScreen({super.key});
@@ -15,8 +15,8 @@ class TacksScreen extends StatelessWidget {
     return BlocProvider<TacksBloc>(
       create: (_) => TacksBloc(
         appRouter: appLocator.get<AppRouterDelegate>(),
-        getRunnerTacksUseCase: appLocator.get<GetRunnerTacksUseCase>(),
-        getTackerTacksUseCase: appLocator.get<GetTackerTacksUseCase>(),
+        fetchRunnerTacksUseCase: appLocator.get<FetchRunnerTacksUseCase>(),
+        fetchTackerTacksUseCase: appLocator.get<FetchTackerTacksUseCase>(),
         cancelOfferUseCase: appLocator.get<CancelOfferUseCase>(),
       ),
       child: CupertinoPageScaffold(

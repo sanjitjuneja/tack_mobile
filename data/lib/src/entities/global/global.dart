@@ -5,4 +5,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'entities/pagination_entity.dart';
 
+part 'requests/pagination_request.dart';
+
 part 'global.g.dart';

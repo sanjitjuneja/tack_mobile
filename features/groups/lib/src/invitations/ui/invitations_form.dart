@@ -4,8 +4,8 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:groups/src/invitations/bloc/invitations_bloc.dart';
-import 'package:groups/src/invitations/ui/widgets/invitation_tile.dart';
+import '../bloc/invitations_bloc.dart';
+import 'widgets/invitation_tile.dart';
 
 class InvitationsForm extends StatelessWidget {
   const InvitationsForm({super.key});
@@ -24,19 +24,19 @@ class InvitationsForm extends StatelessWidget {
             Expanded(
               child: AppListViewWithRefresh(
                 enableRefresh: true,
-                enableLoad: state.canLoadMore,
+                enableLoad: state.invitationsData.canLoadMore,
                 isLoading: state.isLoading,
-                hasData: state.hasData,
+                hasData: state.invitationsData.hasData,
                 emptyWidget: EmptyWidget(
                   svgIcon: AppIconsTheme.people,
                   descriptionKey: 'invitationsScreen.empty.description',
                 ),
                 onRefresh: _onRefreshAction,
                 onLoad: _onLoadMoreAction,
-                itemCount: state.invitations.length,
+                itemCount: state.invitationsData.results.length,
                 itemBuilder: (_, int index) {
                   return InvitationTile(
-                    invitation: state.invitations[index],
+                    invitation: state.invitationsData.results[index],
                   );
                 },
               ),

@@ -41,7 +41,7 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
   Future<void> initialLoad() async {
     // Handle of network error, no any action needed on error.
     try {
-      await getGroups(const domain.GetGroupsPayload());
+      await fetchGroups(const domain.FetchGroupsPayload());
       await _initialSetActiveGroup();
     } catch (_) {}
   }
@@ -59,8 +59,8 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
     final domain.Group group;
 
     if (groupIndex == -1) {
-      group = await getGroup(
-        domain.GetGroupPayload(id: activeGroupId),
+      group = await fetchGroup(
+        domain.FetchGroupPayload(id: activeGroupId),
       );
     } else {
       group = _groupsStreamController.stream.value.elementAt(groupIndex).group;
@@ -70,34 +70,44 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
   }
 
   @override
-  Future<domain.Group> getGroup(domain.GetGroupPayload payload) async {
-    return _apiProvider.getGroup(
-      request: GetGroupRequest(id: payload.id),
+  Future<domain.Group> fetchGroup(domain.FetchGroupPayload payload) async {
+    return _apiProvider.fetchGroup(
+      request: FetchGroupRequest(
+        id: payload.id,
+      ),
     );
   }
 
   @override
-  Future<List<domain.GroupDetails>> getGroups(
-    domain.GetGroupsPayload payload,
+  Future<domain.PaginationModel<domain.GroupDetails>> fetchGroups(
+    domain.FetchGroupsPayload payload,
   ) async {
-    final List<domain.GroupDetails> groups = await _apiProvider.getGroups(
-      request: const GetGroupsRequest(),
+    final domain.PaginationModel<domain.GroupDetails> groups =
+        await _apiProvider.fetchGroups(
+      request: FetchGroupsRequest(
+        lastObjectId: payload.lastObjectId,
+        queryParameters: payload.queryParameters,
+      ),
     );
-    _groupsStreamController.add(groups);
+    if (payload.queryParameters == null) {
+      _groupsStreamController.add(groups.results);
+    }
 
     return groups;
   }
 
   @override
   Future<void> selectGroup(domain.SelectGroupPayload payload) async {
-    if (payload.group.id == currentGroup?.id) return;
+    if (payload.group?.id == currentGroup?.id) return;
 
     _groupStreamController.add(payload.group);
-    _sharedPreferencesProvider.setActiveGroupId(payload.group.id);
+    _sharedPreferencesProvider.setActiveGroupId(payload.group?.id);
+    if (payload.group == null) return;
+
     try {
       await _apiProvider.selectGroup(
         request: SelectGroupRequest(
-          id: payload.group.id,
+          id: payload.group!.id,
         ),
       );
     } catch (_) {}
@@ -112,7 +122,9 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
         image: payload.image,
       ),
     );
-    await selectGroup(domain.SelectGroupPayload(group: group));
+    await selectGroup(
+      domain.SelectGroupPayload(group: group),
+    );
 
     return group;
   }
@@ -124,11 +136,16 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
         id: payload.group.id,
       ),
     );
-
+    _groupsStreamController.add(
+      _groupsStreamController.value
+        ..removeWhere(
+          (domain.GroupDetails element) => element.id == payload.group.id,
+        ),
+    );
     if (currentGroup?.id == payload.group.id) {
       await selectGroup(
         domain.SelectGroupPayload(
-          group: payload.group,
+          group: _groupsStreamController.value.lastOrNull?.group,
         ),
       );
     }
@@ -157,44 +174,49 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
   }
 
   @override
-  Future<domain.GroupInviteLink> getGroupInviteLink(
-    domain.GetGroupInviteLinkPayload payload,
+  Future<domain.GroupInviteLink> fetchGroupInviteLink(
+    domain.FetchGroupInviteLinkPayload payload,
   ) async {
-    return _apiProvider.getGroupInviteLink(
-      request: GetGroupInviteLinkRequest(
+    return _apiProvider.fetchGroupInviteLink(
+      request: FetchGroupInviteLinkRequest(
         id: payload.group.id,
       ),
     );
   }
 
   @override
-  Future<domain.GroupInvite> getGroupInvite(
-    domain.GetGroupInvitePayload payload,
+  Future<domain.GroupInvite> fetchGroupInvite(
+    domain.FetchGroupInvitePayload payload,
   ) async {
-    return _apiProvider.getGroupInvite(
-      request: GetGroupInviteRequest(
+    return _apiProvider.fetchGroupInvite(
+      request: FetchGroupInviteRequest(
         params: payload.uri.queryParameters,
       ),
     );
   }
 
   @override
-  Future<List<domain.TackUser>> getGroupMembers(
-    domain.GetGroupMembersPayload payload,
+  Future<domain.PaginationModel<domain.TackUser>> fetchGroupMembers(
+    domain.FetchGroupMembersPayload payload,
   ) async {
-    return _apiProvider.getGroupMembers(
-      request: GetGroupMembersRequest(
-        id: payload.group.id,
+    return _apiProvider.fetchGroupMembers(
+      request: FetchGroupMembersRequest(
+        groupId: payload.group.id,
+        lastObjectId: payload.lastObjectId,
+        queryParameters: payload.queryParameters,
       ),
     );
   }
 
   @override
-  Future<List<domain.GroupInvitation>> getInvitations(
-    domain.GetGroupInvitationsPayload payload,
+  Future<domain.PaginationModel<domain.GroupInvitation>> fetchGroupInvitations(
+    domain.FetchGroupInvitationsPayload payload,
   ) async {
-    return _apiProvider.getInvitations(
-      request: const GetGroupInvitationsRequest(),
+    return _apiProvider.fetchGroupInvitations(
+      request: FetchGroupInvitationsRequest(
+        lastObjectId: payload.lastObjectId,
+        queryParameters: payload.queryParameters,
+      ),
     );
   }
 

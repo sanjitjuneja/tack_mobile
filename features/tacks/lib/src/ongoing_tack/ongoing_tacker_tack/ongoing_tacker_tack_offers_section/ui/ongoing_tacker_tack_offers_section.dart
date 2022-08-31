@@ -28,7 +28,7 @@ class OngoingTackerTackOffersSection extends StatelessWidget {
       create: (_) {
         return OffersBloc(
           tack: state.tack,
-          getTackOffersUseCase: appLocator.get<GetTackOffersUseCase>(),
+          fetchTacksOffersUseCase: appLocator.get<FetchTackOffersUseCase>(),
         );
       },
       child: BlocBuilder<OffersBloc, OffersState>(

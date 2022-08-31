@@ -1,6 +1,6 @@
 part of mappers;
 
-class TackUserMapper implements Mapper<TackUserEntity?, domain.TackUser?> {
+class TackUserMapper implements Mapper<TackUserEntity, domain.TackUser> {
   final TackUserContactsMapper tackUserContactsMapper;
 
   const TackUserMapper({
@@ -8,9 +8,7 @@ class TackUserMapper implements Mapper<TackUserEntity?, domain.TackUser?> {
   });
 
   @override
-  domain.TackUser? fromEntity(TackUserEntity? entity) {
-    if (entity == null) return null;
-
+  domain.TackUser fromEntity(TackUserEntity entity) {
     return domain.TackUser(
       id: entity.id,
       firstName: entity.firstName,
@@ -21,9 +19,7 @@ class TackUserMapper implements Mapper<TackUserEntity?, domain.TackUser?> {
   }
 
   @override
-  TackUserEntity? toEntity(domain.TackUser? item) {
-    if (item == null) return null;
-
+  TackUserEntity toEntity(domain.TackUser item) {
     return TackUserEntity(
       id: item.id,
       firstName: item.firstName,

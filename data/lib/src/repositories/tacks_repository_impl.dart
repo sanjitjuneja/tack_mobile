@@ -27,47 +27,68 @@ class TacksRepositoryImpl implements domain.TacksRepository {
       _runnerTacksStreamController;
 
   @override
-  Future<List<domain.TemplateTack>> nearbyPopularTacks(
-    domain.NearbyPopularTacksPayload payload,
+  Future<List<domain.TemplateTack>> fetchNearbyPopularTacks(
+    domain.FetchNearbyPopularTacksPayload payload,
   ) async {
-    return _apiProvider.getNearbyPopularTacks(
-      request: const NearbyPopularTacksRequest(),
+    return _apiProvider.fetchNearbyPopularTacks(
+      request: const FetchNearbyPopularTacksRequest(),
     );
   }
 
   @override
-  Future<List<domain.TemplateTack>> groupPopularTacks(
-    domain.GroupPopularTacksPayload payload,
+  Future<List<domain.TemplateTack>> fetchGroupPopularTacks(
+    domain.FetchGroupPopularTacksPayload payload,
   ) async {
-    return _apiProvider.getGroupPopularTacks(
-      request: GroupPopularTacksRequest(groupId: payload.groupId),
+    return _apiProvider.fetchGroupPopularTacks(
+      request: FetchGroupPopularTacksRequest(groupId: payload.groupId),
     );
   }
 
   @override
-  Future<List<domain.RunnerTack>> getRunnerTacks() async {
-    final List<domain.RunnerTack> tacks = await _apiProvider.getRunnerTacks();
-    _runnerTacksStreamController.add(tacks);
+  Future<domain.PaginationModel<domain.RunnerTack>> fetchRunnerTacks(
+    domain.FetchRunnerTacksPayload payload,
+  ) async {
+    final domain.PaginationModel<domain.RunnerTack> tacks =
+        await _apiProvider.fetchRunnerTacks(
+      FetchRunnerTacksRequest(
+        lastObjectId: payload.lastObjectId,
+        queryParameters: payload.queryParameters,
+      ),
+    );
+    if (payload.queryParameters == null) {
+      _runnerTacksStreamController.add(tacks.results);
+    }
 
     return tacks;
   }
 
   @override
-  Future<List<domain.Tack>> getTackerTacks() async {
-    final List<domain.Tack> tacks = await _apiProvider.getTackerTacks();
-    _tackerTacksStreamController.add(tacks);
+  Future<domain.PaginationModel<domain.Tack>> fetchTackerTacks(
+    domain.FetchTackerTacksPayload payload,
+  ) async {
+    final domain.PaginationModel<domain.Tack> tacks =
+        await _apiProvider.fetchTackerTacks(
+      FetchTackerTacksRequest(
+        lastObjectId: payload.lastObjectId,
+        queryParameters: payload.queryParameters,
+      ),
+    );
+    if (payload.queryParameters == null) {
+      _tackerTacksStreamController.add(tacks.results);
+    }
 
     return tacks;
   }
 
   @override
-  Future<domain.PaginationModel<domain.Tack>> getGroupTacks(
-    domain.GroupTacksPayload payload,
+  Future<domain.PaginationModel<domain.GroupTack>> fetchGroupTacks(
+    domain.FetchGroupTacksPayload payload,
   ) async {
-    return _apiProvider.getGroupTacks(
-      GroupTacksRequest(
+    return _apiProvider.fetchGroupTacks(
+      FetchGroupsTacksRequest(
         groupId: payload.groupId,
-        queryParameters: payload.nextPage?.queryParameters,
+        lastObjectId: payload.lastObjectId,
+        queryParameters: payload.queryParameters,
       ),
     );
   }
@@ -147,13 +168,14 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   }
 
   @override
-  Future<domain.PaginationModel<domain.Offer>> getTackOffers(
-    domain.TackOffersPayload payload,
+  Future<domain.PaginationModel<domain.Offer>> fetchTackOffers(
+    domain.FetchTackOffersPayload payload,
   ) async {
-    return _apiProvider.getTackOffers(
-      GetTackOffersRequest(
+    return _apiProvider.fetchTackOffers(
+      FetchTackOffersRequest(
         tackId: payload.tack.id,
-        queryParameters: payload.nextPage?.queryParameters,
+        lastObjectId: payload.lastObjectId,
+        queryParameters: payload.queryParameters,
       ),
     );
   }

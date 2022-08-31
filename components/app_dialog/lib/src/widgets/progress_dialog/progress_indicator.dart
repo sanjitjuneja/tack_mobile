@@ -21,7 +21,7 @@ class AppProgressIndicator extends StatelessWidget {
     return Material(
       type: MaterialType.transparency,
       child: Container(
-        width: double.infinity,
+        width: expand ? double.infinity : null,
         color: backgroundColor ?? AppTheme.barrierColor,
         child: Column(
           mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,

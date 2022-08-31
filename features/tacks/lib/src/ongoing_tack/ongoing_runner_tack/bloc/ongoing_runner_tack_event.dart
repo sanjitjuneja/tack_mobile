@@ -4,6 +4,10 @@ abstract class OngoingRunnerTackEvent {
   const OngoingRunnerTackEvent();
 }
 
+class FetchUserContactsAction extends OngoingRunnerTackEvent {
+  const FetchUserContactsAction();
+}
+
 class ActionPressed extends OngoingRunnerTackEvent {
   const ActionPressed();
 }

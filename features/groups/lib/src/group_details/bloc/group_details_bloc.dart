@@ -5,9 +5,8 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:navigation/navigation.dart';
 
-import 'package:groups/src/group_details/models/group_details_screen_result.dart';
-import 'package:groups/src/group_details/models/group_users_state.dart';
-import 'package:groups/src/invite_members/ui/invite_members_page.dart';
+import '../models/group_details_screen_result.dart';
+import '../../invite_members/ui/invite_members_page.dart';
 
 part 'group_details_event.dart';
 
@@ -15,7 +14,7 @@ part 'group_details_state.dart';
 
 class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
   final AppRouterDelegate _appRouter;
-  final LoadGroupMembersUseCase _loadGroupMembersUseCase;
+  final FetchGroupMembersUseCase _fetchGroupMembersUseCase;
   final AcceptGroupInvitationUseCase _acceptGroupInvitationUseCase;
   final DeclineGroupInvitationUseCase _declineGroupInvitationUseCase;
   final LeaveGroupUseCase _leaveGroupUseCase;
@@ -24,7 +23,7 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
 
   GroupDetailsBloc({
     required AppRouterDelegate appRouter,
-    required LoadGroupMembersUseCase loadGroupMembersUseCase,
+    required FetchGroupMembersUseCase fetchGroupMembersUseCase,
     required AcceptGroupInvitationUseCase acceptGroupInvitationUseCase,
     required DeclineGroupInvitationUseCase declineGroupInvitationUseCase,
     required LeaveGroupUseCase leaveGroupUseCase,
@@ -33,7 +32,7 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
     required GroupDetails? groupDetails,
     required GroupInvitation? groupInvitation,
   })  : _appRouter = appRouter,
-        _loadGroupMembersUseCase = loadGroupMembersUseCase,
+        _fetchGroupMembersUseCase = fetchGroupMembersUseCase,
         _acceptGroupInvitationUseCase = acceptGroupInvitationUseCase,
         _declineGroupInvitationUseCase = declineGroupInvitationUseCase,
         _leaveGroupUseCase = leaveGroupUseCase,
@@ -43,7 +42,7 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
           GroupDetailsState(
             groupDetails: groupDetails,
             invitation: groupInvitation,
-            usersState: const GroupsUsersState(isLoading: true),
+            isLoading: true,
           ),
         ) {
     on<InitialLoad>(_onInitialLoad);
@@ -71,14 +70,17 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
     Emitter<GroupDetailsState> emit,
   ) async {
     try {
-      final List<TackUser> members = await _loadGroupMembersUseCase.execute(
-        GetGroupMembersPayload(group: state.group),
+      final PaginationModel<TackUser> membersData =
+          await _fetchGroupMembersUseCase.execute(
+        FetchGroupMembersPayload(
+          group: state.group,
+        ),
       );
 
       event.completer?.complete(RefreshingStatus.complete);
       emit(
         state.copyWith(
-          usersState: state.usersState.copyWith(members: members),
+          membersData: membersData,
         ),
       );
     } catch (e) {
@@ -87,7 +89,7 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
       if (event.completer == null) {
         emit(
           state.copyWith(
-            usersState: const GroupsUsersState(),
+            membersData: PaginationModel.empty(),
           ),
         );
       }
@@ -99,14 +101,21 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
     Emitter<GroupDetailsState> emit,
   ) async {
     try {
-      final List<TackUser> members = await _loadGroupMembersUseCase.execute(
-        GetGroupMembersPayload(group: state.group),
+      final PaginationModel<TackUser> membersData =
+          await _fetchGroupMembersUseCase.execute(
+        FetchGroupMembersPayload(
+          group: state.group,
+          lastObjectId: state.membersData.results.lastOrNull?.id,
+          nextPage: state.membersData.next,
+        ),
       );
 
       event.completer.complete(LoadingStatus.complete);
       emit(
         state.copyWith(
-          usersState: state.usersState.copyWith(members: members),
+          membersData: state.membersData.more(
+            newPage: membersData,
+          ),
         ),
       );
     } catch (e) {
