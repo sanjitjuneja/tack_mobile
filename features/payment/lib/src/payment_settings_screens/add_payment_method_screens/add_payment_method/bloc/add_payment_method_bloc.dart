@@ -37,7 +37,7 @@ class AddPaymentMethodBloc
     AddCreditCardRequest event,
     Emitter<AddPaymentMethodState> emit,
   ) async {
-    final bool result = await _appRouter.pushForResult(
+    final bool? result = await _appRouter.pushForResult(
       AddCreditCardFeature.page(),
     );
     if (result == true) {
