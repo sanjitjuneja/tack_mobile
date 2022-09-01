@@ -92,8 +92,12 @@
       "message": "",
       "mainButtonLabel": "Close"
     },
-    "paymentMethodAlert": {
-      "message": "Payment Method Successfully added",
+    "cardAddedAlert": {
+      "message": "Card Successfully Added",
+      "mainButtonLabel": "Close"
+    },
+    "bankAddedAlert": {
+      "message": "Bank Successfully Added",
       "mainButtonLabel": "Close"
     },
     "sinUpComplete": {

@@ -142,7 +142,9 @@ class PaymentSettingsBloc
       _appRouter.pushForResult(
         AppAlertDialog.page(
           SuccessAlert(
-            contentKey: 'otherAlert.paymentMethodAlert',
+            contentKey: result == AddPaymentMethodScreenResult.card
+                ? 'otherAlert.cardAddedAlert'
+                : 'otherAlert.bankAddedAlert',
           ),
         ),
       );
