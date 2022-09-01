@@ -40,9 +40,11 @@ class AddPaymentMethodBloc
     final bool result = await _appRouter.pushForResult(
       AddCreditCardFeature.page(),
     );
-    result == false
-        ? _appRouter.popWithResult(null)
-        : _appRouter.popWithResult(AddPaymentMethodScreenResult.card);
+    if (result == true) {
+      _appRouter.popWithResult(AddPaymentMethodScreenResult.card);
+    } else {
+      _appRouter.popWithResult(null);
+    }
   }
 
   Future<void> _onAddBankAccountRequest(
@@ -63,9 +65,9 @@ class AddPaymentMethodBloc
             await _addBankAccountUseCase.execute(
           const AddBankAccountPayload(),
         );
+        _appRouter.pop();
         if (bankAccounts != null) {
           if (bankAccounts.isEmpty) {
-            _appRouter.pop();
             _appRouter.push(
               AddPaymentMethodFailedFeature.page(
                 titleKey: 'addPaymentMethodFailedScreen.unableToAdd',
@@ -74,11 +76,8 @@ class AddPaymentMethodBloc
               ),
             );
           } else {
-            _appRouter.pop();
             _appRouter.popWithResult(AddPaymentMethodScreenResult.bankAccount);
           }
-        } else {
-          _appRouter.pop();
         }
       }
     } catch (e) {

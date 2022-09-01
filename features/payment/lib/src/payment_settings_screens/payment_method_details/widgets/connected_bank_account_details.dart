@@ -40,7 +40,7 @@ class ConnectedBankAccountDetails extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Text(
-                    bankAccount.bankName.capitalize(),
+                    bankAccount.bankName.toSentenceCase(),
                     style: AppTextTheme.manrope20Regular,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -57,7 +57,7 @@ class ConnectedBankAccountDetails extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              bankAccount.bankAccountType.capitalize(),
+              bankAccount.bankAccountType.toSentenceCase(),
               style: AppTextTheme.manrope16Regular.copyWith(
                 color: AppTheme.textHeavyHintColor,
               ),

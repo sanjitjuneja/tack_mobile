@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/use_case.dart';
-import 'package:domain/user/user.dart';
 import 'package:navigation/navigation.dart';
 import 'package:payment/payment.dart';
 import 'package:domain/domain.dart';
@@ -133,13 +132,12 @@ class PaymentSettingsBloc
     AddPaymentMethodAction event,
     Emitter<PaymentSettingsState> emit,
   ) async {
-    final result = await _appRouter.pushForResult(
+    final AddPaymentMethodScreenResult? result = await _appRouter.pushForResult(
       AddPaymentMethodFeature.page(
         bankAccountsAmount: state.bankAccounts.length,
       ),
     );
-    if (result == AddPaymentMethodScreenResult.card ||
-        result == AddPaymentMethodScreenResult.bankAccount) {
+    if (result != null) {
       add(const InitialLoad());
       _appRouter.pushForResult(
         AppAlertDialog.page(
@@ -182,6 +180,7 @@ class PaymentSettingsBloc
   @override
   Future<void> close() {
     _userBalanceSubscription.cancel();
+
     return super.close();
   }
 }
