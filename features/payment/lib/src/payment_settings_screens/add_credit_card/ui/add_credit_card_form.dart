@@ -35,23 +35,19 @@ class AddCreditCardForm extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              CardFormField(
-                style: CardFormStyle(
-                  backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
-                  borderRadius: 16,
-                ),
+              CardField(
                 enablePostalCode: false,
                 onCardChanged: (card) => _onCardChange(
                   context: context,
                   card: card,
                 ),
               ),
-              const Spacer(flex: 6),
+              const Spacer(flex: 10),
               Row(
                 children: <Widget>[
                   const Spacer(),
                   Expanded(
-                    flex: 8,
+                    flex: 10,
                     child: AppCircleButton(
                       labelKey: 'addCreditCard.addPaymentMethod',
                       expanded: false,

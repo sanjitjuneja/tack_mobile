@@ -46,11 +46,15 @@ class TackBalance extends StatelessWidget {
                 ),
                 style: AppTextTheme.poppins18Medium,
               ),
-              const SizedBox(width: 36),
-              Text(
-                '\$ ${tackBalance.toStringAsFixed(2)}',
-                style: AppTextTheme.manrope30Bold.copyWith(
-                  color: AppTheme.textSecondaryColor,
+              const Spacer(),
+              Expanded(
+                flex: 4,
+                child: Text(
+                  CurrencyUtility.dollarFormat.format(tackBalance),
+                  style: AppTextTheme.manrope30Bold.copyWith(
+                    color: AppTheme.textSecondaryColor,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],

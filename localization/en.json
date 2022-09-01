@@ -92,6 +92,10 @@
       "message": "",
       "mainButtonLabel": "Close"
     },
+    "paymentMethodAlert": {
+      "message": "Payment Method Successfully added",
+      "mainButtonLabel": "Close"
+    },
     "sinUpComplete": {
       "message": "Sign Up\nComplete"
     },
@@ -536,9 +540,11 @@
     "close": "Close"
   },
   "addPaymentMethodFailedScreen": {
-    "title": "Unable To Add",
+    "unableToAdd": "Unable To Add",
+    "limitReached": "Limit Reached",
     "description": "We were unable to add the payment method to your account. Please try again in a few minutes.",
     "depositoryDescription": "We were unable to find a depository account linked with your bank. Please try again with a new bank.",
+    "limitDescription": "You have reached the limit of 5 bank accounts linked as payment methods. Please remove one before adding another.",
     "close": "Close"
   },
   "withdrawFailedScreen": {

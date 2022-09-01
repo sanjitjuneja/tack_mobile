@@ -4,9 +4,9 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/payment/payment.dart';
 import 'package:navigation/navigation.dart';
-import 'package:payment/payment.dart';
-import 'package:payment/src/payment_settings_screens/add_credit_card/ui/add_credit_card_page.dart';
 
+import '../../../../../payment.dart';
+import '../../../../payment_settings_screens/add_credit_card/ui/add_credit_card_page.dart';
 import '../../add_payment_method_failed/ui/add_payment_method_failed_page.dart';
 
 part 'add_payment_method_event.dart';
@@ -17,12 +17,15 @@ class AddPaymentMethodBloc
     extends Bloc<AddPaymentMethodEvent, AddPaymentMethodState> {
   final AppRouterDelegate _appRouter;
   final AddBankAccountUseCase _addBankAccountUseCase;
+  final int _bankAccountsAmount;
 
   AddPaymentMethodBloc({
     required AppRouterDelegate appRouter,
     required AddBankAccountUseCase addBankAccountUseCase,
+    required int bankAccountsAmount,
   })  : _appRouter = appRouter,
         _addBankAccountUseCase = addBankAccountUseCase,
+        _bankAccountsAmount = bankAccountsAmount,
         super(
           const AddPaymentMethodState(),
         ) {
@@ -34,7 +37,12 @@ class AddPaymentMethodBloc
     AddCreditCardRequest event,
     Emitter<AddPaymentMethodState> emit,
   ) async {
-    _appRouter.push(AddCreditCardFeature.page());
+    final bool result = await _appRouter.pushForResult(
+      AddCreditCardFeature.page(),
+    );
+    result == false
+        ? _appRouter.popWithResult(null)
+        : _appRouter.popWithResult(AddPaymentMethodScreenResult.card);
   }
 
   Future<void> _onAddBankAccountRequest(
@@ -42,26 +50,45 @@ class AddPaymentMethodBloc
     Emitter<AddPaymentMethodState> emit,
   ) async {
     try {
-      _appRouter.push(ProgressDialog.page());
-      final List<ConnectedBankAccount>? bankAccounts =
-          await _addBankAccountUseCase.execute(
-        const AddBankAccountPayload(),
-      );
-      _appRouter.pop();
-      if (bankAccounts == null) {
-        _appRouter.replace(AddPaymentMethodFailedFeature.page());
-      } else if (bankAccounts.isEmpty) {
-        _appRouter.replace(
+      if (_bankAccountsAmount >= Constants.maxBankAccountsAmount) {
+        _appRouter.push(
           AddPaymentMethodFailedFeature.page(
-            labelKey: 'addPaymentMethodFailedScreen.depositoryDescription',
+            titleKey: 'addPaymentMethodFailedScreen.limitReached',
+            descriptionKey: 'addPaymentMethodFailedScreen.limitDescription',
           ),
         );
       } else {
-        _appRouter.replace(PaymentSettingsFeature.page());
+        _appRouter.push(ProgressDialog.page());
+        final List<ConnectedBankAccount>? bankAccounts =
+            await _addBankAccountUseCase.execute(
+          const AddBankAccountPayload(),
+        );
+        if (bankAccounts != null) {
+          if (bankAccounts.isEmpty) {
+            _appRouter.pop();
+            _appRouter.push(
+              AddPaymentMethodFailedFeature.page(
+                titleKey: 'addPaymentMethodFailedScreen.unableToAdd',
+                descriptionKey:
+                    'addPaymentMethodFailedScreen.depositoryDescription',
+              ),
+            );
+          } else {
+            _appRouter.pop();
+            _appRouter.popWithResult(AddPaymentMethodScreenResult.bankAccount);
+          }
+        } else {
+          _appRouter.pop();
+        }
       }
     } catch (e) {
       _appRouter.pop();
-      _appRouter.replace(AddPaymentMethodFailedFeature.page());
+      _appRouter.push(
+        AddPaymentMethodFailedFeature.page(
+          titleKey: 'addPaymentMethodFailedScreen.unableToAdd',
+          descriptionKey: 'addPaymentMethodFailedScreen.description',
+        ),
+      );
     }
   }
 }

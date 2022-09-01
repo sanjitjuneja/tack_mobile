@@ -8,6 +8,10 @@ class InitialLoad extends PaymentSettingsEvent {
   const InitialLoad();
 }
 
+class FetchUserBalanceAction extends PaymentSettingsEvent {
+  const FetchUserBalanceAction();
+}
+
 class AddCashAction extends PaymentSettingsEvent {
   const AddCashAction();
 }
@@ -27,5 +31,13 @@ class PaymentMethodDetailsAction extends PaymentSettingsEvent {
   const PaymentMethodDetailsAction({
     this.card,
     this.bankAccount,
+  });
+}
+
+class UserBalanceUpdate extends PaymentSettingsEvent {
+  final UserBankAccount userBalance;
+
+  const UserBalanceUpdate({
+    required this.userBalance,
   });
 }

@@ -27,3 +27,9 @@ class TextUtility {
 extension PrepareForEllipsis on String {
   String get toElliptical => replaceAll('', '\u{200B}');
 }
+
+extension StringCapitalize on String {
+  String capitalize() {
+    return '${this[0].toUpperCase()}${substring(1).toLowerCase()}';
+  }
+}

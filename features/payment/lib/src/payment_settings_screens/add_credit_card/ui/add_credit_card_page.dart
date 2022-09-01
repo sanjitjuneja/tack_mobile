@@ -11,15 +11,15 @@ class AddCreditCardFeature {
   static Page<void> page() => const AddCreditCardPage();
 }
 
-class AddCreditCardPage extends Page<void> {
+class AddCreditCardPage extends Page<bool> {
   @override
   String get name => AddCreditCardFeature.routeName;
 
   const AddCreditCardPage();
 
   @override
-  Route<void> createRoute(BuildContext context) {
-    return CupertinoPageRoute<void>(
+  Route<bool> createRoute(BuildContext context) {
+    return CupertinoPageRoute<bool>(
       settings: this,
       builder: (_) => BlocProvider<AddCreditCardBloc>(
         create: (_) {

@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
+import 'package:domain/use_case.dart';
+import 'package:domain/user/user.dart';
 import 'package:navigation/navigation.dart';
 import 'package:payment/payment.dart';
 import 'package:domain/domain.dart';
@@ -14,25 +17,35 @@ class PaymentSettingsBloc
   final AppRouterDelegate _appRouter;
   final FetchConnectedBankAccountsUseCase _fetchConnectedBankAccountsUseCase;
   final FetchConnectedCardsUseCase _fetchConnectedCardsUseCase;
+  final ObserveUserBalanceUseCase _observeUserBalanceUseCase;
+  final FetchUserBalanceUseCase _fetchUserBalanceUseCase;
   final FetchIsApplePaySupportedUseCase _fetchIsApplePaySupportedUseCase;
   final FetchIsGooglePaySupportedUseCase _fetchIsGooglePaySupportedUseCase;
+
+  late StreamSubscription<UserBankAccount> _userBalanceSubscription;
 
   PaymentSettingsBloc({
     required AppRouterDelegate appRouter,
     required FetchConnectedBankAccountsUseCase
         fetchConnectedBankAccountsUseCase,
     required FetchConnectedCardsUseCase fetchConnectedCardsUseCase,
+    required ObserveUserBalanceUseCase observeUserBalanceUseCase,
+    required FetchUserBalanceUseCase fetchUserBalanceUseCase,
+    required GetUserBalanceUseCase getUserBalanceUseCase,
     required FetchIsApplePaySupportedUseCase fetchIsApplePaySupportedUseCase,
     required FetchIsGooglePaySupportedUseCase fetchIsGooglePaySupportedUseCase,
   })  : _appRouter = appRouter,
         _fetchConnectedBankAccountsUseCase = fetchConnectedBankAccountsUseCase,
         _fetchConnectedCardsUseCase = fetchConnectedCardsUseCase,
+        _observeUserBalanceUseCase = observeUserBalanceUseCase,
+        _fetchUserBalanceUseCase = fetchUserBalanceUseCase,
         _fetchIsApplePaySupportedUseCase = fetchIsApplePaySupportedUseCase,
         _fetchIsGooglePaySupportedUseCase = fetchIsGooglePaySupportedUseCase,
         super(
-          const PaymentSettingsState(
+          PaymentSettingsState(
             bankAccounts: <ConnectedBankAccount>[],
             cards: <ConnectedCard>[],
+            userBalance: getUserBalanceUseCase.execute(NoParams()),
           ),
         ) {
     on<InitialLoad>(_onInitialLoad);
@@ -41,6 +54,18 @@ class PaymentSettingsBloc
     on<PayoutAction>(_onPayloadAction);
     on<AddPaymentMethodAction>(_onAddPaymentMethodAction);
     on<PaymentMethodDetailsAction>(_onPaymentMethodDetailsAction);
+
+    on<UserBalanceUpdate>(_onUserBalanceUpdate);
+
+    _userBalanceSubscription =
+        _observeUserBalanceUseCase.execute(NoParams()).listen(
+      (UserBankAccount newUserBalance) {
+        final PaymentSettingsEvent event = UserBalanceUpdate(
+          userBalance: newUserBalance,
+        );
+        add(event);
+      },
+    );
 
     add(const InitialLoad());
   }
@@ -67,6 +92,8 @@ class PaymentSettingsBloc
           await _fetchIsGooglePaySupportedUseCase.execute(
         const FetchIsGooglePaySupportedPayload(),
       );
+
+      await _fetchUserBalanceUseCase.execute(const FetchUserBalancePayload());
 
       emit(
         state.copyWith(
@@ -106,7 +133,22 @@ class PaymentSettingsBloc
     AddPaymentMethodAction event,
     Emitter<PaymentSettingsState> emit,
   ) async {
-    _appRouter.push(AddPaymentMethodFeature.page());
+    final result = await _appRouter.pushForResult(
+      AddPaymentMethodFeature.page(
+        bankAccountsAmount: state.bankAccounts.length,
+      ),
+    );
+    if (result == AddPaymentMethodScreenResult.card ||
+        result == AddPaymentMethodScreenResult.bankAccount) {
+      add(const InitialLoad());
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          SuccessAlert(
+            contentKey: 'otherAlert.paymentMethodAlert',
+          ),
+        ),
+      );
+    }
   }
 
   Future<void> _onPaymentMethodDetailsAction(
@@ -126,5 +168,20 @@ class PaymentSettingsBloc
         ),
       );
     }
+  }
+
+  Future<void> _onUserBalanceUpdate(
+    UserBalanceUpdate event,
+    Emitter<PaymentSettingsState> emit,
+  ) async {
+    emit(
+      state.copyWith(userBalance: event.userBalance),
+    );
+  }
+
+  @override
+  Future<void> close() {
+    _userBalanceSubscription.cancel();
+    return super.close();
   }
 }
