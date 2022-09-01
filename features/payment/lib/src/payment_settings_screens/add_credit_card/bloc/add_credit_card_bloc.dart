@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/payment/payment.dart';
 import 'package:navigation/navigation.dart';
+
 import '../../add_payment_method_screens/add_payment_method_failed/ui/add_payment_method_failed_page.dart';
 
 part 'add_credit_card_event.dart';
@@ -39,14 +40,17 @@ class AddCreditCardBloc extends Bloc<AddCreditCardEvent, AddCreditCardState> {
   ) async {
     try {
       _appRouter.push(ProgressDialog.page());
-      final SetupIntent setupIntent = await _addCardUseCase.execute(
-        const AddCardPayload(),
-      );
+      await _addCardUseCase.execute(const AddCardPayload());
       _appRouter.pop();
-      //TODO: navigate to card info screen using setupIntent.paymentMethodId
+      _appRouter.popWithResult(true);
     } catch (e) {
       _appRouter.pop();
-      _appRouter.replace(AddPaymentMethodFailedFeature.page());
+      _appRouter.replace(
+        AddPaymentMethodFailedFeature.page(
+          titleKey: 'addPaymentMethodFailedScreen.unableToAdd',
+          descriptionKey: 'addPaymentMethodFailedScreen.description',
+        ),
+      );
     }
   }
 }

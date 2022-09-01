@@ -61,8 +61,8 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
             ),
           );
           completer.complete(bankAccounts);
-        } catch (e) {
-          completer.complete(null);
+        } catch (error) {
+          completer.completeError(error);
         }
       },
     );

@@ -39,7 +39,7 @@ class ConnectedCardDetails extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  card.cardData.brand,
+                  card.cardData.brand.toSentenceCase(),
                   style: AppTextTheme.manrope20Regular,
                 ),
                 AppNetworkImageWidget(

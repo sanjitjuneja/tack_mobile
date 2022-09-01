@@ -5,22 +5,26 @@ class AddPaymentMethodFailedFeature {
   static const String routeName = '/addPaymentMethodFailed';
 
   static Page<void> page({
-    String? labelKey,
+    required String titleKey,
+    required String descriptionKey,
   }) {
     return AddPaymentMethodFailedPage(
-      labelKey: labelKey,
+      titleKey: titleKey,
+      descriptionKey: descriptionKey,
     );
   }
 }
 
 class AddPaymentMethodFailedPage extends Page<void> {
-  final String? labelKey;
+  final String titleKey;
+  final String descriptionKey;
 
   @override
   String get name => AddPaymentMethodFailedFeature.routeName;
 
   const AddPaymentMethodFailedPage({
-    this.labelKey,
+    required this.titleKey,
+    required this.descriptionKey,
   });
 
   @override
@@ -28,7 +32,8 @@ class AddPaymentMethodFailedPage extends Page<void> {
     return CupertinoPageRoute<void>(
       settings: this,
       builder: (_) => AddPaymentMethodFailedScreen(
-        labelKey: labelKey,
+        titleKey: titleKey,
+        descriptionKey: descriptionKey,
       ),
     );
   }

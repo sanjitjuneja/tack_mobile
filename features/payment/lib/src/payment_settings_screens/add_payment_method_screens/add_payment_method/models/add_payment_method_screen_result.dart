@@ -1,0 +1,4 @@
+enum AddPaymentMethodScreenResult {
+  bankAccount,
+  card,
+}

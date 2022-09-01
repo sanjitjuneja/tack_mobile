@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'package:domain/payment/payment.dart';
+import 'package:domain/user/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 import '../bloc/payment_settings_bloc.dart';
@@ -33,6 +34,10 @@ class PaymentSettingsPage extends Page<void> {
                 appLocator.get<FetchIsApplePaySupportedUseCase>(),
             fetchIsGooglePaySupportedUseCase:
                 appLocator.get<FetchIsGooglePaySupportedUseCase>(),
+            getUserBalanceUseCase: appLocator.get<GetUserBalanceUseCase>(),
+            observeUserBalanceUseCase:
+                appLocator.get<ObserveUserBalanceUseCase>(),
+            fetchUserBalanceUseCase: appLocator.get<FetchUserBalanceUseCase>(),
           );
         },
         child: const PaymentSettingsScreen(),

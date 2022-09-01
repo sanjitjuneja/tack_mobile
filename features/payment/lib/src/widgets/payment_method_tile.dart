@@ -59,12 +59,12 @@ class PaymentMethodTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      title,
+                      title.toSentenceCase(),
                       style: AppTextTheme.poppins18Medium,
                     ),
                     if (subtitle != null)
                       Text(
-                        subtitle ?? '',
+                        subtitle?.toSentenceCase() ?? '',
                         style: AppTextTheme.poppins12Medium.copyWith(
                           color: AppColors.shuttleGray,
                         ),

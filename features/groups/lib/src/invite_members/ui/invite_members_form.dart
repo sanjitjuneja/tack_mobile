@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 
@@ -39,13 +40,13 @@ class InviteMembersForm extends StatelessWidget {
                       Container(
                         alignment: Alignment.center,
                         padding: const EdgeInsets.only(top: 40.0),
-                        child: IconButton(
+                        child: CupertinoButton(
                           onPressed: () => _onReloadButtonPressed(context),
                           padding: EdgeInsets.zero,
-                          iconSize: 60,
-                          icon: Icon(
+                          child: Icon(
                             Icons.refresh_rounded,
                             color: AppTheme.progressInterfaceDarkColor,
+                            size: 60,
                           ),
                         ),
                       ),

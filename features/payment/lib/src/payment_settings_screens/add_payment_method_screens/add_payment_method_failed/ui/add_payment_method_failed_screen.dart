@@ -3,11 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'add_payment_method_failed_form.dart';
 
 class AddPaymentMethodFailedScreen extends StatelessWidget {
-  final String? labelKey;
+  final String titleKey;
+  final String descriptionKey;
 
   const AddPaymentMethodFailedScreen({
     Key? key,
-    this.labelKey,
+    required this.titleKey,
+    required this.descriptionKey,
   }) : super(key: key);
 
   @override
@@ -21,7 +23,8 @@ class AddPaymentMethodFailedScreen extends StatelessWidget {
       ),
       child: SafeArea(
         child: AddPaymentMethodFailedForm(
-          labelKey: labelKey,
+          titleKey: titleKey,
+          descriptionKey: descriptionKey,
         ),
       ),
     );

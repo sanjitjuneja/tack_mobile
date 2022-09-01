@@ -4,4 +4,6 @@ class Constants {
   static const double paymentMethodCardRatio = 16 / 10;
 
   static const String kPhonePrefix = '+1';
+
+  static const int maxBankAccountsAmount = 5;
 }
