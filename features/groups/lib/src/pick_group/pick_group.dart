@@ -17,5 +17,3 @@ part 'ui/pick_group_drawer/pick_group_drawer_page.dart';
 part 'ui/pick_group_screen/pick_group_form.dart';
 part 'ui/pick_group_screen/pick_group_page.dart';
 part 'ui/pick_group_screen/pick_group_screen.dart';
-
-// part 'ui/widgets/pick_group_widget.dart';

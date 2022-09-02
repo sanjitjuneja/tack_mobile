@@ -9,6 +9,9 @@ class _SelectableGroup with AppSelectableItem, EquatableMixin {
   @override
   String? get imagePath => group.imageUrl;
 
+  @override
+  AppIcon? get placeholderIcon => null;
+
   const _SelectableGroup(this.group);
 
   @override

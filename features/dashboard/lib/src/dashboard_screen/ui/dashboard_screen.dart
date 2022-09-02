@@ -23,6 +23,7 @@ class DashboardScreen extends StatelessWidget {
               child: PageHeaderWithGroupWidget(
                 titleKey: 'general.noGroupSelected',
                 subtitleKey: 'dashboardScreen.title',
+                image: null,
                 group: state.currentGroup,
                 withFeedback: state.canPickOtherGroup,
                 onTap: state.canPickOtherGroup

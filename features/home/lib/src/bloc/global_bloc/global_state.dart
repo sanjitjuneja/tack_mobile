@@ -18,12 +18,13 @@ class GlobalState {
   GlobalState copyWith({
     User? user,
     List<GroupDetails>? groups,
-    Group? currentGroup,
+    Optional<Group?>? currentGroup,
   }) {
     return GlobalState(
       user: user ?? this.user,
       groups: groups ?? this.groups,
-      currentGroup: currentGroup ?? this.currentGroup,
+      currentGroup:
+          currentGroup == null ? this.currentGroup : currentGroup.value,
     );
   }
 }

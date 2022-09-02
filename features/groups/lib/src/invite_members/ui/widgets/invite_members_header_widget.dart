@@ -17,7 +17,10 @@ class InviteMembersHeaderWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        AppNetworkImageWidget(group.imageUrl),
+        AppNetworkImageWidget(
+          group.imageUrl,
+          placeholderIcon: null,
+        ),
         const SizedBox(width: 12),
         Text(
           FlutterI18n.translate(

@@ -11,6 +11,8 @@ abstract class UserRepository {
 
   Future<void> initialLoad();
 
+  Future<User> fetchUser();
+
   Future<UserBankAccount> fetchUserBalance(FetchUserBalancePayload payload);
 
   Future<UserContacts> fetchUserContacts(FetchUserContactsPayload payload);

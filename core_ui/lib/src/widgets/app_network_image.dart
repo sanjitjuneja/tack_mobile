@@ -1,15 +1,19 @@
 import 'package:core/core.dart';
-import 'package:core_ui/src/theme/app_theme.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:cached_network_image/cached_network_image.dart';
+
+import '../theme/app_theme.dart';
 
 class AppNetworkImageWidget extends StatelessWidget {
   static const Duration _fadeInDuration = Duration(milliseconds: 300);
   static const Duration _fadeOutDuration = Duration(milliseconds: 500);
 
   final String? url;
+
+  /// By default used [AppIconsTheme.tack] icon, if null provided in constructor
+  /// backgroundColor will be used instead.
   final AppIcon? placeholderIcon;
+  final Color? backgroundColor;
   final double diameter;
   final bool isShadowBorder;
   final BoxShape boxShape;
@@ -18,12 +22,15 @@ class AppNetworkImageWidget extends StatelessWidget {
   const AppNetworkImageWidget(
     this.url, {
     super.key,
-    this.placeholderIcon,
+    this.placeholderIcon = AppIconsTheme.tack,
+    this.backgroundColor,
     this.diameter = 45.0,
     this.isShadowBorder = true,
     this.boxShape = BoxShape.circle,
     this.boxFit = BoxFit.cover,
   });
+
+  Color get _backgroundColor => backgroundColor ?? AppTheme.primaryColor;
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +41,13 @@ class AppNetworkImageWidget extends StatelessWidget {
         shape: boxShape,
         border: isShadowBorder
             ? Border.all(
-                color: AppTheme.primaryColor,
+                color: _backgroundColor,
                 width: 2,
               )
             : null,
-        color: AppTheme.transparentColor,
+        color: isShadowBorder ? _backgroundColor : AppTheme.transparentColor,
       ),
+      clipBehavior: Clip.hardEdge,
       child: UrlManager.isValidUrl(url)
           ? CachedNetworkImage(
               fadeInDuration: _fadeInDuration,
@@ -57,9 +65,11 @@ class AppNetworkImageWidget extends StatelessWidget {
                 );
               },
               placeholder: (_, __) =>
-                  placeholderIcon?.call() ?? AppIconsTheme.tack(),
+                  placeholderIcon?.call() ??
+                  ColoredBox(color: _backgroundColor),
               errorWidget: (_, __, ___) =>
-                  placeholderIcon?.call() ?? AppIconsTheme.tack(),
+                  placeholderIcon?.call() ??
+                  ColoredBox(color: _backgroundColor),
             )
           : placeholderIcon?.call() ?? AppIconsTheme.tack(),
     );

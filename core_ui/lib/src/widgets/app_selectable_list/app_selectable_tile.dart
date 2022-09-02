@@ -34,7 +34,10 @@ class AppBaseSelectableTile<T extends AppSelectableItem>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             if (item.imagePath != null) ...<Widget>[
-              AppNetworkImageWidget(item.imagePath),
+              AppNetworkImageWidget(
+                item.imagePath,
+                placeholderIcon: item.placeholderIcon,
+              ),
               const SizedBox(width: 20),
             ],
             Expanded(

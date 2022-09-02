@@ -8,7 +8,7 @@ class AppIcon {
 
   bool get isSVG => iconKey.contains('svg');
 
-  AppIcon(
+  const AppIcon(
     this.iconKey,
   );
 

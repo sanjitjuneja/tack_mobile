@@ -67,60 +67,60 @@ class AppIconsTheme {
   static const String _supportKey = '${_svgPath}support.svg';
 
   /// Bottom Navigation bar
-  static AppIcon get dashboardsActive => AppIcon(_dashboardActiveKey);
-  static AppIcon get dashboardInactive => AppIcon(_dashboardInactiveKey);
-  static AppIcon get addActive => AppIcon(_addActiveKey);
-  static AppIcon get addInactive => AppIcon(_addInactiveKey);
-  static AppIcon get tacksActive => AppIcon(_tacksActiveKey);
-  static AppIcon get tacksInactive => AppIcon(_tacksInactiveKey);
+  static const AppIcon dashboardsActive = AppIcon(_dashboardActiveKey);
+  static const AppIcon dashboardInactive = AppIcon(_dashboardInactiveKey);
+  static const AppIcon addActive = AppIcon(_addActiveKey);
+  static const AppIcon addInactive = AppIcon(_addInactiveKey);
+  static const AppIcon tacksActive = AppIcon(_tacksActiveKey);
+  static const AppIcon tacksInactive = AppIcon(_tacksInactiveKey);
   ///
 
-  static AppIcon get chat => AppIcon(_chatKey);
-  static AppIcon get notification => AppIcon(_notificationKey);
-  static AppIcon get menu => AppIcon(_menuKey);
+  static const AppIcon chat = AppIcon(_chatKey);
+  static const AppIcon notification = AppIcon(_notificationKey);
+  static const AppIcon menu = AppIcon(_menuKey);
 
-  static AppIcon get search => AppIcon(_searchKey);
-  static AppIcon get edit => AppIcon(_editKey);
-  static AppIcon get person => AppIcon(_personKey);
-  static AppIcon get message => AppIcon(_messageKey);
-  static AppIcon get taskComplete => AppIcon(_taskCompleteKey);
-  static AppIcon get camera => AppIcon(_cameraKey);
-  static AppIcon get trash => AppIcon(_trashKey);
-  static AppIcon get copy => AppIcon(_copyKey);
-  static AppIcon get share => AppIcon(_shareKey);
+  static const AppIcon search = AppIcon(_searchKey);
+  static const AppIcon edit = AppIcon(_editKey);
+  static const AppIcon person = AppIcon(_personKey);
+  static const AppIcon message = AppIcon(_messageKey);
+  static const AppIcon taskComplete = AppIcon(_taskCompleteKey);
+  static const AppIcon camera = AppIcon(_cameraKey);
+  static const AppIcon trash = AppIcon(_trashKey);
+  static const AppIcon copy = AppIcon(_copyKey);
+  static const AppIcon share = AppIcon(_shareKey);
 
   /// SVG
-  static AppIcon get chevronLeft => AppIcon(_chevronLeftKey);
-  static AppIcon get chevronRight => AppIcon(_chevronRightKey);
+  static const AppIcon chevronLeft = AppIcon(_chevronLeftKey);
+  static const AppIcon chevronRight = AppIcon(_chevronRightKey);
 
-  static AppIcon get point => AppIcon(_pointKey);
-  static AppIcon get checkMarkFilled => AppIcon(_checkMarkFilledKey);
-  static AppIcon get checkMark => AppIcon(_checkMarkKey);
-  static AppIcon get cross => AppIcon(_crossKey);
-  static AppIcon get logout => AppIcon(_logoutKey);
+  static const AppIcon point = AppIcon(_pointKey);
+  static const AppIcon checkMarkFilled = AppIcon(_checkMarkFilledKey);
+  static const AppIcon checkMark = AppIcon(_checkMarkKey);
+  static const AppIcon cross = AppIcon(_crossKey);
+  static const AppIcon logout = AppIcon(_logoutKey);
 
-  static AppIcon get tacksList => AppIcon(_tacksListKey);
-  static AppIcon get people => AppIcon(_peopleKey);
-  static AppIcon get phone => AppIcon(_phoneKey);
-  static AppIcon get more => AppIcon(_moreKey);
-  static AppIcon get star => AppIcon(_starKey);
-  static AppIcon get tack => AppIcon(_tackKey);
-  static AppIcon get rateStar => AppIcon(_rateStarKey);
-  static AppIcon get prompt => AppIcon(_promptKey);
-  static AppIcon get editPencil => AppIcon(_editPencilKey);
-  static AppIcon get plus => AppIcon(_plusKey);
-  static AppIcon get bankRounded => AppIcon(_bankRoundedKey);
-  static AppIcon get bankRoundedFilled => AppIcon(_bankRoundedFilledKey);
-  static AppIcon get bank => AppIcon(_bankKey);
-  static AppIcon get add => AppIcon(_addKey);
-  static AppIcon get masterCard => AppIcon(_masterCardKey);
-  static AppIcon get morganChase => AppIcon(_morganChaseKey);
-  static AppIcon get applePay => AppIcon(_applePayKey);
-  static AppIcon get googlePay => AppIcon(_googlePayKey);
-  static AppIcon get lock => AppIcon(_lockKey);
-  static AppIcon get card => AppIcon(_cardKey);
-  static AppIcon get chevronRightRounded => AppIcon(_chevronRightRoundedKey);
-  static AppIcon get checkmark => AppIcon(_checkmarkKey);
-  static AppIcon get redCrossRounded => AppIcon(_redCrossRoundedKey);
-  static AppIcon get support => AppIcon(_supportKey);
+  static const AppIcon tacksList = AppIcon(_tacksListKey);
+  static const AppIcon people = AppIcon(_peopleKey);
+  static const AppIcon phone = AppIcon(_phoneKey);
+  static const AppIcon more = AppIcon(_moreKey);
+  static const AppIcon star = AppIcon(_starKey);
+  static const AppIcon tack = AppIcon(_tackKey);
+  static const AppIcon rateStar = AppIcon(_rateStarKey);
+  static const AppIcon prompt = AppIcon(_promptKey);
+  static const AppIcon editPencil = AppIcon(_editPencilKey);
+  static const AppIcon plus = AppIcon(_plusKey);
+  static const AppIcon bankRounded = AppIcon(_bankRoundedKey);
+  static const AppIcon bankRoundedFilled = AppIcon(_bankRoundedFilledKey);
+  static const AppIcon bank = AppIcon(_bankKey);
+  static const AppIcon add = AppIcon(_addKey);
+  static const AppIcon masterCard = AppIcon(_masterCardKey);
+  static const AppIcon morganChase = AppIcon(_morganChaseKey);
+  static const AppIcon applePay = AppIcon(_applePayKey);
+  static const AppIcon googlePay = AppIcon(_googlePayKey);
+  static const AppIcon lock = AppIcon(_lockKey);
+  static const AppIcon card = AppIcon(_cardKey);
+  static const AppIcon chevronRightRounded = AppIcon(_chevronRightRoundedKey);
+  static const AppIcon checkmark = AppIcon(_checkmarkKey);
+  static const AppIcon redCrossRounded = AppIcon(_redCrossRoundedKey);
+  static const AppIcon support = AppIcon(_supportKey);
 }
