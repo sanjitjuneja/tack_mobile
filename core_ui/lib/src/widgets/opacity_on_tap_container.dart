@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 class OpacityOnTapContainer extends StatefulWidget {
   final Widget child;
   final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
   final HapticFeedbackType feedbackType;
   final bool withFeedback;
   final double pressedOpacity;
@@ -18,6 +19,7 @@ class OpacityOnTapContainer extends StatefulWidget {
     this.pressedOpacity = 0.7,
     double? disabledOpacity,
     this.onTap,
+    this.onLongPress,
     this.disable = false,
   }) : disabledOpacity = disabledOpacity ?? pressedOpacity;
 
@@ -99,6 +101,13 @@ class _OpacityOnTapContainerState extends State<OpacityOnTapContainer>
     widget.onTap?.call();
   }
 
+  void _onLongPress() {
+    if (widget.withFeedback) {
+      HapticFeedbackManager.feedback(type: widget.feedbackType);
+    }
+    widget.onLongPress?.call();
+  }
+
   void _animate() {
     if (_animationController.isAnimating) return;
     if (widget.onTap == null) return;
@@ -130,6 +139,7 @@ class _OpacityOnTapContainerState extends State<OpacityOnTapContainer>
       onTapUp: isDisabled ? null : _handleTapUp,
       onTapCancel: isDisabled ? null : _handleTapCancel,
       onTap: isDisabled ? null : _onTap,
+      onLongPress: isDisabled ? null : _onLongPress,
       child: Semantics(
         button: true,
         child: FadeTransition(

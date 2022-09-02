@@ -79,7 +79,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
 
       if (kDebugMode && !state.loginData.isValid ||
           !state.passwordData.isValid) {
-        login = '+18096666919';
+        login = '+375295555555';
         password = 'Tackapp123';
       } else {
         login = FieldValidator.adjustToAmericanNumberIfNeeded(

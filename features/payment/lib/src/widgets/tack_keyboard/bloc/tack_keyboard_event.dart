@@ -4,8 +4,18 @@ abstract class TackKeyboardEvent {
   const TackKeyboardEvent();
 }
 
-class KeyboardInputEvent extends TackKeyboardEvent {
+class KeyboardTapInputEvent extends TackKeyboardEvent {
   final String symbol;
 
-  const KeyboardInputEvent({required this.symbol});
+  const KeyboardTapInputEvent({
+    required this.symbol,
+  });
+}
+
+class KeyboardLongPressInputEvent extends TackKeyboardEvent {
+  final String symbol;
+
+  const KeyboardLongPressInputEvent({
+    required this.symbol,
+  });
 }
