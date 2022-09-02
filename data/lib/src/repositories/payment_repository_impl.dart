@@ -103,10 +103,11 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
   }
 
   @override
-  bool fetchIsApplePaySupported(
+  Future<bool> fetchIsApplePaySupported(
     domain.FetchIsApplePaySupportedPayload payload,
-  ) {
-    final bool isApplePaySupported = Stripe.instance.isApplePaySupported.value;
+  ) async {
+    final bool isApplePaySupported =
+        await Stripe.instance.checkApplePaySupport();
 
     return isApplePaySupported;
   }
