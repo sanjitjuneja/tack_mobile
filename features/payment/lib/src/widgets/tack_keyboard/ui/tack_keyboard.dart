@@ -20,10 +20,10 @@ class TackKeyboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TackKeyboardBloc, TackKeyboardState>(
-      listener: (BuildContext context, TackKeyboardState state) {
-        onChanged(double.tryParse(state.value) ?? 0);
+      listener: (_, TackKeyboardState state) {
+        onChanged(state.parsedValue);
       },
-      builder: (BuildContext context, TackKeyboardState state) {
+      builder: (_, TackKeyboardState state) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
@@ -32,14 +32,16 @@ class TackKeyboard extends StatelessWidget {
                 readOnly: true,
                 textAlign: TextAlign.center,
                 controller: TextEditingController(
-                  text: '\$ ${state.value.isNotEmpty ? state.value : '0.00'}',
+                  text: CurrencyUtility.dollarFormat.format(
+                    state.parsedValue,
+                  ),
                 ),
                 style: AppTextTheme.manrope38Bold.copyWith(
                   color: AppTheme.grassColor,
                 ),
                 decoration: const BoxDecoration(),
               ),
-              const AppDivider(width: 234),
+              const AppDivider(),
               RichText(
                 text: TextSpan(
                   text: FlutterI18n.translate(

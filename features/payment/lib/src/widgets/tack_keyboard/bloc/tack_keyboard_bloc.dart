@@ -30,13 +30,12 @@ class TackKeyboardBloc extends Bloc<TackKeyboardEvent, TackKeyboardState> {
         }
         break;
       case '0':
-        if (state.value.isNotEmpty) {
-          if (state.value.length < 4 || state.value.contains('.')) {
-            emit(state.copyWith(value: '${state.value}0'));
-          } else {
-            emit(state.copyWith(value: '${state.value}.0'));
-          }
-        }
+        if (state.value.isEmpty) break;
+        emit(
+          state.copyWith(
+            value: _addSymbol(event.symbol),
+          ),
+        );
         break;
       case '<-':
         if (state.value.length == 1 || state.value.isEmpty) {
@@ -50,12 +49,26 @@ class TackKeyboardBloc extends Bloc<TackKeyboardEvent, TackKeyboardState> {
         }
         break;
       default:
-        if (state.value.length < 4 || state.value.contains('.')) {
-          emit(state.copyWith(value: '${state.value}${event.symbol}'));
-        } else {
-          emit(state.copyWith(value: '${state.value}.${event.symbol}'));
-        }
+        emit(
+          state.copyWith(
+            value: _addSymbol(event.symbol),
+          ),
+        );
         break;
+    }
+  }
+
+  String _addSymbol(String symbol) {
+    if (state.value.length == Constants.maxPriceLength) return state.value;
+
+    final bool hasDot = state.value.contains('.');
+    final bool reachedLimitBeforePoint =
+        state.value.length < Constants.maxDigitsBeforeDot;
+
+    if (reachedLimitBeforePoint || hasDot) {
+      return '${state.value}$symbol';
+    } else {
+      return '${state.value}.$symbol';
     }
   }
 }
