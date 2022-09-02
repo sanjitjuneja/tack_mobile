@@ -7,7 +7,7 @@
             <data android:scheme="tel" />
         </intent>
     </queries>
-
+    
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
@@ -50,5 +50,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
     </application>
 </manifest>
