@@ -21,7 +21,7 @@ abstract class PaymentRepository {
     FetchIsGooglePaySupportedPayload payload,
   );
 
-  bool fetchIsApplePaySupported(
+  Future<bool> fetchIsApplePaySupported(
     FetchIsApplePaySupportedPayload payload,
   );
 }

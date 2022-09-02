@@ -6,5 +6,9 @@
 	<array>
 		<string>applinks:tackappdev.page.link</string>
 	</array>
+	<key>com.apple.developer.in-app-payments</key>
+	<array>
+		<string>merchant.com.tackApp.ios.dev</string>
+	</array>
 </dict>
 </plist>
