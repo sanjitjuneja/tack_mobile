@@ -14,7 +14,10 @@ class GroupInfoHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        AppNetworkImageWidget(group.imageUrl),
+        AppNetworkImageWidget(
+          group.imageUrl,
+          placeholderIcon: null,
+        ),
         const SizedBox(width: 10),
         Expanded(
           child: Text(

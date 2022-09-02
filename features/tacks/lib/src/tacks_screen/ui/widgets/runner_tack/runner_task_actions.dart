@@ -94,7 +94,10 @@ class RunnerTackActions extends StatelessWidget {
 
     return Row(
       children: <Widget>[
-        AppNetworkImageWidget(runnerTack.tack.group.imageUrl),
+        AppNetworkImageWidget(
+          runnerTack.tack.group.imageUrl,
+          placeholderIcon: null,
+        ),
         const SizedBox(width: 10),
         Expanded(
           child: Text(

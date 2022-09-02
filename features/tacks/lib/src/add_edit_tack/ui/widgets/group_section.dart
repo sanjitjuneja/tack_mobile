@@ -30,7 +30,10 @@ class GroupSection extends StatelessWidget {
             ),
             child: Row(
               children: <Widget>[
-                AppNetworkImageWidget(state.groupData.group?.imageUrl),
+                AppNetworkImageWidget(
+                  state.groupData.group?.imageUrl,
+                  placeholderIcon: null,
+                ),
                 const SizedBox(width: 14),
                 Expanded(
                   child: Text(
@@ -38,7 +41,7 @@ class GroupSection extends StatelessWidget {
                         ? state.groupData.group!.name
                         : FlutterI18n.translate(
                             context,
-                            'general.noGroupSelectedSubtitle',
+                            'general.noGroupSelected',
                           ),
                     style: AppTextTheme.manrope18Regular
                         .copyWith(color: AppTheme.textPrimaryColor),

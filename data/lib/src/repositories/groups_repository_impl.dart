@@ -136,16 +136,18 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
         id: payload.group.id,
       ),
     );
-    _groupsStreamController.add(
-      _groupsStreamController.value
-        ..removeWhere(
-          (domain.GroupDetails element) => element.id == payload.group.id,
-        ),
+    final List<domain.GroupDetails> finalGroups = <domain.GroupDetails>[
+      ...groups,
+    ];
+    finalGroups.removeWhere(
+      (domain.GroupDetails element) => element.group.id == payload.group.id,
     );
+
+    _groupsStreamController.add(finalGroups);
     if (currentGroup?.id == payload.group.id) {
       await selectGroup(
         domain.SelectGroupPayload(
-          group: _groupsStreamController.value.lastOrNull?.group,
+          group: _groupsStreamController.value.firstOrNull?.group,
         ),
       );
     }

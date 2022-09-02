@@ -4,6 +4,7 @@ export 'src/config/app_config.dart';
 export 'src/config/firebase_config_helper.dart';
 
 export 'src/constants/constants.dart';
+export 'src/constants/optional.dart';
 export 'src/constants/void_type.dart';
 
 export 'src/di/app_di.dart';

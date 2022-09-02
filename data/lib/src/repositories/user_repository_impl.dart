@@ -45,8 +45,18 @@ class UserRepositoryImpl implements domain.UserRepository {
   Future<void> initialLoad() async {
     // Handle of network error, no any action needed on error.
     try {
+      await fetchUser();
       await fetchUserBalance(const domain.FetchUserBalancePayload());
     } catch (_) {}
+  }
+
+  @override
+  Future<domain.User> fetchUser() async {
+    final domain.User user = await _apiProvider.getUser();
+    await _sharedPreferencesProvider.setUser(user);
+    await _sharedPreferencesProvider.setActiveGroupId(user.activeGroup);
+
+    return user;
   }
 
   @override

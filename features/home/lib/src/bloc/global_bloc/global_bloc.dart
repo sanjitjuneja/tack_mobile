@@ -76,7 +76,7 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
     CurrentGroupChanged event,
     Emitter<GlobalState> emit,
   ) async {
-    emit(state.copyWith(currentGroup: event.group));
+    emit(state.copyWith(currentGroup: Optional(event.group)));
   }
 
   Future<void> _onGroupsChanged(

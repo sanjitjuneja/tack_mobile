@@ -34,6 +34,7 @@ class InvitationTile extends StatelessWidget {
           children: <Widget>[
             AppNetworkImageWidget(
               invitation.group.imageUrl,
+              placeholderIcon: null,
               isShadowBorder: false,
             ),
             const SizedBox(width: 12),
