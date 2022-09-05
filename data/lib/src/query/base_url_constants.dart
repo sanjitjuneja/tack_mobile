@@ -17,43 +17,52 @@ class BaseUrlConstants {
   static const String userChangeBioPath = '/users/me/change_bio/';
   static const String userPasswordChangePath = '/users/me/password-change/';
 
-  static const String userContactsPath = '/tacks/${ApiQuery.idKey}/get_contacts/';
+  static const String userContactsPath =
+      '/tacks/${ApiQuery.idKey}/get_contacts/';
 
   static const String offersPath = '/offers/';
   static const String offerCancelPath = '/offers/${ApiQuery.idKey}/';
-  static const String offerTestAcceptPath = '/offers/${ApiQuery.idKey}/test_accept/';
+  static const String offerTestAcceptPath =
+      '/offers/${ApiQuery.idKey}/test_accept/';
 
   static const String groupsPath = '/groups/';
   static const String groupsMePath = '/groups/me/';
   static const String groupPath = '/groups/${ApiQuery.idKey}/';
-  static const String groupSetActivePath = '/groups/${ApiQuery.idKey}/set_active/';
+  static const String groupSetActivePath =
+      '/groups/${ApiQuery.idKey}/set_active/';
   static const String groupMembersPath = '/groups/${ApiQuery.idKey}/members/';
   static const String groupLeavePath = '/groups/${ApiQuery.idKey}/leave/';
   static const String groupMutePath = '/groups/${ApiQuery.idKey}/mute/';
   static const String groupUnMutePath = '/groups/${ApiQuery.idKey}/unmute/';
-  static const String groupInviteLinkPath = '/groups/${ApiQuery.idKey}/get_invite_link/';
+  static const String groupInviteLinkPath =
+      '/groups/${ApiQuery.idKey}/get_invite_link/';
   static const String groupInvitePath = '/groups/invite/';
 
   static const String groupsTacksPath = '/groups/${ApiQuery.idKey}/tacks/';
 
   static const String invitationsMePath = 'invites/me/';
-  static const String invitationAcceptPath = 'invites/${ApiQuery.idKey}/accept/';
+  static const String invitationAcceptPath =
+      'invites/${ApiQuery.idKey}/accept/';
   static const String invitationDeclinePath = 'invites/${ApiQuery.idKey}/';
 
   static const String tacksMeRunnerPath = '/tacks/me/as_runner/';
   static const String tacksMeTackerPath = '/tacks/me/as_tacker/';
 
-  static const String tacksPreviousMeRunnerPath = '/tacks/me/previous_as_runner/';
-  static const String tacksPreviousMeTackerPath = '/tacks/me/previous_as_tacker/';
+  static const String tacksPreviousMeRunnerPath =
+      '/tacks/me/previous_as_runner/';
+  static const String tacksPreviousMeTackerPath =
+      '/tacks/me/previous_as_tacker/';
 
   static const String tacks = '/tacks/';
   static const String tacksWithId = '/tacks/${ApiQuery.idKey}/';
   static const String tackOffersPath = '/tacks/${ApiQuery.idKey}/offers/';
   static const String tackStartPath = '/tacks/${ApiQuery.idKey}/start_tack/';
   static const String tackCompletePath = '/tacks/${ApiQuery.idKey}/complete/';
-  static const String tackConfirmCompletePath = '/tacks/${ApiQuery.idKey}/confirm_complete/';
+  static const String tackConfirmCompletePath =
+      '/tacks/${ApiQuery.idKey}/confirm_complete/';
 
-  static const String groupPopularTacksPath = 'groups/${ApiQuery.idKey}/popular_tacks/';
+  static const String groupPopularTacksPath =
+      'groups/${ApiQuery.idKey}/popular_tacks/';
   static const String nearbyPopularTacksPath = 'tacks/nearby/';
 
   static const String reviews = '/reviews/';
@@ -63,4 +72,6 @@ class BaseUrlConstants {
   static const String plaidBankAccounts = 'payment/add-withdraw-method/';
   static const String connectedBankAccounts = 'payment/get-withdraw-methods/';
   static const String connectedCards = 'payment/get-payment-methods/';
+  static const String removePaymentMethod = 'payment/detach-payment-method/';
+  static const String setPrimaryPaymentMethod = 'payment/set-primary-method/';
 }

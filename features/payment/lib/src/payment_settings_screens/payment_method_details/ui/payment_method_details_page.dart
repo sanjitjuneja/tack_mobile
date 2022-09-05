@@ -16,7 +16,7 @@ class PaymentMethodDetailsFeature {
     );
   }
 
-  static Page<void> bankDetailsPage({
+  static Page<bool?> bankDetailsPage({
     required ConnectedBankAccount bankAccount,
   }) {
     return _PaymentMethodDetailsPage(
@@ -25,7 +25,7 @@ class PaymentMethodDetailsFeature {
   }
 }
 
-class _PaymentMethodDetailsPage extends Page<void> {
+class _PaymentMethodDetailsPage extends Page<bool?> {
   final ConnectedCard? card;
   final ConnectedBankAccount? bankAccount;
 
@@ -38,14 +38,17 @@ class _PaymentMethodDetailsPage extends Page<void> {
   }) : assert(card != null || bankAccount != null);
 
   @override
-  Route<void> createRoute(BuildContext context) {
-    return CupertinoPageRoute<void>(
+  Route<bool?> createRoute(BuildContext context) {
+    return CupertinoPageRoute<bool?>(
       settings: this,
       builder: (_) => BlocProvider<PaymentMethodDetailsBloc>(
         create: (_) {
           return PaymentMethodDetailsBloc(
             appRouter: appLocator.get<AppRouterDelegate>(),
-            addCardUseCase: appLocator.get<AddCardUseCase>(),
+            removePaymentMethodUseCase:
+                appLocator.get<RemovePaymentMethodUseCase>(),
+            setPrimaryPaymentMethodUseCase:
+                appLocator.get<SetPrimaryPaymentMethodUseCase>(),
             card: card,
             bankAccount: bankAccount,
           );

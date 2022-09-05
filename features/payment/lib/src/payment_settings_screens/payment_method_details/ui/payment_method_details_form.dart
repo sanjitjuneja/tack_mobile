@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../widgets/connected_bank_account_details.dart';
@@ -29,11 +30,25 @@ class PaymentMethodDetailsForm extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   PrimaryPaymentMethodButton(
-                    isPrimary: false,
-                    onTap: () => _onSetPrimaryMethodAction(context),
+                    isPrimary: state.isBankAccount
+                        ? state.bankAccount!.isPrimary
+                        : state.card!.isPrimary,
+                    onTap: () {
+                      _onSetPrimaryMethodAction(
+                        context,
+                        bankAccount: state.bankAccount,
+                        card: state.card,
+                      );
+                    },
                   ),
                   RemovePaymentMethodButton(
-                    onTap: () => _onRemovePaymentMethodAction(context),
+                    onTap: () {
+                      _onRemovePaymentMethodAction(
+                        context,
+                        bankAccount: state.bankAccount,
+                        card: state.card,
+                      );
+                    },
                     isBankAccount: state.isBankAccount,
                   ),
                 ],
@@ -48,11 +63,29 @@ class PaymentMethodDetailsForm extends StatelessWidget {
     );
   }
 
-  void _onSetPrimaryMethodAction(BuildContext context) {
-    //TODO
+  void _onSetPrimaryMethodAction(
+    BuildContext context, {
+    ConnectedBankAccount? bankAccount,
+    ConnectedCard? card,
+  }) {
+    BlocProvider.of<PaymentMethodDetailsBloc>(context).add(
+      SetPrimaryPaymentMethodRequest(
+        bankAccount: bankAccount,
+        card: card,
+      ),
+    );
   }
 
-  void _onRemovePaymentMethodAction(BuildContext context) {
-    //TODO
+  void _onRemovePaymentMethodAction(
+    BuildContext context, {
+    ConnectedBankAccount? bankAccount,
+    ConnectedCard? card,
+  }) {
+    BlocProvider.of<PaymentMethodDetailsBloc>(context).add(
+      RemovePaymentMethodRequest(
+        bankAccount: bankAccount,
+        card: card,
+      ),
+    );
   }
 }

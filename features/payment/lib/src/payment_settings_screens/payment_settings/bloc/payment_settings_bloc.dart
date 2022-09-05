@@ -155,18 +155,22 @@ class PaymentSettingsBloc
     PaymentMethodDetailsAction event,
     Emitter<PaymentSettingsState> emit,
   ) async {
+    bool? result;
     if (event.card != null) {
-      _appRouter.push(
+      result = await _appRouter.pushForResult(
         PaymentMethodDetailsFeature.cardDetailsPage(
           card: event.card!,
         ),
       );
     } else {
-      _appRouter.push(
+      result = await _appRouter.pushForResult(
         PaymentMethodDetailsFeature.bankDetailsPage(
           bankAccount: event.bankAccount!,
         ),
       );
+    }
+    if (result != null) {
+      add(const InitialLoad());
     }
   }
 

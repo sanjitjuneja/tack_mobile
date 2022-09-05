@@ -9,17 +9,69 @@ part 'payment_method_details_event.dart';
 class PaymentMethodDetailsBloc
     extends Bloc<PaymentMethodDetailsEvent, PaymentMethodDetailsState> {
   final AppRouterDelegate _appRouter;
+  final RemovePaymentMethodUseCase _removePaymentMethodUseCase;
+  final SetPrimaryPaymentMethodUseCase _setPrimaryPaymentMethodUseCase;
 
   PaymentMethodDetailsBloc({
     required AppRouterDelegate appRouter,
-    required AddCardUseCase addCardUseCase,
+    required RemovePaymentMethodUseCase removePaymentMethodUseCase,
+    required SetPrimaryPaymentMethodUseCase setPrimaryPaymentMethodUseCase,
     required ConnectedCard? card,
     required ConnectedBankAccount? bankAccount,
   })  : _appRouter = appRouter,
+        _removePaymentMethodUseCase = removePaymentMethodUseCase,
+        _setPrimaryPaymentMethodUseCase = setPrimaryPaymentMethodUseCase,
         super(
           PaymentMethodDetailsState(
             card: card,
             bankAccount: bankAccount,
           ),
-        );
+        ) {
+    on<RemovePaymentMethodRequest>(_onRemovePaymentMethodRequest);
+    on<SetPrimaryPaymentMethodRequest>(_onSetPrimaryPaymentMethodRequest);
+  }
+
+  Future<void> _onRemovePaymentMethodRequest(
+    RemovePaymentMethodRequest event,
+    Emitter<PaymentMethodDetailsState> emit,
+  ) async {
+    if (state.isBankAccount) {
+      await _removePaymentMethodUseCase.execute(
+        RemovePaymentMethodPayload(
+          paymentMethodType: ConnectedPaymentMethodType.bank,
+          paymentMethodId: state.bankAccount!.id,
+        ),
+      );
+    } else {
+      await _removePaymentMethodUseCase.execute(
+        RemovePaymentMethodPayload(
+          paymentMethodType: ConnectedPaymentMethodType.card,
+          paymentMethodId: state.card!.id,
+        ),
+      );
+    }
+    _appRouter.popWithResult(true);
+  }
+
+  Future<void> _onSetPrimaryPaymentMethodRequest(
+    SetPrimaryPaymentMethodRequest event,
+    Emitter<PaymentMethodDetailsState> emit,
+  ) async {
+    if (state.isBankAccount) {
+      await _setPrimaryPaymentMethodUseCase.execute(
+        SetPrimaryPaymentMethodPayload(
+          paymentMethodType: ConnectedPaymentMethodType.bank,
+          paymentMethodId: state.bankAccount!.id,
+        ),
+      );
+    } else {
+      await _setPrimaryPaymentMethodUseCase.execute(
+        SetPrimaryPaymentMethodPayload(
+          paymentMethodType: ConnectedPaymentMethodType.card,
+          paymentMethodId: state.card!.id,
+        ),
+      );
+    }
+    _appRouter.popWithResult(true);
+  }
 }

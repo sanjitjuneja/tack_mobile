@@ -682,6 +682,32 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
+  Future<void> removePaymentMethod({
+    required RemovePaymentMethodRequest request,
+  }) async {
+    return post<void>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.removePaymentMethod,
+        body: request.toJson(),
+        params: null,
+      ),
+      parser: (_) {},
+    );
+  }
+
+  Future<void> setPrimaryPaymentMethod({
+    required SetPrimaryPaymentMethodRequest request,
+  }) async {
+    return post<void>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.setPrimaryPaymentMethod,
+        body: request.toJson(),
+        params: null,
+      ),
+      parser: (_) {},
+    );
+  }
+
 // Future<void> logOut() {
 //   return get<void>(
 //     ApiQuery(

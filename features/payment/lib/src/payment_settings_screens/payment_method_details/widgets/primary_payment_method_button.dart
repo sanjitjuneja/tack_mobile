@@ -15,7 +15,7 @@ class PrimaryPaymentMethodButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OpacityOnTapContainer(
-      onTap: onTap,
+      onTap: isPrimary ? null : onTap,
       feedbackType: HapticFeedbackType.heavy,
       withFeedback: true,
       child: Container(

@@ -14,6 +14,7 @@ class ConnectedBankAccountMapper
       bankAccountType: entity.bankAccountType,
       imageUrl: entity.imageUrl,
       channels: entity.channels,
+      isPrimary: entity.isPrimary,
     );
   }
 
@@ -27,6 +28,7 @@ class ConnectedBankAccountMapper
       bankAccountType: item.bankAccountType,
       imageUrl: item.imageUrl,
       channels: item.channels,
+      isPrimary: item.isPrimary,
     );
   }
 }

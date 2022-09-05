@@ -24,4 +24,12 @@ abstract class PaymentRepository {
   Future<bool> fetchIsApplePaySupported(
     FetchIsApplePaySupportedPayload payload,
   );
+
+  Future<void> removePaymentMethod(
+    RemovePaymentMethodPayload payload,
+  );
+
+  Future<void> setPrimaryPaymentMethod(
+    SetPrimaryPaymentMethodPayload payload,
+  );
 }

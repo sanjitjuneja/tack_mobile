@@ -16,6 +16,8 @@ class ConnectedBankAccountEntity extends JsonSerializable {
   final String? imageUrl;
   @JsonKey(name: 'channels')
   final List<String> channels;
+  @JsonKey(name: 'is_primary')
+  final bool isPrimary;
 
   const ConnectedBankAccountEntity({
     required this.id,
@@ -25,6 +27,7 @@ class ConnectedBankAccountEntity extends JsonSerializable {
     required this.bankAccountType,
     required this.imageUrl,
     required this.channels,
+    required this.isPrimary,
   });
 
   factory ConnectedBankAccountEntity.fromJson(Map<String, dynamic> json) {
