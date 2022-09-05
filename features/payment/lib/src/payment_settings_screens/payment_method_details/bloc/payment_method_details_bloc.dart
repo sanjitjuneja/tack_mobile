@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:navigation/navigation.dart';
 
@@ -35,43 +36,55 @@ class PaymentMethodDetailsBloc
     RemovePaymentMethodRequest event,
     Emitter<PaymentMethodDetailsState> emit,
   ) async {
-    if (state.isBankAccount) {
-      await _removePaymentMethodUseCase.execute(
-        RemovePaymentMethodPayload(
-          paymentMethodType: ConnectedPaymentMethodType.bank,
-          paymentMethodId: state.bankAccount!.id,
-        ),
-      );
-    } else {
-      await _removePaymentMethodUseCase.execute(
-        RemovePaymentMethodPayload(
-          paymentMethodType: ConnectedPaymentMethodType.card,
-          paymentMethodId: state.card!.id,
-        ),
-      );
+    try {
+      _appRouter.push(ProgressDialog.page());
+      if (state.isBankAccount) {
+        await _removePaymentMethodUseCase.execute(
+          RemovePaymentMethodPayload(
+            paymentMethodType: ConnectedPaymentMethodType.bank,
+            paymentMethodId: state.bankAccount!.id,
+          ),
+        );
+      } else {
+        await _removePaymentMethodUseCase.execute(
+          RemovePaymentMethodPayload(
+            paymentMethodType: ConnectedPaymentMethodType.card,
+            paymentMethodId: state.card!.id,
+          ),
+        );
+      }
+      _appRouter.pop();
+      _appRouter.popWithResult(true);
+    } catch (e) {
+      _appRouter.pop();
     }
-    _appRouter.popWithResult(true);
   }
 
   Future<void> _onSetPrimaryPaymentMethodRequest(
     SetPrimaryPaymentMethodRequest event,
     Emitter<PaymentMethodDetailsState> emit,
   ) async {
-    if (state.isBankAccount) {
-      await _setPrimaryPaymentMethodUseCase.execute(
-        SetPrimaryPaymentMethodPayload(
-          paymentMethodType: ConnectedPaymentMethodType.bank,
-          paymentMethodId: state.bankAccount!.id,
-        ),
-      );
-    } else {
-      await _setPrimaryPaymentMethodUseCase.execute(
-        SetPrimaryPaymentMethodPayload(
-          paymentMethodType: ConnectedPaymentMethodType.card,
-          paymentMethodId: state.card!.id,
-        ),
-      );
+    try {
+      _appRouter.push(ProgressDialog.page());
+      if (state.isBankAccount) {
+        await _setPrimaryPaymentMethodUseCase.execute(
+          SetPrimaryPaymentMethodPayload(
+            paymentMethodType: ConnectedPaymentMethodType.bank,
+            paymentMethodId: state.bankAccount!.id,
+          ),
+        );
+      } else {
+        await _setPrimaryPaymentMethodUseCase.execute(
+          SetPrimaryPaymentMethodPayload(
+            paymentMethodType: ConnectedPaymentMethodType.card,
+            paymentMethodId: state.card!.id,
+          ),
+        );
+      }
+      _appRouter.pop();
+      _appRouter.popWithResult(true);
+    } catch (e) {
+      _appRouter.pop();
     }
-    _appRouter.popWithResult(true);
   }
 }
