@@ -3,6 +3,8 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:navigation/navigation.dart';
 
+import '../../payment_settings/models/payment_method_details_screen_result.dart';
+
 part 'payment_method_details_state.dart';
 
 part 'payment_method_details_event.dart';
@@ -53,8 +55,16 @@ class PaymentMethodDetailsBloc
           ),
         );
       }
+      final bool isPrimaryMethod = state.isBankAccount
+          ? state.bankAccount!.isPrimary
+          : state.card!.isPrimary;
+
       _appRouter.pop();
-      _appRouter.popWithResult(true);
+      _appRouter.popWithResult(
+        isPrimaryMethod
+            ? PaymentMethodDetailsScreenResult.removedPrimaryPaymentMethod
+            : PaymentMethodDetailsScreenResult.removedPaymentMethod,
+      );
     } catch (e) {
       _appRouter.pop();
     }
@@ -82,7 +92,7 @@ class PaymentMethodDetailsBloc
         );
       }
       _appRouter.pop();
-      _appRouter.popWithResult(true);
+      _appRouter.popWithResult(PaymentMethodDetailsScreenResult.setPrimary);
     } catch (e) {
       _appRouter.pop();
     }

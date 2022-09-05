@@ -100,6 +100,18 @@
       "message": "Bank Successfully Added",
       "mainButtonLabel": "Close"
     },
+    "paymentMethodRemovedAlert": {
+      "message": "Payment Method Successfully Removed",
+      "mainButtonLabel": "Close"
+    },
+    "paymentPrimaryMethodRemovedAlert": {
+      "message": "Payment Method Successfully Removed\n(Please Set New Primary Method)",
+      "mainButtonLabel": "Close"
+    },
+    "primaryPaymentMethodSelectedAlert": {
+      "message": "Primary Method Successfully Selected",
+      "mainButtonLabel": "Close"
+    },
     "sinUpComplete": {
       "message": "Sign Up\nComplete"
     },

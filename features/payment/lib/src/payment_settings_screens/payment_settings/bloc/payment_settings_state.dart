@@ -12,6 +12,20 @@ class PaymentSettingsState {
   bool get digitalWalletsSupported =>
       isApplePaySupported || isGooglePaySupported;
 
+  bool get isPrimaryMethodExists {
+    for (final bankAccount in bankAccounts) {
+      if (bankAccount.isPrimary) {
+        return true;
+      }
+    }
+    for (final card in cards) {
+      if (card.isPrimary) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   const PaymentSettingsState({
     required this.bankAccounts,
     required this.cards,
