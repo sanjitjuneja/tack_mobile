@@ -40,107 +40,105 @@ class PaymentSettingsForm extends StatelessWidget {
                 backgroundColor: AppTheme.transparentColor,
                 indicatorColor: AppTheme.progressInterfaceDarkColor,
               ),
-            ] else
-              if (state.hasError) ...<Widget>[
-                Container(
-                  alignment: Alignment.center,
-                  child: CupertinoButton(
-                    onPressed: () => _onReloadButtonPressed(context),
-                    padding: EdgeInsets.zero,
-                    child: Icon(
-                      Icons.refresh_rounded,
-                      color: AppTheme.progressInterfaceDarkColor,
-                      size: 60,
-                    ),
+            ] else if (state.hasError) ...<Widget>[
+              Container(
+                alignment: Alignment.center,
+                child: CupertinoButton(
+                  onPressed: () => _onReloadButtonPressed(context),
+                  padding: EdgeInsets.zero,
+                  child: Icon(
+                    Icons.refresh_rounded,
+                    color: AppTheme.progressInterfaceDarkColor,
+                    size: 60,
                   ),
                 ),
-              ] else
-                ...<Widget>[
-                  if (state.bankAccounts.isNotEmpty) ...<Widget>[
-                    Text(
-                      FlutterI18n.translate(
-                        context,
-                        'paymentSettingsScreen.banks',
-                      ),
-                      style: AppTextTheme.manrope20Bold,
+              ),
+            ] else ...<Widget>[
+              if (state.bankAccounts.isNotEmpty) ...<Widget>[
+                Text(
+                  FlutterI18n.translate(
+                    context,
+                    'paymentSettingsScreen.banks',
+                  ),
+                  style: AppTextTheme.manrope20Bold,
+                ),
+                const SizedBox(height: 14),
+                ...state.bankAccounts.map(
+                  (bankAccount) => PaymentMethodTile(
+                    onTap: () =>
+                        _onPaymentMethodTile(context, bankAccount: bankAccount),
+                    leadingIcon: AppNetworkImageWidget(
+                      bankAccount.imageUrl,
+                      placeholderIcon: AppIconsTheme.bank,
+                      boxShape: BoxShape.rectangle,
+                      boxFit: BoxFit.fitWidth,
                     ),
-                    const SizedBox(height: 14),
-                    ...state.bankAccounts.map(
-                          (bankAccount) =>
-                          PaymentMethodTile(
-                            onTap: () =>
-                                _onPaymentMethodTile(
-                                    context, bankAccount: bankAccount),
-                            leadingIcon: AppNetworkImageWidget(
-                              bankAccount.imageUrl,
-                              placeholderIcon: AppIconsTheme.bank,
-                              boxShape: BoxShape.rectangle,
-                              boxFit: BoxFit.fitWidth,
-                            ),
-                            title: bankAccount.bankName,
-                            subtitle: bankAccount.bankAccountType,
-                            isPrimary: bankAccount.isPrimary,
-                          ),
+                    title: bankAccount.bankName,
+                    subtitle: bankAccount.bankAccountType,
+                    isPrimary: bankAccount.isPrimary,
+                  ),
+                ),
+                const SizedBox(height: 30),
+              ],
+              if (state.cards.isNotEmpty) ...<Widget>[
+                Text(
+                  FlutterI18n.translate(
+                    context,
+                    'paymentSettingsScreen.cards',
+                  ),
+                  style: AppTextTheme.manrope20Bold,
+                ),
+                const SizedBox(height: 14),
+                ...state.cards.map(
+                  (card) => PaymentMethodTile(
+                    onTap: () => _onPaymentMethodTile(context, card: card),
+                    leadingIcon: AppNetworkImageWidget(
+                      card.cardData.imageUrl,
+                      placeholderIcon: AppIconsTheme.card,
+                      boxShape: BoxShape.rectangle,
+                      boxFit: BoxFit.fitWidth,
                     ),
-                    const SizedBox(height: 30),
-                  ],
-                  if (state.cards.isNotEmpty) ...<Widget>[
-                    Text(
-                      FlutterI18n.translate(
-                        context,
-                        'paymentSettingsScreen.cards',
-                      ),
-                      style: AppTextTheme.manrope20Bold,
+                    title: card.cardData.brand,
+                    subtitle: '****${card.cardData.last4}',
+                    isPrimary: card.isPrimary,
+                  ),
+                ),
+                const SizedBox(height: 30),
+              ],
+              if (state.digitalWalletsSupported) ...<Widget>[
+                Text(
+                  FlutterI18n.translate(
+                    context,
+                    'paymentSettingsScreen.digitalWallets',
+                  ),
+                  style: AppTextTheme.manrope20Bold,
+                ),
+                const SizedBox(height: 14),
+                if (state.isApplePaySupported)
+                  PaymentMethodTile(
+                    leadingIcon: AppIconsTheme.applePay(size: 35),
+                    title: FlutterI18n.translate(
+                      context,
+                      'paymentSettingsScreen.applePay',
                     ),
-                    const SizedBox(height: 14),
-                    ...state.cards.map(
-                          (card) =>
-                          PaymentMethodTile(
-                            onTap: () =>
-                                _onPaymentMethodTile(context, card: card),
-                            leadingIcon: AppNetworkImageWidget(
-                              card.cardData.imageUrl,
-                              placeholderIcon: AppIconsTheme.card,
-                              boxShape: BoxShape.rectangle,
-                              boxFit: BoxFit.fitWidth,
-                            ),
-                            title: card.cardData.brand,
-                            subtitle: '****${card.cardData.last4}',
-                            isPrimary: card.isPrimary,
-                          ),
+                    isPrimary:
+                        state.bankAccounts.isEmpty && state.cards.isEmpty,
+                    hasTrailingArrow: false,
+                  ),
+                if (state.isGooglePaySupported)
+                  PaymentMethodTile(
+                    leadingIcon: AppIconsTheme.googlePay(size: 35),
+                    title: FlutterI18n.translate(
+                      context,
+                      'paymentSettingsScreen.googlePay',
                     ),
-                    const SizedBox(height: 30),
-                  ],
-                  if (state.digitalWalletsSupported) ...<Widget>[
-                    Text(
-                      FlutterI18n.translate(
-                        context,
-                        'paymentSettingsScreen.digitalWallets',
-                      ),
-                      style: AppTextTheme.manrope20Bold,
-                    ),
-                    const SizedBox(height: 14),
-                    if (state.isApplePaySupported)
-                      PaymentMethodTile(
-                        leadingIcon: AppIconsTheme.applePay(size: 35),
-                        title: FlutterI18n.translate(
-                          context,
-                          'paymentSettingsScreen.applePay',
-                        ),
-                        hasTrailingArrow: false,
-                      ),
-                    if (state.isGooglePaySupported)
-                      PaymentMethodTile(
-                        leadingIcon: AppIconsTheme.googlePay(size: 35),
-                        title: FlutterI18n.translate(
-                          context,
-                          'paymentSettingsScreen.googlePay',
-                        ),
-                        hasTrailingArrow: false,
-                      ),
-                    const SizedBox(height: 30),
-                  ],
-                ],
+                    isPrimary:
+                        state.bankAccounts.isEmpty && state.cards.isEmpty,
+                    hasTrailingArrow: false,
+                  ),
+                const SizedBox(height: 30),
+              ],
+            ],
             Text(
               FlutterI18n.translate(
                 context,
@@ -190,7 +188,8 @@ class PaymentSettingsForm extends StatelessWidget {
     );
   }
 
-  void _onPaymentMethodTile(BuildContext context, {
+  void _onPaymentMethodTile(
+    BuildContext context, {
     ConnectedCard? card,
     ConnectedBankAccount? bankAccount,
   }) {
