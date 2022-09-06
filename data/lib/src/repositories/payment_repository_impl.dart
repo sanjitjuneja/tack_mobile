@@ -123,4 +123,28 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
 
     return isGooglePaySupported;
   }
+
+  @override
+  Future<void> removePaymentMethod(
+    domain.RemovePaymentMethodPayload payload,
+  ) async {
+    await _apiProvider.removePaymentMethod(
+      request: RemovePaymentMethodRequest(
+        paymentType: payload.paymentMethodType.name,
+        paymentMethodId: payload.paymentMethodId,
+      ),
+    );
+  }
+
+  @override
+  Future<void> setPrimaryPaymentMethod(
+    domain.SetPrimaryPaymentMethodPayload payload,
+  ) async {
+    await _apiProvider.setPrimaryPaymentMethod(
+      request: SetPrimaryPaymentMethodRequest(
+        paymentType: payload.paymentMethodType.name,
+        paymentMethodId: payload.paymentMethodId,
+      ),
+    );
+  }
 }

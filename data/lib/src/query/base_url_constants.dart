@@ -63,4 +63,6 @@ class BaseUrlConstants {
   static const String plaidBankAccounts = 'payment/add-withdraw-method/';
   static const String connectedBankAccounts = 'payment/get-withdraw-methods/';
   static const String connectedCards = 'payment/get-payment-methods/';
+  static const String removePaymentMethod = 'payment/detach-payment-method/';
+  static const String setPrimaryPaymentMethod = 'payment/set-primary-method/';
 }

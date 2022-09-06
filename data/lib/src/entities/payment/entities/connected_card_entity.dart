@@ -6,11 +6,14 @@ class ConnectedCardEntity extends JsonSerializable {
   final String type;
   @JsonKey(name: 'card')
   final ConnectedCardDataEntity cardData;
+  @JsonKey(name: 'is_primary')
+  final bool isPrimary;
 
   const ConnectedCardEntity({
     required this.id,
     required this.type,
     required this.cardData,
+    required this.isPrimary,
   });
 
   factory ConnectedCardEntity.fromJson(Map<String, dynamic> json) {

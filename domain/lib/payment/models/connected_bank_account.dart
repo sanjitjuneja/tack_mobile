@@ -8,6 +8,7 @@ class ConnectedBankAccount extends Equatable {
   final String bankAccountType;
   final String? imageUrl;
   final List<String> channels;
+  final bool isPrimary;
 
   const ConnectedBankAccount({
     required this.id,
@@ -17,6 +18,7 @@ class ConnectedBankAccount extends Equatable {
     required this.bankAccountType,
     required this.imageUrl,
     required this.channels,
+    required this.isPrimary,
   });
 
   @override
@@ -28,5 +30,6 @@ class ConnectedBankAccount extends Equatable {
         bankAccountType,
         imageUrl,
         channels,
+        isPrimary,
       ];
 }

@@ -14,6 +14,7 @@ class ConnectedCardMapper
       id: entity.id,
       type: entity.type,
       cardData: connectedCardDataMapper.fromEntity(entity.cardData),
+      isPrimary: entity.isPrimary,
     );
   }
 
@@ -23,6 +24,7 @@ class ConnectedCardMapper
       id: item.id,
       type: item.type,
       cardData: connectedCardDataMapper.toEntity(item.cardData),
+      isPrimary: item.isPrimary,
     );
   }
 }
