@@ -55,7 +55,7 @@ class AppBaseSelectableTile<T extends AppSelectableItem>
               height: 24,
               child: Visibility(
                 visible: isSelected,
-                child: AppImagesTheme.checkMarkRounded,
+                child: AppIconsTheme.checkMarkFilled(),
               ),
             ),
           ],

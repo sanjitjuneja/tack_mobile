@@ -17,8 +17,8 @@ dependencies:
     path: ../navigation
 
  # Features
-  splash:
-    path: ../features/splash
+  onboarding:
+    path: ../features/onboarding
 
 dev_dependencies:
   flutter_test:

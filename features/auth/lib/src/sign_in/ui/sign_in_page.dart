@@ -1,29 +1,26 @@
 import 'package:core/core.dart';
-import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 
 import '../bloc/sign_in_bloc.dart';
-import '../models/sign_in_screen_result.dart';
 import 'sign_in_screen.dart';
 
 class SignInFeature {
   static const String routeName = '/signIn';
 
-  static Page<SignInScreenResult?> page() => const SignInPage();
+  static Page<bool?> page() => const SignInPage();
 }
 
-class SignInPage extends Page<SignInScreenResult?> {
+class SignInPage extends Page<bool?> {
   const SignInPage();
 
   @override
   String get name => SignInFeature.routeName;
 
   @override
-  Route<SignInScreenResult?> createRoute(BuildContext context) {
-    return OpacityRoute<SignInScreenResult?>(
+  Route<bool?> createRoute(BuildContext context) {
+    return CupertinoPageRoute<bool?>(
       settings: this,
       builder: (_) => BlocProvider<SignInBloc>(
         create: (_) {

@@ -5,7 +5,8 @@
   },
   "errors": {
     "couldNotLaunchURL": "Could not launch URL",
-    "tackIsNotAvailable": "Sorry, this Tack is no longer available"
+    "tackIsNotAvailable": "Sorry, this Tack is no longer available",
+    "hasOngoingTacksInGroup": "You can't leave this group. You have ongoing Tacks"
   },
   "validationErrors": {
     "fieldRequired": "Field Required",
@@ -192,6 +193,22 @@
     "upToDate": "Up to date",
     "updateFailed": "Update failed!",
     "noGroupSelected": "No Group Selected"
+  },
+  "onboardingScreen": {
+    "first": {
+      "title": "Step 1: Create A\nTack",
+      "description": "Create a custom Tack or edit a Tack template to publish within a Tack Group. "
+    },
+    "second": {
+      "title": "Step 2: Choose\nRunner",
+      "description": "Wait until another group member accepts your Tack or counters your offer. Only pay once you’ve decided on a Runner to complete your Tack."
+    },
+    "third": {
+      "title": "Step 3: Review\nCompletion",
+      "description": "Once your Runner has marked your Tack complete, you must review its completion before money is sent to the Runner’s Tack Balance."
+    },
+    "signUpButton": "Create Account",
+    "signInButton": "Log In"
   },
   "splashScreen": {
     "signInButton": "Sign In",

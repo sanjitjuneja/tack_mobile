@@ -44,7 +44,7 @@ class ErrorHandler {
   Never _parseError(Map<String, dynamic> errors) {
     // TODO: refactor after BE changes.
     final String value = errors.values.toString();
-    if (value.contains('Incorrect password')){
+    if (value.contains('Incorrect password')) {
       throw IncorrectPasswordException();
     }
     if (value.contains('User with the given phone number is not found')) {
@@ -56,8 +56,14 @@ class ErrorHandler {
     if (value.contains('User with this phone number already exists.')) {
       throw ExistedUserException();
     }
+    if (value.contains('User already exists')) {
+      throw ExistedUserException();
+    }
     if (value.contains('No active account found with the given credentials')) {
       throw WrongCredentialsException();
+    }
+    if (value.contains('You can\'t leave this group. You have ongoing Tacks')){
+      throw HasOngoingGroupTacksException();
     }
 
     throw AppException('');
