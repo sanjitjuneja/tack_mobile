@@ -23,6 +23,7 @@ class PaymentSettingsState {
         return true;
       }
     }
+
     return false;
   }
 
