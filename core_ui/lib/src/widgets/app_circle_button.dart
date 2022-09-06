@@ -10,6 +10,7 @@ class AppCircleButton extends StatelessWidget {
   final AppButtonType type;
   final AppInterfaceSize interfaceSize;
   final bool isDisabled;
+  final EdgeInsets? padding;
   final EdgeInsets? margin;
   final TextStyle? interfaceTextStyle;
   final Color? backgroundColor;
@@ -26,6 +27,7 @@ class AppCircleButton extends StatelessWidget {
     this.type = AppButtonType.primary,
     this.interfaceSize = AppInterfaceSize.medium,
     this.isDisabled = false,
+    this.padding,
     this.margin,
     this.interfaceTextStyle,
     this.backgroundColor,
@@ -85,7 +87,11 @@ class AppCircleButton extends StatelessWidget {
         disable: isDisabled,
         child: Container(
           width: expanded ? double.infinity : null,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          padding: padding ??
+              const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 16,
+              ),
           decoration: BoxDecoration(
             color: _backgroundColor,
             border: Border.all(color: _borderColor),

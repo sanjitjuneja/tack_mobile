@@ -32,6 +32,12 @@ class AppIconsTheme {
   static const String _shareKey = '${_basePath}share.png';
 
   /// SVG
+  /// TODO: think about location for big SVG
+  static const String _onboardingFirstKey = '${_svgPath}onboarding_first.svg';
+  static const String _onboardingSecondKey = '${_svgPath}onboarding_second.svg';
+  static const String _onboardingThirdKey = '${_svgPath}onboarding_third.svg';
+  ///
+
   static const String _chevronLeftKey = '${_svgPath}chevron_left.svg';
   static const String _chevronRightKey = '${_svgPath}chevron_right.svg';
 
@@ -90,6 +96,13 @@ class AppIconsTheme {
   static const AppIcon share = AppIcon(_shareKey);
 
   /// SVG
+
+  /// TODO: think about location for big SVG
+  static const AppIcon onboardingFirst = AppIcon(_onboardingFirstKey);
+  static const AppIcon onboardingSecond = AppIcon(_onboardingSecondKey);
+  static const AppIcon onboardingThird = AppIcon(_onboardingThirdKey);
+  ///
+
   static const AppIcon chevronLeft = AppIcon(_chevronLeftKey);
   static const AppIcon chevronRight = AppIcon(_chevronRightKey);
 

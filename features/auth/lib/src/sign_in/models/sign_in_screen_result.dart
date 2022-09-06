@@ -1,4 +1,0 @@
-enum SignInScreenResult {
-  signIn,
-  signUp,
-}

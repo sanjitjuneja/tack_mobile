@@ -20,7 +20,11 @@ class AppTheme {
   static Color get heighlitedColor => AppColors.brightGray;
   static Color get transparentColor => AppColors.transparent;
 
-  ///Background
+  /// Page Indicator
+  static Color get pageIndicatorActiveColor => AppColors.fern;
+  static Color get pageIndicatorInactiveColor => AppColors.athensGrey;
+
+  /// Background
   static Color get backgroundColor => AppColors.gin;
   static Color get secondaryBackgroundColor => AppColors.white;
   static Color get primaryBackgroundColor => AppColors.tranquil;

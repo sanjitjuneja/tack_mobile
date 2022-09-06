@@ -19,6 +19,7 @@ class AppNavigationBar extends StatelessWidget
   final bool automaticallyImplyLeading;
   final bool withResult;
   final bool withMenu;
+  final bool withTransition;
 
   AppNavigationBar({
     super.key,
@@ -31,6 +32,7 @@ class AppNavigationBar extends StatelessWidget
     this.automaticallyImplyLeading = true,
     this.withResult = false,
     this.withMenu = false,
+    this.withTransition = true,
   })  : titleStyle = titleStyle ?? AppTextTheme.manrope20Medium,
         titleColor = titleColor ?? AppColors.black;
 
@@ -41,6 +43,7 @@ class AppNavigationBar extends StatelessWidget
       color: backgroundColor,
       child: CupertinoNavigationBar(
         backgroundColor: backgroundColor,
+        transitionBetweenRoutes: withTransition,
         leading: automaticallyImplyLeading
             ? CupertinoButton(
                 padding: EdgeInsets.zero,
