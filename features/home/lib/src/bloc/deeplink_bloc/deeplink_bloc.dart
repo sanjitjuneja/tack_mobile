@@ -41,8 +41,6 @@ class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
         if (event != null) add(DeeplinkAction(intent: event));
       },
     );
-
-    add(const InitialCheck());
   }
 
   Future<void> _onInitialCheck(
@@ -68,10 +66,6 @@ class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
 
     switch (event.intent.destination) {
       case DeeplinkDestination.invite:
-        if (_appRouter.pages
-            .any((element) => element.name == InvitationsFeature.routeName)) {
-          return;
-        }
         __onGroupInvite(
           event.intent,
           emit,

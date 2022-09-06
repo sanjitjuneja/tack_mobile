@@ -9,6 +9,7 @@ class OnboardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppTheme.secondaryBackgroundColor,
       navigationBar: AppNavigationBar(
         backgroundColor: AppTheme.secondaryBackgroundColor,
@@ -16,6 +17,7 @@ class OnboardingScreen extends StatelessWidget {
         withTransition: false,
       ),
       child: const SafeArea(
+        maintainBottomViewPadding: true,
         child: OnboardingForm(),
       ),
     );

@@ -14,10 +14,6 @@ class AppTheme {
   static Color get grassColor => AppColors.fern;
   static Color get accentColor => AppColors.black;
   static Color get primaryColor => AppColors.white;
-  static Color get positiveColor => AppColors.white;
-  static Color get hintColor => AppColors.shuttleGray;
-  static Color get darkDisabledColor => AppColors.ghostx2;
-  static Color get heighlitedColor => AppColors.brightGray;
   static Color get transparentColor => AppColors.transparent;
 
   /// Page Indicator
@@ -28,8 +24,7 @@ class AppTheme {
   static Color get backgroundColor => AppColors.gin;
   static Color get secondaryBackgroundColor => AppColors.white;
   static Color get primaryBackgroundColor => AppColors.tranquil;
-  static Color get registrationBackGroundColor => AppColors.gin;
-  static Color get textFieldBackgroundColor => AppColors.athensGrayx2;
+  static Color get textFieldBackgroundColor => AppColors.athensGray;
   static Color get ratingBackgroundColor => AppColors.nero;
 
   /// System colors
@@ -94,15 +89,11 @@ class AppTheme {
   static Color get buttonInterfaceSecondaryColor => AppColors.fern;
 
   /// Icons
-  static Color get p => AppColors.p;
-  static Color get k => AppColors.k;
-  static Color get seaColor => AppColors.curiousBlue;
   static Color get bottomSheetLift => AppColors.ghost;
   static Color get errorIconColor => AppColors.cinnabar;
   static Color get iconPrimaryColor => AppColors.midGrey;
   static Color get iconSecondaryColor => AppColors.fern;
   static Color get iconHintColor => AppColors.shuttleGray;
-  static Color get thirdPartyDescriptionColor => AppColors.stormGray;
 
   /// Toast
   static Color get toastBackgroundColor => AppColors.aluminium;

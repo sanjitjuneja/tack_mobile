@@ -1,6 +1,6 @@
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 import 'package:splash/src/ui/splash_screen.dart';
 
@@ -9,29 +9,27 @@ import '../bloc/splash_bloc.dart';
 class SplashFeature {
   static const String routeName = '/splash';
 
-  static Page<dynamic> page() => _SplashPage();
+  static Page<void> page() => _SplashPage();
 }
 
-class _SplashPage extends PageWithScaffoldKey<dynamic> {
+class _SplashPage extends Page<void> {
   @override
   String get name => SplashFeature.routeName;
 
   @override
-  Route<dynamic> createRoute(BuildContext context) {
-    return MaterialPageRoute<dynamic>(
-      builder: (BuildContext context) {
+  Route<void> createRoute(BuildContext context) {
+    return CupertinoPageRoute<void>(
+      settings: this,
+      builder: (_) {
         return BlocProvider<SplashBloc>(
-          create: (BuildContext context) => SplashBloc(
+          lazy: false,
+          create: (_) => SplashBloc(
             globalAppRouter: appLocator.get<GlobalAppRouterDelegate>(),
             isAuthorizedUseCase: appLocator.get<IsAuthorizedUseCase>(),
           ),
-          child: ScaffoldMessenger(
-            key: scaffoldKey,
-            child: const SplashScreen(),
-          ),
+          child: const SplashScreen(),
         );
       },
-      settings: this,
     );
   }
 }
