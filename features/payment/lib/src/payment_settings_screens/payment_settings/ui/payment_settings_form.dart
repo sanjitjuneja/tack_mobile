@@ -121,8 +121,7 @@ class PaymentSettingsForm extends StatelessWidget {
                       context,
                       'paymentSettingsScreen.applePay',
                     ),
-                    isPrimary:
-                        state.bankAccounts.isEmpty && state.cards.isEmpty,
+                    isPrimary: !state.isPrimaryMethodExists,
                     hasTrailingArrow: false,
                   ),
                 if (state.isGooglePaySupported)
@@ -132,8 +131,7 @@ class PaymentSettingsForm extends StatelessWidget {
                       context,
                       'paymentSettingsScreen.googlePay',
                     ),
-                    isPrimary:
-                        state.bankAccounts.isEmpty && state.cards.isEmpty,
+                    isPrimary: !state.isPrimaryMethodExists,
                     hasTrailingArrow: false,
                   ),
                 const SizedBox(height: 30),

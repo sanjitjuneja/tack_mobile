@@ -7,6 +7,8 @@ import 'package:navigation/navigation.dart';
 import 'package:payment/payment.dart';
 import 'package:domain/domain.dart';
 
+import '../models/payment_method_details_screen_result.dart';
+
 part 'payment_settings_event.dart';
 
 part 'payment_settings_state.dart';
@@ -155,7 +157,7 @@ class PaymentSettingsBloc
     PaymentMethodDetailsAction event,
     Emitter<PaymentSettingsState> emit,
   ) async {
-    bool? result;
+    PaymentMethodDetailsScreenResult? result;
     if (event.card != null) {
       result = await _appRouter.pushForResult(
         PaymentMethodDetailsFeature.cardDetailsPage(
@@ -171,6 +173,32 @@ class PaymentSettingsBloc
     }
     if (result != null) {
       add(const InitialLoad());
+      if (result == PaymentMethodDetailsScreenResult.removedPaymentMethod) {
+        _appRouter.pushForResult(
+          AppAlertDialog.page(
+            SuccessAlert(
+              contentKey: 'otherAlert.paymentMethodRemovedAlert',
+            ),
+          ),
+        );
+      } else if (result ==
+          PaymentMethodDetailsScreenResult.removedPrimaryPaymentMethod) {
+        _appRouter.pushForResult(
+          AppAlertDialog.page(
+            SuccessAlert(
+              contentKey: 'otherAlert.paymentPrimaryMethodRemovedAlert',
+            ),
+          ),
+        );
+      } else {
+        _appRouter.pushForResult(
+          AppAlertDialog.page(
+            SuccessAlert(
+              contentKey: 'otherAlert.primaryPaymentMethodSelectedAlert',
+            ),
+          ),
+        );
+      }
     }
   }
 
