@@ -4,6 +4,7 @@ class AppImagesTheme {
   static const String packageCoreUI = 'core_ui';
 
   static const String _basePath = 'assets/images/';
+  static const String _imageNoResizePath = 'assets/images_no_resize/';
 
   static const String _keyAppLogo = '${_basePath}app_logo.png';
 
@@ -16,6 +17,27 @@ class AppImagesTheme {
   static const String _keyAlertRequest = '${_basePath}alert_request.png';
   static const String _keyAlertError = '${_basePath}alert_error.png';
 
+  /// Only 1x size.
+  static const String _onboardingFirstKey = '${_imageNoResizePath}onboarding_first.png';
+  static const String _onboardingSecondKey = '${_imageNoResizePath}onboarding_second.png';
+  static const String _onboardingThirdKey = '${_imageNoResizePath}onboarding_third.png';
+  ///
+
+  /// TODO: think about location for big SVG
+  static Widget get onboardingFirst => Image.asset(
+        _onboardingFirstKey,
+        package: packageCoreUI,
+      );
+
+  static Widget get onboardingSecond => Image.asset(
+        _onboardingSecondKey,
+        package: packageCoreUI,
+      );
+
+  static Widget get onboardingThird => Image.asset(
+        _onboardingThirdKey,
+        package: packageCoreUI,
+      );
 
   static Image get alertBack => Image.asset(
         _keyAlertBack,

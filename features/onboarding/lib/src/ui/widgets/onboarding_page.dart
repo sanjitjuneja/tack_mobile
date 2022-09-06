@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 class OnboardingPage extends StatelessWidget {
   final String titleKey;
   final String descriptionKey;
-  final AppIcon image;
+  final Widget image;
 
   const OnboardingPage({
     super.key,
@@ -22,9 +22,7 @@ class OnboardingPage extends StatelessWidget {
         children: <Widget>[
           const SizedBox(height: 12),
           Expanded(
-            child: image.svg(
-              fit: BoxFit.fitWidth,
-            ),
+            child: image,
           ),
           const SizedBox(height: 20),
           Text(

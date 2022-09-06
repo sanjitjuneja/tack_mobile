@@ -33,7 +33,7 @@ class AppDrawerHeader extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextTheme.manrope24SemiBold.copyWith(
-                          color: AppTheme.positiveColor,
+                          color: AppTheme.textBrightColor,
                         ),
                       ),
                     ),

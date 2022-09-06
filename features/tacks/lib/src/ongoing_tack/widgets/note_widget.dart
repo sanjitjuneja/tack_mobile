@@ -20,7 +20,8 @@ class NoteWidget extends StatelessWidget {
           contentKey,
         ),
         textAlign: TextAlign.center,
-        style: AppTextTheme.manrope13Medium.copyWith(color: AppTheme.hintColor),
+        style: AppTextTheme.manrope13Medium
+            .copyWith(color: AppTheme.textHeavyHintColor),
       ),
     );
   }

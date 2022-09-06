@@ -15,23 +15,30 @@ class OnboardingForm extends StatefulWidget {
 class _OnboardingFormState extends State<OnboardingForm> {
   final PageController pageController = PageController();
 
-  static const List<Widget> _pages = <Widget>[
-    OnboardingPage(
-      titleKey: 'onboardingScreen.first.title',
-      descriptionKey: 'onboardingScreen.first.description',
-      image: AppIconsTheme.onboardingFirst,
-    ),
-    OnboardingPage(
-      titleKey: 'onboardingScreen.second.title',
-      descriptionKey: 'onboardingScreen.second.description',
-      image: AppIconsTheme.onboardingSecond,
-    ),
-    OnboardingPage(
-      titleKey: 'onboardingScreen.third.title',
-      descriptionKey: 'onboardingScreen.third.description',
-      image: AppIconsTheme.onboardingThird,
-    ),
-  ];
+  late List<Widget> _pages;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _pages = <Widget>[
+      OnboardingPage(
+        titleKey: 'onboardingScreen.first.title',
+        descriptionKey: 'onboardingScreen.first.description',
+        image: AppImagesTheme.onboardingFirst,
+      ),
+      OnboardingPage(
+        titleKey: 'onboardingScreen.second.title',
+        descriptionKey: 'onboardingScreen.second.description',
+        image: AppImagesTheme.onboardingSecond,
+      ),
+      OnboardingPage(
+        titleKey: 'onboardingScreen.third.title',
+        descriptionKey: 'onboardingScreen.third.description',
+        image: AppImagesTheme.onboardingThird,
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {

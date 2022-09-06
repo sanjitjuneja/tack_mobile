@@ -5,7 +5,8 @@
   },
   "errors": {
     "couldNotLaunchURL": "Could not launch URL",
-    "tackIsNotAvailable": "Sorry, this Tack is no longer available"
+    "tackIsNotAvailable": "Sorry, this Tack is no longer available",
+    "hasOngoingTacksInGroup": "You can't leave this group. You have ongoing Tacks"
   },
   "validationErrors": {
     "fieldRequired": "Field Required",

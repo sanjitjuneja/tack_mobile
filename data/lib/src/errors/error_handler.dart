@@ -62,6 +62,9 @@ class ErrorHandler {
     if (value.contains('No active account found with the given credentials')) {
       throw WrongCredentialsException();
     }
+    if (value.contains('You can\'t leave this group. You have ongoing Tacks')){
+      throw HasOngoingGroupTacksException();
+    }
 
     throw AppException('');
   }

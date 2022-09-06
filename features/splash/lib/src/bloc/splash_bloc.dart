@@ -23,6 +23,8 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
         _isAuthorizedUseCase = isAuthorizedUseCase,
         super(const SplashState()) {
     on<InitialEvent>(_onInitialEvent);
+
+    add(const InitialEvent());
   }
 
   Future<void> _onInitialEvent(
