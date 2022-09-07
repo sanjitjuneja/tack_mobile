@@ -1,7 +1,10 @@
-import 'package:core/core.dart';
-import 'package:core_ui/core_ui.dart';
+import 'package:app_drawer/app_drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
+
+import '../theme/app_theme.dart';
+import '../widgets/app_back_button.dart';
+import 'opacity_on_tap_container.dart';
 
 const double _kNavBarPersistentHeight = 50;
 
@@ -45,8 +48,7 @@ class AppNavigationBar extends StatelessWidget
         transitionBetweenRoutes: withTransition,
         leading: leading ??
             (automaticallyImplyLeading
-                ? CupertinoButton(
-                    padding: EdgeInsets.zero,
+                ? AppBackButton(
                     onPressed: () {
                       if (withResult) {
                         GlobalAppRouter.of(context).popWithResult(null);
@@ -54,20 +56,6 @@ class AppNavigationBar extends StatelessWidget
                         GlobalAppRouter.of(context).pop();
                       }
                     },
-                    child: Row(
-                      children: <Widget>[
-                        AppIconsTheme.chevronLeft(
-                          color: AppTheme.topNavBarInterfaceColor,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          FlutterI18n.translate(context, 'general.back'),
-                          style: AppTextTheme.manrope16Regular.copyWith(
-                            color: AppTheme.topNavBarInterfaceColor,
-                          ),
-                        ),
-                      ],
-                    ),
                   )
                 : null),
         middle: middle ??

@@ -4,8 +4,8 @@ import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
-import 'package:payment/src/add_to_tack_balance_screens/select_payment_method_screen/ui/select_payment_method_page.dart';
 
+import '../../select_payment_method_screen/ui/select_payment_method_page.dart';
 import '../../add_to_tack_balance_successful/ui/add_to_tack_balance_successful_page.dart';
 import '../../models/selected_payment_method.dart';
 
@@ -128,20 +128,9 @@ class AddToTackBalanceBloc
     SelectPaymentMethodAction event,
     Emitter<AddToTackBalanceState> emit,
   ) async {
-    final String? selectedPaymentMethodId =
-        state.selectedPaymentMethod.card != null
-            ? state.selectedPaymentMethod.card!.id
-            : state.selectedPaymentMethod.bankAccount != null
-                ? state.selectedPaymentMethod.bankAccount!.id
-                : state.selectedPaymentMethod.isApplePay
-                    ? Constants.applePayId
-                    : state.selectedPaymentMethod.isGooglePay
-                        ? Constants.googlePayId
-                        : null;
-
     final SelectedPaymentMethod? result = await _appRouter.pushForResult(
       SelectPaymentMethodFeature.page(
-        selectedPaymentMethodId: selectedPaymentMethodId,
+        selectedPaymentMethodId: state.selectedPaymentMethodId,
       ),
     );
     emit(state.copyWith(selectedPaymentMethod: result));
@@ -155,6 +144,7 @@ class AddToTackBalanceBloc
         return bankAccount;
       }
     }
+
     return null;
   }
 
@@ -166,6 +156,7 @@ class AddToTackBalanceBloc
         return card;
       }
     }
+
     return null;
   }
 

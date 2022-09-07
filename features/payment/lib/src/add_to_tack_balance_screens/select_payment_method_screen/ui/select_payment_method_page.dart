@@ -2,8 +2,8 @@ import 'package:core/core.dart';
 import 'package:domain/payment/payment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
-import 'package:payment/src/add_to_tack_balance_screens/models/selected_payment_method.dart';
 
+import '../../../add_to_tack_balance_screens/models/selected_payment_method.dart';
 import '../../select_payment_method_screen/ui/select_payment_method_screen.dart';
 import '../bloc/select_payment_method_bloc.dart';
 

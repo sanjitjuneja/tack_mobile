@@ -56,6 +56,7 @@ class AddToTackBalanceForm extends StatelessWidget {
                       placeholderIcon: AppIconsTheme.card,
                       boxShape: BoxShape.rectangle,
                       boxFit: BoxFit.fitWidth,
+                      isShadowBorder: false,
                     ),
                     onTap: () => _onSelectPaymentMethod(context),
                     title: state.selectedPaymentMethod.card!.cardData.brand,
@@ -76,6 +77,7 @@ class AddToTackBalanceForm extends StatelessWidget {
                       placeholderIcon: AppIconsTheme.bank,
                       boxShape: BoxShape.rectangle,
                       boxFit: BoxFit.fitWidth,
+                      isShadowBorder: false,
                     ),
                     onTap: () => _onSelectPaymentMethod(context),
                     title: state.selectedPaymentMethod.bankAccount!.bankName,
@@ -154,8 +156,8 @@ class AddToTackBalanceForm extends StatelessWidget {
                   child: AppCircleButton(
                     labelKey: 'addToTackBalanceScreen.deposit',
                     expanded: false,
-                    isDisabled: state.amount < 0 ||
-                        !state.isExistsSelectedPaymentMethod,
+                    isDisabled: state.amount <= 0 ||
+                        !state.isExistSelectedPaymentMethod,
                     onTap: () => _onDepositTap(context),
                   ),
                 ),

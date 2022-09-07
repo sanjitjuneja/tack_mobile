@@ -18,27 +18,12 @@ class SelectPaymentMethodScreen extends StatelessWidget {
         withResult: true,
         leading: BlocBuilder<SelectPaymentMethodBloc, SelectPaymentMethodState>(
           builder: (_, SelectPaymentMethodState state) {
-            return CupertinoButton(
-              padding: EdgeInsets.zero,
+            return AppBackButton(
               onPressed: () {
                 GlobalAppRouter.of(context).popWithResult(
                   state.selectedPaymentMethod,
                 );
               },
-              child: Row(
-                children: <Widget>[
-                  AppIconsTheme.chevronLeft(
-                    color: AppTheme.topNavBarInterfaceColor,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    FlutterI18n.translate(context, 'general.back'),
-                    style: AppTextTheme.manrope16Regular.copyWith(
-                      color: AppTheme.topNavBarInterfaceColor,
-                    ),
-                  ),
-                ],
-              ),
             );
           },
         ),

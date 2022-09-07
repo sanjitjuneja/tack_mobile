@@ -15,14 +15,29 @@ class AddToTackBalanceState {
     this.hasError = false,
   });
 
-  bool get isExistsSelectedPaymentMethod {
+  bool get isExistSelectedPaymentMethod {
     if (selectedPaymentMethod.card == null &&
         selectedPaymentMethod.bankAccount == null &&
         !selectedPaymentMethod.isGooglePay &&
         !selectedPaymentMethod.isApplePay) {
       return false;
     }
+
     return true;
+  }
+
+  String? get selectedPaymentMethodId {
+    if (selectedPaymentMethod.card != null) {
+      return selectedPaymentMethod.card!.id;
+    } else if (selectedPaymentMethod.bankAccount != null) {
+      return selectedPaymentMethod.bankAccount!.id;
+    } else if (selectedPaymentMethod.isApplePay) {
+      return Constants.applePayId;
+    } else if (selectedPaymentMethod.isGooglePay) {
+      return Constants.googlePayId;
+    }
+
+    return null;
   }
 
   AddToTackBalanceState copyWith({
