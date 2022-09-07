@@ -30,7 +30,7 @@ class AppNetworkImageWidget extends StatelessWidget {
     this.boxFit = BoxFit.cover,
   });
 
-  Color get _backgroundColor => backgroundColor ?? AppTheme.primaryColor;
+  Color get _backgroundColor => backgroundColor ?? AppTheme.transparentColor;
 
   @override
   Widget build(BuildContext context) {

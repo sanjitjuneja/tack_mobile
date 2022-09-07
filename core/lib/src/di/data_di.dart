@@ -429,6 +429,12 @@ class DataDI {
       ),
     );
 
+    appLocator.registerLazySingleton<FetchFeeUseCase>(
+      () => FetchFeeUseCase(
+        paymentRepository: appLocator.get<PaymentRepository>(),
+      ),
+    );
+
     appLocator.registerLazySingleton<LogOutUseCase>(
       () => LogOutUseCase(
         globalAppRouter: appLocator.get<GlobalAppRouterDelegate>(),
@@ -497,6 +503,7 @@ class DataDI {
     appLocator.unregister<FetchIsGooglePaySupportedUseCase>();
     appLocator.unregister<RemovePaymentMethodUseCase>();
     appLocator.unregister<SetPrimaryPaymentMethodUseCase>();
+    appLocator.unregister<FetchFeeUseCase>();
 
     appLocator.unregister<LogOutUseCase>();
   }

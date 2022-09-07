@@ -63,6 +63,10 @@ class MapperFactory {
 
   PlaidMapper get plaidMapper => const PlaidMapper();
 
+  FeeMapper get feeMapper => const FeeMapper(
+        feeDataMapper: FeeDataMapper(),
+      );
+
   ConnectedBankAccountMapper get connectedBankAccountMapper =>
       const ConnectedBankAccountMapper();
 

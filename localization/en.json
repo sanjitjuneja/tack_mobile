@@ -543,7 +543,13 @@
     "title": "Add Cash to Tack Balance",
     "currentTackBalance": "Current Tack Balance: ",
     "newTackBalance": "New Tack Balance: ",
-    "deposit": "Deposit"
+    "deposit": "Deposit",
+    "selectPaymentMethod": "Select Payment Method",
+    "bankOrCard": "Bank or Card"
+  },
+  "selectPaymentMethodScreen": {
+    "fee": "{feePercent}% fee",
+    "noFee": "No Fee"
   },
   "addToTackBalanceSuccessfulScreen": {
     "newTackBalance": "New Tack Balance: {amount}",

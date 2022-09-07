@@ -11,6 +11,8 @@ part 'models/payment_setup_intent.dart';
 part 'models/connected_card.dart';
 part 'models/connected_card_data.dart';
 part 'models/connected_payment_method_type.dart';
+part 'models/fee.dart';
+part 'models/fee_data.dart';
 
 part 'payloads/add_card_payload.dart';
 part 'payloads/add_bank_account_payload.dart';
@@ -21,6 +23,7 @@ part 'payloads/fetch_is_apple_pay_supported_payload.dart';
 part 'payloads/fetch_is_google_pay_supported_payload.dart';
 part 'payloads/remove_payment_method_payload.dart';
 part 'payloads/set_primary_payment_method_payload.dart';
+part 'payloads/fetch_fee_payload.dart';
 
 part 'repositories/payment_repository.dart';
 
@@ -32,3 +35,4 @@ part 'use_cases/fetch_is_apple_pay_supported_use_case.dart';
 part 'use_cases/fetch_is_google_pay_supported_use_case.dart';
 part 'use_cases/remove_payment_method_use_case.dart';
 part 'use_cases/set_primary_payment_method_use_case.dart';
+part 'use_cases/fetch_fee_use_case.dart';

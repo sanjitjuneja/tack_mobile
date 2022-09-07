@@ -708,6 +708,19 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
+  Future<domain.Fee> fetchFee({
+    required FetchFeeRequest request,
+  }) async {
+    return get<FeeEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.fetchFees,
+        body: null,
+        params: null,
+      ),
+      parser: FeeEntity.fromJson,
+    ).then(mapper.feeMapper.fromEntity);
+  }
+
 // Future<void> logOut() {
 //   return get<void>(
 //     ApiQuery(

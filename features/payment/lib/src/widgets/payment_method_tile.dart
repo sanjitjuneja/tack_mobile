@@ -10,6 +10,9 @@ class PaymentMethodTile extends StatelessWidget {
   final bool isPrimary;
   final bool isColored;
   final bool hasTrailingArrow;
+  final bool isSelected;
+  final bool isSelectable;
+  final double? feePercent;
 
   const PaymentMethodTile({
     Key? key,
@@ -17,9 +20,12 @@ class PaymentMethodTile extends StatelessWidget {
     required this.title,
     this.subtitle,
     this.onTap,
+    this.feePercent,
     this.isPrimary = false,
     this.isColored = false,
     this.hasTrailingArrow = true,
+    this.isSelected = false,
+    this.isSelectable = false,
   }) : super(key: key);
 
   @override
@@ -29,8 +35,9 @@ class PaymentMethodTile extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       child: Container(
         padding: isColored
-            ? const EdgeInsets.symmetric(
-                horizontal: 16.0,
+            ? EdgeInsets.symmetric(
+                horizontal: 12.0,
+                vertical: subtitle == null ? 6.0 : 0.0,
               )
             : null,
         decoration: isColored
@@ -72,7 +79,7 @@ class PaymentMethodTile extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                if (isPrimary)
+                if (isPrimary) ...<Widget>[
                   Text(
                     FlutterI18n.translate(
                       context,
@@ -82,12 +89,40 @@ class PaymentMethodTile extends StatelessWidget {
                       color: AppTheme.textSecondaryColor,
                     ),
                   ),
-                const SizedBox(width: 18),
-                if (hasTrailingArrow)
+                ] else if (feePercent != null) ...<Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(right: 16.0),
+                    child: Text(
+                      FlutterI18n.translate(
+                        context,
+                        feePercent! > 0
+                            ? 'selectPaymentMethodScreen.fee'
+                            : 'selectPaymentMethodScreen.noFee',
+                        translationParams: <String, String>{
+                          'feePercent': feePercent!.toStringAsFixed(0),
+                        },
+                      ),
+                      style: AppTextTheme.poppins12Medium.copyWith(
+                        color: AppColors.shuttleGray,
+                      ),
+                    ),
+                  ),
+                ],
+                if (isSelectable) ...<Widget>[
+                  if (isSelected) ...<Widget>[
+                    GestureDetector(
+                      onTap: onTap,
+                      child: AppIconsTheme.checkMarkFilled(size: 30),
+                    ),
+                  ] else ...<Widget>[
+                    AppIconsTheme.add(size: 30),
+                  ],
+                ] else if (hasTrailingArrow) ...<Widget>[
                   AppIconsTheme.chevronRight(
                     color: AppTheme.iconPrimaryColor,
                     size: 20,
                   ),
+                ],
               ],
             ),
             const SizedBox(height: 8),

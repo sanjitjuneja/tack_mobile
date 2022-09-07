@@ -12,6 +12,7 @@ class AppNavigationBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
   final Color? backgroundColor;
   final Widget? middle;
+  final Widget? leading;
   final String? title;
   final TextStyle titleStyle;
   final Color titleColor;
@@ -24,6 +25,7 @@ class AppNavigationBar extends StatelessWidget
     super.key,
     this.backgroundColor,
     this.middle,
+    this.leading,
     this.title,
     TextStyle? titleStyle,
     Color? titleColor,
@@ -41,32 +43,33 @@ class AppNavigationBar extends StatelessWidget
       color: backgroundColor,
       child: CupertinoNavigationBar(
         backgroundColor: backgroundColor,
-        leading: automaticallyImplyLeading
-            ? CupertinoButton(
-                padding: EdgeInsets.zero,
-                onPressed: () {
-                  if (withResult) {
-                    GlobalAppRouter.of(context).popWithResult(null);
-                  } else {
-                    GlobalAppRouter.of(context).pop();
-                  }
-                },
-                child: Row(
-                  children: <Widget>[
-                    AppIconsTheme.chevronLeft(
-                      color: AppTheme.topNavBarInterfaceColor,
+        leading: leading ??
+            (automaticallyImplyLeading
+                ? CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      if (withResult) {
+                        GlobalAppRouter.of(context).popWithResult(null);
+                      } else {
+                        GlobalAppRouter.of(context).pop();
+                      }
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        AppIconsTheme.chevronLeft(
+                          color: AppTheme.topNavBarInterfaceColor,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          FlutterI18n.translate(context, 'general.back'),
+                          style: AppTextTheme.manrope16Regular.copyWith(
+                            color: AppTheme.topNavBarInterfaceColor,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 10),
-                    Text(
-                      FlutterI18n.translate(context, 'general.back'),
-                      style: AppTextTheme.manrope16Regular.copyWith(
-                        color: AppTheme.topNavBarInterfaceColor,
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            : null,
+                  )
+                : null),
         middle: middle ??
             Padding(
               padding: const EdgeInsets.only(left: 2.0),
