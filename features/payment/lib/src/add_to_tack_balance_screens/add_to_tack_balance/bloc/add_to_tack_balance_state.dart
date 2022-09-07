@@ -16,14 +16,12 @@ class AddToTackBalanceState {
   });
 
   bool get isExistSelectedPaymentMethod {
-    if (selectedPaymentMethod.card == null &&
-        selectedPaymentMethod.bankAccount == null &&
-        !selectedPaymentMethod.isGooglePay &&
-        !selectedPaymentMethod.isApplePay) {
-      return false;
-    }
+    if (selectedPaymentMethod.card != null) return true;
+    if (selectedPaymentMethod.bankAccount != null) return true;
+    if (selectedPaymentMethod.isGooglePay) return true;
+    if (selectedPaymentMethod.isApplePay) return true;
 
-    return true;
+    return false;
   }
 
   String? get selectedPaymentMethodId {
