@@ -38,6 +38,8 @@ class AddToTackBalanceState {
     return null;
   }
 
+  bool get isReadyToProceed => amount > 0 && isExistSelectedPaymentMethod;
+
   AddToTackBalanceState copyWith({
     double? amount,
     UserBankAccount? userBalance,

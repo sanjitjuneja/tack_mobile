@@ -156,8 +156,7 @@ class AddToTackBalanceForm extends StatelessWidget {
                   child: AppCircleButton(
                     labelKey: 'addToTackBalanceScreen.deposit',
                     expanded: false,
-                    isDisabled: state.amount <= 0 ||
-                        !state.isExistSelectedPaymentMethod,
+                    isDisabled: !state.isReadyToProceed,
                     onTap: () => _onDepositTap(context),
                   ),
                 ),
