@@ -1,9 +1,6 @@
 part of app_theme;
 
 class AppIconsTheme {
-  static Color get primaryColor => AppColors.midGrey;
-  static Color get hintColor => AppColors.shuttleGray;
-
   static const String _basePath = 'assets/icons/';
   static const String _navigationPath = 'assets/navigation/';
   static const String _svgPath = 'assets/svg/';
@@ -32,6 +29,7 @@ class AppIconsTheme {
   static const String _shareKey = '${_basePath}share.png';
 
   /// SVG
+
   static const String _chevronLeftKey = '${_svgPath}chevron_left.svg';
   static const String _chevronRightKey = '${_svgPath}chevron_right.svg';
 

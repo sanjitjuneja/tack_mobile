@@ -90,7 +90,7 @@ class RoundedCustomButton extends StatelessWidget {
                         FlutterI18n.translate(context, text),
                         style: textStyle ??
                             AppTextTheme.manrope14Medium.copyWith(
-                              color: AppTheme.positiveColor,
+                              color: AppTheme.textBrightColor,
                             ),
                         overflow: TextOverflow.visible,
                         textAlign: TextAlign.center,

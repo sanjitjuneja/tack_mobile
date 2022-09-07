@@ -1,10 +1,7 @@
-import 'package:app_drawer/app_drawer.dart';
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
-
-import '../theme/app_theme.dart';
-import 'opacity_on_tap_container.dart';
 
 const double _kNavBarPersistentHeight = 50;
 
@@ -20,6 +17,7 @@ class AppNavigationBar extends StatelessWidget
   final bool automaticallyImplyLeading;
   final bool withResult;
   final bool withMenu;
+  final bool withTransition;
 
   AppNavigationBar({
     super.key,
@@ -33,6 +31,7 @@ class AppNavigationBar extends StatelessWidget
     this.automaticallyImplyLeading = true,
     this.withResult = false,
     this.withMenu = false,
+    this.withTransition = true,
   })  : titleStyle = titleStyle ?? AppTextTheme.manrope20Medium,
         titleColor = titleColor ?? AppColors.black;
 
@@ -43,6 +42,7 @@ class AppNavigationBar extends StatelessWidget
       color: backgroundColor,
       child: CupertinoNavigationBar(
         backgroundColor: backgroundColor,
+        transitionBetweenRoutes: withTransition,
         leading: leading ??
             (automaticallyImplyLeading
                 ? CupertinoButton(

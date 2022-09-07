@@ -275,6 +275,12 @@ class AppTextTheme {
         fontFamily: _manropeFamily,
       );
 
+  static TextStyle get manrope25Bold => const TextStyle(
+        fontSize: 25,
+        fontWeight: FontWeight.w700,
+        fontFamily: _manropeFamily,
+      );
+
   static TextStyle get manrope26Bold => const TextStyle(
         fontSize: 26,
         fontWeight: FontWeight.w700,

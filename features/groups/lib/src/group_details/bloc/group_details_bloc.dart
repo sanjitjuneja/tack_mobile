@@ -222,6 +222,15 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
       );
       _appRouter.pop();
       _appRouter.popWithResult(GroupDetailsScreenResult.leaveGroup);
+    } on HasOngoingGroupTacksException catch (_) {
+      _appRouter.pop();
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            messageKey: 'errors.hasOngoingTacksInGroup',
+          ),
+        ),
+      );
     } catch (e) {
       _appRouter.pop();
       _appRouter.pushForResult(

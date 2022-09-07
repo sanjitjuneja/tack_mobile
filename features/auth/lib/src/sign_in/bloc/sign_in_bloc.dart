@@ -9,7 +9,6 @@ import 'package:phone_verification/phone_verification.dart';
 
 import '../../forgot_password/ui/forgot_password_page.dart';
 import '../../sign_up/ui/sign_up_page.dart';
-import '../models/sign_in_screen_result.dart';
 
 part 'sign_in_event.dart';
 
@@ -95,7 +94,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         ),
       );
       _appRouter.pop();
-      _appRouter.popWithResult(SignInScreenResult.signIn);
+      _appRouter.popWithResult(true);
     } on WrongCredentialsException catch (_) {
       _appRouter.pop();
       emit(
@@ -167,7 +166,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     );
 
     if (result == true) {
-      _appRouter.popWithResult(SignInScreenResult.signUp);
+      _appRouter.popWithResult(true);
     }
   }
 }
