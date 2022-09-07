@@ -32,4 +32,8 @@ abstract class PaymentRepository {
   Future<void> setPrimaryPaymentMethod(
     SetPrimaryPaymentMethodPayload payload,
   );
+
+  Future<Fee> fetchFee(
+    FetchFeePayload payload,
+  );
 }

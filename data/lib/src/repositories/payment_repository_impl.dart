@@ -147,4 +147,15 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
       ),
     );
   }
+
+  @override
+  Future<domain.Fee> fetchFee(
+    domain.FetchFeePayload payload,
+  ) async {
+    final domain.Fee fee = await _apiProvider.fetchFee(
+      request: const FetchFeeRequest(),
+    );
+
+    return fee;
+  }
 }

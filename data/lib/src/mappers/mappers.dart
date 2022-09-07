@@ -34,6 +34,8 @@ part 'payment/connected_bank_account_mapper.dart';
 part 'payment/payment_setup_intent_mapper.dart';
 part 'payment/connected_card_mapper.dart';
 part 'payment/connected_card_data_mapper.dart';
+part 'payment/fee_mapper.dart';
+part 'payment/fee_data_mapper.dart';
 
 part 'base_mapper.dart';
 

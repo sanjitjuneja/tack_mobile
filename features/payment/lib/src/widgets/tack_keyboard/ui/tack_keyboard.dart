@@ -41,7 +41,13 @@ class TackKeyboard extends StatelessWidget {
                 ),
                 decoration: const BoxDecoration(),
               ),
-              const AppDivider(),
+              ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxWidth: 234,
+                ),
+                child: const AppDivider(),
+              ),
+              const SizedBox(height: 5),
               RichText(
                 text: TextSpan(
                   text: FlutterI18n.translate(

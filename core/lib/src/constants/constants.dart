@@ -12,4 +12,8 @@ class Constants {
   static const String kPhonePrefix = '+1';
 
   static const int maxBankAccountsAmount = 5;
+
+  static const String applePayId = 'applePay';
+
+  static const String googlePayId = 'googlePay';
 }
