@@ -36,4 +36,12 @@ abstract class PaymentRepository {
   Future<Fee> fetchFee(
     FetchFeePayload payload,
   );
+
+  Future<void> handleDwollaDeposit(
+    HandleDwollaDepositPayload payload,
+  );
+
+  Future<void> handleStripeDeposit(
+    HandleStripeDepositPayload payload,
+  );
 }

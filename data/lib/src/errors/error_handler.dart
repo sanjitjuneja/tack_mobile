@@ -65,6 +65,9 @@ class ErrorHandler {
     if (value.contains('You can\'t leave this group. You have ongoing Tacks')){
       throw HasOngoingGroupTacksException();
     }
+    if (value.contains('You reached your 24h transaction limit')){
+      throw TransactionsLimitException();
+    }
 
     throw AppException('');
   }

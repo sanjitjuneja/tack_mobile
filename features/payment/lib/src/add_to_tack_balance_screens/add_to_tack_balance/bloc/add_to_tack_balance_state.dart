@@ -2,6 +2,7 @@ part of 'add_to_tack_balance_bloc.dart';
 
 class AddToTackBalanceState {
   final double amount;
+  final Fee? fee;
   final UserBankAccount userBalance;
   final SelectedPaymentMethod selectedPaymentMethod;
   final bool isLoading;
@@ -11,6 +12,7 @@ class AddToTackBalanceState {
     required this.amount,
     required this.selectedPaymentMethod,
     required this.userBalance,
+    required this.fee,
     this.isLoading = false,
     this.hasError = false,
   });
@@ -22,6 +24,30 @@ class AddToTackBalanceState {
     if (selectedPaymentMethod.isApplePay) return true;
 
     return false;
+  }
+
+  double get currentFeePercent {
+    if (selectedPaymentMethod.bankAccount != null) {
+      return fee?.dwollaFeeData.feePercent ?? 0;
+    } else {
+      return fee?.stripeFeeData.feePercent ?? 0;
+    }
+  }
+
+  int get currentMinFeeAmount {
+    if (selectedPaymentMethod.bankAccount != null) {
+      return fee?.dwollaFeeData.feeMin ?? 0;
+    } else {
+      return fee?.stripeFeeData.feeMin ?? 0;
+    }
+  }
+
+  int get currentMaxFeeAmount {
+    if (selectedPaymentMethod.bankAccount != null) {
+      return fee?.dwollaFeeData.feeMax ?? 0;
+    } else {
+      return fee?.stripeFeeData.feeMax ?? 0;
+    }
   }
 
   String? get selectedPaymentMethodId {
@@ -43,6 +69,7 @@ class AddToTackBalanceState {
   AddToTackBalanceState copyWith({
     double? amount,
     UserBankAccount? userBalance,
+    Fee? fee,
     SelectedPaymentMethod? selectedPaymentMethod,
     bool? isLoading,
     bool? hasError,
@@ -50,6 +77,7 @@ class AddToTackBalanceState {
     return AddToTackBalanceState(
       amount: amount ?? this.amount,
       userBalance: userBalance ?? this.userBalance,
+      fee: fee ?? this.fee,
       selectedPaymentMethod:
           selectedPaymentMethod ?? this.selectedPaymentMethod,
       isLoading: isLoading ?? this.isLoading,

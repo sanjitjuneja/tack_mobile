@@ -25,7 +25,7 @@ class TackKeyboardBloc extends Bloc<TackKeyboardEvent, TackKeyboardState> {
   ) async {
     switch (event.symbol) {
       case '.':
-        if (state.value.isNotEmpty && !state.value.contains('.')) {
+        if (!state.value.contains('.')) {
           emit(state.copyWith(value: '${state.value}.'));
         }
         break;

@@ -5,6 +5,25 @@ class TackKeyboardState {
 
   double get parsedValue => double.tryParse(value) ?? 0.0;
 
+  bool isInLimitsRange(double min, double max) {
+    return parsedValue >= min && parsedValue <= max;
+  }
+
+  double amountWithFee({
+    required double feePercent,
+    required double feeMinAmount,
+    required double feeMaxAmount,
+  }) {
+    double feeAmount = (feePercent / 100) * parsedValue;
+    if (feeAmount > feeMaxAmount) {
+      feeAmount = feeMaxAmount;
+    } else if (feeAmount < feeMinAmount) {
+      feeAmount = feeMinAmount;
+    }
+
+    return parsedValue + feeAmount;
+  }
+
   const TackKeyboardState({
     required this.value,
   });

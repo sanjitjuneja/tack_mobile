@@ -142,12 +142,18 @@ class AddToTackBalanceForm extends StatelessWidget {
               subtitleKey: state.amount > 0
                   ? 'addToTackBalanceScreen.newTackBalance'
                   : 'addToTackBalanceScreen.currentTackBalance',
+              hasLimits: true,
+              feePercent: state.currentFeePercent,
+              feeMinAmount: state.currentMinFeeAmount,
+              feeMaxAmount: state.currentMaxFeeAmount,
+              minErrorKey: 'addToTackBalanceScreen.minDepositLimitErrorMessage',
+              maxErrorKey: 'addToTackBalanceScreen.maxDepositLimitErrorMessage',
               amount: state.userBalance.usdBalance + state.amount,
               onChanged: (double amount) {
                 _onUpdateDepositAmountAction(context, amount: amount);
               },
             ),
-            const SizedBox(height: 24),
+            const Spacer(),
             Row(
               children: <Widget>[
                 const Spacer(),

@@ -18,6 +18,8 @@ part 'requests/fetch_connected_cards_request.dart';
 part 'requests/remove_payment_method_request.dart';
 part 'requests/set_primary_payment_method_request.dart';
 part 'requests/fetch_fee_request.dart';
+part 'requests/handle_dwolla_deposit_request.dart';
+part 'requests/handle_stripe_deposit_request.dart';
 
 part 'responses/fetch_connected_bank_accounts_response.dart';
 part 'responses/fetch_connected_cards_response.dart';
