@@ -5,9 +5,9 @@ enum Flavor {
 }
 
 class AppConfig {
-  static const String stagingUrl = 'http://54.208.176.198:8020//api/v1/';
-  static const String productionUrl = 'http://54.208.176.198:8020/api/v1/';
-  static const String developmentUrl = 'http://54.208.176.198:8020/api/v1/';
+  static const String stagingUrl = 'https://backend.tackapp.net/api/v1/';
+  static const String productionUrl = 'https://backend.tackapp.net/api/v1/';
+  static const String developmentUrl = 'https://backend.tackapp.net/api/v1/';
 
   static const String stripeDevelopmentKey =
       'pk_test_51KYDDWHUDqRuKWfqG347VI2pG1CgnOApLRuoqeZZ4A0ZHBuOh5QapxVwJ9XLh5pZREboD3HyvbZl97VI1TlZsVqr00gRuftswA';
