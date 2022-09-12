@@ -201,8 +201,8 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
               amount: payload.amountInCents.toDollarFormat.toString(),
             ),
           ],
-          country: 'US',
-          currency: 'USD',
+          country: Constants.countryCode,
+          currency: payload.currency,
         ),
       );
       await Stripe.instance.confirmApplePayPayment(
