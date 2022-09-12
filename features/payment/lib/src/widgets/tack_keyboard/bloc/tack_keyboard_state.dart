@@ -15,9 +15,9 @@ class TackKeyboardState {
     required double feeMaxAmount,
   }) {
     double feeAmount = (feePercent / 100) * parsedValue;
-    if (feeAmount > feeMaxAmount) {
+    if (feeAmount > feeMaxAmount && feeMaxAmount > 0) {
       feeAmount = feeMaxAmount;
-    } else if (feeAmount < feeMinAmount) {
+    } else if (feeAmount < feeMinAmount && feeMinAmount > 0) {
       feeAmount = feeMinAmount;
     }
 
