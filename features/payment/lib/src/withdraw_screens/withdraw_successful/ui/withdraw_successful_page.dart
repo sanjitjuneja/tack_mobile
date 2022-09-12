@@ -1,27 +1,26 @@
 import 'package:flutter/cupertino.dart';
-import 'package:payment/src/withdraw_screens/withdraw/widgets/withdraw_method_type.dart';
 import 'withdraw_successful_screen.dart';
 
 class WithdrawSuccessfulFeature {
   static const String routeName = '/withdrawSuccessful';
 
   static Page<void> page({
-    required WithdrawMethodType withdrawMethodType,
+    required double? newTackBalance,
   }) {
     return WithdrawSuccessfulPage(
-      withdrawMethodType: withdrawMethodType,
+      newTackBalance: newTackBalance,
     );
   }
 }
 
 class WithdrawSuccessfulPage extends Page<void> {
-  final WithdrawMethodType withdrawMethodType;
+  final double? newTackBalance;
 
   @override
   String get name => WithdrawSuccessfulFeature.routeName;
 
   const WithdrawSuccessfulPage({
-    required this.withdrawMethodType,
+    required this.newTackBalance,
   });
 
   @override
@@ -29,7 +28,7 @@ class WithdrawSuccessfulPage extends Page<void> {
     return CupertinoPageRoute<void>(
       settings: this,
       builder: (_) => WithdrawSuccessfulScreen(
-        withdrawMethodType: withdrawMethodType,
+        newTackBalance: newTackBalance,
       ),
     );
   }

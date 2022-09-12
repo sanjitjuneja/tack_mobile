@@ -1,4 +1,0 @@
-enum WithdrawMethodType {
-  instant,
-  regular,
-}

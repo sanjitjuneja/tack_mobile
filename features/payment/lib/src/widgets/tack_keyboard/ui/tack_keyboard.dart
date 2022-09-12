@@ -204,7 +204,7 @@ class TackKeyboard extends StatelessWidget {
                       context,
                       minErrorKey!,
                       translationParams: <String, String>{
-                        'min_range': minAmount.toStringAsFixed(0),
+                        'min_range': minAmount.toStringAsFixed(2),
                       },
                     ),
                     textAlign: TextAlign.center,
@@ -218,7 +218,7 @@ class TackKeyboard extends StatelessWidget {
                       context,
                       maxErrorKey!,
                       translationParams: <String, String>{
-                        'max_range': maxAmount.toStringAsFixed(0),
+                        'max_range': maxAmount.toStringAsFixed(2),
                       },
                     ),
                     textAlign: TextAlign.center,

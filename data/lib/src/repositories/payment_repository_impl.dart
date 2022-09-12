@@ -231,4 +231,17 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
       );
     }
   }
+
+  @override
+  Future<void> handleDwollaWithdraw(
+    domain.HandleDwollaWithdrawPayload payload,
+  ) async {
+    await _apiProvider.handleDwollaWithdraw(
+      request: HandleDwollaWithdrawRequest(
+        paymentMethodId: payload.paymentMethodId,
+        amountInCents: payload.amountInCents,
+        currency: payload.currency,
+      ),
+    );
+  }
 }

@@ -447,6 +447,12 @@ class DataDI {
       ),
     );
 
+    appLocator.registerLazySingleton<HandleDwollaWithdrawUseCase>(
+      () => HandleDwollaWithdrawUseCase(
+        paymentRepository: appLocator.get<PaymentRepository>(),
+      ),
+    );
+
     appLocator.registerLazySingleton<LogOutUseCase>(
       () => LogOutUseCase(
         globalAppRouter: appLocator.get<GlobalAppRouterDelegate>(),
@@ -518,6 +524,7 @@ class DataDI {
     appLocator.unregister<FetchFeeUseCase>();
     appLocator.unregister<HandleStripeDepositUseCase>();
     appLocator.unregister<HandleDwollaDepositUseCase>();
+    appLocator.unregister<HandleDwollaWithdrawUseCase>();
 
     appLocator.unregister<LogOutUseCase>();
   }

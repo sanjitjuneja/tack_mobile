@@ -68,4 +68,5 @@ class BaseUrlConstants {
   static const String fetchFees = 'payment/get-fees/';
   static const String stripeDeposit = 'payment/deposit-stripe/';
   static const String dwollaDeposit = 'payment/deposit-dwolla/';
+  static const String dwollaWithdraw = 'payment/withdraw/';
 }

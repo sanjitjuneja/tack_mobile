@@ -4,15 +4,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '/src/widgets/payment_method_tile.dart';
-import '../bloc/select_payment_method_bloc.dart';
+import '../bloc/select_deposit_payment_method_bloc.dart';
 
-class SelectPaymentMethodForm extends StatelessWidget {
-  const SelectPaymentMethodForm({Key? key}) : super(key: key);
+class SelectDepositPaymentMethodForm extends StatelessWidget {
+  const SelectDepositPaymentMethodForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SelectPaymentMethodBloc, SelectPaymentMethodState>(
-      builder: (BuildContext context, SelectPaymentMethodState state) {
+    return BlocBuilder<SelectDepositPaymentMethodBloc, SelectDepositPaymentMethodState>(
+      builder: (BuildContext context, SelectDepositPaymentMethodState state) {
         return AppScrollView(
           children: <Widget>[
             Center(
@@ -125,6 +125,7 @@ class SelectPaymentMethodForm extends StatelessWidget {
                       context,
                       'paymentSettingsScreen.applePay',
                     ),
+                    isSentenceCase: false,
                     isSelectable: true,
                     isSelected:
                         state.selectedPaymentMethodId == Constants.applePayId,
@@ -144,6 +145,7 @@ class SelectPaymentMethodForm extends StatelessWidget {
                       'paymentSettingsScreen.googlePay',
                     ),
                     isSelectable: true,
+                    isSentenceCase: false,
                     isSelected:
                         state.selectedPaymentMethodId == Constants.googlePayId,
                     feePercent: state.fee?.stripeFeeData.feePercent,
@@ -171,6 +173,7 @@ class SelectPaymentMethodForm extends StatelessWidget {
                 context,
                 'paymentSettingsScreen.addPaymentMethod',
               ),
+              isSentenceCase: false,
               onTap: () => _onAddPaymentMethod(context),
             ),
             const SizedBox(height: 10)
@@ -184,19 +187,19 @@ class SelectPaymentMethodForm extends StatelessWidget {
     BuildContext context, {
     required String paymentMethodId,
   }) {
-    BlocProvider.of<SelectPaymentMethodBloc>(context).add(
-      SelectPaymentMethodAction(paymentMethodId: paymentMethodId),
+    BlocProvider.of<SelectDepositPaymentMethodBloc>(context).add(
+      SelectDepositPaymentMethodAction(paymentMethodId: paymentMethodId),
     );
   }
 
   void _onReloadButtonPressed(BuildContext context) {
-    BlocProvider.of<SelectPaymentMethodBloc>(context).add(
+    BlocProvider.of<SelectDepositPaymentMethodBloc>(context).add(
       const InitialLoad(),
     );
   }
 
   void _onAddPaymentMethod(BuildContext context) {
-    BlocProvider.of<SelectPaymentMethodBloc>(context).add(
+    BlocProvider.of<SelectDepositPaymentMethodBloc>(context).add(
       const AddPaymentMethodAction(),
     );
   }

@@ -1,14 +1,13 @@
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:payment/src/withdraw_screens/withdraw/widgets/withdraw_method_type.dart';
 import 'withdraw_successful_form.dart';
 
 class WithdrawSuccessfulScreen extends StatelessWidget {
-  final WithdrawMethodType withdrawMethodType;
+  final double? newTackBalance;
 
   const WithdrawSuccessfulScreen({
     Key? key,
-    required this.withdrawMethodType,
+    required this.newTackBalance,
   }) : super(key: key);
 
   @override
@@ -22,7 +21,7 @@ class WithdrawSuccessfulScreen extends StatelessWidget {
       ),
       child: SafeArea(
         child: WithdrawSuccessfulForm(
-          withdrawMethodType: withdrawMethodType,
+          newTackBalance: newTackBalance,
         ),
       ),
     );

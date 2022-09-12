@@ -6,12 +6,12 @@ import 'package:domain/domain.dart';
 import '../../../../payment.dart';
 import '../../models/selected_payment_method.dart';
 
-part 'select_payment_method_event.dart';
+part 'select_deposit_payment_method_event.dart';
 
-part 'select_payment_method_state.dart';
+part 'select_deposit_payment_method_state.dart';
 
-class SelectPaymentMethodBloc
-    extends Bloc<SelectPaymentMethodEvent, SelectPaymentMethodState> {
+class SelectDepositPaymentMethodBloc
+    extends Bloc<SelectDepositPaymentMethodEvent, SelectDepositPaymentMethodState> {
   final AppRouterDelegate _appRouter;
   final FetchConnectedBankAccountsUseCase _fetchConnectedBankAccountsUseCase;
   final FetchConnectedCardsUseCase _fetchConnectedCardsUseCase;
@@ -19,7 +19,7 @@ class SelectPaymentMethodBloc
   final FetchIsGooglePaySupportedUseCase _fetchIsGooglePaySupportedUseCase;
   final FetchFeeUseCase _feeUseCase;
 
-  SelectPaymentMethodBloc({
+  SelectDepositPaymentMethodBloc({
     required AppRouterDelegate appRouter,
     required FetchConnectedBankAccountsUseCase
         fetchConnectedBankAccountsUseCase,
@@ -35,7 +35,7 @@ class SelectPaymentMethodBloc
         _fetchIsGooglePaySupportedUseCase = fetchIsGooglePaySupportedUseCase,
         _feeUseCase = feeUseCase,
         super(
-          SelectPaymentMethodState(
+          SelectDepositPaymentMethodState(
             bankAccounts: <ConnectedBankAccount>[],
             cards: <ConnectedCard>[],
             selectedPaymentMethodId: selectedPaymentMethodId,
@@ -44,7 +44,7 @@ class SelectPaymentMethodBloc
         ) {
     on<InitialLoad>(_onInitialLoad);
 
-    on<SelectPaymentMethodAction>(_onSelectPaymentMethodAction);
+    on<SelectDepositPaymentMethodAction>(_onSelectDepositPaymentMethodAction);
     on<AddPaymentMethodAction>(_onAddPaymentMethodAction);
 
     add(const InitialLoad());
@@ -52,7 +52,7 @@ class SelectPaymentMethodBloc
 
   Future<void> _onInitialLoad(
     InitialLoad event,
-    Emitter<SelectPaymentMethodState> emit,
+    Emitter<SelectDepositPaymentMethodState> emit,
   ) async {
     try {
       emit(state.copyWith(isLoading: true));
@@ -98,16 +98,16 @@ class SelectPaymentMethodBloc
     }
   }
 
-  Future<void> _onSelectPaymentMethodAction(
-    SelectPaymentMethodAction event,
-    Emitter<SelectPaymentMethodState> emit,
+  Future<void> _onSelectDepositPaymentMethodAction(
+    SelectDepositPaymentMethodAction event,
+    Emitter<SelectDepositPaymentMethodState> emit,
   ) async {
     emit(state.copyWith(selectedPaymentMethodId: event.paymentMethodId));
   }
 
   Future<void> _onAddPaymentMethodAction(
     AddPaymentMethodAction event,
-    Emitter<SelectPaymentMethodState> emit,
+    Emitter<SelectDepositPaymentMethodState> emit,
   ) async {
     final AddPaymentMethodScreenResult? result = await _appRouter.pushForResult(
       AddPaymentMethodFeature.page(

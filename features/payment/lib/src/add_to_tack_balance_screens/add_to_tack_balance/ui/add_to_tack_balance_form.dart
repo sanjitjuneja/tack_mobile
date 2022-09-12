@@ -94,6 +94,7 @@ class AddToTackBalanceForm extends StatelessWidget {
                     ),
                     child: PaymentMethodTile(
                       leadingIcon: AppIconsTheme.applePay(size: 35),
+                      isSentenceCase: false,
                       onTap: () => _onSelectPaymentMethod(context),
                       title: FlutterI18n.translate(
                         context,
@@ -109,6 +110,7 @@ class AddToTackBalanceForm extends StatelessWidget {
                     ),
                     child: PaymentMethodTile(
                       leadingIcon: AppIconsTheme.googlePay(size: 35),
+                      isSentenceCase: false,
                       onTap: () => _onSelectPaymentMethod(context),
                       title: FlutterI18n.translate(
                         context,
@@ -129,6 +131,7 @@ class AddToTackBalanceForm extends StatelessWidget {
                         context,
                         'addToTackBalanceScreen.selectPaymentMethod',
                       ),
+                      isSentenceCase: false,
                       subtitle: FlutterI18n.translate(
                         context,
                         'addToTackBalanceScreen.bankOrCard',
@@ -193,7 +196,9 @@ class AddToTackBalanceForm extends StatelessWidget {
     required double amount,
   }) {
     BlocProvider.of<AddToTackBalanceBloc>(context).add(
-      UpdateDepositAmountAction(amount: amount),
+      UpdateDepositAmountAction(
+        amount: amount,
+      ),
     );
   }
 
