@@ -140,7 +140,7 @@ class AddToTackBalanceForm extends StatelessWidget {
               ],
               ConstrainedBox(
                 constraints: const BoxConstraints(
-                  maxHeight: 46,
+                  minHeight: 46,
                 ),
               ),
               TackKeyboard(
@@ -162,7 +162,7 @@ class AddToTackBalanceForm extends StatelessWidget {
               ),
               ConstrainedBox(
                 constraints: const BoxConstraints(
-                  maxHeight: 46,
+                  minHeight: 46,
                 ),
               ),
               Row(
