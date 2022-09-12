@@ -36,7 +36,7 @@ class AddToTackBalanceForm extends StatelessWidget {
                 Container(
                   alignment: Alignment.center,
                   child: CupertinoButton(
-                    onPressed: () => {},
+                    onPressed: () => _onRefreshAction(context),
                     padding: EdgeInsets.zero,
                     child: Icon(
                       Icons.refresh_rounded,
@@ -206,6 +206,12 @@ class AddToTackBalanceForm extends StatelessWidget {
   void _onSelectPaymentMethod(BuildContext context) {
     BlocProvider.of<AddToTackBalanceBloc>(context).add(
       const SelectPaymentMethodAction(),
+    );
+  }
+
+  void _onRefreshAction(BuildContext context) {
+    BlocProvider.of<AddToTackBalanceBloc>(context).add(
+      const InitialLoad(),
     );
   }
 }
