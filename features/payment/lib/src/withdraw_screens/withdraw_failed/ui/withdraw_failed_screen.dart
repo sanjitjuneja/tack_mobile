@@ -3,7 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'withdraw_failed_form.dart';
 
 class WithdrawFailedScreen extends StatelessWidget {
-  const WithdrawFailedScreen({Key? key}) : super(key: key);
+  final String errorKey;
+
+  const WithdrawFailedScreen({
+    Key? key,
+    required this.errorKey,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +19,10 @@ class WithdrawFailedScreen extends StatelessWidget {
         withResult: false,
         automaticallyImplyLeading: false,
       ),
-      child: const SafeArea(
-        child: WithdrawFailedForm(),
+      child: SafeArea(
+        child: WithdrawFailedForm(
+          errorKey: errorKey,
+        ),
       ),
     );
   }

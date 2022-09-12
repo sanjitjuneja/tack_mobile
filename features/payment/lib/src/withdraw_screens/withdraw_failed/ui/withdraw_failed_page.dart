@@ -4,20 +4,32 @@ import 'withdraw_failed_screen.dart';
 class WithdrawFailedFeature {
   static const String routeName = '/withdrawFailed';
 
-  static Page<void> page() => const WithdrawFailedPage();
+  static Page<void> page({
+    required String errorKey,
+  }) {
+    return WithdrawFailedPage(
+      errorKey: errorKey,
+    );
+  }
 }
 
 class WithdrawFailedPage extends Page<void> {
+  final String errorKey;
+
   @override
   String get name => WithdrawFailedFeature.routeName;
 
-  const WithdrawFailedPage();
+  const WithdrawFailedPage({
+    required this.errorKey,
+  });
 
   @override
   Route<void> createRoute(BuildContext context) {
     return CupertinoPageRoute<void>(
       settings: this,
-      builder: (_) => const WithdrawFailedScreen(),
+      builder: (_) => WithdrawFailedScreen(
+        errorKey: errorKey,
+      ),
     );
   }
 }

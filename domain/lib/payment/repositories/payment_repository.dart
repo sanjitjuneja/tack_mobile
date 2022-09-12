@@ -44,4 +44,8 @@ abstract class PaymentRepository {
   Future<void> handleStripeDeposit(
     HandleStripeDepositPayload payload,
   );
+
+  Future<void> handleDwollaWithdraw(
+    HandleDwollaWithdrawPayload payload,
+  );
 }

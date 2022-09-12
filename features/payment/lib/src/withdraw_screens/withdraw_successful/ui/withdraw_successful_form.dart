@@ -2,14 +2,13 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
-import 'package:payment/src/withdraw_screens/withdraw/widgets/withdraw_method_type.dart';
 
 class WithdrawSuccessfulForm extends StatelessWidget {
-  final WithdrawMethodType withdrawMethodType;
+  final double? newTackBalance;
 
   const WithdrawSuccessfulForm({
     Key? key,
-    required this.withdrawMethodType,
+    required this.newTackBalance,
   }) : super(key: key);
 
   @override
@@ -20,7 +19,7 @@ class WithdrawSuccessfulForm extends StatelessWidget {
         const SizedBox(height: 10),
         const Spacer(),
         Expanded(
-          flex: 3,
+          flex: 5,
           child: Center(
             child: Column(
               children: <Widget>[
@@ -29,9 +28,7 @@ class WithdrawSuccessfulForm extends StatelessWidget {
                 Text(
                   FlutterI18n.translate(
                     context,
-                    withdrawMethodType == WithdrawMethodType.instant
-                        ? 'withdrawSuccessfulScreen.instantPayoutTitle'
-                        : 'withdrawSuccessfulScreen.regularPayoutTitle',
+                    'withdrawSuccessfulScreen.regularPayoutTitle',
                   ),
                   textAlign: TextAlign.center,
                   style: AppTextTheme.manrope24SemiBold,
@@ -40,9 +37,7 @@ class WithdrawSuccessfulForm extends StatelessWidget {
                 Text(
                   FlutterI18n.translate(
                     context,
-                    withdrawMethodType == WithdrawMethodType.instant
-                        ? 'withdrawSuccessfulScreen.instantPayoutSubtitle'
-                        : 'withdrawSuccessfulScreen.regularPayoutSubtitle',
+                    'withdrawSuccessfulScreen.regularPayoutSubtitle',
                   ),
                   style: AppTextTheme.manrope14Medium.copyWith(
                     color: AppTheme.textDescriptionColor,
@@ -54,7 +49,9 @@ class WithdrawSuccessfulForm extends StatelessWidget {
                     context,
                     'withdrawSuccessfulScreen.newTackBalance',
                     translationParams: {
-                      'amount': CurrencyUtility.dollarFormat.format(0.0),
+                      'amount': CurrencyUtility.dollarFormat.format(
+                        newTackBalance,
+                      ),
                     },
                   ),
                   style: AppTextTheme.manrope20Bold.copyWith(

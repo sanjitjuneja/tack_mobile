@@ -4,7 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
 class WithdrawFailedForm extends StatelessWidget {
-  const WithdrawFailedForm({Key? key}) : super(key: key);
+  final String errorKey;
+
+  const WithdrawFailedForm({
+    Key? key,
+    required this.errorKey,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +40,7 @@ class WithdrawFailedForm extends StatelessWidget {
                   child: Text(
                     FlutterI18n.translate(
                       context,
-                      'withdrawFailedScreen.description',
+                      errorKey,
                     ),
                     textAlign: TextAlign.center,
                     style: AppTextTheme.manrope14Medium.copyWith(

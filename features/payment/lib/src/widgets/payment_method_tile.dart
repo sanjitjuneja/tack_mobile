@@ -12,6 +12,7 @@ class PaymentMethodTile extends StatelessWidget {
   final bool hasTrailingArrow;
   final bool isSelected;
   final bool isSelectable;
+  final bool isSentenceCase;
   final double? feePercent;
 
   const PaymentMethodTile({
@@ -26,6 +27,7 @@ class PaymentMethodTile extends StatelessWidget {
     this.hasTrailingArrow = true,
     this.isSelected = false,
     this.isSelectable = false,
+    this.isSentenceCase = true,
   }) : super(key: key);
 
   @override
@@ -66,7 +68,7 @@ class PaymentMethodTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      hasTrailingArrow ? title.toSentenceCase() : title,
+                      isSentenceCase ? title.toSentenceCase() : title,
                       style: AppTextTheme.poppins18Medium,
                     ),
                     if (subtitle != null)

@@ -4,28 +4,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
 import '../../../add_to_tack_balance_screens/models/selected_payment_method.dart';
-import '../../select_payment_method_screen/ui/select_payment_method_screen.dart';
-import '../bloc/select_payment_method_bloc.dart';
+import '../../select_deposit_payment_method_screen/ui/select_deposit_payment_method_screen.dart';
+import '../bloc/select_deposit_payment_method_bloc.dart';
 
-class SelectPaymentMethodFeature {
-  static const String routeName = '/selectPaymentMethod';
+class SelectDepositPaymentMethodFeature {
+  static const String routeName = '/selectDepositPaymentMethod';
 
   static Page<SelectedPaymentMethod?> page({
     required String? selectedPaymentMethodId,
   }) {
-    return SelectPaymentMethodPage(
+    return SelectDepositPaymentMethodPage(
       selectedPaymentMethodId: selectedPaymentMethodId,
     );
   }
 }
 
-class SelectPaymentMethodPage extends Page<SelectedPaymentMethod?> {
+class SelectDepositPaymentMethodPage extends Page<SelectedPaymentMethod?> {
   final String? selectedPaymentMethodId;
 
   @override
-  String get name => SelectPaymentMethodFeature.routeName;
+  String get name => SelectDepositPaymentMethodFeature.routeName;
 
-  const SelectPaymentMethodPage({
+  const SelectDepositPaymentMethodPage({
     required this.selectedPaymentMethodId,
   });
 
@@ -33,9 +33,9 @@ class SelectPaymentMethodPage extends Page<SelectedPaymentMethod?> {
   Route<SelectedPaymentMethod?> createRoute(BuildContext context) {
     return CupertinoPageRoute<SelectedPaymentMethod?>(
       settings: this,
-      builder: (_) => BlocProvider<SelectPaymentMethodBloc>(
+      builder: (_) => BlocProvider<SelectDepositPaymentMethodBloc>(
         create: (_) {
-          return SelectPaymentMethodBloc(
+          return SelectDepositPaymentMethodBloc(
             appRouter: appLocator.get<AppRouterDelegate>(),
             fetchConnectedBankAccountsUseCase:
                 appLocator.get<FetchConnectedBankAccountsUseCase>(),
@@ -49,7 +49,7 @@ class SelectPaymentMethodPage extends Page<SelectedPaymentMethod?> {
             feeUseCase: appLocator.get<FetchFeeUseCase>(),
           );
         },
-        child: const SelectPaymentMethodScreen(),
+        child: const SelectDepositPaymentMethodScreen(),
       ),
     );
   }

@@ -747,6 +747,19 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.paymentSetupIntentMapper.fromEntity);
   }
 
+  Future<void> handleDwollaWithdraw({
+    required HandleDwollaWithdrawRequest request,
+  }) async {
+    return post<void>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.dwollaWithdraw,
+        body: request.toJson(),
+        params: null,
+      ),
+      parser: (_) {},
+    );
+  }
+
 // Future<void> logOut() {
 //   return get<void>(
 //     ApiQuery(

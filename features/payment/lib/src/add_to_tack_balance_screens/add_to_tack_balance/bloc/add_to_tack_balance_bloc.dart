@@ -7,7 +7,7 @@ import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
 
 import '../../add_to_tack_balance_failed/ui/add_to_tack_balance_failed_page.dart';
-import '../../select_payment_method_screen/ui/select_payment_method_page.dart';
+import '../../select_deposit_payment_method_screen/ui/select_deposit_payment_method_page.dart';
 import '../../add_to_tack_balance_successful/ui/add_to_tack_balance_successful_page.dart';
 import '../../models/selected_payment_method.dart';
 
@@ -146,7 +146,7 @@ class AddToTackBalanceBloc
     Emitter<AddToTackBalanceState> emit,
   ) async {
     final SelectedPaymentMethod? result = await _appRouter.pushForResult(
-      SelectPaymentMethodFeature.page(
+      SelectDepositPaymentMethodFeature.page(
         selectedPaymentMethodId: state.selectedPaymentMethodId,
       ),
     );

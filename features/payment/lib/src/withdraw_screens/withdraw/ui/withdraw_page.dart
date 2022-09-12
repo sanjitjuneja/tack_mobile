@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 import '../../../widgets/tack_keyboard/bloc/tack_keyboard_bloc.dart';
@@ -28,6 +29,17 @@ class WithdrawPage extends Page<void> {
               create: (_) {
                 return WithdrawBloc(
                   appRouter: appLocator.get<AppRouterDelegate>(),
+                  fetchConnectedBankAccountsUseCase:
+                      appLocator.get<FetchConnectedBankAccountsUseCase>(),
+                  getUserBalanceUseCase:
+                      appLocator.get<GetUserBalanceUseCase>(),
+                  observeUserBalanceUseCase:
+                      appLocator.get<ObserveUserBalanceUseCase>(),
+                  fetchUserBalanceUseCase:
+                      appLocator.get<FetchUserBalanceUseCase>(),
+                  fetchFeeUseCase: appLocator.get<FetchFeeUseCase>(),
+                  handleDwollaWithdrawUseCase:
+                      appLocator.get<HandleDwollaWithdrawUseCase>(),
                 );
               },
             ),

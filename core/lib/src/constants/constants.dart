@@ -17,6 +17,10 @@ class Constants {
 
   static const double maxDepositLimitAmount = 1000;
 
+  static const double minWithdrawLimitAmount = 0.01;
+
+  static const double maxWithdrawLimitAmount = 1000;
+
   static const String usd = 'USD';
 
   static const String applePayId = 'applePay';

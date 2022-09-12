@@ -1,6 +1,6 @@
-part of 'select_payment_method_bloc.dart';
+part of 'select_deposit_payment_method_bloc.dart';
 
-class SelectPaymentMethodState {
+class SelectDepositPaymentMethodState {
   final List<ConnectedBankAccount> bankAccounts;
   final List<ConnectedCard> cards;
   final String? selectedPaymentMethodId;
@@ -48,7 +48,7 @@ class SelectPaymentMethodState {
     return null;
   }
 
-  const SelectPaymentMethodState({
+  const SelectDepositPaymentMethodState({
     required this.bankAccounts,
     required this.cards,
     required this.selectedPaymentMethodId,
@@ -59,7 +59,7 @@ class SelectPaymentMethodState {
     this.isGooglePaySupported = false,
   });
 
-  SelectPaymentMethodState copyWith({
+  SelectDepositPaymentMethodState copyWith({
     List<ConnectedBankAccount>? bankAccounts,
     List<ConnectedCard>? cards,
     String? selectedPaymentMethodId,
@@ -69,7 +69,7 @@ class SelectPaymentMethodState {
     bool? isApplePaySupported,
     bool? isGooglePaySupported,
   }) {
-    return SelectPaymentMethodState(
+    return SelectDepositPaymentMethodState(
       bankAccounts: bankAccounts ?? this.bankAccounts,
       cards: cards ?? this.cards,
       selectedPaymentMethodId:

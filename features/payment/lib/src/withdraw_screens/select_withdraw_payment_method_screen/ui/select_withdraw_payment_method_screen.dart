@@ -3,11 +3,11 @@ import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
-import '../bloc/select_payment_method_bloc.dart';
-import 'select_payment_method_form.dart';
+import '../bloc/select_withdraw_payment_method_bloc.dart';
+import 'select_withdraw_payment_method_form.dart';
 
-class SelectPaymentMethodScreen extends StatelessWidget {
-  const SelectPaymentMethodScreen({Key? key}) : super(key: key);
+class SelectWithdrawPaymentMethodScreen extends StatelessWidget {
+  const SelectWithdrawPaymentMethodScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +16,13 @@ class SelectPaymentMethodScreen extends StatelessWidget {
       navigationBar: AppNavigationBar(
         backgroundColor: AppTheme.secondaryBackgroundColor,
         withResult: true,
-        leading: BlocBuilder<SelectPaymentMethodBloc, SelectPaymentMethodState>(
-          builder: (_, SelectPaymentMethodState state) {
+        leading: BlocBuilder<SelectWithdrawPaymentMethodBloc,
+            SelectWithdrawPaymentMethodState>(
+          builder: (_, SelectWithdrawPaymentMethodState state) {
             return AppBackButton(
               onPressed: () {
                 GlobalAppRouter.of(context).popWithResult(
-                  state.selectedPaymentMethod,
+                  state.selectedBankAccount,
                 );
               },
             );
@@ -29,7 +30,7 @@ class SelectPaymentMethodScreen extends StatelessWidget {
         ),
       ),
       child: const SafeArea(
-        child: SelectPaymentMethodForm(),
+        child: SelectWithdrawPaymentMethodForm(),
       ),
     );
   }
