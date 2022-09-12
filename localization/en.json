@@ -566,7 +566,10 @@
     "selectPaymentMethod": "Select Payment Method",
     "bankOrCard": "Bank or Card",
     "noTransactionFee": "No Deposit Fee",
-    "feeLabel": " will be charged in accordance with our {fee_percent}% deposit fee(min: ${min_fee}, max: ${max_fee})"
+    "feeLabel": " will be charged in accordance with our {fee_percent}% deposit fee",
+    "feeLabelWithMinAndMax": " will be charged in accordance with our {fee_percent}% deposit fee(min: ${min_fee}, max: ${max_fee})",
+    "feeLabelWithMin": " will be charged in accordance with our {fee_percent}% deposit fee(min: ${min_fee})",
+    "feeLabelWithMax": " will be charged in accordance with our {fee_percent}% deposit fee(max: ${max_fee})"
   },
   "selectPaymentMethodScreen": {
     "fee": "{feePercent}% fee",

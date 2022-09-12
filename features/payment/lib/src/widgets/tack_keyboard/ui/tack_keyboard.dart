@@ -124,26 +124,75 @@ class TackKeyboard extends StatelessWidget {
                         color: AppTheme.grassColor,
                       ),
                       children: <TextSpan>[
-                        TextSpan(
-                          text: FlutterI18n.translate(
-                            context,
-                            'addToTackBalanceScreen.feeLabel',
-                            translationParams: <String, String>{
-                              'fee_percent': feePercent.toStringAsFixed(0),
-                              'min_fee': feeMinAmount
-                                  .toDouble()
-                                  .toDollarFormat
-                                  .toStringAsFixed(2),
-                              'max_fee': feeMaxAmount
-                                  .toDouble()
-                                  .toDollarFormat
-                                  .toStringAsFixed(2),
-                            },
+                        if (feeMinAmount > 0 && feeMaxAmount > 0) ...<TextSpan>[
+                          TextSpan(
+                            text: FlutterI18n.translate(
+                              context,
+                              'addToTackBalanceScreen.feeLabelWithMinAndMax',
+                              translationParams: <String, String>{
+                                'fee_percent': feePercent.toStringAsFixed(0),
+                                'min_fee': feeMinAmount
+                                    .toDouble()
+                                    .toDollarFormat
+                                    .toStringAsFixed(2),
+                                'max_fee': feeMaxAmount
+                                    .toDouble()
+                                    .toDollarFormat
+                                    .toStringAsFixed(2),
+                              },
+                            ),
+                            style: AppTextTheme.manrope14Regular.copyWith(
+                              color: AppTheme.textHeavyHintColor,
+                            ),
                           ),
-                          style: AppTextTheme.manrope14Regular.copyWith(
-                            color: AppTheme.textHeavyHintColor,
+                        ] else if (feeMinAmount > 0) ...<TextSpan>[
+                          TextSpan(
+                            text: FlutterI18n.translate(
+                              context,
+                              'addToTackBalanceScreen.feeLabelWithMin',
+                              translationParams: <String, String>{
+                                'fee_percent': feePercent.toStringAsFixed(0),
+                                'min_fee': feeMinAmount
+                                    .toDouble()
+                                    .toDollarFormat
+                                    .toStringAsFixed(2),
+                              },
+                            ),
+                            style: AppTextTheme.manrope14Regular.copyWith(
+                              color: AppTheme.textHeavyHintColor,
+                            ),
                           ),
-                        ),
+                        ] else if (feeMaxAmount > 0) ...<TextSpan>[
+                          TextSpan(
+                            text: FlutterI18n.translate(
+                              context,
+                              'addToTackBalanceScreen.feeLabelWithMax',
+                              translationParams: <String, String>{
+                                'fee_percent': feePercent.toStringAsFixed(0),
+                                'max_fee': feeMaxAmount
+                                    .toDouble()
+                                    .toDollarFormat
+                                    .toStringAsFixed(2),
+                              },
+                            ),
+                            style: AppTextTheme.manrope14Regular.copyWith(
+                              color: AppTheme.textHeavyHintColor,
+                            ),
+                          ),
+                        ] else ...<TextSpan>[
+                          TextSpan(
+                            text: FlutterI18n.translate(
+                              context,
+                              'addToTackBalanceScreen.feeLabel',
+                              translationParams: <String, String>{
+                                'fee_percent': feePercent.toStringAsFixed(0),
+                              },
+                            ),
+                            style: AppTextTheme.manrope14Regular.copyWith(
+                              color: AppTheme.textHeavyHintColor,
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ),
