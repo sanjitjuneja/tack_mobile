@@ -50,6 +50,22 @@ class AddToTackBalanceState {
     }
   }
 
+
+  double amountInDollarFormatWithFee({
+    required double feePercent,
+    required double feeMinAmount,
+    required double feeMaxAmount,
+  }) {
+    double feeAmount = (feePercent / 100) * amount;
+    if (feeAmount > feeMaxAmount.toDollarFormat) {
+      feeAmount = feeMaxAmount;
+    } else if (feeAmount < feeMinAmount.toDollarFormat) {
+      feeAmount = feeMinAmount;
+    }
+
+    return amount + feeAmount;
+  }
+
   String? get selectedPaymentMethodId {
     if (selectedPaymentMethod.card != null) {
       return selectedPaymentMethod.card!.id;

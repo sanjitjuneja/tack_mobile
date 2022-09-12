@@ -203,7 +203,13 @@ class AddToTackBalanceBloc
         await _handleStripeDepositUseCase.execute(
           HandleStripeDepositPayload(
             paymentMethodId: Constants.applePayId,
-            amountInCents: state.amount.toCentsFormat,
+            amountInCents: state
+                .amountInDollarFormatWithFee(
+                  feePercent: state.fee?.stripeFeeData.feePercent ?? 0,
+                  feeMinAmount: state.fee?.stripeFeeData.feeMin.toDouble() ?? 0,
+                  feeMaxAmount: state.fee?.stripeFeeData.feeMax.toDouble() ?? 0,
+                )
+                .toCentsFormat,
             currency: Constants.usd,
           ),
         );

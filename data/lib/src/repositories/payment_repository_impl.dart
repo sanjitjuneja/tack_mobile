@@ -15,6 +15,7 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
   })  : _apiProvider = apiProvider,
         _appConfig = appConfig {
     Stripe.publishableKey = _appConfig.stripeKey;
+    Stripe.merchantIdentifier = Constants.merchantName;
   }
 
   @override
@@ -192,6 +193,18 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
     );
 
     if (payload.paymentMethodId == Constants.applePayId) {
+      await Stripe.instance.presentApplePay(
+        ApplePayPresentParams(
+          cartItems: <ApplePayCartSummaryItem>[
+            ApplePayCartSummaryItem.immediate(
+              label: Constants.merchantName,
+              amount: payload.amountInCents.toDollarFormat.toString(),
+            ),
+          ],
+          country: 'US',
+          currency: 'USD',
+        ),
+      );
       await Stripe.instance.confirmApplePayPayment(
         paymentIntent.clientSecret,
       );
