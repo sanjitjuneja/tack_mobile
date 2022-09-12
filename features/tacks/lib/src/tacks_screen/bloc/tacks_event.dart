@@ -48,6 +48,22 @@ class LoadTackerTacks extends TacksEvent {
   });
 }
 
+class RunnerTackIntentAction extends TacksEvent {
+  final WebSocketIntent<RunnerTack> tackIntent;
+
+  const RunnerTackIntentAction({
+    required this.tackIntent,
+  });
+}
+
+class TackerTackIntentAction extends TacksEvent {
+  final WebSocketIntent<Tack> tackIntent;
+
+  const TackerTackIntentAction({
+    required this.tackIntent,
+  });
+}
+
 class CancelTackOffer extends TacksEvent {
   final RunnerTack runnerTack;
 

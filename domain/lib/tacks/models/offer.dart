@@ -1,6 +1,6 @@
 part of tacks;
 
-class Offer extends Equatable {
+class Offer extends Equatable with IdentifiableMixin {
   final int id;
   final int tackId;
   final TackUser runner;
@@ -34,4 +34,7 @@ class Offer extends Equatable {
         createdAt,
         lifetime,
       ];
+
+  @override
+  int get itemId => id;
 }

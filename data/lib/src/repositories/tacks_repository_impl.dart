@@ -1,30 +1,44 @@
-import 'package:data/src/entities/entities.dart';
-import 'package:data/src/providers/api_provider.dart';
-import 'package:core/core.dart';
 import 'package:domain/domain.dart' as domain;
+
+import '../entities/entities.dart';
+import '../providers/api_provider.dart';
+import '../providers/web_sockets_handlers.dart';
+import '../providers/web_sockets_provider.dart';
 
 class TacksRepositoryImpl implements domain.TacksRepository {
   final ApiProvider _apiProvider;
-
-  late BehaviorSubject<List<domain.Tack>> _tackerTacksStreamController;
-  late BehaviorSubject<List<domain.RunnerTack>> _runnerTacksStreamController;
+  final WebSocketsProvider _webSocketsProvider;
 
   TacksRepositoryImpl({
     required ApiProvider apiProvider,
-  }) : _apiProvider = apiProvider {
-    _tackerTacksStreamController =
-        BehaviorSubject<List<domain.Tack>>.seeded(<domain.Tack>[]);
-    _runnerTacksStreamController =
-        BehaviorSubject<List<domain.RunnerTack>>.seeded(<domain.RunnerTack>[]);
+    required WebSocketsProvider webSocketsProvider,
+  })  : _apiProvider = apiProvider,
+        _webSocketsProvider = webSocketsProvider;
+
+  @override
+  WebSocketStream<domain.GroupTack> get groupTackIntentStream =>
+      _webSocketsProvider.groupTacksStream;
+
+  @override
+  WebSocketStream<domain.Tack> get tackerTackIntentStream =>
+      _webSocketsProvider.tacksStream;
+
+  @override
+  WebSocketStream<domain.RunnerTack> get runnerTackIntentStream =>
+      _webSocketsProvider.runnerTacksStream;
+
+  @override
+  WebSocketStream<domain.Offer> get offerIntentStream =>
+      _webSocketsProvider.offersStream;
+
+  @override
+  Future<bool> fetchHasRunningTack(
+    domain.FetchHasRunningTackPayload payload,
+  ) async {
+    return _apiProvider.fetchHasRunningTack(
+      const FetchHasRunningTackRequest(),
+    );
   }
-
-  @override
-  ValueStream<List<domain.Tack>> get tackerTacksStream =>
-      _tackerTacksStreamController;
-
-  @override
-  ValueStream<List<domain.RunnerTack>> get runnerTacksStream =>
-      _runnerTacksStreamController;
 
   @override
   Future<List<domain.TemplateTack>> fetchNearbyPopularTacks(
@@ -55,9 +69,6 @@ class TacksRepositoryImpl implements domain.TacksRepository {
         queryParameters: payload.queryParameters,
       ),
     );
-    if (payload.queryParameters == null) {
-      _runnerTacksStreamController.add(tacks.results);
-    }
 
     return tacks;
   }
@@ -73,9 +84,6 @@ class TacksRepositoryImpl implements domain.TacksRepository {
         queryParameters: payload.queryParameters,
       ),
     );
-    if (payload.queryParameters == null) {
-      _tackerTacksStreamController.add(tacks.results);
-    }
 
     return tacks;
   }

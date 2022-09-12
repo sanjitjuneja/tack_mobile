@@ -5,9 +5,13 @@ enum Flavor {
 }
 
 class AppConfig {
+  static const String developmentUrl = 'https://backend.tackapp.net/api/v1/';
   static const String stagingUrl = 'https://backend.tackapp.net/api/v1/';
   static const String productionUrl = 'https://backend.tackapp.net/api/v1/';
-  static const String developmentUrl = 'https://backend.tackapp.net/api/v1/';
+
+  static const String developmentWebSocketsUrl = 'ws://34.236.154.0:8020/ws/';
+  static const String stagingWebSocketsUrl = 'ws://34.236.154.0:8020/ws/';
+  static const String productionWebSocketsUrl = 'ws://34.236.154.0:8020/ws/';
 
   static const String stripeDevelopmentKey =
       'pk_test_51KYDDWHUDqRuKWfqG347VI2pG1CgnOApLRuoqeZZ4A0ZHBuOh5QapxVwJ9XLh5pZREboD3HyvbZl97VI1TlZsVqr00gRuftswA';
@@ -18,33 +22,44 @@ class AppConfig {
 
   final Flavor flavor;
   final String baseUrl;
+  final String webSocketsUrl;
   final String stripeKey;
 
   AppConfig._(
     this.flavor,
     this.baseUrl,
+    this.webSocketsUrl,
     this.stripeKey,
   );
 
   factory AppConfig.fromFlavor(Flavor flavor) {
-    String baseUrl;
-    String stripeKey;
+    final String baseUrl;
+    final String webSocketsUrl;
+    final String stripeKey;
 
     switch (flavor) {
       case Flavor.dev:
         baseUrl = developmentUrl;
+        webSocketsUrl = developmentWebSocketsUrl;
         stripeKey = stripeDevelopmentKey;
         break;
       case Flavor.staging:
         baseUrl = stagingUrl;
+        webSocketsUrl = stagingWebSocketsUrl;
         stripeKey = stripeStagingKey;
         break;
       case Flavor.production:
         baseUrl = productionUrl;
+        webSocketsUrl = productionWebSocketsUrl;
         stripeKey = stripeProductionKey;
         break;
     }
 
-    return AppConfig._(flavor, baseUrl, stripeKey);
+    return AppConfig._(
+      flavor,
+      baseUrl,
+      webSocketsUrl,
+      stripeKey,
+    );
   }
 }

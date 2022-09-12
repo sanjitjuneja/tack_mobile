@@ -1,13 +1,14 @@
 import 'dart:io';
 
-import 'package:data/src/entities/entities.dart';
-import 'package:data/src/entities/global/global.dart';
-import 'package:data/src/mappers/mappers.dart';
-import 'package:data/src/providers/api_provider_core.dart';
-import 'package:data/src/providers/session_provider.dart';
-import 'package:data/src/query/api_query.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/domain.dart' as domain;
+
+import 'api_provider_core.dart';
+import 'session_provider.dart';
+import '../entities/entities.dart';
+import '../entities/global/global.dart';
+import '../mappers/mappers.dart';
+import '../query/api_query.dart';
 
 class ApiProvider extends ApiProviderCore {
   final MapperFactory mapper;
@@ -34,6 +35,7 @@ class ApiProvider extends ApiProviderCore {
         ) async {
           final Session? session = await sessionProvider.getCurrentSession();
           if (session != null) {
+            print(session.accessToken);
             options.headers[HttpHeaders.authorizationHeader] =
                 'Bearer ${session.accessToken}';
           }
@@ -173,18 +175,18 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
-  Future<domain.Group> fetchGroup({
+  Future<domain.GroupDetails> fetchGroup({
     required FetchGroupRequest request,
   }) async {
-    return get<GroupEntity>(
+    return get<GroupDetailsEntity>(
       ApiQuery(
         endpoint: BaseUrlConstants.groupPath,
         id: request.id,
         body: null,
         params: null,
       ),
-      parser: GroupEntity.fromJson,
-    ).then(mapper.groupMapper.fromEntity);
+      parser: GroupDetailsEntity.fromJson,
+    ).then(mapper.groupDetailsMapper.fromEntity);
   }
 
   Future<domain.PaginationModel<domain.GroupDetails>> fetchGroups({
@@ -392,6 +394,21 @@ class ApiProvider extends ApiProviderCore {
     ).then(
       (GroupPopularTacksResponse response) =>
           mapper.templateTackMapper.fromList(response.popular),
+    );
+  }
+
+  Future<bool> fetchHasRunningTack(
+    FetchHasRunningTackRequest request,
+  ) async {
+    return get<HasRunningTackEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.tackMeHasRunningPath,
+        body: null,
+        params: null,
+      ),
+      parser: HasRunningTackEntity.fromJson,
+    ).then(
+      (HasRunningTackEntity response) => response.hasRunningTack,
     );
   }
 

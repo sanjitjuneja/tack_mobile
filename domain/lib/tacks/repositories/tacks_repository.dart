@@ -1,9 +1,15 @@
 part of tacks;
 
 abstract class TacksRepository {
-  ValueStream<List<Tack>> get tackerTacksStream;
+  Stream<WebSocketIntent<GroupTack>> get groupTackIntentStream;
 
-  ValueStream<List<RunnerTack>> get runnerTacksStream;
+  Stream<WebSocketIntent<Tack>> get tackerTackIntentStream;
+
+  Stream<WebSocketIntent<RunnerTack>> get runnerTackIntentStream;
+
+  Stream<WebSocketIntent<Offer>> get offerIntentStream;
+
+  Future<bool> fetchHasRunningTack(FetchHasRunningTackPayload payload);
 
   Future<List<TemplateTack>> fetchNearbyPopularTacks(
     FetchNearbyPopularTacksPayload payload,

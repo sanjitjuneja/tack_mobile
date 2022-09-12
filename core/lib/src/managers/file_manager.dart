@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:image_picker/image_picker.dart';
@@ -25,10 +26,22 @@ class FileManager {
   static Future<XFile?> pickImage(
     ImageSource source, {
     int? imageQuality,
-  }) {
+  }) async {
     return ImagePicker().pickImage(
       source: source,
       imageQuality: imageQuality ?? 50,
     );
+  }
+
+  static String getFileSizeString({
+    required int bytes,
+    int decimals = 0,
+  }) {
+    const List<String> suffixes = <String>['b', 'kb', 'mb', 'gb', 'tb'];
+    final int i = (log(bytes) / log(1024)).floor();
+
+    final String size = (bytes / pow(1024, i)).toStringAsFixed(decimals);
+
+    return <String>[size, suffixes[i]].join();
   }
 }

@@ -1,6 +1,6 @@
 part of groups;
 
-class GroupDetails extends Equatable {
+class GroupDetails extends Equatable with IdentifiableMixin {
   final int id;
   final Group group;
   final bool isMuted;
@@ -17,4 +17,7 @@ class GroupDetails extends Equatable {
         group,
         isMuted,
       ];
+
+  @override
+  int get itemId => id;
 }

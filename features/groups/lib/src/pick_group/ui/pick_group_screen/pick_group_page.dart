@@ -31,6 +31,8 @@ class _PickGroupFeaturePage extends Page<Group> {
           create: (_) {
             return GroupsBloc(
               loadGroupsUseCase: appLocator.get<LoadGroupsUseCase>(),
+              observeGroupIntentUseCase:
+                  appLocator.get<ObserveGroupIntentUseCase>(),
             );
           },
           child: _PickGroupScreen(

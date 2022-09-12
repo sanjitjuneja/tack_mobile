@@ -7,6 +7,7 @@ import 'package:domain/tacks/tacks.dart';
 import 'package:domain/use_case.dart';
 
 import '../global/global.dart';
+import '../web_sockets/web_sockets.dart';
 
 part 'models/group.dart';
 part 'models/group_details.dart';
@@ -35,7 +36,7 @@ part 'use_cases/create_group_use_case.dart';
 part 'use_cases/decline_group_invitation_use_case.dart';
 part 'use_cases/get_current_group_use_case.dart';
 part 'use_cases/fetch_group_invite_use_case.dart';
-part 'use_cases/get_groups_use_case.dart';
+part 'use_cases/get_groups_count_use_case.dart';
 part 'use_cases/leave_group_use_case.dart';
 part 'use_cases/fetch_group_invitations_use_case.dart';
 part 'use_cases/fetch_group_invite_link.dart';
@@ -44,6 +45,8 @@ part 'use_cases/fetch_group_use_case.dart';
 part 'use_cases/fetch_groups_use_case.dart';
 part 'use_cases/mute_group_use_case.dart';
 part 'use_cases/observe_current_group_use_case.dart';
-part 'use_cases/observe_groups_use_case.dart';
+part 'use_cases/observe_group_intent_use_case.dart';
+part 'use_cases/observe_group_invitation_intent_use_case.dart';
+part 'use_cases/observe_groups_count_use_case.dart';
 part 'use_cases/select_group_use_case.dart';
 part 'use_cases/un_mute_group_use_case.dart';

@@ -36,12 +36,15 @@ class _OngoingRunnerTackPage extends Page<OngoingRunnerScreenResult> {
           return OngoingRunnerTackBloc(
             tack: tack,
             appRouter: AppRouter.of(context),
+            observeRunnerTackIntentUseCase:
+                appLocator.get<ObserveRunnerTackIntentUseCase>(),
             fetchUserContactsUseCase:
                 appLocator.get<FetchUserContactsUseCase>(),
             cancelTackRunnerUseCase: appLocator.get<CancelTackRunnerUseCase>(),
             completeTackUseCase: appLocator.get<CompleteTackRunnerUseCase>(),
             startTackUseCase: appLocator.get<StartTackRunnerUseCase>(),
-            tacksRepository: appLocator.get<TacksRepository>(),
+            fetchHasRunningTackUseCase:
+                appLocator.get<FetchHasRunningTackUseCase>(),
           );
         },
         child: const OngoingRunnerTackScreen(),

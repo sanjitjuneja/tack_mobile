@@ -8,6 +8,7 @@ import '../global/global.dart';
 import '../groups/groups.dart';
 
 part 'entities/group_tack_entity.dart';
+part 'entities/has_running_tack_entity.dart';
 part 'entities/offer_entity.dart';
 part 'entities/runner_tack_entity.dart';
 part 'entities/tack_entity.dart';
@@ -27,6 +28,7 @@ part 'requests/fetch_tacker_tacks_request.dart';
 part 'requests/fetch_tack_offers_request.dart';
 part 'requests/fetch_group_popular_tacks_request.dart';
 part 'requests/fetch_group_tacks_request.dart';
+part 'requests/fetch_has_running_tack_request.dart';
 part 'requests/make_offer_request.dart';
 part 'requests/fetch_nearby_popular_tacks_request.dart';
 part 'requests/rate_tack_request.dart';

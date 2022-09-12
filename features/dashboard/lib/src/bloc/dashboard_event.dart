@@ -28,6 +28,14 @@ class LoadMoreAction extends DashboardEvent {
   });
 }
 
+class GroupTackIntentAction extends DashboardEvent {
+  final WebSocketIntent<GroupTack> groupTackIntent;
+
+  const GroupTackIntentAction({
+    required this.groupTackIntent,
+  });
+}
+
 class OpenOwnOngoingTack extends DashboardEvent {
   final GroupTack groupTack;
 

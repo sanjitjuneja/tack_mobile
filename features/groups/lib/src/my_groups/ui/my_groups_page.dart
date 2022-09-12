@@ -38,6 +38,8 @@ class _MyGroupsPage extends Page<void> {
             create: (_) {
               return GroupsBloc(
                 loadGroupsUseCase: appLocator.get<LoadGroupsUseCase>(),
+                observeGroupIntentUseCase:
+                    appLocator.get<ObserveGroupIntentUseCase>(),
               );
             },
           ),

@@ -111,28 +111,32 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
       ImagePickOptionDrawer.page(),
     );
     if (imageSource == null) return;
+    _appRouter.push(ProgressDialog.page());
 
     final XFile? xFile = await FileManager.pickImage(
       imageSource,
-      imageQuality: 5,
-    );
-    if (xFile == null) return;
-
-    final File imageToCrop = await FileManager.writeTempFile(
-      await xFile.readAsBytes(),
-      fileName: 'imageToCrop',
-      mimeType: xFile.mimeType,
+      imageQuality: 30,
     );
 
-    final File? result = await _appRouter.pushForResult(
-      ImageCropper.page(file: imageToCrop),
-    );
-
-    if (result != null) {
-      emit(
-        state.copyWith(groupImage: result),
+    if (xFile != null) {
+      final File imageToCrop = await FileManager.writeTempFile(
+        await xFile.readAsBytes(),
+        fileName: 'imageToCrop',
+        mimeType: xFile.mimeType,
       );
+
+      final File? result = await _appRouter.pushForResult(
+        ImageCropper.page(file: imageToCrop),
+      );
+
+      if (result != null) {
+        emit(
+          state.copyWith(groupImage: result),
+        );
+      }
     }
+
+    _appRouter.pop();
   }
 
   Future<void> _onCreateGroupDeletePhoto(
