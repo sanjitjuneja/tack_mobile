@@ -11,8 +11,9 @@ class SelectDepositPaymentMethodForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SelectDepositPaymentMethodBloc, SelectDepositPaymentMethodState>(
-      builder: (BuildContext context, SelectDepositPaymentMethodState state) {
+    return BlocBuilder<SelectDepositPaymentMethodBloc,
+        SelectDepositPaymentMethodState>(
+      builder: (_, SelectDepositPaymentMethodState state) {
         return AppScrollView(
           children: <Widget>[
             Center(
