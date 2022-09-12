@@ -4,7 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
 class AddToTackBalanceSuccessfulForm extends StatelessWidget {
-  const AddToTackBalanceSuccessfulForm({Key? key}) : super(key: key);
+  final double newTackBalance;
+
+  const AddToTackBalanceSuccessfulForm({
+    Key? key,
+    required this.newTackBalance,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +39,9 @@ class AddToTackBalanceSuccessfulForm extends StatelessWidget {
                     context,
                     'addToTackBalanceSuccessfulScreen.newTackBalance',
                     translationParams: {
-                      'amount': CurrencyUtility.dollarFormat.format(0.0),
+                      'amount': CurrencyUtility.dollarFormat.format(
+                        newTackBalance,
+                      ),
                     },
                   ),
                   style: AppTextTheme.manrope20Bold.copyWith(

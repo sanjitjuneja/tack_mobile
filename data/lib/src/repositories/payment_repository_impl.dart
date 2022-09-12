@@ -15,6 +15,7 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
   })  : _apiProvider = apiProvider,
         _appConfig = appConfig {
     Stripe.publishableKey = _appConfig.stripeKey;
+    Stripe.merchantIdentifier = Constants.merchantName;
   }
 
   @override
@@ -157,5 +158,77 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
     );
 
     return fee;
+  }
+
+  @override
+  Future<void> handleDwollaDeposit(
+    domain.HandleDwollaDepositPayload payload,
+  ) async {
+    await _apiProvider.fetchDwollaPaymentIntent(
+      request: HandleDwollaDepositRequest(
+        paymentMethodId: payload.paymentMethodId,
+        amountInCents: payload.amountInCents,
+        currency: payload.currency,
+      ),
+    );
+  }
+
+  @override
+  Future<void> handleStripeDeposit(
+    domain.HandleStripeDepositPayload payload,
+  ) async {
+    final String? paymentMethodId =
+        payload.paymentMethodId == Constants.applePayId ||
+                payload.paymentMethodId == Constants.googlePayId
+            ? null
+            : payload.paymentMethodId;
+
+    final domain.PaymentSetupIntent paymentIntent =
+        await _apiProvider.fetchStripePaymentIntent(
+      request: HandleStripeDepositRequest(
+        paymentMethodId: paymentMethodId,
+        amountInCents: payload.amountInCents,
+        currency: payload.currency,
+      ),
+    );
+
+    if (payload.paymentMethodId == Constants.applePayId) {
+      await Stripe.instance.presentApplePay(
+        ApplePayPresentParams(
+          cartItems: <ApplePayCartSummaryItem>[
+            ApplePayCartSummaryItem.immediate(
+              label: Constants.merchantName,
+              amount: payload.amountInCents.toDollarFormat.toString(),
+            ),
+          ],
+          country: Constants.countryCode,
+          currency: payload.currency,
+        ),
+      );
+      await Stripe.instance.confirmApplePayPayment(
+        paymentIntent.clientSecret,
+      );
+    } else if (payload.paymentMethodId == Constants.googlePayId) {
+      await Stripe.instance.initGooglePay(
+        const GooglePayInitParams(
+          merchantName: Constants.merchantName,
+          countryCode: Constants.countryCode,
+        ),
+      );
+      await Stripe.instance.presentGooglePay(
+        PresentGooglePayParams(
+          clientSecret: paymentIntent.clientSecret,
+        ),
+      );
+    } else {
+      await Stripe.instance.confirmPayment(
+        paymentIntent.clientSecret,
+        PaymentMethodParams.cardFromMethodId(
+          paymentMethodData: PaymentMethodDataCardFromMethod(
+            paymentMethodId: payload.paymentMethodId,
+          ),
+        ),
+      );
+    }
   }
 }

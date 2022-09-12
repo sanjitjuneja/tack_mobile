@@ -13,7 +13,17 @@ class Constants {
 
   static const int maxBankAccountsAmount = 5;
 
+  static const double minDepositLimitAmount = 1;
+
+  static const double maxDepositLimitAmount = 1000;
+
+  static const String usd = 'USD';
+
   static const String applePayId = 'applePay';
+
+  static const String countryCode = 'US';
+
+  static const String merchantName = 'Tack App';
 
   static const String googlePayId = 'googlePay';
 }

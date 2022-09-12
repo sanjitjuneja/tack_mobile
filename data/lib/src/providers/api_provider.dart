@@ -721,6 +721,32 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.feeMapper.fromEntity);
   }
 
+  Future<void> fetchDwollaPaymentIntent({
+    required HandleDwollaDepositRequest request,
+  }) async {
+    return post<void>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.dwollaDeposit,
+        body: request.toJson(),
+        params: null,
+      ),
+      parser: (_) {},
+    );
+  }
+
+  Future<domain.PaymentSetupIntent> fetchStripePaymentIntent({
+    required HandleStripeDepositRequest request,
+  }) async {
+    return post<PaymentSetupIntentEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.stripeDeposit,
+        body: request.toJson(),
+        params: null,
+      ),
+      parser: PaymentSetupIntentEntity.fromJson,
+    ).then(mapper.paymentSetupIntentMapper.fromEntity);
+  }
+
 // Future<void> logOut() {
 //   return get<void>(
 //     ApiQuery(

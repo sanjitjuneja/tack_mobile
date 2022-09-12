@@ -44,6 +44,11 @@ class AddToTackBalancePage extends Page<void> {
                       appLocator.get<ObserveUserBalanceUseCase>(),
                   fetchUserBalanceUseCase:
                       appLocator.get<FetchUserBalanceUseCase>(),
+                  handleDwollaDepositUseCase:
+                      appLocator.get<HandleDwollaDepositUseCase>(),
+                  handleStripeDepositUseCase:
+                      appLocator.get<HandleStripeDepositUseCase>(),
+                  fetchFeeUseCase: appLocator.get<FetchFeeUseCase>(),
                 );
               },
             ),

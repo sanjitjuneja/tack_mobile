@@ -4,7 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
 class AddToTackBalanceFailedForm extends StatelessWidget {
-  const AddToTackBalanceFailedForm({Key? key}) : super(key: key);
+  final String errorKey;
+
+  const AddToTackBalanceFailedForm({
+    Key? key,
+    required this.errorKey,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +40,7 @@ class AddToTackBalanceFailedForm extends StatelessWidget {
                   child: Text(
                     FlutterI18n.translate(
                       context,
-                      'addToTackBalanceFailedScreen.description',
+                      errorKey,
                     ),
                     textAlign: TextAlign.center,
                     style: AppTextTheme.manrope14Medium.copyWith(

@@ -2,7 +2,6 @@ import 'package:core/src/text_input_formatters/currency_formatter.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-
 class CurrencyUtility {
   static List<TextInputFormatter> dollarInputFormatters({double? maxValue}) =>
       <TextInputFormatter>[
@@ -21,4 +20,12 @@ class CurrencyUtility {
         symbol: '\$',
         decimalDigits: 0,
       );
+}
+
+extension CentsToDollarFormat on double {
+  double get toDollarFormat => this / 100;
+}
+
+extension DollarToCentsFormat on double {
+  double get toCentsFormat => this * 100;
 }

@@ -66,4 +66,6 @@ class BaseUrlConstants {
   static const String removePaymentMethod = 'payment/detach-payment-method/';
   static const String setPrimaryPaymentMethod = 'payment/set-primary-method/';
   static const String fetchFees = 'payment/get-fees/';
+  static const String stripeDeposit = 'payment/deposit-stripe/';
+  static const String dwollaDeposit = 'payment/deposit-dwolla/';
 }

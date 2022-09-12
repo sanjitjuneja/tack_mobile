@@ -560,9 +560,16 @@
     "title": "Add Cash to Tack Balance",
     "currentTackBalance": "Current Tack Balance: ",
     "newTackBalance": "New Tack Balance: ",
+    "minDepositLimitErrorMessage": "Minimum deposit must be ${min_range}",
+    "maxDepositLimitErrorMessage": "Deposit must be less than ${max_range}",
     "deposit": "Deposit",
     "selectPaymentMethod": "Select Payment Method",
-    "bankOrCard": "Bank or Card"
+    "bankOrCard": "Bank or Card",
+    "noTransactionFee": "No Deposit Fee",
+    "feeLabel": " will be charged in accordance with our {fee_percent}% deposit fee",
+    "feeLabelWithMinAndMax": " will be charged in accordance with our {fee_percent}% deposit fee(min: ${min_fee}, max: ${max_fee})",
+    "feeLabelWithMin": " will be charged in accordance with our {fee_percent}% deposit fee(min: ${min_fee})",
+    "feeLabelWithMax": " will be charged in accordance with our {fee_percent}% deposit fee(max: ${max_fee})"
   },
   "selectPaymentMethodScreen": {
     "fee": "{feePercent}% fee",
@@ -575,7 +582,8 @@
   },
   "addToTackBalanceFailedScreen": {
     "title": "Deposit Failed",
-    "description": "We were unable to successfully process the deposit. Please try again in a few minutes.",
+    "unableToAdd": "We were unable to successfully process the deposit. Please try again in a few minutes.",
+    "limitReached": "You’ve initiated too many transactions in the last 24 hrs. Please try again soon.",
     "close": "Close"
   },
   "addPaymentMethodFailedScreen": {

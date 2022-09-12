@@ -3,7 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'add_to_tack_balance_failed_form.dart';
 
 class AddToTackBalanceFailedScreen extends StatelessWidget {
-  const AddToTackBalanceFailedScreen({Key? key}) : super(key: key);
+  final String errorKey;
+
+  const AddToTackBalanceFailedScreen({
+    Key? key,
+    required this.errorKey,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +19,10 @@ class AddToTackBalanceFailedScreen extends StatelessWidget {
         withResult: false,
         automaticallyImplyLeading: false,
       ),
-      child: const SafeArea(
-        child: AddToTackBalanceFailedForm(),
+      child: SafeArea(
+        child: AddToTackBalanceFailedForm(
+          errorKey: errorKey,
+        ),
       ),
     );
   }

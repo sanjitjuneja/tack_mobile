@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
 
+import '../../add_to_tack_balance_failed/ui/add_to_tack_balance_failed_page.dart';
 import '../../select_payment_method_screen/ui/select_payment_method_page.dart';
 import '../../add_to_tack_balance_successful/ui/add_to_tack_balance_successful_page.dart';
 import '../../models/selected_payment_method.dart';
@@ -22,6 +24,9 @@ class AddToTackBalanceBloc
   final FetchUserBalanceUseCase _fetchUserBalanceUseCase;
   final FetchIsApplePaySupportedUseCase _fetchIsApplePaySupportedUseCase;
   final FetchIsGooglePaySupportedUseCase _fetchIsGooglePaySupportedUseCase;
+  final HandleDwollaDepositUseCase _handleDwollaDepositUseCase;
+  final HandleStripeDepositUseCase _handleStripeDepositUseCase;
+  final FetchFeeUseCase _fetchFeeUseCase;
 
   late StreamSubscription<UserBankAccount> _userBalanceSubscription;
 
@@ -35,6 +40,9 @@ class AddToTackBalanceBloc
     required GetUserBalanceUseCase getUserBalanceUseCase,
     required FetchIsApplePaySupportedUseCase fetchIsApplePaySupportedUseCase,
     required FetchIsGooglePaySupportedUseCase fetchIsGooglePaySupportedUseCase,
+    required HandleDwollaDepositUseCase handleDwollaDepositUseCase,
+    required HandleStripeDepositUseCase handleStripeDepositUseCase,
+    required FetchFeeUseCase fetchFeeUseCase,
   })  : _appRouter = appRouter,
         _fetchConnectedBankAccountsUseCase = fetchConnectedBankAccountsUseCase,
         _fetchConnectedCardsUseCase = fetchConnectedCardsUseCase,
@@ -42,10 +50,14 @@ class AddToTackBalanceBloc
         _fetchUserBalanceUseCase = fetchUserBalanceUseCase,
         _fetchIsApplePaySupportedUseCase = fetchIsApplePaySupportedUseCase,
         _fetchIsGooglePaySupportedUseCase = fetchIsGooglePaySupportedUseCase,
+        _handleDwollaDepositUseCase = handleDwollaDepositUseCase,
+        _handleStripeDepositUseCase = handleStripeDepositUseCase,
+        _fetchFeeUseCase = fetchFeeUseCase,
         super(
           AddToTackBalanceState(
             amount: 0.0,
             userBalance: getUserBalanceUseCase.execute(NoParams()),
+            fee: null,
             selectedPaymentMethod: const SelectedPaymentMethod(
               bankAccount: null,
               card: null,
@@ -63,7 +75,7 @@ class AddToTackBalanceBloc
     _userBalanceSubscription =
         _observeUserBalanceUseCase.execute(NoParams()).listen(
       (UserBankAccount newUserBalance) {
-        final AddToTackBalanceEvent event = UserBalanceUpdate(
+        final UserBalanceUpdate event = UserBalanceUpdate(
           userBalance: newUserBalance,
         );
         add(event);
@@ -98,6 +110,10 @@ class AddToTackBalanceBloc
 
       await _fetchUserBalanceUseCase.execute(const FetchUserBalancePayload());
 
+      final Fee fee = await _fetchFeeUseCase.execute(
+        const FetchFeePayload(),
+      );
+
       emit(
         state.copyWith(
           selectedPaymentMethod: SelectedPaymentMethod(
@@ -110,6 +126,7 @@ class AddToTackBalanceBloc
             isApplePay: isApplePaySupported,
             isGooglePay: isGooglePaySupported,
           ),
+          fee: fee,
           isLoading: false,
           hasError: false,
         ),
@@ -164,7 +181,68 @@ class AddToTackBalanceBloc
     MakeAddToTackBalanceRequest event,
     Emitter<AddToTackBalanceState> emit,
   ) async {
-    _appRouter.replace(AddToTackBalanceSuccessfulFeature.page());
+    try {
+      _appRouter.push(ProgressDialog.page());
+      if (state.selectedPaymentMethod.card != null) {
+        await _handleStripeDepositUseCase.execute(
+          HandleStripeDepositPayload(
+            paymentMethodId: state.selectedPaymentMethod.card!.id,
+            amountInCents: state.amount.toCentsFormat,
+            currency: Constants.usd,
+          ),
+        );
+      } else if (state.selectedPaymentMethod.bankAccount != null) {
+        await _handleDwollaDepositUseCase.execute(
+          HandleDwollaDepositPayload(
+            paymentMethodId: state.selectedPaymentMethod.bankAccount!.id,
+            amountInCents: state.amount.toCentsFormat,
+            currency: Constants.usd,
+          ),
+        );
+      } else if (state.selectedPaymentMethod.isApplePay) {
+        await _handleStripeDepositUseCase.execute(
+          HandleStripeDepositPayload(
+            paymentMethodId: Constants.applePayId,
+            amountInCents: state
+                .amountInDollarFormatWithFee(
+                  feePercent: state.fee?.stripeFeeData.feePercent ?? 0,
+                  feeMinAmount: state.fee?.stripeFeeData.feeMin.toDouble() ?? 0,
+                  feeMaxAmount: state.fee?.stripeFeeData.feeMax.toDouble() ?? 0,
+                )
+                .toCentsFormat,
+            currency: Constants.usd,
+          ),
+        );
+      } else {
+        await _handleStripeDepositUseCase.execute(
+          HandleStripeDepositPayload(
+            paymentMethodId: Constants.googlePayId,
+            amountInCents: state.amount.toCentsFormat,
+            currency: Constants.usd,
+          ),
+        );
+      }
+      _appRouter.pop();
+      _appRouter.push(
+        AddToTackBalanceSuccessfulFeature.page(
+          newTackBalance: state.userBalance.usdBalance + state.amount,
+        ),
+      );
+    } on TransactionsLimitException {
+      _appRouter.pop();
+      _appRouter.push(
+        AddToTackBalanceFailedFeature.page(
+          errorKey: 'addToTackBalanceFailedScreen.limitReached',
+        ),
+      );
+    } catch (e) {
+      _appRouter.pop();
+      _appRouter.push(
+        AddToTackBalanceFailedFeature.page(
+          errorKey: 'addToTackBalanceFailedScreen.unableToAdd',
+        ),
+      );
+    }
   }
 
   Future<void> _onUpdateDepositAmountAction(
