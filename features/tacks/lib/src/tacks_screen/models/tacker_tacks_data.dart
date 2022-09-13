@@ -1,27 +1,102 @@
 import 'package:domain/domain.dart';
 
 class TackerTacksState {
-  final List<Tack> tacks;
+  final List<Tack> results;
   final bool isLoading;
-  final bool canLoadMore;
 
-  bool get hasData => tacks.isNotEmpty;
+  bool get hasData => results.isNotEmpty;
 
   const TackerTacksState({
-    List<Tack>? tacks,
+    List<Tack>? results,
     this.isLoading = false,
-    this.canLoadMore = true,
-  }) : tacks = tacks ?? const <Tack>[];
+  }) : results = results ?? const <Tack>[];
 
-  TackerTacksState copyWith({
-    List<Tack>? tacks,
-    bool? isLoading,
-    bool? canLoadMore,
+  TackerTacksState _withSorting({
+    required List<Tack> results,
+    bool isLoading = false,
   }) {
     return TackerTacksState(
-      tacks: tacks ?? this.tacks,
-      isLoading: isLoading ?? false,
-      canLoadMore: canLoadMore ?? this.canLoadMore,
+      results: results..sort(),
+      isLoading: isLoading,
+    );
+  }
+
+  TackerTacksState _withoutSorting({
+    required List<Tack> results,
+    bool isLoading = false,
+  }) {
+    return TackerTacksState(
+      results: results,
+      isLoading: isLoading,
+    );
+  }
+
+  TackerTacksState copyWith({
+    List<Tack>? results,
+    bool? isLoading,
+  }) {
+    final bool isLoadingResult = isLoading ?? false;
+
+    if (results == null) {
+      return _withoutSorting(
+        results: this.results,
+        isLoading: isLoadingResult,
+      );
+    }
+
+    return _withSorting(
+      results: results,
+      isLoading: isLoadingResult,
+    );
+  }
+
+  TackerTacksState addItem({
+    required Tack item,
+  }) {
+    final int index = results.indexWhere(
+      (element) => element.itemId == item.itemId,
+    );
+
+    if (index != -1) return this;
+
+    return _withSorting(
+      results: <Tack>[
+        item,
+        ...results,
+      ],
+    );
+  }
+
+  TackerTacksState updateItem({
+    required Tack item,
+  }) {
+    final int index = results.indexWhere(
+      (element) => element.itemId == item.itemId,
+    );
+
+    if (index == -1) return this;
+
+    final List<Tack> items = <Tack>[...results];
+    items[index] = item;
+
+    return _withSorting(
+      results: items,
+    );
+  }
+
+  TackerTacksState removeItem({
+    required int itemId,
+  }) {
+    final int index = results.indexWhere(
+      (element) => element.itemId == itemId,
+    );
+
+    if (index == -1) return this;
+
+    return _withoutSorting(
+      results: <Tack>[
+        ...results,
+      ]..removeAt(index),
     );
   }
 }

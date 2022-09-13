@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
+
 import '../bloc/add_payment_method_bloc.dart';
 import '../models/add_payment_method_screen_result.dart';
 import 'add_payment_method_screen.dart';

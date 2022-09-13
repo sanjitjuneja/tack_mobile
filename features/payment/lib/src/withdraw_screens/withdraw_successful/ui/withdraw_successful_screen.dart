@@ -1,5 +1,6 @@
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
+
 import 'withdraw_successful_form.dart';
 
 class WithdrawSuccessfulScreen extends StatelessWidget {

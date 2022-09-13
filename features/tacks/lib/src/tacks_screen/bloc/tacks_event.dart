@@ -24,27 +24,11 @@ class RefreshRunnerTacks extends TacksEvent {
   });
 }
 
-class LoadRunnerTacks extends TacksEvent {
-  final Completer<LoadingStatus> completer;
-
-  const LoadRunnerTacks({
-    required this.completer,
-  });
-}
-
 class RefreshTackerTacks extends TacksEvent {
   final Completer<RefreshingStatus>? completer;
 
   const RefreshTackerTacks({
     this.completer,
-  });
-}
-
-class LoadTackerTacks extends TacksEvent {
-  final Completer<LoadingStatus> completer;
-
-  const LoadTackerTacks({
-    required this.completer,
   });
 }
 

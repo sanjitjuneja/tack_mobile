@@ -1,6 +1,6 @@
 part of tacks;
 
-class FetchRunnerTacksUseCase extends FutureUseCase<PaginationModel<RunnerTack>,
+class FetchRunnerTacksUseCase extends FutureUseCase<List<RunnerTack>,
     FetchRunnerTacksPayload> {
   final TacksRepository _tacksRepository;
 
@@ -9,7 +9,7 @@ class FetchRunnerTacksUseCase extends FutureUseCase<PaginationModel<RunnerTack>,
   }) : _tacksRepository = tacksRepository;
 
   @override
-  Future<PaginationModel<RunnerTack>> execute(
+  Future<List<RunnerTack>> execute(
     FetchRunnerTacksPayload params,
   ) async {
     return _tacksRepository.fetchRunnerTacks(params);

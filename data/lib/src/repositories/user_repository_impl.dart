@@ -146,8 +146,6 @@ class UserRepositoryImpl implements domain.UserRepository {
     await _sharedPreferencesProvider.setActiveGroupId(user.activeGroup);
 
     _userStreamController.add(user);
-    print(user);
-    print('UPDATE');
   }
 
   @override

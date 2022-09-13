@@ -28,8 +28,8 @@ class TackerTacksWidget extends StatelessWidget {
             builder: (_, TacksState state) {
               return AppListViewWithRefresh(
                 enableRefresh: true,
-                enableLoad: state.tackerTacksData.canLoadMore,
-                isLoading: state.isLoading,
+                enableLoad: false,
+                isLoading: state.tackerTacksData.isLoading,
                 hasData: state.tackerTacksData.hasData,
                 emptyWidget: EmptyWidget(
                   svgIcon: AppIconsTheme.tacksList,
@@ -38,7 +38,6 @@ class TackerTacksWidget extends StatelessWidget {
                   onButtonTap: () => _onEmptyStateButtonTap(context),
                 ),
                 onRefresh: _onRefreshAction,
-                onLoad: _onLoadMoreAction,
                 itemCount: state.tackerTacksData.results.length,
                 itemBuilder: (_, int index) {
                   return TackerTackWidget(
@@ -63,13 +62,5 @@ class TackerTacksWidget extends StatelessWidget {
   ) {
     BlocProvider.of<TacksBloc>(context)
         .add(RefreshTackerTacks(completer: completer));
-  }
-
-  void _onLoadMoreAction(
-    BuildContext context,
-    Completer<LoadingStatus> completer,
-  ) {
-    BlocProvider.of<TacksBloc>(context)
-        .add(LoadTackerTacks(completer: completer));
   }
 }

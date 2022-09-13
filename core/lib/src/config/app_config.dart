@@ -9,9 +9,9 @@ class AppConfig {
   static const String stagingUrl = 'https://backend.tackapp.net/api/v1/';
   static const String productionUrl = 'https://backend.tackapp.net/api/v1/';
 
-  static const String developmentWebSocketsUrl = 'ws://34.236.154.0:8020/ws/';
-  static const String stagingWebSocketsUrl = 'ws://34.236.154.0:8020/ws/';
-  static const String productionWebSocketsUrl = 'ws://34.236.154.0:8020/ws/';
+  static const String developmentWebSocketsUrl = 'ws://backend.tackapp.net/ws/';
+  static const String stagingWebSocketsUrl = 'ws://backend.tackapp.net/ws/';
+  static const String productionWebSocketsUrl = 'ws://backend.tackapp.net/ws/';
 
   static const String stripeDevelopmentKey =
       'pk_test_51KYDDWHUDqRuKWfqG347VI2pG1CgnOApLRuoqeZZ4A0ZHBuOh5QapxVwJ9XLh5pZREboD3HyvbZl97VI1TlZsVqr00gRuftswA';

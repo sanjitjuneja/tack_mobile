@@ -27,6 +27,7 @@ class DescriptionSection extends StatelessWidget {
       minLines: 3,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.done,
+      textCapitalization: TextCapitalization.sentences,
       hasShadow: false,
       backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
       inputFormatters: <TextInputFormatter>[

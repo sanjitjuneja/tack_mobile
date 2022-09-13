@@ -1,6 +1,6 @@
 part of tacks_entities;
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class GroupPopularTacksResponse extends JsonSerializable {
   final List<TemplateTackEntity> popular;
 
@@ -11,7 +11,4 @@ class GroupPopularTacksResponse extends JsonSerializable {
   factory GroupPopularTacksResponse.fromJson(Map<String, dynamic> json) {
     return _$GroupPopularTacksResponseFromJson(json);
   }
-
-  @override
-  Map<String, dynamic> toJson() => _$GroupPopularTacksResponseToJson(this);
 }

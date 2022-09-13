@@ -59,10 +59,10 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   }
 
   @override
-  Future<domain.PaginationModel<domain.RunnerTack>> fetchRunnerTacks(
+  Future<List<domain.RunnerTack>> fetchRunnerTacks(
     domain.FetchRunnerTacksPayload payload,
   ) async {
-    final domain.PaginationModel<domain.RunnerTack> tacks =
+    final List<domain.RunnerTack> tacks =
         await _apiProvider.fetchRunnerTacks(
       FetchRunnerTacksRequest(
         lastObjectId: payload.lastObjectId,
@@ -74,10 +74,10 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   }
 
   @override
-  Future<domain.PaginationModel<domain.Tack>> fetchTackerTacks(
+  Future<List<domain.Tack>> fetchTackerTacks(
     domain.FetchTackerTacksPayload payload,
   ) async {
-    final domain.PaginationModel<domain.Tack> tacks =
+    final List<domain.Tack> tacks =
         await _apiProvider.fetchTackerTacks(
       FetchTackerTacksRequest(
         lastObjectId: payload.lastObjectId,

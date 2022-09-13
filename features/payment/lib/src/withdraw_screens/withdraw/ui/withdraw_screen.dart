@@ -1,7 +1,8 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:payment/src/withdraw_screens/withdraw/bloc/withdraw_bloc.dart';
+
+import '../bloc/withdraw_bloc.dart';
 import 'withdraw_form.dart';
 
 class WithdrawScreen extends StatelessWidget {

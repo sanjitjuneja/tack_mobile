@@ -1,7 +1,9 @@
 {
   "urls": {
     "termsAndConditions": "https://www.iubenda.com/terms-and-conditions/37710693",
-    "privacyPolicy": "https://www.iubenda.com/privacy-policy/37710693"
+    "privacyPolicy": "https://www.iubenda.com/privacy-policy/37710693",
+    "dwollaTermsOfService": "https://www.dwolla.com/legal/tos/",
+    "dwollaPrivacyPolicy": "https://www.dwolla.com/legal/privacy/"
   },
   "errors": {
     "couldNotLaunchURL": "Could not launch URL",
@@ -129,7 +131,7 @@
     "offerSent": {
       "title": "Offer Sent",
       "message": "We will notify you if the offer is accepted",
-      "mainButtonLabel": "View All Offers Sent"
+      "mainButtonLabel": "Close"
     },
     "offerAccepted": {
       "title": "Offer Accepted",
@@ -229,7 +231,7 @@
     "emailPlaceholder": "Email",
     "newPasswordPlaceholder": "New Password",
     "confirmPasswordPlaceholder": "Confirm Password",
-    "termsPrivacyAgreement": "Agree to <a href={termsConditionsLink}>Terms & Conditions</a> & <a href={privacyPolicyLink}>Privacy Policy</a>",
+    "termsPrivacyAgreement": "By selecting this button you agree to Our <a href={termsOfServiceLink}>Terms of Service</a> & <a href={privacyPolicyLink}>Privacy Policy</a>, as well as <a href={dwollaTermsOfServiceLink}>Dwolla’s Terms of Service</a> & <a href={dwollaPrivacyPolicyLink}>Privacy Policy</a>",
     "nextButton": "Next"
   },
   "forgotPasswordScreen": {
@@ -317,8 +319,8 @@
     "subtitle": "Ongoing Tacks",
     "description": "Here are your ongoing Tacks (the ones you have created yourself or completing for others)",
     "tabs": {
-      "first": "Tacker",
-      "second": "Runner"
+      "first": "Created",
+      "second": "Completing"
     },
     "tacker": {
       "subtitle": "Created By You"
@@ -372,8 +374,8 @@
     "members": "Members",
     "leaveButton": "Leave",
     "inviteMembersButton": "Invite Members",
-    "muteNotificationsButton": "Mute Notifications",
-    "unMuteNotificationsButton": "Un Mute Notifications",
+    "muteNotificationsButton": "Mute",
+    "unMuteNotificationsButton": "Unmute",
     "declineButton": "Decline",
     "joinButton": "Join"
   },
@@ -406,8 +408,8 @@
     "title": "Create Tack",
     "description": "Create custom Tack or select a popular template or frequent Tacks within your current group.",
     "tabs": {
-      "first": "Nearby",
-      "second": "Group"
+      "first": "Popular Nearby",
+      "second": "Popular In Group"
     },
     "nearbyPopular": {
       "subtitle": "Popular Tacks Nearby",

@@ -261,10 +261,8 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
       ),
     );
 
-    print(groupsCount);
     _groupsCountStreamController.add(groupsCount + 1);
 
-    print(groupsCount);
     await selectGroup(
       domain.SelectGroupPayload(
         group: payload.invitation.group,

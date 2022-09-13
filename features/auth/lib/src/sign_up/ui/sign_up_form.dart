@@ -1,4 +1,3 @@
-import 'package:auth/src/sign_up/ui/widgets/passwords_section.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import '../bloc/sign_up_bloc.dart';
 import 'widgets/email_section.dart';
 import 'widgets/last_name_section.dart';
+import 'widgets/passwords_section.dart';
 import 'widgets/phone_number_section.dart';
 import 'widgets/terms_conditions_resolver.dart';
 import 'widgets/first_name_section.dart';
@@ -52,7 +52,7 @@ class SignUpForm extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TermsConditionsResolver(state: state),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 8),
             KeyboardVisibilityWidget(
               padding: const EdgeInsets.only(bottom: 10),
               child: AppCircleButton(

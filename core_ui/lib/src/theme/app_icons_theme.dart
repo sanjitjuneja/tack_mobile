@@ -29,7 +29,6 @@ class AppIconsTheme {
   static const String _shareKey = '${_basePath}share.png';
 
   /// SVG
-
   static const String _chevronLeftKey = '${_svgPath}chevron_left.svg';
   static const String _chevronRightKey = '${_svgPath}chevron_right.svg';
 
@@ -63,6 +62,8 @@ class AppIconsTheme {
   static const String _checkmarkKey = '${_svgPath}checkmark.svg';
   static const String _redCrossRoundedKey = '${_svgPath}red_cross_rounded.svg';
   static const String _supportKey = '${_svgPath}support.svg';
+  static const String _bellKey = '${_svgPath}bell.svg';
+  static const String _bellCrossedOutKey = '${_svgPath}bell_crossed_out.svg';
 
   /// Bottom Navigation bar
   static const AppIcon dashboardsActive = AppIcon(_dashboardActiveKey);
@@ -121,4 +122,6 @@ class AppIconsTheme {
   static const AppIcon checkmark = AppIcon(_checkmarkKey);
   static const AppIcon redCrossRounded = AppIcon(_redCrossRoundedKey);
   static const AppIcon support = AppIcon(_supportKey);
+  static const AppIcon bell = AppIcon(_bellKey);
+  static const AppIcon bellCrossedOut = AppIcon(_bellCrossedOutKey);
 }

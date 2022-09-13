@@ -35,7 +35,6 @@ class ApiProvider extends ApiProviderCore {
         ) async {
           final Session? session = await sessionProvider.getCurrentSession();
           if (session != null) {
-            print(session.accessToken);
             options.headers[HttpHeaders.authorizationHeader] =
                 'Bearer ${session.accessToken}';
           }
@@ -412,7 +411,7 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
-  Future<domain.PaginationModel<domain.RunnerTack>> fetchRunnerTacks(
+  Future<List<domain.RunnerTack>> fetchRunnerTacks(
     FetchRunnerTacksRequest request,
   ) async {
     return get<PaginationEntity<RunnerTackEntity>>(
@@ -424,10 +423,10 @@ class ApiProvider extends ApiProviderCore {
       parser: PaginationEntity<RunnerTackEntity>.fromJson,
     ).then(
       mapper.paginationMapper<RunnerTackEntity, domain.RunnerTack>().fromEntity,
-    );
+    ).then((el) => el.results);
   }
 
-  Future<domain.PaginationModel<domain.Tack>> fetchTackerTacks(
+  Future<List<domain.Tack>> fetchTackerTacks(
     FetchTackerTacksRequest request,
   ) async {
     return get<PaginationEntity<TackEntity>>(
@@ -439,7 +438,7 @@ class ApiProvider extends ApiProviderCore {
       parser: PaginationEntity<TackEntity>.fromJson,
     ).then(
       mapper.paginationMapper<TackEntity, domain.Tack>().fromEntity,
-    );
+    ).then((el) => el.results);
   }
 
   Future<domain.PaginationModel<domain.GroupTack>> fetchGroupTacks(

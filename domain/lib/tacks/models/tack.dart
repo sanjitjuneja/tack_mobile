@@ -1,6 +1,6 @@
 part of tacks;
 
-class Tack extends Equatable with IdentifiableMixin {
+class Tack extends Equatable with IdentifiableMixin, Comparable {
   final int id;
   final String title;
   final double price;
@@ -55,4 +55,9 @@ class Tack extends Equatable with IdentifiableMixin {
 
   @override
   int get itemId => id;
+
+  @override
+  int compareTo(covariant Tack other) {
+    return status.compareTo(other.status);
+  }
 }

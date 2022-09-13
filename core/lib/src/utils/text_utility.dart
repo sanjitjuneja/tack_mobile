@@ -32,4 +32,8 @@ extension StringToSentenceCase on String {
   String toSentenceCase() {
     return '${this[0].toUpperCase()}${substring(1).toLowerCase()}';
   }
+
+  String eachWordToSentenceCase() {
+    return split('\t').map((String word) => word.toSentenceCase()).join('\t');
+  }
 }
