@@ -1,8 +1,8 @@
 import 'package:core/core.dart';
-import 'package:domain/payment/payment.dart';
-import 'package:domain/user/user.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
+
 import '../bloc/payment_settings_bloc.dart';
 import 'payment_settings_screen.dart';
 
