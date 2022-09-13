@@ -18,17 +18,34 @@ class PayForTackScreen extends StatelessWidget {
         actions: <Widget>[
           BlocBuilder<PayForTackBloc, PayForTackState>(
             builder: (_, PayForTackState state) {
-              return state.currentFeePercent == 0 && !state.isLoading
-                  ? Text(
-                      FlutterI18n.translate(
-                        context,
-                        'addToTackBalanceScreen.noTransactionFee',
-                      ),
-                      style: AppTextTheme.manrope16Regular.copyWith(
-                        color: AppTheme.grassColor,
-                      ),
-                    )
-                  : Container();
+              return Row(
+                children: <Widget>[
+                  TimeLeftWidget(
+                    tillTime: state.offer.expiredAt,
+                    builder: (_, String content) {
+                      return RichText(
+                        text: TextSpan(
+                          text: content,
+                          style: AppTextTheme.manrope14Regular.copyWith(
+                            color: AppTheme.errorColor,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: FlutterI18n.translate(
+                                context,
+                                'payForTack.untilOfferExpires',
+                              ),
+                              style: AppTextTheme.manrope14Regular.copyWith(
+                                color: AppTheme.textHeavyHintColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              );
             },
           ),
         ],

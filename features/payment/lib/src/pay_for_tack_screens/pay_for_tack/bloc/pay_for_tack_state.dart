@@ -22,31 +22,20 @@ class PayForTackState {
     if (selectedPaymentMethod.bankAccount != null) return true;
     if (selectedPaymentMethod.isGooglePay) return true;
     if (selectedPaymentMethod.isApplePay) return true;
+    if (selectedPaymentMethod.isTackBalance) return true;
 
     return false;
   }
 
+  bool get hasEnoughTackBalance => userBalance.usdBalance >= (offer.price ?? 0);
+
   double get currentFeePercent {
-    if (selectedPaymentMethod.bankAccount != null) {
+    if (selectedPaymentMethod.isTackBalance) {
+      return 0;
+    } else if (selectedPaymentMethod.bankAccount != null) {
       return fee?.dwollaFeeData.feePercent ?? 0;
     } else {
       return fee?.stripeFeeData.feePercent ?? 0;
-    }
-  }
-
-  int get currentMinFeeAmount {
-    if (selectedPaymentMethod.bankAccount != null) {
-      return fee?.dwollaFeeData.feeMin ?? 0;
-    } else {
-      return fee?.stripeFeeData.feeMin ?? 0;
-    }
-  }
-
-  int get currentMaxFeeAmount {
-    if (selectedPaymentMethod.bankAccount != null) {
-      return fee?.dwollaFeeData.feeMax ?? 0;
-    } else {
-      return fee?.stripeFeeData.feeMax ?? 0;
     }
   }
 
@@ -59,6 +48,8 @@ class PayForTackState {
       return Constants.applePayId;
     } else if (selectedPaymentMethod.isGooglePay) {
       return Constants.googlePayId;
+    } else if (selectedPaymentMethod.isTackBalance) {
+      return Constants.tackBalance;
     }
 
     return null;

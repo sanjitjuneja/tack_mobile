@@ -120,6 +120,7 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
             ),
             isApplePay: isApplePaySupported,
             isGooglePay: isGooglePaySupported,
+            isTackBalance: state.hasEnoughTackBalance,
           ),
           fee: fee,
           isLoading: false,
@@ -140,8 +141,8 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
     SelectPaymentMethodAction event,
     Emitter<PayForTackState> emit,
   ) async {
-/*    final PayForTackSelectedPaymentMethod? result = await _appRouter.pushForResult(
-      SelectDepositPaymentMethodFeature.page(
+    /*final PayForTackSelectedPaymentMethod? result = await _appRouter.pushForResult(
+      SelectPayForTackPaymentMethodFeature.page(
         selectedPaymentMethodId: state.selectedPaymentMethodId,
       ),
     );

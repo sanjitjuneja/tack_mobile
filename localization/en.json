@@ -628,7 +628,7 @@
     "balance": "Balance: ${balance}",
     "noTransactionFee": "No Transaction Fee",
     "listedTackPrice": "Listed Tack Price",
-    "untilOfferExpires": "Until Offer Expires",
+    "untilOfferExpires": " Until Offer Expires",
     "beginTack": "Begin Tack"
   },
   "withdrawScreen": {
