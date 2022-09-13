@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
+import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
 
 import '../../../add_edit_tack/ui/add_edit_tack_page.dart';
@@ -15,19 +18,24 @@ part 'ongoing_tacker_tack_state.dart';
 class OngoingTackerTackBloc
     extends Bloc<OngoingTackerTackEvent, OngoingTackerTackState> {
   final AppRouterDelegate _appRouter;
+  final ObserveTackerTackIntentUseCase _observeTackerTackIntentUseCase;
   final FetchUserContactsUseCase _fetchUserContactsUseCase;
   final CancelTackTackerUseCase _cancelTackUseCase;
   final AcceptOfferUseCase _acceptOfferUseCase;
   final CompleteTackTackerUseCase _completeTackUseCase;
 
+  late StreamSubscription<WebSocketIntent<Tack>> _tackIntentSubscription;
+
   OngoingTackerTackBloc({
     required Tack tack,
     required AppRouterDelegate appRouter,
+    required ObserveTackerTackIntentUseCase observeTackerTackIntentUseCase,
     required FetchUserContactsUseCase fetchUserContactsUseCase,
     required CancelTackTackerUseCase cancelTackTackerUseCase,
     required AcceptOfferUseCase acceptOfferUseCase,
     required CompleteTackTackerUseCase completeTackUseCase,
   })  : _appRouter = appRouter,
+        _observeTackerTackIntentUseCase = observeTackerTackIntentUseCase,
         _fetchUserContactsUseCase = fetchUserContactsUseCase,
         _cancelTackUseCase = cancelTackTackerUseCase,
         _acceptOfferUseCase = acceptOfferUseCase,
@@ -47,7 +55,17 @@ class OngoingTackerTackBloc
     on<ContactRunner>(_onContactRunner);
     on<SelectOffer>(_onSelectOffer);
 
-    add(const FetchUserContactsAction());
+    on<TackIntentAction>(_onTackIntentAction);
+
+    _tackIntentSubscription = _observeTackerTackIntentUseCase
+        .execute(NoParams())
+        .listen((WebSocketIntent<Tack> tackIntent) {
+      add(TackIntentAction(tackIntent: tackIntent));
+    });
+
+    if (tack.canContactOther) {
+      add(const FetchUserContactsAction());
+    }
   }
 
   Future<void> _onFetchUserContactsAction(
@@ -186,5 +204,41 @@ class OngoingTackerTackBloc
         ),
       );
     }
+  }
+
+  Future<void> _onTackIntentAction(
+    TackIntentAction event,
+    Emitter<OngoingTackerTackState> emit,
+  ) async {
+    final WebSocketIntent<Tack> intent = event.tackIntent;
+
+    switch (intent.action) {
+      case WebSocketAction.create:
+        return;
+      case WebSocketAction.update:
+        if (intent.objectId != state.tack.id) return;
+
+        final Tack newTack = intent.object!;
+
+        if (newTack.canContactOther && !state.hasContactData) {
+          add(const FetchUserContactsAction());
+        }
+
+        return emit(
+          state.copyWith(
+            tack:newTack,
+            currentStep: newTack.currentStepIndex(isTacker: true),
+          ),
+        );
+      case WebSocketAction.delete:
+        return;
+    }
+  }
+
+  @override
+  Future<void> close() async {
+    _tackIntentSubscription.cancel();
+
+    return super.close();
   }
 }

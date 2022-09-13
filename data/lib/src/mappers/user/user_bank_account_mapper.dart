@@ -7,6 +7,7 @@ class UserBankAccountMapper
   @override
   domain.UserBankAccount fromEntity(UserBankAccountEntity entity) {
     return domain.UserBankAccount(
+      id: entity.id,
       usdBalance: entity.usdBalance / 100,
     );
   }
@@ -14,6 +15,7 @@ class UserBankAccountMapper
   @override
   UserBankAccountEntity toEntity(domain.UserBankAccount item) {
     return UserBankAccountEntity(
+      id: item.id,
       usdBalance: (item.usdBalance * 100).toInt(),
     );
   }

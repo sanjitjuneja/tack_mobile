@@ -4,6 +4,7 @@ export 'src/config/app_config.dart';
 export 'src/config/firebase_config_helper.dart';
 
 export 'src/constants/constants.dart';
+export 'src/constants/type_check.dart';
 export 'src/constants/optional.dart';
 export 'src/constants/void_type.dart';
 
@@ -18,6 +19,8 @@ export 'src/managers/haptic_feedback_manager.dart';
 export 'src/managers/share_manager.dart';
 export 'src/managers/toast_manager.dart';
 export 'src/managers/url_manager.dart';
+
+export 'src/mixins/identifiable_mixin.dart';
 
 export 'src/text_input_formatters/currency_formatter.dart';
 export 'src/text_input_formatters/phone_number_formatter.dart';

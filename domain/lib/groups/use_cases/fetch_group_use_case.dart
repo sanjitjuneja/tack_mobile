@@ -1,14 +1,14 @@
 part of groups;
 
-class LoadGroupUseCase extends FutureUseCase<Group, FetchGroupPayload> {
+class FetchGroupUseCase extends FutureUseCase<GroupDetails, FetchGroupPayload> {
   final GroupsRepository _groupsRepository;
 
-  LoadGroupUseCase({
+  FetchGroupUseCase({
     required GroupsRepository groupsRepository,
   }) : _groupsRepository = groupsRepository;
 
   @override
-  Future<Group> execute(FetchGroupPayload params) async {
+  Future<GroupDetails> execute(FetchGroupPayload params) async {
     return _groupsRepository.fetchGroup(params);
   }
 }

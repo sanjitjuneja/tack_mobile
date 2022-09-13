@@ -1,17 +1,21 @@
 part of groups;
 
 abstract class GroupsRepository {
-  Stream<List<GroupDetails>> get groupsStream;
+  Stream<int> get groupsCountStream;
 
-  List<GroupDetails> get groups;
+  int get groupsCount;
 
   Stream<Group?> get currentGroupStream;
 
   Group? get currentGroup;
 
+  Stream<WebSocketIntent<GroupDetails>> get groupIntentStream;
+
+  Stream<WebSocketIntent<GroupInvitation>> get groupInvitationIntentStream;
+
   Future<void> initialLoad();
 
-  Future<Group> fetchGroup(FetchGroupPayload payload);
+  Future<GroupDetails> fetchGroup(FetchGroupPayload payload);
 
   Future<PaginationModel<GroupDetails>> fetchGroups(FetchGroupsPayload payload);
 
@@ -42,4 +46,6 @@ abstract class GroupsRepository {
   Future<void> acceptGroupInvitation(AcceptGroupInvitationPayload payload);
 
   Future<void> declineGroupInvitation(DeclineGroupInvitationPayload payload);
+
+  Future<void> dispose();
 }

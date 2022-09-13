@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
+import 'package:domain/use_case.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
 import 'package:tacks/tacks.dart';
@@ -16,15 +17,21 @@ part 'dashboard_state.dart';
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final AppRouterDelegate _appRouter;
   final FetchGroupTacksUseCase _fetchGroupTacksUseCase;
+  final ObserveGroupTackIntentUseCase _observeGroupTackIntentUseCase;
   final MakeOfferUseCase _makeOfferUseCase;
+
+  late StreamSubscription<WebSocketIntent<GroupTack>>
+      _groupTackIntentSubscription;
 
   DashboardBloc({
     required AppRouterDelegate appRouter,
     required FetchGroupTacksUseCase fetchGroupTacksUseCase,
+    required ObserveGroupTackIntentUseCase observeGroupTackIntentUseCase,
     required MakeOfferUseCase makeOfferUseCase,
     required Group selectedGroup,
   })  : _appRouter = appRouter,
         _fetchGroupTacksUseCase = fetchGroupTacksUseCase,
+        _observeGroupTackIntentUseCase = observeGroupTackIntentUseCase,
         _makeOfferUseCase = makeOfferUseCase,
         super(
           DashboardState(
@@ -38,9 +45,18 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     on<RefreshAction>(_onRefreshAction);
     on<LoadMoreAction>(_onLoadMoreAction);
 
-    on<OpenOwnOngoingTack>(_onOpenOwnOngoingTack);
+    on<GroupTackIntentAction>(_onGroupTackIntentAction);
+
+    on<OpenOwnRunningOngoingTack>(_onOpenOwnRunningOngoingTack);
+    on<OpenOwnCreatedOngoingTack>(_onOpenOwnOngoingTack);
     on<CounterOfferOpen>(_onCounterOfferOpen);
     on<AcceptTack>(_onAcceptTack);
+
+    _groupTackIntentSubscription = _observeGroupTackIntentUseCase
+        .execute(NoParams())
+        .listen((WebSocketIntent<GroupTack> groupTackIntent) {
+      add(GroupTackIntentAction(groupTackIntent: groupTackIntent));
+    });
 
     add(const InitialLoad());
   }
@@ -115,8 +131,47 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     }
   }
 
+  Future<void> _onGroupTackIntentAction(
+    GroupTackIntentAction event,
+    Emitter<DashboardState> emit,
+  ) async {
+    final WebSocketIntent<GroupTack> intent = event.groupTackIntent;
+
+    final PaginationModel<GroupTack> tacksData;
+
+    switch (intent.action) {
+      case WebSocketAction.create:
+        tacksData = state.tacksData.addItem(
+          item: intent.object!,
+        );
+        break;
+      case WebSocketAction.update:
+        tacksData = state.tacksData.updateItem(
+          item: intent.object!,
+        );
+        break;
+      case WebSocketAction.delete:
+        tacksData = state.tacksData.removeItem(
+          itemId: intent.objectId,
+        );
+        break;
+    }
+
+    emit(
+      state.copyWith(tacksData: tacksData),
+    );
+  }
+
+  Future<void> _onOpenOwnRunningOngoingTack(
+    OpenOwnRunningOngoingTack event,
+    Emitter<DashboardState> emit,
+  ) async {
+    _appRouter.navigationTabState.changeInnerTabIndex(HomeScreenTab.tacks, 1);
+    _appRouter.navigationTabState.changeTabIndex(HomeScreenTab.tacks);
+  }
+
   Future<void> _onOpenOwnOngoingTack(
-    OpenOwnOngoingTack event,
+    OpenOwnCreatedOngoingTack event,
     Emitter<DashboardState> emit,
   ) async {
     _appRouter.pushForResult(
@@ -168,16 +223,13 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     String? error,
   ) async {
     if (result) {
-      final bool dialogResult = await _appRouter.pushForResult(
+      _appRouter.pushForResult(
         AppAlertDialog.page(
           RequestAlert(
             contentKey: 'otherAlert.offerSent',
           ),
         ),
       );
-      if (dialogResult) {
-        _appRouter.navigationTabState.changeTabIndex(HomeScreenTab.tacks);
-      }
     } else if (error.toString().toLowerCase().contains('not available')) {
       _appRouter.pushForResult(
         AppAlertDialog.page(
@@ -197,5 +249,12 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         ),
       );
     }
+  }
+
+  @override
+  Future<void> close() async {
+    _groupTackIntentSubscription.cancel();
+
+    return super.close();
   }
 }

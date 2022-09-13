@@ -16,8 +16,10 @@ class TackTileActions extends StatelessWidget {
         final bool isOwnTack = state.user.id == groupTack.tack.tacker.id;
 
         if (isMineOfferSent) {
-          return const AppButton(
+          return AppButton(
             labelKey: 'dashboardScreen.offerSentButton',
+            withFeedback: true,
+            onTap: () => _onRunningByMeButtonPressed(context),
           );
         } else if (isOwnTack) {
           return AppButton(
@@ -56,9 +58,15 @@ class TackTileActions extends StatelessWidget {
     );
   }
 
+  void _onRunningByMeButtonPressed(BuildContext context) {
+    BlocProvider.of<DashboardBloc>(context).add(
+      OpenOwnRunningOngoingTack(groupTack: groupTack),
+    );
+  }
+
   void _onCreatedByMeButtonPressed(BuildContext context) {
     BlocProvider.of<DashboardBloc>(context).add(
-      OpenOwnOngoingTack(groupTack: groupTack),
+      OpenOwnRunningOngoingTack(groupTack: groupTack),
     );
   }
 

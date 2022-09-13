@@ -3,11 +3,14 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
+import 'package:domain/use_case.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
 
 import '../../ongoing_tack/ongoing_runner_tack/ui/ongoing_runner_tack_page.dart';
 import '../../ongoing_tack/ongoing_tacker_tack/ui/ongoing_tacker_tack_page.dart';
+import '../models/runner_tacks_data.dart';
+import '../models/tacker_tacks_data.dart';
 
 part 'tacks_event.dart';
 
@@ -17,34 +20,52 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
   final AppRouterDelegate _appRouter;
   final FetchRunnerTacksUseCase _fetchRunnerTacksUseCase;
   final FetchTackerTacksUseCase _fetchTackerTacksUseCase;
+  final ObserveRunnerTackIntentUseCase _observeRunnerTackIntentUseCase;
+  final ObserveTackerTackIntentUseCase _observeTackerTackIntentUseCase;
   final CancelOfferUseCase _cancelOfferUseCase;
+
+  late StreamSubscription<WebSocketIntent<RunnerTack>>
+      _runnerTackIntentSubscription;
+  late StreamSubscription<WebSocketIntent<Tack>> _tackerTackIntentSubscription;
 
   TacksBloc({
     required AppRouterDelegate appRouter,
     required FetchRunnerTacksUseCase fetchRunnerTacksUseCase,
     required FetchTackerTacksUseCase fetchTackerTacksUseCase,
+    required ObserveRunnerTackIntentUseCase observeRunnerTackIntentUseCase,
+    required ObserveTackerTackIntentUseCase observeTackerTackIntentUseCase,
     required CancelOfferUseCase cancelOfferUseCase,
   })  : _appRouter = appRouter,
         _fetchRunnerTacksUseCase = fetchRunnerTacksUseCase,
         _fetchTackerTacksUseCase = fetchTackerTacksUseCase,
+        _observeRunnerTackIntentUseCase = observeRunnerTackIntentUseCase,
+        _observeTackerTackIntentUseCase = observeTackerTackIntentUseCase,
         _cancelOfferUseCase = cancelOfferUseCase,
-        super(
-          TacksState(
-            isLoading: true,
-          ),
-        ) {
+        super(const TacksState()) {
     on<MoveToAddTab>(_onMoveToAddTab);
     on<MoveToHomeTab>(_onMoveToHomeTab);
 
     on<InitialLoad>(_onInitialLoad);
     on<RefreshRunnerTacks>(_onRefreshRunnerTacks);
-    on<LoadRunnerTacks>(_onLoadRunnerTacks);
     on<RefreshTackerTacks>(_onRefreshTackerTacks);
-    on<LoadTackerTacks>(_onLoadTackerTacks);
+
+    on<RunnerTackIntentAction>(_onRunnerTackIntentAction);
+    on<TackerTackIntentAction>(_onTackerTackIntentAction);
 
     on<CancelTackOffer>(_onCancelTackOffer);
     on<OpenTackerTack>(_onOpenTackerTack);
     on<OpenRunnerTack>(_onOpenRunnerTack);
+
+    _runnerTackIntentSubscription = _observeRunnerTackIntentUseCase
+        .execute(NoParams())
+        .listen((WebSocketIntent<RunnerTack> tackIntent) {
+      add(RunnerTackIntentAction(tackIntent: tackIntent));
+    });
+    _tackerTackIntentSubscription = _observeTackerTackIntentUseCase
+        .execute(NoParams())
+        .listen((WebSocketIntent<Tack> tackIntent) {
+      add(TackerTackIntentAction(tackIntent: tackIntent));
+    });
 
     add(const InitialLoad());
   }
@@ -76,15 +97,14 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
     Emitter<TacksState> emit,
   ) async {
     try {
-      final PaginationModel<RunnerTack> tacksData =
-          await _fetchRunnerTacksUseCase.execute(
+      final List<RunnerTack> tacks = await _fetchRunnerTacksUseCase.execute(
         const FetchRunnerTacksPayload(),
       );
 
       event.completer?.complete(RefreshingStatus.complete);
       emit(
         state.copyWith(
-          runnerTacksData: tacksData,
+          runnerTacksData: state.runnerTacksData.copyWith(results: tacks),
         ),
       );
     } catch (_) {
@@ -92,36 +112,10 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
       if (event.completer == null) {
         emit(
           state.copyWith(
-            runnerTacksData: PaginationModel.empty(),
+            runnerTacksData: const RunnerTacksState(),
           ),
         );
       }
-    }
-  }
-
-  Future<void> _onLoadRunnerTacks(
-    LoadRunnerTacks event,
-    Emitter<TacksState> emit,
-  ) async {
-    try {
-      final PaginationModel<RunnerTack> tacksData =
-          await _fetchRunnerTacksUseCase.execute(
-        FetchRunnerTacksPayload(
-          lastObjectId: state.runnerTacksData.results.lastOrNull?.id,
-          nextPage: state.runnerTacksData.next,
-        ),
-      );
-
-      event.completer.complete(LoadingStatus.complete);
-      emit(
-        state.copyWith(
-          runnerTacksData: state.runnerTacksData.more(
-            newPage: tacksData,
-          ),
-        ),
-      );
-    } catch (_) {
-      event.completer.complete(LoadingStatus.failed);
     }
   }
 
@@ -130,15 +124,14 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
     Emitter<TacksState> emit,
   ) async {
     try {
-      final PaginationModel<Tack> tacksData =
-          await _fetchTackerTacksUseCase.execute(
+      final List<Tack> tacks = await _fetchTackerTacksUseCase.execute(
         const FetchTackerTacksPayload(),
       );
 
       event.completer?.complete(RefreshingStatus.complete);
       emit(
         state.copyWith(
-          tackerTacksData: tacksData,
+          tackerTacksData: state.tackerTacksData.copyWith(results: tacks),
         ),
       );
     } catch (_) {
@@ -146,37 +139,73 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
       if (event.completer == null) {
         emit(
           state.copyWith(
-            tackerTacksData: PaginationModel.empty(),
+            tackerTacksData: const TackerTacksState(),
           ),
         );
       }
     }
   }
 
-  Future<void> _onLoadTackerTacks(
-    LoadTackerTacks event,
+  Future<void> _onRunnerTackIntentAction(
+    RunnerTackIntentAction event,
     Emitter<TacksState> emit,
   ) async {
-    try {
-      final PaginationModel<Tack> tacksData =
-          await _fetchTackerTacksUseCase.execute(
-        FetchTackerTacksPayload(
-          lastObjectId: state.tackerTacksData.results.lastOrNull?.id,
-          nextPage: state.tackerTacksData.next,
-        ),
-      );
+    final WebSocketIntent<RunnerTack> intent = event.tackIntent;
 
-      event.completer.complete(LoadingStatus.complete);
-      emit(
-        state.copyWith(
-          tackerTacksData: state.tackerTacksData.more(
-            newPage: tacksData,
-          ),
-        ),
-      );
-    } catch (_) {
-      event.completer.complete(LoadingStatus.failed);
+    final RunnerTacksState runnerTacksData;
+
+    switch (intent.action) {
+      case WebSocketAction.create:
+        runnerTacksData = state.runnerTacksData.addItem(
+          item: intent.object!,
+        );
+        break;
+      case WebSocketAction.update:
+        runnerTacksData = state.runnerTacksData.updateItem(
+          item: intent.object!,
+        );
+        break;
+      case WebSocketAction.delete:
+        runnerTacksData = state.runnerTacksData.removeItem(
+          itemId: intent.objectId,
+        );
+        break;
     }
+
+    emit(
+      state.copyWith(runnerTacksData: runnerTacksData),
+    );
+  }
+
+  Future<void> _onTackerTackIntentAction(
+    TackerTackIntentAction event,
+    Emitter<TacksState> emit,
+  ) async {
+    final WebSocketIntent<Tack> intent = event.tackIntent;
+
+    final TackerTacksState tackerTacksData;
+
+    switch (intent.action) {
+      case WebSocketAction.create:
+        tackerTacksData = state.tackerTacksData.addItem(
+          item: intent.object!,
+        );
+        break;
+      case WebSocketAction.update:
+        tackerTacksData = state.tackerTacksData.updateItem(
+          item: intent.object!,
+        );
+        break;
+      case WebSocketAction.delete:
+        tackerTacksData = state.tackerTacksData.removeItem(
+          itemId: intent.objectId,
+        );
+        break;
+    }
+
+    emit(
+      state.copyWith(tackerTacksData: tackerTacksData),
+    );
   }
 
   Future<void> _onCancelTackOffer(
@@ -219,13 +248,25 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
     OpenTackerTack event,
     Emitter<TacksState> emit,
   ) async {
-    _appRouter.pushForResult(OngoingTackerTack.page(tack: event.tack));
+    _appRouter.pushForResult(
+      OngoingTackerTack.page(tack: event.tack),
+    );
   }
 
   Future<void> _onOpenRunnerTack(
     OpenRunnerTack event,
     Emitter<TacksState> emit,
   ) async {
-    _appRouter.pushForResult(OngoingRunnerTack.page(tack: event.tack));
+    _appRouter.pushForResult(
+      OngoingRunnerTack.page(tack: event.tack),
+    );
+  }
+
+  @override
+  Future<void> close() async {
+    _runnerTackIntentSubscription.cancel();
+    _tackerTackIntentSubscription.cancel();
+
+    return super.close();
   }
 }

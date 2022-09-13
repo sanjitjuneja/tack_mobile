@@ -1,6 +1,6 @@
 part of tacks;
 
-class Tack extends Equatable {
+class Tack extends Equatable with IdentifiableMixin, Comparable {
   final int id;
   final String title;
   final double price;
@@ -19,6 +19,8 @@ class Tack extends Equatable {
   bool get canRunnerCancel => status < TackStatus.pendingReview;
 
   bool get isChooseRunnerStage => status == TackStatus.pendingAccept;
+
+  bool get canContactOther => status > TackStatus.pendingAccept;
 
   const Tack({
     required this.id,
@@ -50,4 +52,12 @@ class Tack extends Equatable {
         completionMessage,
         completionTime,
       ];
+
+  @override
+  int get itemId => id;
+
+  @override
+  int compareTo(covariant Tack other) {
+    return status.compareTo(other.status);
+  }
 }

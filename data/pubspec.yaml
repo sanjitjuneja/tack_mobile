@@ -10,6 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   core:
     path: ../core
   domain:
@@ -20,6 +21,7 @@ dependencies:
   json_annotation: ^4.6.0
   jwt_decoder: ^2.0.1
   path: any
+  web_socket_channel: ^2.2.0
 
 dev_dependencies:
   flutter_test:

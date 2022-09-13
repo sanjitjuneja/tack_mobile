@@ -1,6 +1,6 @@
 part of groups;
 
-class GroupInvitation extends Equatable {
+class GroupInvitation extends Equatable with IdentifiableMixin {
   final int id;
   final Group group;
   final int invitee;
@@ -17,4 +17,7 @@ class GroupInvitation extends Equatable {
         group,
         invitee,
       ];
+
+  @override
+  int get itemId => id;
 }

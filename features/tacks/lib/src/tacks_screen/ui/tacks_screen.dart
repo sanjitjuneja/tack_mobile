@@ -17,6 +17,10 @@ class TacksScreen extends StatelessWidget {
         appRouter: appLocator.get<AppRouterDelegate>(),
         fetchRunnerTacksUseCase: appLocator.get<FetchRunnerTacksUseCase>(),
         fetchTackerTacksUseCase: appLocator.get<FetchTackerTacksUseCase>(),
+        observeRunnerTackIntentUseCase:
+            appLocator.get<ObserveRunnerTackIntentUseCase>(),
+        observeTackerTackIntentUseCase:
+            appLocator.get<ObserveTackerTackIntentUseCase>(),
         cancelOfferUseCase: appLocator.get<CancelOfferUseCase>(),
       ),
       child: CupertinoPageScaffold(
@@ -25,7 +29,7 @@ class TacksScreen extends StatelessWidget {
           backgroundColor: AppTheme.primaryBackgroundColor,
           automaticallyImplyLeading: false,
           withMenu: true,
-          middle: Align(
+          middle: const Align(
             alignment: Alignment.centerLeft,
             child: PageHeaderWithGroupWidget(
               titleKey: 'tacksScreen.title',

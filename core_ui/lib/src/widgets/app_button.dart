@@ -28,6 +28,7 @@ class AppButton extends StatelessWidget {
   final bool withFeedback;
   final bool withShadow;
   final bool isDisabled;
+  final bool shouldDisableTap;
   final bool expanded;
   final void Function()? onTap;
 
@@ -49,6 +50,7 @@ class AppButton extends StatelessWidget {
     this.withFeedback = false,
     this.withShadow = true,
     this.isDisabled = false,
+    this.shouldDisableTap = false,
     this.expanded = true,
     this.onTap,
   }) : assert(labelKey != null || labelWidget != null || icon != null);
@@ -74,7 +76,7 @@ class AppButton extends StatelessWidget {
       onTap: onTap,
       feedbackType: feedbackType,
       withFeedback: withFeedback,
-      disable: isDisabled,
+      disable: shouldDisableTap || isDisabled,
       child: Container(
         constraints: constraints,
         padding: shape == BoxShape.rectangle

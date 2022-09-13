@@ -32,6 +32,8 @@ class _InvitationsPage extends Page<void> {
                 appLocator.get<FetchGroupInvitationsUseCase>(),
             acceptGroupInvitationUseCase:
                 appLocator.get<AcceptGroupInvitationUseCase>(),
+            observeGroupInvitationIntentUseCase:
+                appLocator.get<ObserveGroupInvitationIntentUseCase>(),
           );
         },
         child: const InvitationsScreen(),

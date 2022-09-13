@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
+import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
 
 import '../../models/ongoing_runner_screen_result.dart';
+import '../../models/running_tack_data.dart';
 import '../../view_extensions/ongoing_tack_to_view_extension.dart';
 import '../../../rate_tack_user/ui/rate_tack_user_page.dart';
 
@@ -16,26 +18,27 @@ part 'ongoing_runner_tack_state.dart';
 class OngoingRunnerTackBloc
     extends Bloc<OngoingRunnerTackEvent, OngoingRunnerTackState> {
   final AppRouterDelegate _appRouter;
+  final ObserveRunnerTackIntentUseCase _observeRunnerTackIntentUseCase;
+  final FetchHasRunningTackUseCase _fetchHasRunningTackUseCase;
   final FetchUserContactsUseCase _fetchUserContactsUseCase;
   final CancelTackRunnerUseCase _cancelTackUseCase;
   final CompleteTackRunnerUseCase _completeTackUseCase;
   final StartTackRunnerUseCase _startTackUseCase;
 
-  static bool _hasInProgressRunnerTack(List<RunnerTack> tacks) {
-    return tacks.any(
-      (element) => element.tack.status == TackStatus.inProgress,
-    );
-  }
+  late StreamSubscription<WebSocketIntent<RunnerTack>> _tackIntentSubscription;
 
   OngoingRunnerTackBloc({
     required Tack tack,
     required AppRouterDelegate appRouter,
+    required ObserveRunnerTackIntentUseCase observeRunnerTackIntentUseCase,
+    required FetchHasRunningTackUseCase fetchHasRunningTackUseCase,
     required FetchUserContactsUseCase fetchUserContactsUseCase,
     required CancelTackRunnerUseCase cancelTackRunnerUseCase,
     required CompleteTackRunnerUseCase completeTackUseCase,
     required StartTackRunnerUseCase startTackUseCase,
-    required TacksRepository tacksRepository,
   })  : _appRouter = appRouter,
+        _observeRunnerTackIntentUseCase = observeRunnerTackIntentUseCase,
+        _fetchHasRunningTackUseCase = fetchHasRunningTackUseCase,
         _fetchUserContactsUseCase = fetchUserContactsUseCase,
         _cancelTackUseCase = cancelTackRunnerUseCase,
         _completeTackUseCase = completeTackUseCase,
@@ -46,18 +49,54 @@ class OngoingRunnerTackBloc
             stepsCount:
                 OngoingTackToStepIndexViewExtension.runnerTackStepsCount,
             currentStep: tack.currentStepIndex(isTacker: false),
-            hasRunningTack: _hasInProgressRunnerTack(
-              tacksRepository.runnerTacksStream.value,
+            runningTackData: const RunningTackData(
+              isLoading: true,
             ),
           ),
         ) {
+    on<FetchHasRunningTackAction>(_onFetchHasRunningTackAction);
     on<FetchUserContactsAction>(_onFetchUserContactsAction);
 
     on<ActionPressed>(_onActionPressed);
     on<ContactTacker>(_onContactTacker);
     on<CancelTack>(_onCancelTack);
 
+    on<TackIntentAction>(_onTackIntentAction);
+
+    _tackIntentSubscription = _observeRunnerTackIntentUseCase
+        .execute(NoParams())
+        .listen((WebSocketIntent<RunnerTack> tackIntent) {
+      add(TackIntentAction(tackIntent: tackIntent));
+    });
+
+    add(const FetchHasRunningTackAction());
     add(const FetchUserContactsAction());
+  }
+
+  Future<void> _onFetchHasRunningTackAction(
+    FetchHasRunningTackAction event,
+    Emitter<OngoingRunnerTackState> emit,
+  ) async {
+    try {
+      final bool hasRunningTack = await _fetchHasRunningTackUseCase.execute(
+        const FetchHasRunningTackPayload(),
+      );
+      emit(
+        state.copyWith(
+          runningTackData: RunningTackData(
+            hasRunningTack: hasRunningTack,
+          ),
+        ),
+      );
+    } catch (_) {
+      emit(
+        state.copyWith(
+          runningTackData: const RunningTackData(
+            hasError: true,
+          ),
+        ),
+      );
+    }
   }
 
   Future<void> _onFetchUserContactsAction(
@@ -183,5 +222,36 @@ class OngoingRunnerTackBloc
         ),
       );
     }
+  }
+
+  Future<void> _onTackIntentAction(
+    TackIntentAction event,
+    Emitter<OngoingRunnerTackState> emit,
+  ) async {
+    final WebSocketIntent<RunnerTack> intent = event.tackIntent;
+
+    switch (intent.action) {
+      case WebSocketAction.create:
+        return;
+      case WebSocketAction.update:
+        final Tack newTack = intent.object!.tack;
+        if (newTack.id != state.tack.id) return;
+
+        return emit(
+          state.copyWith(
+            tack: newTack,
+            currentStep: newTack.currentStepIndex(isTacker: false),
+          ),
+        );
+      case WebSocketAction.delete:
+        return;
+    }
+  }
+
+  @override
+  Future<void> close() async {
+    _tackIntentSubscription.cancel();
+
+    return super.close();
   }
 }

@@ -3,6 +3,7 @@ import 'package:create_tack/create_tack.dart';
 import 'package:dashboard/dashboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:flutter/material.dart';
 
 import 'package:tacks/tacks.dart';
 
@@ -15,8 +16,10 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => HomeScreenState();
 }
 
-class HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   static const double _iconSize = 28.0;
+
+  late Map<HomeScreenTab, TabController?> _pagesTabControllers;
 
   late CupertinoTabController _tabController;
 
@@ -27,10 +30,28 @@ class HomeScreenState extends State<HomeScreen> {
     _tabController = CupertinoTabController(
       initialIndex: HomeScreenTab.dashboardTabIndex,
     );
+
+    _pagesTabControllers = <HomeScreenTab, TabController?>{
+      HomeScreenTab.dashboard: null,
+      HomeScreenTab.add: TabController(length: 2, vsync: this),
+      HomeScreenTab.tacks: TabController(length: 2, vsync: this),
+    };
+  }
+
+  TabController? tabControllerForTab(HomeScreenTab tab) {
+    return _pagesTabControllers[tab];
   }
 
   void changeTabIndex(HomeScreenTab tab) {
     _tabController.index = tab.tabIndex;
+  }
+
+  // TODO: rename
+  void changeInnerTabIndex(HomeScreenTab tab, int toIndex) {
+    if (_pagesTabControllers[tab] == null) return;
+    if (_pagesTabControllers[tab]!.length <= toIndex) return;
+
+    _pagesTabControllers[tab]?.index = toIndex;
   }
 
   List<BottomNavigationBarItem> _getNavigationItems(BuildContext context) {

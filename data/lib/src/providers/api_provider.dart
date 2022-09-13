@@ -1,13 +1,14 @@
 import 'dart:io';
 
-import 'package:data/src/entities/entities.dart';
-import 'package:data/src/entities/global/global.dart';
-import 'package:data/src/mappers/mappers.dart';
-import 'package:data/src/providers/api_provider_core.dart';
-import 'package:data/src/providers/session_provider.dart';
-import 'package:data/src/query/api_query.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/domain.dart' as domain;
+
+import 'api_provider_core.dart';
+import 'session_provider.dart';
+import '../entities/entities.dart';
+import '../entities/global/global.dart';
+import '../mappers/mappers.dart';
+import '../query/api_query.dart';
 
 class ApiProvider extends ApiProviderCore {
   final MapperFactory mapper;
@@ -173,18 +174,18 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
-  Future<domain.Group> fetchGroup({
+  Future<domain.GroupDetails> fetchGroup({
     required FetchGroupRequest request,
   }) async {
-    return get<GroupEntity>(
+    return get<GroupDetailsEntity>(
       ApiQuery(
         endpoint: BaseUrlConstants.groupPath,
         id: request.id,
         body: null,
         params: null,
       ),
-      parser: GroupEntity.fromJson,
-    ).then(mapper.groupMapper.fromEntity);
+      parser: GroupDetailsEntity.fromJson,
+    ).then(mapper.groupDetailsMapper.fromEntity);
   }
 
   Future<domain.PaginationModel<domain.GroupDetails>> fetchGroups({
@@ -395,7 +396,22 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
-  Future<domain.PaginationModel<domain.RunnerTack>> fetchRunnerTacks(
+  Future<bool> fetchHasRunningTack(
+    FetchHasRunningTackRequest request,
+  ) async {
+    return get<HasRunningTackEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.tackMeHasRunningPath,
+        body: null,
+        params: null,
+      ),
+      parser: HasRunningTackEntity.fromJson,
+    ).then(
+      (HasRunningTackEntity response) => response.hasRunningTack,
+    );
+  }
+
+  Future<List<domain.RunnerTack>> fetchRunnerTacks(
     FetchRunnerTacksRequest request,
   ) async {
     return get<PaginationEntity<RunnerTackEntity>>(
@@ -407,10 +423,10 @@ class ApiProvider extends ApiProviderCore {
       parser: PaginationEntity<RunnerTackEntity>.fromJson,
     ).then(
       mapper.paginationMapper<RunnerTackEntity, domain.RunnerTack>().fromEntity,
-    );
+    ).then((el) => el.results);
   }
 
-  Future<domain.PaginationModel<domain.Tack>> fetchTackerTacks(
+  Future<List<domain.Tack>> fetchTackerTacks(
     FetchTackerTacksRequest request,
   ) async {
     return get<PaginationEntity<TackEntity>>(
@@ -422,7 +438,7 @@ class ApiProvider extends ApiProviderCore {
       parser: PaginationEntity<TackEntity>.fromJson,
     ).then(
       mapper.paginationMapper<TackEntity, domain.Tack>().fromEntity,
-    );
+    ).then((el) => el.results);
   }
 
   Future<domain.PaginationModel<domain.GroupTack>> fetchGroupTacks(

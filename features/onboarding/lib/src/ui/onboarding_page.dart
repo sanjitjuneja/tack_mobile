@@ -9,29 +9,44 @@ import 'onboarding_screen.dart';
 class OnboardingFeature {
   static const String routeName = '/onboarding';
 
-  static Page<void> page() {
-    return const _OnboardingPage();
+  static Page<void> page({
+    bool withSlideAnimation = false,
+  }) {
+    return _OnboardingPage(
+      withSlideAnimation: withSlideAnimation,
+    );
   }
 }
 
 class _OnboardingPage extends Page<void> {
-  const _OnboardingPage();
+  final bool withSlideAnimation;
+
+  const _OnboardingPage({
+    required this.withSlideAnimation,
+  });
 
   @override
   String get name => OnboardingFeature.routeName;
 
   @override
   Route<void> createRoute(BuildContext context) {
-    return OpacityRoute<void>(
-      settings: this,
-      builder: (_) {
-        return BlocProvider<OnboardingBloc>(
-          create: (BuildContext context) => OnboardingBloc(
-            globalAppRouter: appLocator.get<GlobalAppRouterDelegate>(),
-          ),
-          child: const OnboardingScreen(),
-        );
-      },
+    final Widget child = BlocProvider<OnboardingBloc>(
+      create: (BuildContext context) => OnboardingBloc(
+        globalAppRouter: appLocator.get<GlobalAppRouterDelegate>(),
+      ),
+      child: const OnboardingScreen(),
     );
+
+    if (withSlideAnimation) {
+      return CupertinoPageRoute<void>(
+        builder: (_) => child,
+        settings: this,
+      );
+    } else {
+      return OpacityRoute<void>(
+        builder: (_) => child,
+        settings: this,
+      );
+    }
   }
 }

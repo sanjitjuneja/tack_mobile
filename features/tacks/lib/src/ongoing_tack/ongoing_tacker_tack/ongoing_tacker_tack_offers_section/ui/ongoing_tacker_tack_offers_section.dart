@@ -6,10 +6,9 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:tacks/src/ongoing_tack/ongoing_tacker_tack/bloc/ongoing_tacker_tack_bloc.dart';
-import 'package:tacks/src/ongoing_tack/ongoing_tacker_tack/ongoing_tacker_tack_offers_section/bloc/offers_bloc.dart';
-import 'package:tacks/src/ongoing_tack/widgets/tack_details_section.dart';
-
+import '../../bloc/ongoing_tacker_tack_bloc.dart';
+import '../bloc/offers_bloc.dart';
+import '../../../widgets/tack_details_section.dart';
 import 'widgets/ongoing_tacker_tack_offer_tile.dart';
 
 class OngoingTackerTackOffersSection extends StatelessWidget {
@@ -29,6 +28,8 @@ class OngoingTackerTackOffersSection extends StatelessWidget {
         return OffersBloc(
           tack: state.tack,
           fetchTacksOffersUseCase: appLocator.get<FetchTackOffersUseCase>(),
+          observeOfferIntentUseCase:
+              appLocator.get<ObserveOfferIntentUseCase>(),
         );
       },
       child: BlocBuilder<OffersBloc, OffersState>(

@@ -25,6 +25,7 @@ class TitleSection extends StatelessWidget {
       errorTextKey: 'validationErrors.fieldRequired',
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
+      textCapitalization: TextCapitalization.words,
       hasShadow: false,
       backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
       inputFormatters: <TextInputFormatter>[

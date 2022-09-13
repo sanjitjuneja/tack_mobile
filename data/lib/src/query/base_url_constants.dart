@@ -46,6 +46,8 @@ class BaseUrlConstants {
   static const String tacksPreviousMeRunnerPath = '/tacks/me/previous_as_runner/';
   static const String tacksPreviousMeTackerPath = '/tacks/me/previous_as_tacker/';
 
+  static const String tackMeHasRunningPath = '/tacks/me/ongoing-runner-tacks/';
+
   static const String tacks = '/tacks/';
   static const String tacksWithId = '/tacks/${ApiQuery.idKey}/';
   static const String tackOffersPath = '/tacks/${ApiQuery.idKey}/offers/';

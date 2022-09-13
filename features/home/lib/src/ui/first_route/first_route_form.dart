@@ -40,10 +40,12 @@ class FirstRouteForm extends StatelessWidget {
               getCurrentUserUseCase: appLocator.get<GetCurrentUserUseCase>(),
               observeUserUseCase: appLocator.get<ObserveUserUseCase>(),
               getCurrentGroupUseCase: appLocator.get<GetCurrentGroupUseCase>(),
-              getGroupsUseCase: appLocator.get<GetGroupsUseCase>(),
+              getGroupsCountUseCase: appLocator.get<GetGroupsCountUseCase>(),
               observeCurrentGroupUseCase:
                   appLocator.get<ObserveCurrentGroupUseCase>(),
-              observeGroupsUseCase: appLocator.get<ObserveGroupsUseCase>(),
+              observeGroupsCountUseCase:
+                  appLocator.get<ObserveGroupsCountUseCase>(),
+              fetchGroupUseCase: appLocator.get<FetchGroupUseCase>(),
               selectGroupUseCase: appLocator.get<SelectGroupUseCase>(),
             );
           },

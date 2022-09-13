@@ -20,4 +20,6 @@ abstract class UserRepository {
   Future<User> updateUserInfo(UpdateUserInfoPayload payload);
 
   Future<void> changePassword(ChangePasswordPayload payload);
+
+  void dispose();
 }

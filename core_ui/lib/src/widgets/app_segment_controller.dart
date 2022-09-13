@@ -103,7 +103,7 @@ class AppSegmentController<T> extends StatelessWidget {
         blurRadius: 4,
       ),
       border: Border.all(color: AppTheme.segmentBorderColor),
-      textStyle: textStyle ?? AppTextTheme.manrope18Medium,
+      textStyle: textStyle ?? AppTextTheme.manrope16Medium,
       tabTextColor: AppTheme.segmentInactiveTabTextColor,
       selectedTabTextColor: AppTheme.segmentActiveTabTextColor,
       tabs: tabs.map(

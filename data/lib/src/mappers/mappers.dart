@@ -1,5 +1,6 @@
 library mappers;
 
+import 'package:core/core.dart';
 import 'package:data/src/entities/entities.dart';
 import 'package:data/src/entities/global/global.dart';
 import 'package:domain/domain.dart' as domain;
@@ -28,6 +29,9 @@ part 'tacks/template_tack_mapper.dart';
 part 'user/user_bank_account_mapper.dart';
 part 'user/user_contacts_mapper.dart';
 part 'user/user_mapper.dart';
+
+part 'web_sockets/web_socket_action_mapper.dart';
+part 'web_sockets/web_socket_intent_mapper.dart';
 
 part 'payment/plaid_mapper.dart';
 part 'payment/connected_bank_account_mapper.dart';

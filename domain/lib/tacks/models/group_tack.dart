@@ -1,6 +1,6 @@
 part of tacks;
 
-class GroupTack extends Equatable {
+class GroupTack extends Equatable with IdentifiableMixin {
   final int id;
   final Tack tack;
   final bool isMineOfferSent;
@@ -17,4 +17,7 @@ class GroupTack extends Equatable {
         tack,
         isMineOfferSent,
       ];
+
+  @override
+  int get itemId => id;
 }

@@ -33,7 +33,7 @@ class MyGroupsForm extends StatelessWidget {
                   enableLoad: state.groupsData.canLoadMore,
                   isLoading: state.isLoading,
                   hasData: state.groupsData.hasData,
-                  emptyWidget: EmptyWidget(
+                  emptyWidget: const EmptyWidget(
                     svgIcon: AppIconsTheme.people,
                     descriptionKey: 'groupsScreen.empty.description',
                   ),

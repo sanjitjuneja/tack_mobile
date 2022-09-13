@@ -24,6 +24,14 @@ class LoadMoreAction extends InvitationsEvent {
   });
 }
 
+class InvitationIntentAction extends InvitationsEvent {
+  final WebSocketIntent<GroupInvitation> invitationIntent;
+
+  const InvitationIntentAction({
+    required this.invitationIntent,
+  });
+}
+
 class OpenInvitationDetails extends InvitationsEvent {
   final GroupInvitation invitation;
 

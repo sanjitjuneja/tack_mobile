@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:core/core.dart';
 import 'package:domain/domain.dart' as domain;
 
@@ -5,26 +7,53 @@ import '../entities/entities.dart';
 import '../providers/api_provider.dart';
 import '../providers/session_provider.dart';
 import '../providers/shared_preferences_provider.dart';
+import '../providers/web_sockets_handlers.dart';
+import '../providers/web_sockets_provider.dart';
 
 class UserRepositoryImpl implements domain.UserRepository {
   final ApiProvider _apiProvider;
   final SessionProvider _sessionProvider;
   final SharedPreferencesProvider _sharedPreferencesProvider;
+  final WebSocketsProvider _webSocketsProvider;
 
   late BehaviorSubject<domain.User> _userStreamController;
   late BehaviorSubject<domain.UserBankAccount> _balanceStreamController;
+
+  late WebSocketStreamSubscription<domain.User>
+      _webSocketUserIntentSubscription;
+  late WebSocketStreamSubscription<domain.UserBankAccount>
+      _webSocketBalanceIntentSubscription;
 
   UserRepositoryImpl({
     required ApiProvider apiProvider,
     required SessionProvider sessionProvider,
     required SharedPreferencesProvider sharedPreferencesProvider,
+    required WebSocketsProvider webSocketsProvider,
   })  : _apiProvider = apiProvider,
         _sessionProvider = sessionProvider,
-        _sharedPreferencesProvider = sharedPreferencesProvider {
+        _sharedPreferencesProvider = sharedPreferencesProvider,
+        _webSocketsProvider = webSocketsProvider {
     final domain.User user = _sharedPreferencesProvider.getUser()!;
+
     _userStreamController = BehaviorSubject<domain.User>.seeded(user);
     _balanceStreamController = BehaviorSubject<domain.UserBankAccount>.seeded(
-      const domain.UserBankAccount(usdBalance: 0),
+      const domain.UserBankAccount(id: -1, usdBalance: 0),
+    );
+
+    _webSocketUserIntentSubscription = _webSocketsProvider.userStream.listen(
+      (domain.WebSocketIntent<domain.User> intent) {
+        if (intent.action == domain.WebSocketAction.update) {
+          _onUserUpdated(intent.object!);
+        }
+      },
+    );
+    _webSocketBalanceIntentSubscription =
+        _webSocketsProvider.userBalanceStream.listen(
+      (domain.WebSocketIntent<domain.UserBankAccount> intent) {
+        if (intent.action == domain.WebSocketAction.update) {
+          _balanceStreamController.add(intent.object!);
+        }
+      },
     );
   }
 
@@ -53,8 +82,7 @@ class UserRepositoryImpl implements domain.UserRepository {
   @override
   Future<domain.User> fetchUser() async {
     final domain.User user = await _apiProvider.getUser();
-    await _sharedPreferencesProvider.setUser(user);
-    await _sharedPreferencesProvider.setActiveGroupId(user.activeGroup);
+    await _onUserUpdated(user);
 
     return user;
   }
@@ -94,8 +122,7 @@ class UserRepositoryImpl implements domain.UserRepository {
         email: payload.email,
       ),
     );
-    await _sharedPreferencesProvider.setUser(user);
-    _userStreamController.add(user);
+    await _onUserUpdated(user);
 
     return user;
   }
@@ -112,5 +139,21 @@ class UserRepositoryImpl implements domain.UserRepository {
     );
 
     return _sessionProvider.updateSession(session);
+  }
+
+  Future<void> _onUserUpdated(domain.User user) async {
+    await _sharedPreferencesProvider.setUser(user);
+    await _sharedPreferencesProvider.setActiveGroupId(user.activeGroup);
+
+    _userStreamController.add(user);
+  }
+
+  @override
+  void dispose() {
+    _userStreamController.close();
+    _balanceStreamController.close();
+
+    _webSocketUserIntentSubscription.cancel();
+    _webSocketBalanceIntentSubscription.cancel();
   }
 }

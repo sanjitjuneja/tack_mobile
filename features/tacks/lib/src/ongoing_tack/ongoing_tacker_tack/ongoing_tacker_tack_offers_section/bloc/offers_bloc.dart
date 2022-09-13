@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
+import 'package:domain/use_case.dart';
 
 part 'offers_event.dart';
 
@@ -10,11 +11,16 @@ part 'offers_state.dart';
 
 class OffersBloc extends Bloc<OffersEvent, OffersState> {
   final FetchTackOffersUseCase _fetchTacksOffersUseCase;
+  final ObserveOfferIntentUseCase _observeOfferIntentUseCase;
+
+  late StreamSubscription<WebSocketIntent<Offer>> _offerIntentSubscription;
 
   OffersBloc({
     required Tack tack,
     required FetchTackOffersUseCase fetchTacksOffersUseCase,
+    required ObserveOfferIntentUseCase observeOfferIntentUseCase,
   })  : _fetchTacksOffersUseCase = fetchTacksOffersUseCase,
+        _observeOfferIntentUseCase = observeOfferIntentUseCase,
         super(
           OffersState(
             tack: tack,
@@ -25,6 +31,13 @@ class OffersBloc extends Bloc<OffersEvent, OffersState> {
     on<RefreshAction>(_onRefreshAction);
     on<LoadMoreAction>(_onLoadMoreAction);
 
+    on<OfferIntentAction>(_onOfferIntentAction);
+
+    _offerIntentSubscription = _observeOfferIntentUseCase
+        .execute(NoParams())
+        .listen((WebSocketIntent<Offer> offerIntent) {
+      add(OfferIntentAction(offerIntent: offerIntent));
+    });
     add(const InitialLoad());
   }
 
@@ -48,9 +61,7 @@ class OffersBloc extends Bloc<OffersEvent, OffersState> {
       event.completer?.complete(RefreshingStatus.complete);
       emit(
         state.copyWith(
-          offersData: state.offersData.more(
-            newPage: offersData,
-          ),
+          offersData: offersData,
         ),
       );
     } catch (e) {
@@ -82,11 +93,54 @@ class OffersBloc extends Bloc<OffersEvent, OffersState> {
       event.completer.complete(LoadingStatus.complete);
       emit(
         state.copyWith(
-          offersData: offersData,
+          offersData: state.offersData.more(
+            newPage: offersData,
+          ),
         ),
       );
     } catch (e) {
       event.completer.complete(LoadingStatus.failed);
     }
+  }
+
+  Future<void> _onOfferIntentAction(
+    OfferIntentAction event,
+    Emitter<OffersState> emit,
+  ) async {
+    final WebSocketIntent<Offer> intent = event.offerIntent;
+    final int? offerTackId = intent.object?.tackId;
+
+    if (offerTackId != null && offerTackId != state.tack.id) return;
+
+    final PaginationModel<Offer> offersData;
+
+    switch (intent.action) {
+      case WebSocketAction.create:
+        offersData = state.offersData.addItem(
+          item: intent.object!,
+        );
+        break;
+      case WebSocketAction.update:
+        offersData = state.offersData.updateItem(
+          item: intent.object!,
+        );
+        break;
+      case WebSocketAction.delete:
+        offersData = state.offersData.removeItem(
+          itemId: intent.objectId,
+        );
+        break;
+    }
+
+    emit(
+      state.copyWith(offersData: offersData),
+    );
+  }
+
+  @override
+  Future<void> close() async {
+    _offerIntentSubscription.cancel();
+
+    return super.close();
   }
 }
