@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:navigation/navigation.dart';
+import 'package:payment/payment.dart';
 
 import '../../../add_edit_tack/ui/add_edit_tack_page.dart';
 import '../../models/ongoing_tacker_screen_result.dart';
@@ -17,7 +18,6 @@ class OngoingTackerTackBloc
   final AppRouterDelegate _appRouter;
   final FetchUserContactsUseCase _fetchUserContactsUseCase;
   final CancelTackTackerUseCase _cancelTackUseCase;
-  final AcceptOfferUseCase _acceptOfferUseCase;
   final CompleteTackTackerUseCase _completeTackUseCase;
 
   OngoingTackerTackBloc({
@@ -25,12 +25,10 @@ class OngoingTackerTackBloc
     required AppRouterDelegate appRouter,
     required FetchUserContactsUseCase fetchUserContactsUseCase,
     required CancelTackTackerUseCase cancelTackTackerUseCase,
-    required AcceptOfferUseCase acceptOfferUseCase,
     required CompleteTackTackerUseCase completeTackUseCase,
   })  : _appRouter = appRouter,
         _fetchUserContactsUseCase = fetchUserContactsUseCase,
         _cancelTackUseCase = cancelTackTackerUseCase,
-        _acceptOfferUseCase = acceptOfferUseCase,
         _completeTackUseCase = completeTackUseCase,
         super(
           OngoingTackerTackState(
@@ -170,21 +168,6 @@ class OngoingTackerTackBloc
     SelectOffer event,
     Emitter<OngoingTackerTackState> emit,
   ) async {
-    try {
-      _appRouter.push(ProgressDialog.page());
-      await _acceptOfferUseCase.execute(
-        AcceptOfferPayload(offer: event.offer),
-      );
-      _appRouter.pop();
-    } catch (e) {
-      _appRouter.pop();
-      _appRouter.pushForResult(
-        AppAlertDialog.page(
-          ErrorAlert(
-            messageKey: e.toString(),
-          ),
-        ),
-      );
-    }
+    _appRouter.push(PayForTackFeature.page(offer: event.offer));
   }
 }

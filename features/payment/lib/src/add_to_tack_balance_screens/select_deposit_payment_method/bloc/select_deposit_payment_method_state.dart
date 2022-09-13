@@ -13,15 +13,15 @@ class SelectDepositPaymentMethodState {
   bool get digitalWalletsSupported =>
       isApplePaySupported || isGooglePaySupported;
 
-  SelectedPaymentMethod? get selectedPaymentMethod {
+  DepositSelectedPaymentMethod? get selectedPaymentMethod {
     if (selectedPaymentMethodId == Constants.googlePayId) {
-      return const SelectedPaymentMethod(
+      return const DepositSelectedPaymentMethod(
         bankAccount: null,
         card: null,
         isGooglePay: true,
       );
     } else if (selectedPaymentMethodId == Constants.applePayId) {
-      return const SelectedPaymentMethod(
+      return const DepositSelectedPaymentMethod(
         bankAccount: null,
         card: null,
         isApplePay: true,
@@ -29,7 +29,7 @@ class SelectDepositPaymentMethodState {
     } else if (selectedPaymentMethodId != null) {
       for (final bankAccount in bankAccounts) {
         if (bankAccount.id == selectedPaymentMethodId) {
-          return SelectedPaymentMethod(
+          return DepositSelectedPaymentMethod(
             bankAccount: bankAccount,
             card: null,
           );
@@ -37,7 +37,7 @@ class SelectDepositPaymentMethodState {
       }
       for (final card in cards) {
         if (card.id == selectedPaymentMethodId) {
-          return SelectedPaymentMethod(
+          return DepositSelectedPaymentMethod(
             bankAccount: null,
             card: card,
           );

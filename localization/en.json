@@ -620,6 +620,15 @@
     "addBank": "Add Bank",
     "addCard": "Credit/Debit Card"
   },
+  "payForTack": {
+    "title": "Payment",
+    "tack": "Tack",
+    "balance": "Balance: ${balance}",
+    "noTransactionFee": "No Transaction Fee",
+    "listedTackPrice": "Listed Tack Price",
+    "untilOfferExpires": "Until Offer Expires",
+    "beginTack": "Begin Tack"
+  },
   "withdrawScreen": {
     "title": "Withdraw to Bank Account",
     "feeLabel": "No Withdraw Fee",

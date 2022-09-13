@@ -9,7 +9,7 @@ import 'package:navigation/navigation.dart';
 
 import '../../withdraw_failed/ui/withdraw_failed_page.dart';
 import '../../withdraw_successful/ui/withdraw_successful_page.dart';
-import '../../select_withdraw_payment_method_screen/ui/select_withdraw_payment_method_page.dart';
+import '../../select_withdraw_payment_method/ui/select_withdraw_payment_method_page.dart';
 
 part 'withdraw_event.dart';
 

@@ -1,18 +1,18 @@
-part of 'add_to_tack_balance_bloc.dart';
+part of 'pay_for_tack_bloc.dart';
 
-class AddToTackBalanceState {
-  final double amount;
+class PayForTackState {
   final Fee? fee;
   final UserBankAccount userBalance;
-  final DepositSelectedPaymentMethod selectedPaymentMethod;
+  final PayForTackSelectedPaymentMethod selectedPaymentMethod;
+  final Offer offer;
   final bool isLoading;
   final bool hasError;
 
-  const AddToTackBalanceState({
-    required this.amount,
+  const PayForTackState({
     required this.selectedPaymentMethod,
     required this.userBalance,
     required this.fee,
+    required this.offer,
     this.isLoading = false,
     this.hasError = false,
   });
@@ -50,21 +50,6 @@ class AddToTackBalanceState {
     }
   }
 
-  double amountInDollarFormatWithFee({
-    required double feePercent,
-    required double feeMinAmount,
-    required double feeMaxAmount,
-  }) {
-    double feeAmount = (feePercent / 100) * amount;
-    if (feeAmount > feeMaxAmount.toDollarFormat) {
-      feeAmount = feeMaxAmount;
-    } else if (feeAmount < feeMinAmount.toDollarFormat) {
-      feeAmount = feeMinAmount;
-    }
-
-    return amount + feeAmount;
-  }
-
   String? get selectedPaymentMethodId {
     if (selectedPaymentMethod.card != null) {
       return selectedPaymentMethod.card!.id;
@@ -79,20 +64,21 @@ class AddToTackBalanceState {
     return null;
   }
 
-  bool get isReadyToProceed => amount > 0 && isExistSelectedPaymentMethod;
+  bool get isReadyToProceed => isExistSelectedPaymentMethod;
 
-  AddToTackBalanceState copyWith({
+  PayForTackState copyWith({
     double? amount,
     UserBankAccount? userBalance,
     Fee? fee,
-    DepositSelectedPaymentMethod? selectedPaymentMethod,
+    Offer? offer,
+    PayForTackSelectedPaymentMethod? selectedPaymentMethod,
     bool? isLoading,
     bool? hasError,
   }) {
-    return AddToTackBalanceState(
-      amount: amount ?? this.amount,
+    return PayForTackState(
       userBalance: userBalance ?? this.userBalance,
       fee: fee ?? this.fee,
+      offer: offer ?? this.offer,
       selectedPaymentMethod:
           selectedPaymentMethod ?? this.selectedPaymentMethod,
       isLoading: isLoading ?? this.isLoading,

@@ -6,3 +6,4 @@ export 'src/withdraw_screens/withdraw/ui/withdraw_page.dart';
 export 'src/add_to_tack_balance_screens/add_to_tack_balance/ui/add_to_tack_balance_page.dart';
 export 'src/payment_settings_screens/payment_method_details/ui/payment_method_details_page.dart';
 export 'src/payment_settings_screens/add_payment_method_screens/add_payment_method/models/add_payment_method_screen_result.dart';
+export 'src/pay_for_tack_screens/pay_for_tack/ui/pay_for_tack_page.dart';

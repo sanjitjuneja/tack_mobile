@@ -1,22 +1,17 @@
 import 'dart:async';
 
 import 'package:core/core.dart';
-import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
 
-import '../../add_to_tack_balance_failed/ui/add_to_tack_balance_failed_page.dart';
-import '../../select_deposit_payment_method/ui/select_deposit_payment_method_page.dart';
-import '../../add_to_tack_balance_successful/ui/add_to_tack_balance_successful_page.dart';
-import '../../models/deposit_selected_payment_method.dart';
+import '../../models/pay_for_tack_selected_payment_method.dart';
 
-part 'add_to_tack_balance_event.dart';
+part 'pay_for_tack_event.dart';
 
-part 'add_to_tack_balance_state.dart';
+part 'pay_for_tack_state.dart';
 
-class AddToTackBalanceBloc
-    extends Bloc<AddToTackBalanceEvent, AddToTackBalanceState> {
+class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
   final AppRouterDelegate _appRouter;
   final FetchConnectedBankAccountsUseCase _fetchConnectedBankAccountsUseCase;
   final FetchConnectedCardsUseCase _fetchConnectedCardsUseCase;
@@ -30,7 +25,7 @@ class AddToTackBalanceBloc
 
   late StreamSubscription<UserBankAccount> _userBalanceSubscription;
 
-  AddToTackBalanceBloc({
+  PayForTackBloc({
     required AppRouterDelegate appRouter,
     required FetchConnectedBankAccountsUseCase
         fetchConnectedBankAccountsUseCase,
@@ -43,6 +38,7 @@ class AddToTackBalanceBloc
     required HandleDwollaDepositUseCase handleDwollaDepositUseCase,
     required HandleStripeDepositUseCase handleStripeDepositUseCase,
     required FetchFeeUseCase fetchFeeUseCase,
+    required Offer offer,
   })  : _appRouter = appRouter,
         _fetchConnectedBankAccountsUseCase = fetchConnectedBankAccountsUseCase,
         _fetchConnectedCardsUseCase = fetchConnectedCardsUseCase,
@@ -54,11 +50,11 @@ class AddToTackBalanceBloc
         _handleStripeDepositUseCase = handleStripeDepositUseCase,
         _fetchFeeUseCase = fetchFeeUseCase,
         super(
-          AddToTackBalanceState(
-            amount: 0.0,
+          PayForTackState(
             userBalance: getUserBalanceUseCase.execute(NoParams()),
+            offer: offer,
             fee: null,
-            selectedPaymentMethod: const DepositSelectedPaymentMethod(
+            selectedPaymentMethod: const PayForTackSelectedPaymentMethod(
               bankAccount: null,
               card: null,
             ),
@@ -66,8 +62,7 @@ class AddToTackBalanceBloc
         ) {
     on<InitialLoad>(_onInitialLoad);
 
-    on<UpdateDepositAmountAction>(_onUpdateDepositAmountAction);
-    on<MakeAddToTackBalanceRequest>(_onMakeAddToTackBalanceRequest);
+    on<MakePayForTackRequest>(_onMakePayForTackRequest);
     on<SelectPaymentMethodAction>(_onSelectPaymentMethodAction);
 
     on<UserBalanceUpdate>(_onUserBalanceUpdate);
@@ -87,7 +82,7 @@ class AddToTackBalanceBloc
 
   Future<void> _onInitialLoad(
     InitialLoad event,
-    Emitter<AddToTackBalanceState> emit,
+    Emitter<PayForTackState> emit,
   ) async {
     try {
       emit(state.copyWith(isLoading: true));
@@ -116,7 +111,7 @@ class AddToTackBalanceBloc
 
       emit(
         state.copyWith(
-          selectedPaymentMethod: DepositSelectedPaymentMethod(
+          selectedPaymentMethod: PayForTackSelectedPaymentMethod(
             bankAccount: _findPrimaryBankAccount(
               bankAccounts: bankAccounts,
             ),
@@ -143,14 +138,14 @@ class AddToTackBalanceBloc
 
   Future<void> _onSelectPaymentMethodAction(
     SelectPaymentMethodAction event,
-    Emitter<AddToTackBalanceState> emit,
+    Emitter<PayForTackState> emit,
   ) async {
-    final DepositSelectedPaymentMethod? result = await _appRouter.pushForResult(
+/*    final PayForTackSelectedPaymentMethod? result = await _appRouter.pushForResult(
       SelectDepositPaymentMethodFeature.page(
         selectedPaymentMethodId: state.selectedPaymentMethodId,
       ),
     );
-    emit(state.copyWith(selectedPaymentMethod: result));
+    emit(state.copyWith(selectedPaymentMethod: result));*/
   }
 
   ConnectedBankAccount? _findPrimaryBankAccount({
@@ -177,11 +172,11 @@ class AddToTackBalanceBloc
     return null;
   }
 
-  Future<void> _onMakeAddToTackBalanceRequest(
-    MakeAddToTackBalanceRequest event,
-    Emitter<AddToTackBalanceState> emit,
+  Future<void> _onMakePayForTackRequest(
+    MakePayForTackRequest event,
+    Emitter<PayForTackState> emit,
   ) async {
-    try {
+    /* try {
       _appRouter.push(ProgressDialog.page());
       if (state.selectedPaymentMethod.card != null) {
         await _handleStripeDepositUseCase.execute(
@@ -224,39 +219,30 @@ class AddToTackBalanceBloc
       }
       _appRouter.pop();
       _appRouter.push(
-        AddToTackBalanceSuccessfulFeature.page(
+        PayForTackSuccessfulFeature.page(
           newTackBalance: state.userBalance.usdBalance + state.amount,
         ),
       );
     } on TransactionsLimitException {
       _appRouter.pop();
       _appRouter.push(
-        AddToTackBalanceFailedFeature.page(
+        PayForTackFailedFeature.page(
           errorKey: 'addToTackBalanceFailedScreen.limitReached',
         ),
       );
     } catch (e) {
       _appRouter.pop();
       _appRouter.push(
-        AddToTackBalanceFailedFeature.page(
+        PayForTackFailedFeature.page(
           errorKey: 'addToTackBalanceFailedScreen.unableToAdd',
         ),
       );
-    }
-  }
-
-  Future<void> _onUpdateDepositAmountAction(
-    UpdateDepositAmountAction event,
-    Emitter<AddToTackBalanceState> emit,
-  ) async {
-    emit(
-      state.copyWith(amount: event.amount),
-    );
+    }*/
   }
 
   Future<void> _onUserBalanceUpdate(
     UserBalanceUpdate event,
-    Emitter<AddToTackBalanceState> emit,
+    Emitter<PayForTackState> emit,
   ) async {
     emit(
       state.copyWith(userBalance: event.userBalance),

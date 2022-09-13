@@ -4,7 +4,7 @@ import 'package:navigation/navigation.dart';
 import 'package:domain/domain.dart';
 
 import '../../../../payment.dart';
-import '../../models/selected_payment_method.dart';
+import '../../models/deposit_selected_payment_method.dart';
 
 part 'select_deposit_payment_method_event.dart';
 

@@ -39,7 +39,6 @@ class _OngoingTackerTackPage extends Page<OngoingTackerScreenResult> {
             fetchUserContactsUseCase:
                 appLocator.get<FetchUserContactsUseCase>(),
             cancelTackTackerUseCase: appLocator.get<CancelTackTackerUseCase>(),
-            acceptOfferUseCase: appLocator.get<AcceptOfferUseCase>(),
             completeTackUseCase: appLocator.get<CompleteTackTackerUseCase>(),
           );
         },
