@@ -2,7 +2,7 @@ part of tacks_entities;
 
 @JsonSerializable(createToJson: false)
 class RunnerTacksResponse extends JsonSerializable {
-  final List<TemplateTackEntity> results;
+  final List<RunnerTackEntity> results;
 
   const RunnerTacksResponse({
     required this.results,

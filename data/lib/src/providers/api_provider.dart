@@ -414,31 +414,33 @@ class ApiProvider extends ApiProviderCore {
   Future<List<domain.RunnerTack>> fetchRunnerTacks(
     FetchRunnerTacksRequest request,
   ) async {
-    return get<PaginationEntity<RunnerTackEntity>>(
+    return get<RunnerTacksResponse>(
       ApiQuery(
         endpoint: BaseUrlConstants.tacksMeRunnerPath,
         body: null,
         params: request.queryParameters,
       ),
-      parser: PaginationEntity<RunnerTackEntity>.fromJson,
+      parser: RunnerTacksResponse.fromJson,
     ).then(
-      mapper.paginationMapper<RunnerTackEntity, domain.RunnerTack>().fromEntity,
-    ).then((el) => el.results);
+      (RunnerTacksResponse response) =>
+          mapper.runnerTackMapper.fromList(response.results),
+    );
   }
 
   Future<List<domain.Tack>> fetchTackerTacks(
     FetchTackerTacksRequest request,
   ) async {
-    return get<PaginationEntity<TackEntity>>(
+    return get<TackerTacksResponse>(
       ApiQuery(
         endpoint: BaseUrlConstants.tacksMeTackerPath,
         body: null,
         params: request.queryParameters,
       ),
-      parser: PaginationEntity<TackEntity>.fromJson,
+      parser: TackerTacksResponse.fromJson,
     ).then(
-      mapper.paginationMapper<TackEntity, domain.Tack>().fromEntity,
-    ).then((el) => el.results);
+      (TackerTacksResponse response) =>
+          mapper.tackMapper.fromList(response.results),
+    );
   }
 
   Future<domain.PaginationModel<domain.GroupTack>> fetchGroupTacks(
