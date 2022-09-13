@@ -5,8 +5,8 @@ import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:home/home.dart';
 
-import 'package:create_tack/src/bloc/create_tack_bloc.dart';
-import 'package:create_tack/src/ui/widgets/template_tack/template_tack_tile.dart';
+import '../../bloc/create_tack_bloc.dart';
+import 'template_tack/template_tack_tile.dart';
 
 class GroupPopularTacksWidget extends StatelessWidget {
   const GroupPopularTacksWidget({super.key});
@@ -15,14 +15,6 @@ class GroupPopularTacksWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(
-          FlutterI18n.translate(
-            context,
-            'createTackScreen.groupPopular.subtitle',
-          ),
-          style: AppTextTheme.manrope13Medium
-              .copyWith(color: AppTheme.textHeavyHintColor),
-        ),
         const SizedBox(height: 10),
         Expanded(
           child: BlocBuilder<CreateTackBloc, CreateTackState>(

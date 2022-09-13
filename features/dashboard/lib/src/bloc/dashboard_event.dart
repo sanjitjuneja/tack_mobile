@@ -36,10 +36,18 @@ class GroupTackIntentAction extends DashboardEvent {
   });
 }
 
-class OpenOwnOngoingTack extends DashboardEvent {
+class OpenOwnRunningOngoingTack extends DashboardEvent {
   final GroupTack groupTack;
 
-  const OpenOwnOngoingTack({
+  const OpenOwnRunningOngoingTack({
+    required this.groupTack,
+  });
+}
+
+class OpenOwnCreatedOngoingTack extends DashboardEvent {
+  final GroupTack groupTack;
+
+  const OpenOwnCreatedOngoingTack({
     required this.groupTack,
   });
 }

@@ -27,7 +27,7 @@ class InvitationsForm extends StatelessWidget {
                 enableLoad: state.invitationsData.canLoadMore,
                 isLoading: state.isLoading,
                 hasData: state.invitationsData.hasData,
-                emptyWidget: EmptyWidget(
+                emptyWidget: const EmptyWidget(
                   svgIcon: AppIconsTheme.people,
                   descriptionKey: 'invitationsScreen.empty.description',
                 ),

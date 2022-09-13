@@ -1,7 +1,7 @@
 part of tacks;
 
 class FetchTackerTacksUseCase
-    extends FutureUseCase<PaginationModel<Tack>, FetchTackerTacksPayload> {
+    extends FutureUseCase<List<Tack>, FetchTackerTacksPayload> {
   final TacksRepository _tacksRepository;
 
   FetchTackerTacksUseCase({
@@ -9,7 +9,7 @@ class FetchTackerTacksUseCase
   }) : _tacksRepository = tacksRepository;
 
   @override
-  Future<PaginationModel<Tack>> execute(FetchTackerTacksPayload params) async {
+  Future<List<Tack>> execute(FetchTackerTacksPayload params) async {
     return _tacksRepository.fetchTackerTacks(params);
   }
 }

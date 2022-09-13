@@ -20,15 +20,22 @@ class GroupDetailsNavigationBarAction extends StatelessWidget {
           );
         } else {
           final String labelKey;
+          final AppIcon icon;
           if (state.groupDetails!.isMuted) {
             labelKey = 'groupDetailsScreen.unMuteNotificationsButton';
+            icon = AppIconsTheme.bell;
           } else {
             labelKey = 'groupDetailsScreen.muteNotificationsButton';
+            icon = AppIconsTheme.bellCrossedOut;
           }
 
-          return NavigationBarActionButton(
-            labelKey: labelKey,
-            onTap: _onChangeNotificationsSettingsButtonPressed,
+          return ConstrainedBox(
+            constraints: const BoxConstraints(minWidth: 110),
+            child: NavigationBarActionButton(
+              labelKey: labelKey,
+              icon: icon,
+              onTap: _onChangeNotificationsSettingsButtonPressed,
+            ),
           );
         }
       },

@@ -1,6 +1,5 @@
 library tacks_entities;
 
-
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../helpers/entity_helper/entities_helpers.dart';
@@ -39,5 +38,7 @@ part 'requests/update_tack_request.dart';
 
 part 'responses/group_popular_tacks_response.dart';
 part 'responses/nearby_popular_tacks_response.dart';
+part 'responses/runner_tacks_response.dart';
+part 'responses/tacker_tacks_response.dart';
 
 part 'tacks.g.dart';

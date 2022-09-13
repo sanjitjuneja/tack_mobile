@@ -9,6 +9,8 @@ import 'package:navigation/navigation.dart';
 
 import '../../ongoing_tack/ongoing_runner_tack/ui/ongoing_runner_tack_page.dart';
 import '../../ongoing_tack/ongoing_tacker_tack/ui/ongoing_tacker_tack_page.dart';
+import '../models/runner_tacks_data.dart';
+import '../models/tacker_tacks_data.dart';
 
 part 'tacks_event.dart';
 
@@ -39,19 +41,13 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
         _observeRunnerTackIntentUseCase = observeRunnerTackIntentUseCase,
         _observeTackerTackIntentUseCase = observeTackerTackIntentUseCase,
         _cancelOfferUseCase = cancelOfferUseCase,
-        super(
-          TacksState(
-            isLoading: true,
-          ),
-        ) {
+        super(const TacksState()) {
     on<MoveToAddTab>(_onMoveToAddTab);
     on<MoveToHomeTab>(_onMoveToHomeTab);
 
     on<InitialLoad>(_onInitialLoad);
     on<RefreshRunnerTacks>(_onRefreshRunnerTacks);
-    on<LoadRunnerTacks>(_onLoadRunnerTacks);
     on<RefreshTackerTacks>(_onRefreshTackerTacks);
-    on<LoadTackerTacks>(_onLoadTackerTacks);
 
     on<RunnerTackIntentAction>(_onRunnerTackIntentAction);
     on<TackerTackIntentAction>(_onTackerTackIntentAction);
@@ -101,15 +97,14 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
     Emitter<TacksState> emit,
   ) async {
     try {
-      final PaginationModel<RunnerTack> tacksData =
-          await _fetchRunnerTacksUseCase.execute(
+      final List<RunnerTack> tacks = await _fetchRunnerTacksUseCase.execute(
         const FetchRunnerTacksPayload(),
       );
 
       event.completer?.complete(RefreshingStatus.complete);
       emit(
         state.copyWith(
-          runnerTacksData: tacksData,
+          runnerTacksData: state.runnerTacksData.copyWith(results: tacks),
         ),
       );
     } catch (_) {
@@ -117,36 +112,10 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
       if (event.completer == null) {
         emit(
           state.copyWith(
-            runnerTacksData: PaginationModel.empty(),
+            runnerTacksData: const RunnerTacksState(),
           ),
         );
       }
-    }
-  }
-
-  Future<void> _onLoadRunnerTacks(
-    LoadRunnerTacks event,
-    Emitter<TacksState> emit,
-  ) async {
-    try {
-      final PaginationModel<RunnerTack> tacksData =
-          await _fetchRunnerTacksUseCase.execute(
-        FetchRunnerTacksPayload(
-          lastObjectId: state.runnerTacksData.results.lastOrNull?.id,
-          nextPage: state.runnerTacksData.next,
-        ),
-      );
-
-      event.completer.complete(LoadingStatus.complete);
-      emit(
-        state.copyWith(
-          runnerTacksData: state.runnerTacksData.more(
-            newPage: tacksData,
-          ),
-        ),
-      );
-    } catch (_) {
-      event.completer.complete(LoadingStatus.failed);
     }
   }
 
@@ -155,15 +124,14 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
     Emitter<TacksState> emit,
   ) async {
     try {
-      final PaginationModel<Tack> tacksData =
-          await _fetchTackerTacksUseCase.execute(
+      final List<Tack> tacks = await _fetchTackerTacksUseCase.execute(
         const FetchTackerTacksPayload(),
       );
 
       event.completer?.complete(RefreshingStatus.complete);
       emit(
         state.copyWith(
-          tackerTacksData: tacksData,
+          tackerTacksData: state.tackerTacksData.copyWith(results: tacks),
         ),
       );
     } catch (_) {
@@ -171,36 +139,10 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
       if (event.completer == null) {
         emit(
           state.copyWith(
-            tackerTacksData: PaginationModel.empty(),
+            tackerTacksData: const TackerTacksState(),
           ),
         );
       }
-    }
-  }
-
-  Future<void> _onLoadTackerTacks(
-    LoadTackerTacks event,
-    Emitter<TacksState> emit,
-  ) async {
-    try {
-      final PaginationModel<Tack> tacksData =
-          await _fetchTackerTacksUseCase.execute(
-        FetchTackerTacksPayload(
-          lastObjectId: state.tackerTacksData.results.lastOrNull?.id,
-          nextPage: state.tackerTacksData.next,
-        ),
-      );
-
-      event.completer.complete(LoadingStatus.complete);
-      emit(
-        state.copyWith(
-          tackerTacksData: state.tackerTacksData.more(
-            newPage: tacksData,
-          ),
-        ),
-      );
-    } catch (_) {
-      event.completer.complete(LoadingStatus.failed);
     }
   }
 
@@ -210,7 +152,7 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
   ) async {
     final WebSocketIntent<RunnerTack> intent = event.tackIntent;
 
-    final PaginationModel<RunnerTack> runnerTacksData;
+    final RunnerTacksState runnerTacksData;
 
     switch (intent.action) {
       case WebSocketAction.create:
@@ -241,7 +183,7 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
   ) async {
     final WebSocketIntent<Tack> intent = event.tackIntent;
 
-    final PaginationModel<Tack> tackerTacksData;
+    final TackerTacksState tackerTacksData;
 
     switch (intent.action) {
       case WebSocketAction.create:

@@ -27,6 +27,7 @@ class NameSection extends StatelessWidget {
           hasShadow: false,
           keyboardType: TextInputType.text,
           textInputAction: TextInputAction.next,
+          textCapitalization: TextCapitalization.words,
           backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
           inputFormatters: <TextInputFormatter>[
             LengthLimitingTextInputFormatter(

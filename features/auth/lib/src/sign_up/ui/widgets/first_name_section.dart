@@ -20,6 +20,7 @@ class FirstNameSection extends StatelessWidget {
       isInvalid: state.firstNameData.isInvalid,
       errorTextKey: 'validationErrors.fieldRequired',
       textInputAction: TextInputAction.next,
+      textCapitalization: TextCapitalization.words,
       keyboardType: TextInputType.visiblePassword,
       backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
       onTextChange: (String value) => _onFirstNameChanged(context, value),

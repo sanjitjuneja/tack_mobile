@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
-import 'package:groups/src/group_details/ui/widgets/group_details_actions.dart';
-import 'package:groups/src/group_details/ui/widgets/group_info/group_info_widget.dart';
-import 'package:groups/src/group_details/ui/widgets/group_users/group_members_widget.dart';
+import 'widgets/group_details_actions.dart';
+import 'widgets/group_info/group_info_widget.dart';
+import 'widgets/group_users/group_members_widget.dart';
 
 class GroupDetailsFrom extends StatelessWidget {
   const GroupDetailsFrom({super.key});

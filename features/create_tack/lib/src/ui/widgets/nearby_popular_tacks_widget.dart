@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:create_tack/src/bloc/create_tack_bloc.dart';
-import 'package:create_tack/src/ui/widgets/template_tack/template_tack_tile.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../../bloc/create_tack_bloc.dart';
+import 'template_tack/template_tack_tile.dart';
 
 class NearbyPopularTacksWidget extends StatelessWidget {
   const NearbyPopularTacksWidget({super.key});
@@ -13,14 +14,6 @@ class NearbyPopularTacksWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(
-          FlutterI18n.translate(
-            context,
-            'createTackScreen.nearbyPopular.subtitle',
-          ),
-          style: AppTextTheme.manrope13Medium
-              .copyWith(color: AppTheme.textHeavyHintColor),
-        ),
         const SizedBox(height: 10),
         Expanded(
           child: BlocBuilder<CreateTackBloc, CreateTackState>(
@@ -30,7 +23,7 @@ class NearbyPopularTacksWidget extends StatelessWidget {
                 enableLoad: state.nearbyTacksState.canLoadMore,
                 isLoading: state.nearbyTacksState.isLoading,
                 hasData: state.nearbyTacksState.hasData,
-                emptyWidget: EmptyWidget(
+                emptyWidget: const EmptyWidget(
                   svgIcon: AppIconsTheme.tacksList,
                 ),
                 onRefresh: _onRefreshAction,

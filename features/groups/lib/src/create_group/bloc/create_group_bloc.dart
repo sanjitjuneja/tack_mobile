@@ -56,10 +56,13 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
     Emitter<CreateGroupState> emit,
   ) async {
     _appRouter.push(ProgressDialog.page());
+
+    final String groupName = state.nameData.name.eachWordToSentenceCase();
+
     try {
       final Group group = await _createGroupUseCase.execute(
         CreateGroupPayload(
-          name: state.nameData.name,
+          name: groupName,
           description: state.descriptionData.description,
           image: state.groupPhotoData.imageFile!,
         ),

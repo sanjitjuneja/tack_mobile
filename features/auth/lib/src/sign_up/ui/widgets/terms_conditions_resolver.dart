@@ -15,7 +15,7 @@ class TermsConditionsResolver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Material(
           type: MaterialType.transparency,
@@ -26,26 +26,37 @@ class TermsConditionsResolver extends StatelessWidget {
               groupValue: true,
               toggleable: true,
               activeColor: AppTheme.successColor,
+              visualDensity: VisualDensity.compact,
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               onChanged: (bool? value) => _onTermsChanged(context, value),
             ),
           ),
         ),
+        const SizedBox(width: 4),
         Expanded(
           child: TextWithHighlight(
             textStyle: AppTextTheme.manrope14Medium
                 .copyWith(color: AppTheme.textHeavyHintColor),
+            linkHighlightColor: AppTheme.textSecondaryColor,
             text: FlutterI18n.translate(
               context,
               'signUpScreen.termsPrivacyAgreement',
               translationParams: <String, String>{
-                'termsConditionsLink': FlutterI18n.translate(
+                'TermsOfServiceLink': FlutterI18n.translate(
                   context,
                   'urls.termsAndConditions',
                 ),
                 'privacyPolicyLink': FlutterI18n.translate(
                   context,
                   'urls.privacyPolicy',
+                ),
+                'dwollaTermsOfServiceLink': FlutterI18n.translate(
+                  context,
+                  'urls.dwollaTermsOfService',
+                ),
+                'dwollaPrivacyPolicyLink': FlutterI18n.translate(
+                  context,
+                  'urls.dwollaPrivacyPolicy',
                 ),
               },
             ),

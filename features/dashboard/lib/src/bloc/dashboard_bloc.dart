@@ -47,7 +47,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
     on<GroupTackIntentAction>(_onGroupTackIntentAction);
 
-    on<OpenOwnOngoingTack>(_onOpenOwnOngoingTack);
+    on<OpenOwnRunningOngoingTack>(_onOpenOwnRunningOngoingTack);
+    on<OpenOwnCreatedOngoingTack>(_onOpenOwnOngoingTack);
     on<CounterOfferOpen>(_onCounterOfferOpen);
     on<AcceptTack>(_onAcceptTack);
 
@@ -161,8 +162,16 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     );
   }
 
+  Future<void> _onOpenOwnRunningOngoingTack(
+    OpenOwnRunningOngoingTack event,
+    Emitter<DashboardState> emit,
+  ) async {
+    _appRouter.navigationTabState.changeInnerTabIndex(HomeScreenTab.tacks, 1);
+    _appRouter.navigationTabState.changeTabIndex(HomeScreenTab.tacks);
+  }
+
   Future<void> _onOpenOwnOngoingTack(
-    OpenOwnOngoingTack event,
+    OpenOwnCreatedOngoingTack event,
     Emitter<DashboardState> emit,
   ) async {
     _appRouter.pushForResult(
@@ -214,16 +223,13 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     String? error,
   ) async {
     if (result) {
-      final bool dialogResult = await _appRouter.pushForResult(
+      _appRouter.pushForResult(
         AppAlertDialog.page(
           RequestAlert(
             contentKey: 'otherAlert.offerSent',
           ),
         ),
       );
-      if (dialogResult) {
-        _appRouter.navigationTabState.changeTabIndex(HomeScreenTab.tacks);
-      }
     } else if (error.toString().toLowerCase().contains('not available')) {
       _appRouter.pushForResult(
         AppAlertDialog.page(
