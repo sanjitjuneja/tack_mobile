@@ -39,6 +39,7 @@ class AppTextField extends StatefulWidget {
   final void Function(TextEditingController)? onFocusLost;
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
+  final TextCapitalization textCapitalization;
   final List<TextInputFormatter>? inputFormatters;
   final double? scrollPadding;
 
@@ -75,6 +76,7 @@ class AppTextField extends StatefulWidget {
     this.onFocusLost,
     this.textInputAction,
     this.keyboardType,
+    this.textCapitalization = TextCapitalization.none,
     this.inputFormatters,
     this.scrollPadding,
   })  : shouldShowCursor = !isDisabled && (shouldShowCursor || onTap != null),
@@ -158,6 +160,7 @@ class _AppTextFieldState extends State<AppTextField> {
           isEnabled: shouldUseOverlay,
           focusNode: focusNode,
           child: CupertinoTextField(
+            textCapitalization: widget.textCapitalization,
             prefix: widget.prefix,
             suffix: widget.suffix != null
                 ? Padding(

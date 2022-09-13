@@ -1,8 +1,8 @@
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:groups/src/group_details/ui/group_details_form.dart';
-import 'package:groups/src/group_details/ui/widgets/group_details_navigation_bar_action.dart';
+import 'group_details_form.dart';
+import 'widgets/group_details_navigation_bar_action.dart';
 
 class GroupDetailsScreen extends StatelessWidget {
   const GroupDetailsScreen({super.key});

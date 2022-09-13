@@ -1,6 +1,6 @@
 part of user;
 
-class User {
+class User with IdentifiableMixin, EquatableMixin {
   final int id;
   final String email;
   final String firstName;
@@ -26,4 +26,21 @@ class User {
     required this.phoneNumber,
     required this.activeGroup,
   });
+
+  @override
+  int get itemId => id;
+
+  @override
+  List<Object?> get props => <Object?>[
+        id,
+        email,
+        firstName,
+        lastName,
+        birthDate,
+        profilePicture,
+        rating,
+        tacksAmount,
+        phoneNumber,
+        activeGroup,
+      ];
 }

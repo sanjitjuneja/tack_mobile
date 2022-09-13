@@ -1,6 +1,6 @@
 part of global;
 
-class PaginationModel<T> extends Equatable {
+class PaginationModel<T extends IdentifiableMixin> extends Equatable {
   final int count;
   final Uri? previous;
   final Uri? next;
@@ -38,6 +38,65 @@ class PaginationModel<T> extends Equatable {
         ...results,
         ...newPage.results,
       ],
+    );
+  }
+
+  PaginationModel<T> addItem({
+    required T item,
+  }) {
+    final int index = results.indexWhere(
+      (element) => element.itemId == item.itemId,
+    );
+
+    if (index != -1) return this;
+
+    return PaginationModel(
+      count: count + 1,
+      previous: previous,
+      next: next,
+      results: <T>[
+        item,
+        ...results,
+      ],
+    );
+  }
+
+  PaginationModel<T> updateItem({
+    required T item,
+  }) {
+    final int index = results.indexWhere(
+      (element) => element.itemId == item.itemId,
+    );
+
+    if (index == -1) return this;
+
+    final List<T> items = <T>[...results];
+    items[index] = item;
+
+    return PaginationModel(
+      count: count,
+      previous: previous,
+      next: next,
+      results: items,
+    );
+  }
+
+  PaginationModel<T> removeItem({
+    required int itemId,
+  }) {
+    final int index = results.indexWhere(
+      (element) => element.itemId == itemId,
+    );
+
+    if (index == -1) return this;
+
+    return PaginationModel(
+      count: count - 1,
+      previous: previous,
+      next: next,
+      results: <T>[
+        ...results,
+      ]..removeAt(index),
     );
   }
 

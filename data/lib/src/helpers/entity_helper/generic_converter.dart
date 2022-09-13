@@ -1,73 +1,90 @@
+import 'package:core/core.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../entities/entities.dart';
 
-class GenericConverter<T> implements JsonConverter<T, Object> {
+class GenericConverter<T> implements JsonConverter<T, Map<String, dynamic>> {
   const GenericConverter();
 
   @override
-  T fromJson(Object json) {
-    if (json is Map<String, dynamic> && T == GroupDetailsEntity) {
+  T fromJson(Map<String, dynamic> json) {
+    if (isTypeTypeOf<T, GroupDetailsEntity>()) {
       return GroupDetailsEntity.fromJson(json) as T;
     }
 
-    if (json is Map<String, dynamic> && T == GroupInvitationEntity) {
+    if (isTypeTypeOf<T, GroupInvitationEntity>()) {
       return GroupInvitationEntity.fromJson(json) as T;
     }
 
-    if (json is Map<String, dynamic> && T == TackEntity) {
+    if (isTypeTypeOf<T, TackEntity>()) {
       return TackEntity.fromJson(json) as T;
     }
 
-    if (json is Map<String, dynamic> && T == GroupTackEntity) {
+    if (isTypeTypeOf<T, GroupTackEntity>()) {
       return GroupTackEntity.fromJson(json) as T;
     }
 
-    if (json is Map<String, dynamic> && T == RunnerTackEntity) {
+    if (isTypeTypeOf<T, RunnerTackEntity>()) {
       return RunnerTackEntity.fromJson(json) as T;
     }
 
-    if (json is Map<String, dynamic> && T == OfferEntity) {
+    if (isTypeTypeOf<T, OfferEntity>()) {
       return OfferEntity.fromJson(json) as T;
     }
 
-    if (json is Map<String, dynamic> && T == TackUserEntity) {
+    if (isTypeTypeOf<T, TackUserEntity>()) {
       return TackUserEntity.fromJson(json) as T;
     }
 
-    return json as T;
+    if (isTypeTypeOf<T, UserEntity>()) {
+      return UserEntity.fromJson(json) as T;
+    }
+
+    if (isTypeTypeOf<T, UserBankAccountEntity>()) {
+      return UserBankAccountEntity.fromJson(json) as T;
+    }
+
+    throw Exception('Not supported Generic type.');
   }
 
   @override
-  Object toJson(T object) {
-    if (T is GroupDetailsEntity) {
+  Map<String, dynamic> toJson(T object) {
+    if (isTypeTypeOf<T, GroupDetailsEntity>()) {
       return (object as GroupDetailsEntity).toJson();
     }
 
-    if (T is GroupInvitationEntity) {
+    if (isTypeTypeOf<T, GroupInvitationEntity>()) {
       return (object as GroupInvitationEntity).toJson();
     }
 
-    if (T is TackEntity) {
+    if (isTypeTypeOf<T, TackEntity>()) {
       return (object as TackEntity).toJson();
     }
 
-    if (T is GroupTackEntity) {
+    if (isTypeTypeOf<T, GroupTackEntity>()) {
       return (object as GroupTackEntity).toJson();
     }
 
-    if (T is RunnerTackEntity) {
+    if (isTypeTypeOf<T, RunnerTackEntity>()) {
       return (object as RunnerTackEntity).toJson();
     }
 
-    if (T is OfferEntity) {
+    if (isTypeTypeOf<T, OfferEntity>()) {
       return (object as OfferEntity).toJson();
     }
 
-    if (T is TackUserEntity) {
+    if (isTypeTypeOf<T, TackUserEntity>()) {
       return (object as TackUserEntity).toJson();
     }
 
-    return object as Object;
+    if (isTypeTypeOf<T, UserEntity>()) {
+      return (object as UserEntity).toJson();
+    }
+
+    if (isTypeTypeOf<T, UserBankAccountEntity>()) {
+      return (object as UserBankAccountEntity).toJson();
+    }
+
+    throw Exception('Not supported Generic type.');
   }
 }

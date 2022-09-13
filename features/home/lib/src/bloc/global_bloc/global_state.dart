@@ -2,27 +2,27 @@ part of 'global_bloc.dart';
 
 class GlobalState {
   final User user;
-  final List<GroupDetails> groups;
+  final int groupsCount;
   final Group? currentGroup;
 
-  bool get canPickOtherGroup => groups.length > 1;
+  bool get canPickOtherGroup => groupsCount > 1;
 
   bool get isGroupSelected => currentGroup != null;
 
   const GlobalState({
     required this.user,
-    required this.groups,
+    required this.groupsCount,
     this.currentGroup,
   });
 
   GlobalState copyWith({
     User? user,
-    List<GroupDetails>? groups,
+    int? groupsCount,
     Optional<Group?>? currentGroup,
   }) {
     return GlobalState(
       user: user ?? this.user,
-      groups: groups ?? this.groups,
+      groupsCount: groupsCount ?? this.groupsCount,
       currentGroup:
           currentGroup == null ? this.currentGroup : currentGroup.value,
     );

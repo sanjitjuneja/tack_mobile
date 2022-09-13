@@ -27,3 +27,11 @@ class SelectOffer extends OngoingTackerTackEvent {
     required this.offer,
   });
 }
+
+class TackIntentAction extends OngoingTackerTackEvent {
+  final WebSocketIntent<Tack> tackIntent;
+
+  const TackIntentAction({
+    required this.tackIntent,
+  });
+}

@@ -15,6 +15,7 @@ class TextWithHighlight extends StatelessWidget {
   final String text;
   final TextStyle textStyle;
   final TextAlign textAlign;
+  final Color? linkHighlightColor;
   final Color? coloredTextColor;
   final void Function(String? url)? onLinkTap;
 
@@ -23,6 +24,7 @@ class TextWithHighlight extends StatelessWidget {
     required this.text,
     TextStyle? textStyle,
     this.textAlign = TextAlign.start,
+    this.linkHighlightColor,
     this.coloredTextColor,
     this.onLinkTap,
   }) : textStyle = textStyle ?? const TextStyle();
@@ -49,7 +51,9 @@ class TextWithHighlight extends StatelessWidget {
           ),
         ),
         _link: Style.fromTextStyle(
-          textStyle,
+          linkHighlightColor != null
+              ? textStyle.copyWith(color: linkHighlightColor)
+              : textStyle,
         ),
         _highlight: Style.fromTextStyle(
           textStyle.copyWith(fontWeight: FontWeight.bold),

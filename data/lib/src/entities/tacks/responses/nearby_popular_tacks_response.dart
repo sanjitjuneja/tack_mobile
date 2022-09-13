@@ -1,6 +1,6 @@
 part of tacks_entities;
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class NearbyPopularTacksResponse extends JsonSerializable {
   final List<TemplateTackEntity> popular;
 
@@ -11,7 +11,4 @@ class NearbyPopularTacksResponse extends JsonSerializable {
   factory NearbyPopularTacksResponse.fromJson(Map<String, dynamic> json) {
     return _$NearbyPopularTacksResponseFromJson(json);
   }
-
-  @override
-  Map<String, dynamic> toJson() => _$NearbyPopularTacksResponseToJson(this);
 }

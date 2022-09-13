@@ -1,6 +1,6 @@
 part of tacks;
 
-class RunnerTack extends Equatable {
+class RunnerTack extends Equatable with IdentifiableMixin, Comparable {
   final int id;
   final Tack tack;
   final Offer? offer;
@@ -21,4 +21,14 @@ class RunnerTack extends Equatable {
         tack,
         offer,
       ];
+
+  @override
+  int get itemId => id;
+
+  @override
+  int compareTo(covariant RunnerTack other) {
+    return tack.compareTo(other.tack);
+  }
+
+  external int compare();
 }

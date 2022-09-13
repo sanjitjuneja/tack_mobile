@@ -14,37 +14,40 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
   final AppRouterDelegate _appRouter;
   final ObserveUserUseCase _observeUserUseCase;
   final ObserveCurrentGroupUseCase _observeCurrentGroupUseCase;
-  final ObserveGroupsUseCase _observeGroupsUseCase;
+  final ObserveGroupsCountUseCase _observeGroupsCountUseCase;
+  final FetchGroupUseCase _fetchGroupUseCase;
   final SelectGroupUseCase _selectGroupUseCase;
 
   late StreamSubscription<User> _userSubscription;
   late StreamSubscription<Group?> _currentGroupSubscription;
-  late StreamSubscription<List<GroupDetails>> _groupsSubscription;
+  late StreamSubscription<int> _groupsCountSubscription;
 
   GlobalBloc({
     required AppRouterDelegate appRouter,
     required GetCurrentUserUseCase getCurrentUserUseCase,
     required ObserveUserUseCase observeUserUseCase,
     required GetCurrentGroupUseCase getCurrentGroupUseCase,
-    required GetGroupsUseCase getGroupsUseCase,
+    required GetGroupsCountUseCase getGroupsCountUseCase,
     required ObserveCurrentGroupUseCase observeCurrentGroupUseCase,
-    required ObserveGroupsUseCase observeGroupsUseCase,
+    required ObserveGroupsCountUseCase observeGroupsCountUseCase,
+    required FetchGroupUseCase fetchGroupUseCase,
     required SelectGroupUseCase selectGroupUseCase,
   })  : _appRouter = appRouter,
         _observeUserUseCase = observeUserUseCase,
         _observeCurrentGroupUseCase = observeCurrentGroupUseCase,
-        _observeGroupsUseCase = observeGroupsUseCase,
+        _observeGroupsCountUseCase = observeGroupsCountUseCase,
+        _fetchGroupUseCase = fetchGroupUseCase,
         _selectGroupUseCase = selectGroupUseCase,
         super(
           GlobalState(
             user: getCurrentUserUseCase.execute(NoParams()),
-            groups: getGroupsUseCase.execute(NoParams()),
+            groupsCount: getGroupsCountUseCase.execute(NoParams()),
             currentGroup: getCurrentGroupUseCase.execute(NoParams()),
           ),
         ) {
     on<UserChanged>(_onUserChanged);
     on<CurrentGroupChanged>(_onCurrentGroupChanged);
-    on<GroupsChanged>(_onGroupsChanged);
+    on<GroupsCountChanged>(_onGroupsCountChanged);
 
     on<ChangeGroup>(_onChangeGroup);
     on<GoToMyInvitations>(_onGoToMyInvitations);
@@ -58,10 +61,9 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
         _observeCurrentGroupUseCase.execute(NoParams()).listen((Group? event) {
       add(CurrentGroupChanged(group: event));
     });
-    _groupsSubscription = _observeGroupsUseCase
-        .execute(NoParams())
-        .listen((List<GroupDetails> event) {
-      add(GroupsChanged(groups: event));
+    _groupsCountSubscription =
+        _observeGroupsCountUseCase.execute(NoParams()).listen((int event) {
+      add(GroupsCountChanged(groupsCount: event));
     });
   }
 
@@ -69,21 +71,39 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
     UserChanged event,
     Emitter<GlobalState> emit,
   ) async {
-    emit(state.copyWith(user: event.user));
+    emit(
+      state.copyWith(user: event.user),
+    );
+
+    if (event.user.activeGroup == state.currentGroup?.id) return;
+    if (event.user.activeGroup == null) return;
+
+    try {
+      final GroupDetails groupDetails = await _fetchGroupUseCase.execute(
+        FetchGroupPayload(id: event.user.activeGroup!),
+      );
+      await _selectGroupUseCase.execute(
+        SelectGroupPayload(group: groupDetails.group),
+      );
+    } catch (_) {}
   }
 
   Future<void> _onCurrentGroupChanged(
     CurrentGroupChanged event,
     Emitter<GlobalState> emit,
   ) async {
-    emit(state.copyWith(currentGroup: Optional(event.group)));
+    emit(
+      state.copyWith(
+        currentGroup: Optional(event.group),
+      ),
+    );
   }
 
-  Future<void> _onGroupsChanged(
-    GroupsChanged event,
+  Future<void> _onGroupsCountChanged(
+    GroupsCountChanged event,
     Emitter<GlobalState> emit,
   ) async {
-    emit(state.copyWith(groups: event.groups));
+    emit(state.copyWith(groupsCount: event.groupsCount));
   }
 
   Future<void> _onChangeGroup(
@@ -119,7 +139,7 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
   Future<void> close() async {
     _userSubscription.cancel();
     _currentGroupSubscription.cancel();
-    _groupsSubscription.cancel();
+    _groupsCountSubscription.cancel();
 
     return super.close();
   }

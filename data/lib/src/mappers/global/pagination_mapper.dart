@@ -1,6 +1,6 @@
 part of mappers;
 
-class PaginationMapper<S, C>
+class PaginationMapper<S, C extends IdentifiableMixin>
     extends Mapper<PaginationEntity<S>, domain.PaginationModel<C>> {
   final Mapper<S, C> mapper;
 

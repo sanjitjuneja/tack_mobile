@@ -137,8 +137,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         SignUpByPhonePayload(
           email: state.emailData.email,
           uuid: state.phoneVerificationData.udid,
-          firstName: state.firstNameData.firstName,
-          lastName: state.lastNameData.lastName,
+          firstName: state.firstNameData.firstName.toSentenceCase(),
+          lastName: state.lastNameData.lastName.toSentenceCase(),
           password: state.passwordData.password,
           phoneNumber: state.phoneVerificationData.phoneNumber,
         ),

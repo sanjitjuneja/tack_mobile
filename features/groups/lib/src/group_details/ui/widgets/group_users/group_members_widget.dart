@@ -36,7 +36,9 @@ class GroupMembersWidget extends StatelessWidget {
                 enableLoad: state.membersData.canLoadMore,
                 isLoading: state.isLoading,
                 hasData: state.membersData.hasData,
-                emptyWidget: EmptyWidget(svgIcon: AppIconsTheme.people),
+                emptyWidget: const EmptyWidget(
+                  svgIcon: AppIconsTheme.people,
+                ),
                 onRefresh: _onRefreshAction,
                 onLoad: _onLoadMoreAction,
                 itemCount: state.membersData.results.length,

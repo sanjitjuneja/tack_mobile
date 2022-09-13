@@ -1,6 +1,6 @@
 part of tacks;
 
-class TackUser extends Equatable {
+class TackUser extends Equatable with IdentifiableMixin {
   final int id;
   final String firstName;
   final String lastName;
@@ -25,4 +25,7 @@ class TackUser extends Equatable {
         rating,
         tacksComplete,
       ];
+
+  @override
+  int get itemId => id;
 }

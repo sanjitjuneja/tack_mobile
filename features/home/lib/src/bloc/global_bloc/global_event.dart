@@ -20,11 +20,11 @@ class CurrentGroupChanged extends GlobalEvent {
   });
 }
 
-class GroupsChanged extends GlobalEvent {
-  final List<GroupDetails> groups;
+class GroupsCountChanged extends GlobalEvent {
+  final int groupsCount;
 
-  const GroupsChanged({
-    required this.groups,
+  const GroupsCountChanged({
+    required this.groupsCount,
   });
 }
 

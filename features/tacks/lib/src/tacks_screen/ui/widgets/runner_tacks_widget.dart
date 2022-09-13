@@ -28,8 +28,8 @@ class RunnerTacksWidget extends StatelessWidget {
             builder: (_, TacksState state) {
               return AppListViewWithRefresh(
                 enableRefresh: true,
-                enableLoad: state.runnerTacksData.canLoadMore,
-                isLoading: state.isLoading,
+                enableLoad: false,
+                isLoading: state.runnerTacksData.isLoading,
                 hasData: state.runnerTacksData.hasData,
                 emptyWidget: EmptyWidget(
                   svgIcon: AppIconsTheme.tacksList,
@@ -38,7 +38,6 @@ class RunnerTacksWidget extends StatelessWidget {
                   onButtonTap: () => _onEmptyStateButtonTap(context),
                 ),
                 onRefresh: _onRefreshAction,
-                onLoad: _onLoadMoreAction,
                 itemCount: state.runnerTacksData.results.length,
                 itemBuilder: (_, int index) {
                   return RunnerTackWidget(
@@ -63,13 +62,5 @@ class RunnerTacksWidget extends StatelessWidget {
   ) {
     BlocProvider.of<TacksBloc>(context)
         .add(RefreshRunnerTacks(completer: completer));
-  }
-
-  void _onLoadMoreAction(
-    BuildContext context,
-    Completer<LoadingStatus> completer,
-  ) {
-    BlocProvider.of<TacksBloc>(context)
-        .add(LoadRunnerTacks(completer: completer));
   }
 }

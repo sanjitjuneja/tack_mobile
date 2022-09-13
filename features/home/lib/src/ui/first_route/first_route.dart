@@ -10,10 +10,11 @@ class FirstRouteFeature {
 
   static Page<void> page({
     bool withSlideAnimation = true,
-  }) =>
-      FirstRoutePage(
-        withSlideAnimation: withSlideAnimation,
-      );
+  }) {
+    return FirstRoutePage(
+      withSlideAnimation: withSlideAnimation,
+    );
+  }
 }
 
 class FirstRoutePage extends Page<void> {

@@ -27,17 +27,26 @@ class OngoingRunnerTackActions extends StatelessWidget {
       case TackStatus.pendingStart:
         return Column(
           children: <Widget>[
-            AppCircleButton(
-              labelKey: tack.status.getButtonLabel(isTacker: false),
-              isDisabled: state.hasRunningTack,
-              withFeedback: true,
-              onTap: () => _onActionPressed(context),
-            ),
-            if (state.hasRunningTack) ...<Widget>[
-              const SizedBox(height: 12),
-              NoteWidget(
-                contentKey: tack.status.getNoteText(isTacker: false),
+            if (state.runningTackData.isLoading) ...<Widget>[
+              AppProgressIndicator(
+                indicatorSize: ProgressIndicatorSize.medium,
+                backgroundColor: AppTheme.transparentColor,
               ),
+            ] else if (state.runningTackData.hasError) ...<Widget>[
+              const SizedBox.shrink(),
+            ] else ...<Widget>[
+              AppCircleButton(
+                labelKey: tack.status.getButtonLabel(isTacker: false),
+                isDisabled: state.runningTackData.hasRunningTack,
+                withFeedback: true,
+                onTap: () => _onActionPressed(context),
+              ),
+              if (state.runningTackData.hasRunningTack) ...<Widget>[
+                const SizedBox(height: 12),
+                NoteWidget(
+                  contentKey: tack.status.getNoteText(isTacker: false),
+                ),
+              ],
             ],
           ],
         );

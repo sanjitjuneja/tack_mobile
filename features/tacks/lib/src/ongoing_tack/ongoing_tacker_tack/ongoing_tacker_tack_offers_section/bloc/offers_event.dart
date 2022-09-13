@@ -23,3 +23,11 @@ class LoadMoreAction extends OffersEvent {
     required this.completer,
   });
 }
+
+class OfferIntentAction extends OffersEvent {
+  final WebSocketIntent<Offer> offerIntent;
+
+  const OfferIntentAction({
+    required this.offerIntent,
+  });
+}

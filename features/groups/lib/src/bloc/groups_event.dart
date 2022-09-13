@@ -23,3 +23,11 @@ class LoadMoreAction extends GroupsEvent {
     required this.completer,
   });
 }
+
+class GroupIntentAction extends GroupsEvent {
+  final WebSocketIntent<GroupDetails> groupIntent;
+
+  const GroupIntentAction({
+    required this.groupIntent,
+  });
+}

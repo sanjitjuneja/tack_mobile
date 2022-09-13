@@ -27,6 +27,7 @@ class OngoingTackerTackOfferDetailsWidget extends StatelessWidget {
           tillTime: offer.expiredAt,
           builder: (_, String content) {
             return AppButton(
+              shouldDisableTap: true,
               labelWidget: SizedBox(
                 width: 40,
                 child: Text(

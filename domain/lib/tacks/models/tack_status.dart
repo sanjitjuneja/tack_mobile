@@ -1,6 +1,6 @@
 part of tacks;
 
-enum TackStatus {
+enum TackStatus with Comparable {
   created(1),
   pendingAccept(2),
   pendingStart(3),
@@ -18,5 +18,10 @@ enum TackStatus {
 
   operator <(TackStatus otherStatus) {
     return stageNumber < otherStatus.stageNumber;
+  }
+
+  @override
+  int compareTo(covariant TackStatus other) {
+    return -stageNumber.compareTo(other.stageNumber);
   }
 }

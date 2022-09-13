@@ -1,35 +1,49 @@
+import 'dart:math';
+
 import 'package:core/core.dart';
 import 'package:domain/domain.dart' as domain;
 
 import '../entities/entities.dart';
 import '../providers/api_provider.dart';
 import '../providers/shared_preferences_provider.dart';
+import '../providers/web_sockets_handlers.dart';
+import '../providers/web_sockets_provider.dart';
 
 class GroupsRepositoryImpl implements domain.GroupsRepository {
   final ApiProvider _apiProvider;
   final SharedPreferencesProvider _sharedPreferencesProvider;
+  final WebSocketsProvider _webSocketsProvider;
 
-  late BehaviorSubject<List<domain.GroupDetails>> _groupsStreamController;
-
+  late BehaviorSubject<int> _groupsCountStreamController;
   late BehaviorSubject<domain.Group?> _groupStreamController;
+
+  late WebSocketStreamSubscription<domain.GroupDetails>
+      _webSocketGroupIntentSubscription;
 
   GroupsRepositoryImpl({
     required ApiProvider apiProvider,
     required SharedPreferencesProvider sharedPreferencesProvider,
+    required WebSocketsProvider webSocketsProvider,
   })  : _apiProvider = apiProvider,
-        _sharedPreferencesProvider = sharedPreferencesProvider {
-    _groupsStreamController = BehaviorSubject<List<domain.GroupDetails>>.seeded(
-      <domain.GroupDetails>[],
-    );
+        _sharedPreferencesProvider = sharedPreferencesProvider,
+        _webSocketsProvider = webSocketsProvider {
+    _groupsCountStreamController = BehaviorSubject<int>.seeded(0);
     _groupStreamController = BehaviorSubject<domain.Group?>.seeded(null);
+
+    _webSocketGroupIntentSubscription = _webSocketsProvider.groupsStream.listen(
+      (domain.WebSocketIntent<domain.GroupDetails> intent) {
+        if (intent.action.isUpdate && currentGroup?.id == intent.objectId) {
+          _groupStreamController.add(intent.object!.group);
+        }
+      },
+    );
   }
 
   @override
-  Stream<List<domain.GroupDetails>> get groupsStream =>
-      _groupsStreamController.stream;
+  Stream<int> get groupsCountStream => _groupsCountStreamController.stream;
 
   @override
-  List<domain.GroupDetails> get groups => _groupsStreamController.stream.value;
+  int get groupsCount => _groupsCountStreamController.stream.value;
 
   @override
   Stream<domain.Group?> get currentGroupStream => _groupStreamController.stream;
@@ -38,39 +52,45 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
   domain.Group? get currentGroup => _groupStreamController.stream.value;
 
   @override
+  WebSocketStream<domain.GroupDetails> get groupIntentStream =>
+      _webSocketsProvider.groupsStream;
+
+  @override
+  WebSocketStream<domain.GroupInvitation> get groupInvitationIntentStream =>
+      _webSocketsProvider.groupInvitationsStream;
+
+  // TODO: move this to global bloc (or find solution for reload)
+  @override
   Future<void> initialLoad() async {
     // Handle of network error, no any action needed on error.
     try {
-      await fetchGroups(const domain.FetchGroupsPayload());
-      await _initialSetActiveGroup();
+      final domain.PaginationModel<domain.GroupDetails> groups =
+          await fetchGroups(
+        const domain.FetchGroupsPayload(),
+      );
+      await _initialSetActiveGroup(groups);
     } catch (_) {}
   }
 
-  Future<void> _initialSetActiveGroup() async {
+  Future<void> _initialSetActiveGroup(
+    domain.PaginationModel<domain.GroupDetails> groups,
+  ) async {
     final int? activeGroupId = _sharedPreferencesProvider.getActiveGroupId();
 
-    if (activeGroupId == null) return;
-
-    final int groupIndex = _groupsStreamController.stream.value.indexWhere(
-      (domain.GroupDetails groupDetails) =>
-          groupDetails.group.id == activeGroupId,
-    );
-
-    final domain.Group group;
-
-    if (groupIndex == -1) {
-      group = await fetchGroup(
-        domain.FetchGroupPayload(id: activeGroupId),
-      );
-    } else {
-      group = _groupsStreamController.stream.value.elementAt(groupIndex).group;
+    if (activeGroupId == null) {
+      return _selectRandomGroup(groups: groups);
     }
 
-    _groupStreamController.add(group);
+    final domain.GroupDetails groupDetails = await fetchGroup(
+      domain.FetchGroupPayload(id: activeGroupId),
+    );
+    _groupStreamController.add(groupDetails.group);
   }
 
   @override
-  Future<domain.Group> fetchGroup(domain.FetchGroupPayload payload) async {
+  Future<domain.GroupDetails> fetchGroup(
+    domain.FetchGroupPayload payload,
+  ) async {
     return _apiProvider.fetchGroup(
       request: FetchGroupRequest(
         id: payload.id,
@@ -89,9 +109,8 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
         queryParameters: payload.queryParameters,
       ),
     );
-    if (payload.queryParameters == null) {
-      _groupsStreamController.add(groups.results);
-    }
+
+    _groupsCountStreamController.add(groups.count);
 
     return groups;
   }
@@ -136,18 +155,28 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
         id: payload.group.id,
       ),
     );
-    final List<domain.GroupDetails> finalGroups = <domain.GroupDetails>[
-      ...groups,
-    ];
-    finalGroups.removeWhere(
-      (domain.GroupDetails element) => element.group.id == payload.group.id,
-    );
 
-    _groupsStreamController.add(finalGroups);
-    if (currentGroup?.id == payload.group.id) {
+    final int newGroupsCount = max(0, groupsCount - 1);
+    _groupsCountStreamController.add(newGroupsCount);
+    final int? currentGroupId = _sharedPreferencesProvider.getActiveGroupId();
+
+    if (payload.group.id != currentGroupId) return;
+
+    await _selectRandomGroup();
+  }
+
+  Future<void> _selectRandomGroup({
+    domain.PaginationModel<domain.GroupDetails>? groups,
+  }) async {
+    final domain.PaginationModel<domain.GroupDetails> groupsData =
+        groups ?? await fetchGroups(const domain.FetchGroupsPayload());
+
+    if (groupsData.count == 0) {
+      _groupStreamController.add(null);
+    } else {
       await selectGroup(
         domain.SelectGroupPayload(
-          group: _groupsStreamController.value.firstOrNull?.group,
+          group: groupsData.results.first.group,
         ),
       );
     }
@@ -232,6 +261,8 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
       ),
     );
 
+    _groupsCountStreamController.add(groupsCount + 1);
+
     await selectGroup(
       domain.SelectGroupPayload(
         group: payload.invitation.group,
@@ -248,5 +279,13 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
         id: payload.invitation.id,
       ),
     );
+  }
+
+  @override
+  Future<void> dispose() async {
+    _groupsCountStreamController.close();
+    _groupStreamController.close();
+
+    _webSocketGroupIntentSubscription.cancel();
   }
 }

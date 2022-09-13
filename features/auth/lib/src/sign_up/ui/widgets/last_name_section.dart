@@ -20,6 +20,7 @@ class LastNameSection extends StatelessWidget {
       isInvalid: state.lastNameData.isInvalid,
       errorTextKey: 'validationErrors.fieldRequired',
       textInputAction: TextInputAction.next,
+      textCapitalization: TextCapitalization.words,
       keyboardType: TextInputType.visiblePassword,
       backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
       onTextChange: (String value) => _onLastNameChanged(context, value),

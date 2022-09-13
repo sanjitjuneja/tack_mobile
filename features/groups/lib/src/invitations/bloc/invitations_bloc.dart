@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
+import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
 
 import '../../group_details/models/group_details_screen_result.dart';
@@ -16,14 +17,23 @@ class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState> {
   final AppRouterDelegate _appRouter;
   final FetchGroupInvitationsUseCase _fetchGroupInvitationsUseCase;
   final AcceptGroupInvitationUseCase _acceptGroupInvitationUseCase;
+  final ObserveGroupInvitationIntentUseCase
+      _observeGroupInvitationIntentUseCase;
+
+  late StreamSubscription<WebSocketIntent<GroupInvitation>>
+      _groupInvitationIntentSubscription;
 
   InvitationsBloc({
     required AppRouterDelegate appRouter,
     required FetchGroupInvitationsUseCase fetchGroupInvitationsUseCase,
     required AcceptGroupInvitationUseCase acceptGroupInvitationUseCase,
+    required ObserveGroupInvitationIntentUseCase
+        observeGroupInvitationIntentUseCase,
   })  : _appRouter = appRouter,
         _fetchGroupInvitationsUseCase = fetchGroupInvitationsUseCase,
         _acceptGroupInvitationUseCase = acceptGroupInvitationUseCase,
+        _observeGroupInvitationIntentUseCase =
+            observeGroupInvitationIntentUseCase,
         super(
           InvitationsState(
             isLoading: true,
@@ -33,8 +43,16 @@ class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState> {
     on<RefreshAction>(_onRefreshAction);
     on<LoadMoreAction>(_onLoadMoreAction);
 
+    on<InvitationIntentAction>(_onInvitationIntentAction);
+
     on<OpenInvitationDetails>(_onOpenInvitationDetails);
     on<JoinGroup>(_onJoinGroup);
+
+    _groupInvitationIntentSubscription = _observeGroupInvitationIntentUseCase
+        .execute(NoParams())
+        .listen((WebSocketIntent<GroupInvitation> invitationIntent) {
+      add(InvitationIntentAction(invitationIntent: invitationIntent));
+    });
 
     add(const InitialLoad());
   }
@@ -98,6 +116,37 @@ class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState> {
     } catch (_) {
       event.completer.complete(LoadingStatus.failed);
     }
+  }
+
+  Future<void> _onInvitationIntentAction(
+    InvitationIntentAction event,
+    Emitter<InvitationsState> emit,
+  ) async {
+    final WebSocketIntent<GroupInvitation> intent = event.invitationIntent;
+
+    final PaginationModel<GroupInvitation> invitationsData;
+
+    switch (intent.action) {
+      case WebSocketAction.create:
+        invitationsData = state.invitationsData.addItem(
+          item: intent.object!,
+        );
+        break;
+      case WebSocketAction.update:
+        invitationsData = state.invitationsData.updateItem(
+          item: intent.object!,
+        );
+        break;
+      case WebSocketAction.delete:
+        invitationsData = state.invitationsData.removeItem(
+          itemId: intent.objectId,
+        );
+        break;
+    }
+
+    emit(
+      state.copyWith(invitationsData: invitationsData),
+    );
   }
 
   Future<void> _onOpenInvitationDetails(
@@ -177,5 +226,12 @@ class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState> {
       default:
         return;
     }
+  }
+
+  @override
+  Future<void> close() async {
+    _groupInvitationIntentSubscription.cancel();
+
+    return super.close();
   }
 }

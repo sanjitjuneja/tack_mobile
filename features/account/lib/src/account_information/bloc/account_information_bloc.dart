@@ -102,6 +102,10 @@ class AccountInformationBloc
         ),
       ),
     );
+
+   if (result == true) {
+     // TODO: call delete account use case.
+   }
   }
 
   @override

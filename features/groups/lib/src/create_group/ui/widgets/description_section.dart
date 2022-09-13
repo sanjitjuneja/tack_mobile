@@ -3,7 +3,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
-import 'package:groups/src/create_group/bloc/create_group_bloc.dart';
+import '../../bloc/create_group_bloc.dart';
 
 class DescriptionSection extends StatelessWidget {
   final CreateGroupState state;
@@ -25,6 +25,7 @@ class DescriptionSection extends StatelessWidget {
         AppTextField(
           placeholder: 'createGroupScreen.descriptionSection.placeholder',
           keyboardType: TextInputType.text,
+          textCapitalization: TextCapitalization.sentences,
           hasShadow: false,
           backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
           minLines: 4,

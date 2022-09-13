@@ -36,6 +36,8 @@ class _OngoingTackerTackPage extends Page<OngoingTackerScreenResult> {
           return OngoingTackerTackBloc(
             tack: tack,
             appRouter: AppRouter.of(context),
+            observeTackerTackIntentUseCase:
+                appLocator.get<ObserveTackerTackIntentUseCase>(),
             fetchUserContactsUseCase:
                 appLocator.get<FetchUserContactsUseCase>(),
             cancelTackTackerUseCase: appLocator.get<CancelTackTackerUseCase>(),
