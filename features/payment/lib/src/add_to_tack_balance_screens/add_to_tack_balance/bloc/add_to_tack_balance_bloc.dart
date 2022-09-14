@@ -225,7 +225,7 @@ class AddToTackBalanceBloc
       _appRouter.pop();
       _appRouter.push(
         AddToTackBalanceSuccessfulFeature.page(
-          newTackBalance: state.userBalance.usdBalance + state.amount,
+          newTackBalance: state.userBalance.usdBalance,
         ),
       );
     } on TransactionsLimitException {

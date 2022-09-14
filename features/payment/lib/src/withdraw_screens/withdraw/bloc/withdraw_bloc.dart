@@ -157,7 +157,7 @@ class WithdrawBloc extends Bloc<WithdrawEvent, WithdrawState> {
       _appRouter.pop();
       _appRouter.push(
         WithdrawSuccessfulFeature.page(
-          newTackBalance: state.userBalance.usdBalance - state.withdrawAmount,
+          newTackBalance: state.userBalance.usdBalance,
         ),
       );
     } on TransactionsLimitException {
