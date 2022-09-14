@@ -574,6 +574,18 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
+  Future<void> cancelTackByRunner(CancelTackRequest request) async {
+    return post(
+      ApiQuery(
+        endpoint: BaseUrlConstants.tacksRunnerCancelWithId,
+        id: request.tackId,
+        body: null,
+        params: null,
+      ),
+      parser: (_) {},
+    );
+  }
+
   Future<void> cancelTackByTacker(CancelTackRequest request) async {
     return delete(
       ApiQuery(

@@ -8,14 +8,17 @@ import '../providers/shared_preferences_provider.dart';
 
 class AuthRepositoryImpl implements domain.AuthRepository {
   final ApiProvider _apiProvider;
+  final domain.NotificationsRepository _notificationsRepository;
   final SessionProvider _sessionProvider;
   final SharedPreferencesProvider _sharedPreferencesProvider;
 
   AuthRepositoryImpl({
     required ApiProvider apiProvider,
+    required domain.NotificationsRepository notificationsRepository,
     required SessionProvider sessionProvider,
     required SharedPreferencesProvider sharedPreferencesProvider,
   })  : _apiProvider = apiProvider,
+        _notificationsRepository = notificationsRepository,
         _sessionProvider = sessionProvider,
         _sharedPreferencesProvider = sharedPreferencesProvider;
 
@@ -57,8 +60,17 @@ class AuthRepositoryImpl implements domain.AuthRepository {
   Future<domain.User> signIn({
     required domain.SignInPayload payload,
   }) async {
+    final String? firebaseToken = await _notificationsRepository.getToken();
+    final String? fingerprint = await PlatformInfoManager.getDeviceId();
+    final String? deviceName = await PlatformInfoManager.getDeviceModel();
+    final String deviceType = await PlatformInfoManager.getDeviceType();
+
     await _sessionProvider.startSession(
       payload: payload,
+      firebaseToken: firebaseToken,
+      deviceId: fingerprint,
+      deviceName: deviceName,
+      deviceType: deviceType,
     );
 
     final domain.User user = await _apiProvider.getUser();
@@ -123,6 +135,7 @@ class AuthRepositoryImpl implements domain.AuthRepository {
   @override
   Future<void> logout() async {
     try {
+      await _notificationsRepository.deactivateToken();
       await _sessionProvider.endSession();
     } catch (_) {
     } finally {

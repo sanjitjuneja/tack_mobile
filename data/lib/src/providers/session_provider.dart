@@ -1,7 +1,8 @@
-import 'package:data/src/entities/entities.dart';
-import 'package:data/src/providers/shared_preferences_provider.dart';
-import 'package:data/src/providers/session_api_provider.dart';
 import 'package:domain/domain.dart' as domain;
+
+import '../entities/entities.dart';
+import 'shared_preferences_provider.dart';
+import 'session_api_provider.dart';
 
 class SessionProvider {
   final SessionApiProvider _apiProvider;
@@ -40,11 +41,19 @@ class SessionProvider {
 
   Future<Session> startSession({
     required domain.SignInPayload payload,
+    required String? firebaseToken,
+    required String? deviceName,
+    required String? deviceId,
+    required String deviceType,
   }) async {
     final Session session = await _apiProvider.startSession(
       request: StartSessionRequest(
         password: payload.password,
         phoneNumber: payload.login,
+        firebaseToken: firebaseToken,
+        deviceName: deviceName,
+        deviceId: deviceId,
+        deviceType: deviceType,
       ),
     );
     await _sharedPreferencesProvider.setSession(session);

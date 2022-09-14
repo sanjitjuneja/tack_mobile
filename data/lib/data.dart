@@ -14,6 +14,7 @@ export 'src/providers/web_sockets_provider.dart';
 export 'src/repositories/auth_repository_impl.dart';
 export 'src/repositories/deeplink_repository_impl.dart';
 export 'src/repositories/groups_repository_impl.dart';
+export 'src/repositories/notifications_repository_impl.dart';
+export 'src/repositories/payment_repository_impl.dart';
 export 'src/repositories/tacks_repository_impl.dart';
 export 'src/repositories/user_repository_impl.dart';
-export 'src/repositories/payment_repository_impl.dart';

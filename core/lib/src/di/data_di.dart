@@ -20,6 +20,17 @@ class DataDI {
       options: appLocator.get<FirebaseConfigHelper>().currentPlatformOptions,
     );
 
+    final NotificationsRepository notificationsRepository =
+        NotificationsRepositoryImpl();
+    await notificationsRepository.initialize();
+    appLocator.registerSingleton(notificationsRepository);
+
+    appLocator.registerLazySingleton<RequestNotificationsPermissionsUseCase>(
+      () => RequestNotificationsPermissionsUseCase(
+        notificationsRepository: notificationsRepository,
+      ),
+    );
+
     appLocator.registerLazySingleton<MapperFactory>(
       () => MapperFactory(),
     );
@@ -62,6 +73,7 @@ class DataDI {
     appLocator.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(
         apiProvider: appLocator.get<ApiProvider>(),
+        notificationsRepository: notificationsRepository,
         sessionProvider: appLocator.get<SessionProvider>(),
         sharedPreferencesProvider: appLocator.get<SharedPreferencesProvider>(),
       ),

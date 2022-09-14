@@ -1,5 +1,7 @@
 import 'package:auth/auth.dart';
 import 'package:core/core.dart';
+import 'package:domain/domain.dart';
+import 'package:domain/use_case.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
 import 'package:phone_verification/phone_verification.dart';
@@ -10,13 +12,29 @@ part 'onboarding_state.dart';
 
 class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   final GlobalAppRouterDelegate _globalAppRouter;
+  final RequestNotificationsPermissionsUseCase
+      _requestNotificationsPermissionsUseCase;
 
   OnboardingBloc({
     required GlobalAppRouterDelegate globalAppRouter,
+    required RequestNotificationsPermissionsUseCase
+        requestNotificationsPermissionsUseCase,
   })  : _globalAppRouter = globalAppRouter,
+        _requestNotificationsPermissionsUseCase =
+            requestNotificationsPermissionsUseCase,
         super(const OnboardingState()) {
+    on<RequestNotificationsPermissions>(_onRequestNotificationsPermissions);
     on<SignUpAction>(_onSignUpAction);
     on<SignInAction>(_onSignInAction);
+
+    add(const RequestNotificationsPermissions());
+  }
+
+  Future<void> _onRequestNotificationsPermissions(
+    RequestNotificationsPermissions event,
+    Emitter<OnboardingState> emit,
+  ) async {
+    _requestNotificationsPermissionsUseCase.execute(NoParams());
   }
 
   Future<void> _onSignUpAction(

@@ -89,7 +89,7 @@ class WebSocketsProvider with WebSocketHandlers, WidgetsBindingObserver {
   Future<void> connect() async {
     try {
       final Session? session = await _sessionProvider.getCurrentSession();
-      if (session == null) return;
+      if (session == null) throw Exception('no session found');
 
       socketChannel = await WebSocket.connect(
         _appConfig.webSocketsUrl,

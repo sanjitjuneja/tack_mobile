@@ -173,8 +173,7 @@ class TacksRepositoryImpl implements domain.TacksRepository {
 
   @override
   Future<void> cancelTackByRunner(domain.CancelTackPayload payload) async {
-    // TODO: replace by canceling by runner
-    return _apiProvider.cancelTackByTacker(
+    return _apiProvider.cancelTackByRunner(
       CancelTackRequest(
         tackId: payload.tack.id,
       ),

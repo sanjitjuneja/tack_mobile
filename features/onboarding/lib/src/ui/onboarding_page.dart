@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
@@ -33,6 +34,8 @@ class _OnboardingPage extends Page<void> {
     final Widget child = BlocProvider<OnboardingBloc>(
       create: (BuildContext context) => OnboardingBloc(
         globalAppRouter: appLocator.get<GlobalAppRouterDelegate>(),
+        requestNotificationsPermissionsUseCase:
+            appLocator.get<RequestNotificationsPermissionsUseCase>(),
       ),
       child: const OnboardingScreen(),
     );

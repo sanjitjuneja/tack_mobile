@@ -77,6 +77,13 @@
 	<string>We need this</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need this</string>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>Some text</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
