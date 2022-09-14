@@ -11,21 +11,25 @@ class PayForTackFeature {
 
   static Page<void> page({
     required Offer offer,
+    required double tackPrice,
   }) {
     return PayForTackPage(
       offer: offer,
+      tackPrice: tackPrice,
     );
   }
 }
 
 class PayForTackPage extends Page<void> {
   final Offer offer;
+  final double tackPrice;
 
   @override
   String get name => PayForTackFeature.routeName;
 
   const PayForTackPage({
     required this.offer,
+    required this.tackPrice,
   });
 
   @override
@@ -56,6 +60,8 @@ class PayForTackPage extends Page<void> {
                   appLocator.get<HandleStripeDepositUseCase>(),
               fetchFeeUseCase: appLocator.get<FetchFeeUseCase>(),
               offer: offer,
+              tackPrice: tackPrice,
+              acceptOfferUseCase: appLocator.get<AcceptOfferUseCase>(),
             );
           },
           child: const PayForTackScreen(),

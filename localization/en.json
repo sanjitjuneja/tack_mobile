@@ -629,6 +629,8 @@
     "noTransactionFee": "No Transaction Fee",
     "listedTackPrice": "Listed Tack Price",
     "untilOfferExpires": " Until Offer Expires",
+    "enoughTackBalance": "We will always use your Tack balance when you have enough to cover Tack Price.",
+    "notEnoughTackBalance": "Your Tack Balance can’t cover the Tack price. Select from the following payment methods.",
     "beginTack": "Begin Tack"
   },
   "withdrawScreen": {

@@ -5,6 +5,7 @@ class PayForTackState {
   final UserBankAccount userBalance;
   final PayForTackSelectedPaymentMethod selectedPaymentMethod;
   final Offer offer;
+  final double tackPrice;
   final bool isLoading;
   final bool hasError;
 
@@ -13,6 +14,7 @@ class PayForTackState {
     required this.userBalance,
     required this.fee,
     required this.offer,
+    required this.tackPrice,
     this.isLoading = false,
     this.hasError = false,
   });
@@ -27,7 +29,24 @@ class PayForTackState {
     return false;
   }
 
-  bool get hasEnoughTackBalance => userBalance.usdBalance >= (offer.price ?? 0);
+  double get tackOfferPrice => offer.price ?? tackPrice;
+
+  bool get hasEnoughTackBalance => userBalance.usdBalance >= tackOfferPrice;
+
+  double amountInDollarFormatWithFee({
+    required double feePercent,
+    required double feeMinAmount,
+    required double feeMaxAmount,
+  }) {
+    double feeAmount = (feePercent / 100) * tackOfferPrice;
+    if (feeAmount > feeMaxAmount.toDollarFormat) {
+      feeAmount = feeMaxAmount;
+    } else if (feeAmount < feeMinAmount.toDollarFormat) {
+      feeAmount = feeMinAmount;
+    }
+
+    return tackOfferPrice + feeAmount;
+  }
 
   double get currentFeePercent {
     if (selectedPaymentMethod.isTackBalance) {
@@ -40,7 +59,9 @@ class PayForTackState {
   }
 
   String? get selectedPaymentMethodId {
-    if (selectedPaymentMethod.card != null) {
+    if (selectedPaymentMethod.isTackBalance) {
+      return Constants.tackBalance;
+    } else if (selectedPaymentMethod.card != null) {
       return selectedPaymentMethod.card!.id;
     } else if (selectedPaymentMethod.bankAccount != null) {
       return selectedPaymentMethod.bankAccount!.id;
@@ -48,8 +69,6 @@ class PayForTackState {
       return Constants.applePayId;
     } else if (selectedPaymentMethod.isGooglePay) {
       return Constants.googlePayId;
-    } else if (selectedPaymentMethod.isTackBalance) {
-      return Constants.tackBalance;
     }
 
     return null;
@@ -62,6 +81,7 @@ class PayForTackState {
     UserBankAccount? userBalance,
     Fee? fee,
     Offer? offer,
+    double? tackPrice,
     PayForTackSelectedPaymentMethod? selectedPaymentMethod,
     bool? isLoading,
     bool? hasError,
@@ -70,6 +90,7 @@ class PayForTackState {
       userBalance: userBalance ?? this.userBalance,
       fee: fee ?? this.fee,
       offer: offer ?? this.offer,
+      tackPrice: tackPrice ?? this.tackPrice,
       selectedPaymentMethod:
           selectedPaymentMethod ?? this.selectedPaymentMethod,
       isLoading: isLoading ?? this.isLoading,

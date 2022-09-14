@@ -1,11 +1,14 @@
 import 'dart:async';
 
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
 
+import '../../../add_to_tack_balance_screens/add_to_tack_balance_failed/ui/add_to_tack_balance_failed_page.dart';
 import '../../models/pay_for_tack_selected_payment_method.dart';
+import '../../select_pay_for_tack_payment_method/ui/select_pay_for_tack_payment_method_page.dart';
 
 part 'pay_for_tack_event.dart';
 
@@ -22,6 +25,7 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
   final HandleDwollaDepositUseCase _handleDwollaDepositUseCase;
   final HandleStripeDepositUseCase _handleStripeDepositUseCase;
   final FetchFeeUseCase _fetchFeeUseCase;
+  final AcceptOfferUseCase _acceptOfferUseCase;
 
   late StreamSubscription<UserBankAccount> _userBalanceSubscription;
 
@@ -38,7 +42,9 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
     required HandleDwollaDepositUseCase handleDwollaDepositUseCase,
     required HandleStripeDepositUseCase handleStripeDepositUseCase,
     required FetchFeeUseCase fetchFeeUseCase,
+    required AcceptOfferUseCase acceptOfferUseCase,
     required Offer offer,
+    required double tackPrice,
   })  : _appRouter = appRouter,
         _fetchConnectedBankAccountsUseCase = fetchConnectedBankAccountsUseCase,
         _fetchConnectedCardsUseCase = fetchConnectedCardsUseCase,
@@ -49,10 +55,12 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
         _handleDwollaDepositUseCase = handleDwollaDepositUseCase,
         _handleStripeDepositUseCase = handleStripeDepositUseCase,
         _fetchFeeUseCase = fetchFeeUseCase,
+        _acceptOfferUseCase = acceptOfferUseCase,
         super(
           PayForTackState(
             userBalance: getUserBalanceUseCase.execute(NoParams()),
             offer: offer,
+            tackPrice: tackPrice,
             fee: null,
             selectedPaymentMethod: const PayForTackSelectedPaymentMethod(
               bankAccount: null,
@@ -141,12 +149,14 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
     SelectPaymentMethodAction event,
     Emitter<PayForTackState> emit,
   ) async {
-    /*final PayForTackSelectedPaymentMethod? result = await _appRouter.pushForResult(
+    final PayForTackSelectedPaymentMethod? result =
+        await _appRouter.pushForResult(
       SelectPayForTackPaymentMethodFeature.page(
         selectedPaymentMethodId: state.selectedPaymentMethodId,
+        offerPrice: state.tackOfferPrice,
       ),
     );
-    emit(state.copyWith(selectedPaymentMethod: result));*/
+    emit(state.copyWith(selectedPaymentMethod: result));
   }
 
   ConnectedBankAccount? _findPrimaryBankAccount({
@@ -177,13 +187,20 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
     MakePayForTackRequest event,
     Emitter<PayForTackState> emit,
   ) async {
-    /* try {
+    try {
+      if (state.selectedPaymentMethod.isTackBalance) {
+        await _acceptOfferUseCase.execute(
+          AcceptOfferPayload(offer: state.offer),
+        );
+        _appRouter.pop();
+        return;
+      }
       _appRouter.push(ProgressDialog.page());
       if (state.selectedPaymentMethod.card != null) {
         await _handleStripeDepositUseCase.execute(
           HandleStripeDepositPayload(
             paymentMethodId: state.selectedPaymentMethod.card!.id,
-            amountInCents: state.amount.toCentsFormat,
+            amountInCents: state.tackOfferPrice.toCentsFormat,
             currency: Constants.usd,
           ),
         );
@@ -191,7 +208,7 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
         await _handleDwollaDepositUseCase.execute(
           HandleDwollaDepositPayload(
             paymentMethodId: state.selectedPaymentMethod.bankAccount!.id,
-            amountInCents: state.amount.toCentsFormat,
+            amountInCents: state.tackOfferPrice.toCentsFormat,
             currency: Constants.usd,
           ),
         );
@@ -213,32 +230,31 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
         await _handleStripeDepositUseCase.execute(
           HandleStripeDepositPayload(
             paymentMethodId: Constants.googlePayId,
-            amountInCents: state.amount.toCentsFormat,
+            amountInCents: state.tackOfferPrice.toCentsFormat,
             currency: Constants.usd,
           ),
         );
       }
       _appRouter.pop();
-      _appRouter.push(
-        PayForTackSuccessfulFeature.page(
-          newTackBalance: state.userBalance.usdBalance + state.amount,
-        ),
+      await _acceptOfferUseCase.execute(
+        AcceptOfferPayload(offer: state.offer),
       );
+      _appRouter.pop();
     } on TransactionsLimitException {
       _appRouter.pop();
       _appRouter.push(
-        PayForTackFailedFeature.page(
+        AddToTackBalanceFailedFeature.page(
           errorKey: 'addToTackBalanceFailedScreen.limitReached',
         ),
       );
     } catch (e) {
       _appRouter.pop();
       _appRouter.push(
-        PayForTackFailedFeature.page(
+        AddToTackBalanceFailedFeature.page(
           errorKey: 'addToTackBalanceFailedScreen.unableToAdd',
         ),
       );
-    }*/
+    }
   }
 
   Future<void> _onUserBalanceUpdate(

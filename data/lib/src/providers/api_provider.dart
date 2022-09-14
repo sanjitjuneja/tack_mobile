@@ -537,7 +537,7 @@ class ApiProvider extends ApiProviderCore {
   Future<void> acceptOffer(AcceptOfferRequest request) async {
     return post<void>(
       ApiQuery(
-        endpoint: BaseUrlConstants.offerTestAcceptPath,
+        endpoint: BaseUrlConstants.offerAcceptPath,
         id: request.offerId,
         body: null,
         params: null,

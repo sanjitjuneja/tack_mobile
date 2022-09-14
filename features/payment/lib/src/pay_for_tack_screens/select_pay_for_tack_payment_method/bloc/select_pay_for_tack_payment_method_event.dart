@@ -8,7 +8,8 @@ class InitialLoad extends SelectPayForTackPaymentMethodEvent {
   const InitialLoad();
 }
 
-class SelectPayForTackPaymentMethodAction extends SelectPayForTackPaymentMethodEvent {
+class SelectPayForTackPaymentMethodAction
+    extends SelectPayForTackPaymentMethodEvent {
   final String paymentMethodId;
 
   const SelectPayForTackPaymentMethodAction({
@@ -18,4 +19,12 @@ class SelectPayForTackPaymentMethodAction extends SelectPayForTackPaymentMethodE
 
 class AddPaymentMethodAction extends SelectPayForTackPaymentMethodEvent {
   const AddPaymentMethodAction();
+}
+
+class UserBalanceUpdate extends SelectPayForTackPaymentMethodEvent {
+  final UserBankAccount userBalance;
+
+  const UserBalanceUpdate({
+    required this.userBalance,
+  });
 }

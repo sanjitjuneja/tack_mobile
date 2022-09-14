@@ -18,33 +18,29 @@ class PayForTackScreen extends StatelessWidget {
         actions: <Widget>[
           BlocBuilder<PayForTackBloc, PayForTackState>(
             builder: (_, PayForTackState state) {
-              return Row(
-                children: <Widget>[
-                  TimeLeftWidget(
-                    tillTime: state.offer.expiredAt,
-                    builder: (_, String content) {
-                      return RichText(
-                        text: TextSpan(
-                          text: content,
-                          style: AppTextTheme.manrope14Regular.copyWith(
-                            color: AppTheme.errorColor,
+              return TimeLeftWidget(
+                tillTime: state.offer.expiredAt,
+                builder: (_, String content) {
+                  return RichText(
+                    text: TextSpan(
+                      text: content,
+                      style: AppTextTheme.manrope14Regular.copyWith(
+                        color: AppTheme.errorColor,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: FlutterI18n.translate(
+                            context,
+                            'payForTack.untilOfferExpires',
                           ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: FlutterI18n.translate(
-                                context,
-                                'payForTack.untilOfferExpires',
-                              ),
-                              style: AppTextTheme.manrope14Regular.copyWith(
-                                color: AppTheme.textHeavyHintColor,
-                              ),
-                            ),
-                          ],
+                          style: AppTextTheme.manrope14Regular.copyWith(
+                            color: AppTheme.textHeavyHintColor,
+                          ),
                         ),
-                      );
-                    },
-                  ),
-                ],
+                      ],
+                    ),
+                  );
+                },
               );
             },
           ),

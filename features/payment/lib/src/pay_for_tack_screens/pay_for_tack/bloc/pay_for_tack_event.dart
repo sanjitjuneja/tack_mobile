@@ -16,10 +16,6 @@ class SelectPaymentMethodAction extends PayForTackEvent {
   const SelectPaymentMethodAction();
 }
 
-class FetchUserBalanceAction extends PayForTackEvent {
-  const FetchUserBalanceAction();
-}
-
 class UserBalanceUpdate extends PayForTackEvent {
   final UserBankAccount userBalance;
 

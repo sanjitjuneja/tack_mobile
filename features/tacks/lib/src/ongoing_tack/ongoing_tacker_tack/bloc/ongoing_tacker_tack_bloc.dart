@@ -186,7 +186,12 @@ class OngoingTackerTackBloc
     SelectOffer event,
     Emitter<OngoingTackerTackState> emit,
   ) async {
-    _appRouter.push(PayForTackFeature.page(offer: event.offer));
+    _appRouter.push(
+      PayForTackFeature.page(
+        offer: event.offer,
+        tackPrice: state.tack.price,
+      ),
+    );
   }
 
   Future<void> _onTackIntentAction(
@@ -209,7 +214,7 @@ class OngoingTackerTackBloc
 
         return emit(
           state.copyWith(
-            tack:newTack,
+            tack: newTack,
             currentStep: newTack.currentStepIndex(isTacker: true),
           ),
         );

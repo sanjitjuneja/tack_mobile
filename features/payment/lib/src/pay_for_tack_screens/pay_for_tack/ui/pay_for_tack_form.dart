@@ -31,7 +31,7 @@ class PayForTackForm extends StatelessWidget {
                 textAlign: TextAlign.center,
                 controller: TextEditingController(
                   text: CurrencyUtility.dollarFormat.format(
-                    state.offer.price,
+                    state.tackOfferPrice,
                   ),
                 ),
                 style: AppTextTheme.manrope38Bold.copyWith(
@@ -48,7 +48,7 @@ class PayForTackForm extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 6),
-            if (state.currentFeePercent > 0) ...<Widget>[
+            if (state.currentFeePercent == 0) ...<Widget>[
               RichText(
                 text: TextSpan(
                   text: '${FlutterI18n.translate(
