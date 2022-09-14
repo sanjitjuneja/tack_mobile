@@ -5,13 +5,13 @@ enum Flavor {
 }
 
 class AppConfig {
-  static const String developmentUrl = 'http://44.203.217.242/api/v1/';
-  static const String stagingUrl = 'http://44.203.217.242/api/v1/';
-  static const String productionUrl = 'http://44.203.217.242/api/v1/';
+  static const String developmentUrl = 'https://backend.tackapp.net/api/v1/';
+  static const String stagingUrl = 'https://backend.tackapp.net/api/v1/';
+  static const String productionUrl = 'https://backend.tackapp.net/api/v1/';
 
-  static const String developmentWebSocketsUrl = 'ws://44.203.217.242/ws/';
-  static const String stagingWebSocketsUrl = 'ws://44.203.217.242/ws/';
-  static const String productionWebSocketsUrl = 'ws://44.203.217.242/ws/';
+  static const String developmentWebSocketsUrl = 'wss://backend.tackapp.net/ws/';
+  static const String stagingWebSocketsUrl = 'wss://backend.tackapp.net/ws/';
+  static const String productionWebSocketsUrl = 'wss://backend.tackapp.net/ws/';
 
   static const String stripeDevelopmentKey =
       'pk_test_51KYDDWHUDqRuKWfqG347VI2pG1CgnOApLRuoqeZZ4A0ZHBuOh5QapxVwJ9XLh5pZREboD3HyvbZl97VI1TlZsVqr00gRuftswA';

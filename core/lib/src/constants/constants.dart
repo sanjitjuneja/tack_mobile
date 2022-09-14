@@ -30,4 +30,6 @@ class Constants {
   static const String merchantName = 'Tack App';
 
   static const String googlePayId = 'googlePay';
+
+  static const String tackBalance = 'tackBalance';
 }

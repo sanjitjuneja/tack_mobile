@@ -12,6 +12,7 @@ class PaymentMethodTile extends StatelessWidget {
   final bool hasTrailingArrow;
   final bool isSelected;
   final bool isSelectable;
+  final bool isDisabled;
   final bool isSentenceCase;
   final double? feePercent;
 
@@ -28,12 +29,13 @@ class PaymentMethodTile extends StatelessWidget {
     this.isSelected = false,
     this.isSelectable = false,
     this.isSentenceCase = true,
+    this.isDisabled = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: isDisabled ? null : onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
         padding: isColored
@@ -113,11 +115,14 @@ class PaymentMethodTile extends StatelessWidget {
                 if (isSelectable) ...<Widget>[
                   if (isSelected) ...<Widget>[
                     GestureDetector(
-                      onTap: onTap,
+                      onTap: isDisabled ? null : onTap,
                       child: AppIconsTheme.checkMarkFilled(size: 30),
                     ),
                   ] else ...<Widget>[
-                    AppIconsTheme.add(size: 30),
+                    AppIconsTheme.add(
+                      size: 30,
+                      color: isDisabled ? AppTheme.textHeavyHintColor : null,
+                    ),
                   ],
                 ] else if (hasTrailingArrow) ...<Widget>[
                   AppIconsTheme.chevronRight(

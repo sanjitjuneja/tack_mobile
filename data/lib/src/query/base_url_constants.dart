@@ -21,7 +21,7 @@ class BaseUrlConstants {
 
   static const String offersPath = '/offers/';
   static const String offerCancelPath = '/offers/${ApiQuery.idKey}/';
-  static const String offerTestAcceptPath = '/offers/${ApiQuery.idKey}/test_accept/';
+  static const String offerAcceptPath = '/offers/${ApiQuery.idKey}/accept/';
 
   static const String groupsPath = '/groups/';
   static const String groupsMePath = '/groups/me/';

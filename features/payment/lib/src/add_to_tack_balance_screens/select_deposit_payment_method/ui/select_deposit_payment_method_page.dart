@@ -3,14 +3,14 @@ import 'package:domain/payment/payment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
-import '../../../add_to_tack_balance_screens/models/selected_payment_method.dart';
-import '../../select_deposit_payment_method_screen/ui/select_deposit_payment_method_screen.dart';
+import '../../../add_to_tack_balance_screens/models/deposit_selected_payment_method.dart';
+import '../../select_deposit_payment_method/ui/select_deposit_payment_method_screen.dart';
 import '../bloc/select_deposit_payment_method_bloc.dart';
 
 class SelectDepositPaymentMethodFeature {
   static const String routeName = '/selectDepositPaymentMethod';
 
-  static Page<SelectedPaymentMethod?> page({
+  static Page<DepositSelectedPaymentMethod?> page({
     required String? selectedPaymentMethodId,
   }) {
     return SelectDepositPaymentMethodPage(
@@ -19,7 +19,8 @@ class SelectDepositPaymentMethodFeature {
   }
 }
 
-class SelectDepositPaymentMethodPage extends Page<SelectedPaymentMethod?> {
+class SelectDepositPaymentMethodPage
+    extends Page<DepositSelectedPaymentMethod?> {
   final String? selectedPaymentMethodId;
 
   @override
@@ -30,8 +31,8 @@ class SelectDepositPaymentMethodPage extends Page<SelectedPaymentMethod?> {
   });
 
   @override
-  Route<SelectedPaymentMethod?> createRoute(BuildContext context) {
-    return CupertinoPageRoute<SelectedPaymentMethod?>(
+  Route<DepositSelectedPaymentMethod?> createRoute(BuildContext context) {
+    return CupertinoPageRoute<DepositSelectedPaymentMethod?>(
       settings: this,
       builder: (_) => BlocProvider<SelectDepositPaymentMethodBloc>(
         create: (_) {

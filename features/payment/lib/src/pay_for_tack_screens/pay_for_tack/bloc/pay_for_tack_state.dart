@@ -1,18 +1,20 @@
-part of 'add_to_tack_balance_bloc.dart';
+part of 'pay_for_tack_bloc.dart';
 
-class AddToTackBalanceState {
-  final double amount;
+class PayForTackState {
   final Fee? fee;
   final UserBankAccount userBalance;
-  final DepositSelectedPaymentMethod selectedPaymentMethod;
+  final PayForTackSelectedPaymentMethod selectedPaymentMethod;
+  final Offer offer;
+  final double tackPrice;
   final bool isLoading;
   final bool hasError;
 
-  const AddToTackBalanceState({
-    required this.amount,
+  const PayForTackState({
     required this.selectedPaymentMethod,
     required this.userBalance,
     required this.fee,
+    required this.offer,
+    required this.tackPrice,
     this.isLoading = false,
     this.hasError = false,
   });
@@ -22,51 +24,44 @@ class AddToTackBalanceState {
     if (selectedPaymentMethod.bankAccount != null) return true;
     if (selectedPaymentMethod.isGooglePay) return true;
     if (selectedPaymentMethod.isApplePay) return true;
+    if (selectedPaymentMethod.isTackBalance) return true;
 
     return false;
   }
 
-  double get currentFeePercent {
-    if (selectedPaymentMethod.bankAccount != null) {
-      return fee?.dwollaFeeData.feePercent ?? 0;
-    } else {
-      return fee?.stripeFeeData.feePercent ?? 0;
-    }
-  }
+  double get tackOfferPrice => offer.price ?? tackPrice;
 
-  int get currentMinFeeAmount {
-    if (selectedPaymentMethod.bankAccount != null) {
-      return fee?.dwollaFeeData.feeMin ?? 0;
-    } else {
-      return fee?.stripeFeeData.feeMin ?? 0;
-    }
-  }
-
-  int get currentMaxFeeAmount {
-    if (selectedPaymentMethod.bankAccount != null) {
-      return fee?.dwollaFeeData.feeMax ?? 0;
-    } else {
-      return fee?.stripeFeeData.feeMax ?? 0;
-    }
-  }
+  bool get hasEnoughTackBalance => userBalance.usdBalance >= tackOfferPrice;
 
   double amountInDollarFormatWithFee({
     required double feePercent,
     required double feeMinAmount,
     required double feeMaxAmount,
   }) {
-    double feeAmount = (feePercent / 100) * amount;
+    double feeAmount = (feePercent / 100) * tackOfferPrice;
     if (feeAmount > feeMaxAmount.toDollarFormat) {
       feeAmount = feeMaxAmount;
     } else if (feeAmount < feeMinAmount.toDollarFormat) {
       feeAmount = feeMinAmount;
     }
 
-    return amount + feeAmount;
+    return tackOfferPrice + feeAmount;
+  }
+
+  double get currentFeePercent {
+    if (selectedPaymentMethod.isTackBalance) {
+      return 0;
+    } else if (selectedPaymentMethod.bankAccount != null) {
+      return fee?.dwollaFeeData.feePercent ?? 0;
+    } else {
+      return fee?.stripeFeeData.feePercent ?? 0;
+    }
   }
 
   String? get selectedPaymentMethodId {
-    if (selectedPaymentMethod.card != null) {
+    if (selectedPaymentMethod.isTackBalance) {
+      return Constants.tackBalance;
+    } else if (selectedPaymentMethod.card != null) {
       return selectedPaymentMethod.card!.id;
     } else if (selectedPaymentMethod.bankAccount != null) {
       return selectedPaymentMethod.bankAccount!.id;
@@ -79,20 +74,23 @@ class AddToTackBalanceState {
     return null;
   }
 
-  bool get isReadyToProceed => amount > 0 && isExistSelectedPaymentMethod;
+  bool get isReadyToProceed => isExistSelectedPaymentMethod;
 
-  AddToTackBalanceState copyWith({
+  PayForTackState copyWith({
     double? amount,
     UserBankAccount? userBalance,
     Fee? fee,
-    DepositSelectedPaymentMethod? selectedPaymentMethod,
+    Offer? offer,
+    double? tackPrice,
+    PayForTackSelectedPaymentMethod? selectedPaymentMethod,
     bool? isLoading,
     bool? hasError,
   }) {
-    return AddToTackBalanceState(
-      amount: amount ?? this.amount,
+    return PayForTackState(
       userBalance: userBalance ?? this.userBalance,
       fee: fee ?? this.fee,
+      offer: offer ?? this.offer,
+      tackPrice: tackPrice ?? this.tackPrice,
       selectedPaymentMethod:
           selectedPaymentMethod ?? this.selectedPaymentMethod,
       isLoading: isLoading ?? this.isLoading,

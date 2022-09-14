@@ -1,58 +1,84 @@
 import 'dart:async';
 import 'package:core/core.dart';
+import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
 import 'package:domain/domain.dart';
 
 import '../../../../payment.dart';
-import '../../models/selected_payment_method.dart';
+import '../../models/pay_for_tack_selected_payment_method.dart';
 
-part 'select_deposit_payment_method_event.dart';
+part 'select_pay_for_tack_payment_method_event.dart';
 
-part 'select_deposit_payment_method_state.dart';
+part 'select_pay_for_tack_payment_method_state.dart';
 
-class SelectDepositPaymentMethodBloc
-    extends Bloc<SelectDepositPaymentMethodEvent, SelectDepositPaymentMethodState> {
+class SelectPayForTackPaymentMethodBloc extends Bloc<
+    SelectPayForTackPaymentMethodEvent, SelectPayForTackPaymentMethodState> {
   final AppRouterDelegate _appRouter;
   final FetchConnectedBankAccountsUseCase _fetchConnectedBankAccountsUseCase;
   final FetchConnectedCardsUseCase _fetchConnectedCardsUseCase;
   final FetchIsApplePaySupportedUseCase _fetchIsApplePaySupportedUseCase;
   final FetchIsGooglePaySupportedUseCase _fetchIsGooglePaySupportedUseCase;
+  final ObserveUserBalanceUseCase _observeUserBalanceUseCase;
+  final FetchUserBalanceUseCase _fetchUserBalanceUseCase;
   final FetchFeeUseCase _feeUseCase;
 
-  SelectDepositPaymentMethodBloc({
+  late StreamSubscription<UserBankAccount> _userBalanceSubscription;
+
+  SelectPayForTackPaymentMethodBloc({
     required AppRouterDelegate appRouter,
     required FetchConnectedBankAccountsUseCase
         fetchConnectedBankAccountsUseCase,
     required FetchConnectedCardsUseCase fetchConnectedCardsUseCase,
     required FetchIsApplePaySupportedUseCase fetchIsApplePaySupportedUseCase,
     required FetchIsGooglePaySupportedUseCase fetchIsGooglePaySupportedUseCase,
+    required ObserveUserBalanceUseCase observeUserBalanceUseCase,
+    required FetchUserBalanceUseCase fetchUserBalanceUseCase,
+    required GetUserBalanceUseCase getUserBalanceUseCase,
     required FetchFeeUseCase feeUseCase,
     required String? selectedPaymentMethodId,
+    required double offerPrice,
   })  : _appRouter = appRouter,
         _fetchConnectedBankAccountsUseCase = fetchConnectedBankAccountsUseCase,
         _fetchConnectedCardsUseCase = fetchConnectedCardsUseCase,
+        _observeUserBalanceUseCase = observeUserBalanceUseCase,
+        _fetchUserBalanceUseCase = fetchUserBalanceUseCase,
         _fetchIsApplePaySupportedUseCase = fetchIsApplePaySupportedUseCase,
         _fetchIsGooglePaySupportedUseCase = fetchIsGooglePaySupportedUseCase,
         _feeUseCase = feeUseCase,
         super(
-          SelectDepositPaymentMethodState(
+          SelectPayForTackPaymentMethodState(
             bankAccounts: <ConnectedBankAccount>[],
             cards: <ConnectedCard>[],
+            offerPrice: offerPrice,
+            userBalance: getUserBalanceUseCase.execute(NoParams()),
             selectedPaymentMethodId: selectedPaymentMethodId,
             fee: null,
           ),
         ) {
     on<InitialLoad>(_onInitialLoad);
 
-    on<SelectDepositPaymentMethodAction>(_onSelectDepositPaymentMethodAction);
+    on<SelectPayForTackPaymentMethodAction>(
+        _onSelectPayForTackPaymentMethodAction);
     on<AddPaymentMethodAction>(_onAddPaymentMethodAction);
+
+    on<UserBalanceUpdate>(_onUserBalanceUpdate);
+
+    _userBalanceSubscription =
+        _observeUserBalanceUseCase.execute(NoParams()).listen(
+      (UserBankAccount newUserBalance) {
+        final UserBalanceUpdate event = UserBalanceUpdate(
+          userBalance: newUserBalance,
+        );
+        add(event);
+      },
+    );
 
     add(const InitialLoad());
   }
 
   Future<void> _onInitialLoad(
     InitialLoad event,
-    Emitter<SelectDepositPaymentMethodState> emit,
+    Emitter<SelectPayForTackPaymentMethodState> emit,
   ) async {
     try {
       emit(state.copyWith(isLoading: true));
@@ -72,6 +98,8 @@ class SelectDepositPaymentMethodBloc
           await _fetchIsGooglePaySupportedUseCase.execute(
         const FetchIsGooglePaySupportedPayload(),
       );
+
+      await _fetchUserBalanceUseCase.execute(const FetchUserBalancePayload());
 
       final Fee fee = await _feeUseCase.execute(
         const FetchFeePayload(),
@@ -98,16 +126,16 @@ class SelectDepositPaymentMethodBloc
     }
   }
 
-  Future<void> _onSelectDepositPaymentMethodAction(
-    SelectDepositPaymentMethodAction event,
-    Emitter<SelectDepositPaymentMethodState> emit,
+  Future<void> _onSelectPayForTackPaymentMethodAction(
+    SelectPayForTackPaymentMethodAction event,
+    Emitter<SelectPayForTackPaymentMethodState> emit,
   ) async {
     emit(state.copyWith(selectedPaymentMethodId: event.paymentMethodId));
   }
 
   Future<void> _onAddPaymentMethodAction(
     AddPaymentMethodAction event,
-    Emitter<SelectDepositPaymentMethodState> emit,
+    Emitter<SelectPayForTackPaymentMethodState> emit,
   ) async {
     final AddPaymentMethodScreenResult? result = await _appRouter.pushForResult(
       AddPaymentMethodFeature.page(
@@ -117,5 +145,21 @@ class SelectDepositPaymentMethodBloc
     if (result != null) {
       add(const InitialLoad());
     }
+  }
+
+  Future<void> _onUserBalanceUpdate(
+    UserBalanceUpdate event,
+    Emitter<SelectPayForTackPaymentMethodState> emit,
+  ) async {
+    emit(
+      state.copyWith(userBalance: event.userBalance),
+    );
+  }
+
+  @override
+  Future<void> close() {
+    _userBalanceSubscription.cancel();
+
+    return super.close();
   }
 }

@@ -28,6 +28,8 @@ dependencies:
     path: ../home
   groups:
     path: ../groups
+  payment:
+    path: ../payment
 
 dev_dependencies:
   flutter_test:

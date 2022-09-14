@@ -1,12 +1,12 @@
 import 'package:domain/domain.dart';
 
-class SelectedPaymentMethod {
+class DepositSelectedPaymentMethod {
   final ConnectedBankAccount? bankAccount;
   final ConnectedCard? card;
   final bool isApplePay;
   final bool isGooglePay;
 
-  const SelectedPaymentMethod({
+  const DepositSelectedPaymentMethod({
     required this.bankAccount,
     required this.card,
     this.isApplePay = false,

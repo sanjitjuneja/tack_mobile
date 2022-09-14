@@ -84,7 +84,14 @@ class TackKeyboard extends StatelessWidget {
                   style: AppTextTheme.manrope38Bold.copyWith(
                     color: AppTheme.grassColor,
                   ),
-                  decoration: const BoxDecoration(),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        width: 1.0,
+                        color: AppTheme.dividerColor,
+                      ),
+                    ),
+                  ),
                 ),
               ],
               const SizedBox(height: 6),

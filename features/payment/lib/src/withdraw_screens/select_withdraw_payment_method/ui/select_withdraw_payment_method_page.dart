@@ -3,7 +3,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
-import '../../select_withdraw_payment_method_screen/ui/select_withdraw_payment_method_screen.dart';
+import '../../select_withdraw_payment_method/ui/select_withdraw_payment_method_screen.dart';
 import '../bloc/select_withdraw_payment_method_bloc.dart';
 
 class SelectWithdrawPaymentMethodFeature {
