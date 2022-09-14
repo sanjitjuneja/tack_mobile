@@ -6,10 +6,10 @@ import 'package:domain/domain.dart';
 import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
 
-import '../../models/ongoing_runner_screen_result.dart';
 import '../../models/running_tack_data.dart';
 import '../../view_extensions/ongoing_tack_to_view_extension.dart';
 import '../../../rate_tack_user/ui/rate_tack_user_page.dart';
+import '../ui/ongoing_runner_tack_page.dart';
 
 part 'ongoing_runner_tack_event.dart';
 
@@ -28,7 +28,7 @@ class OngoingRunnerTackBloc
   late StreamSubscription<WebSocketIntent<RunnerTack>> _tackIntentSubscription;
 
   OngoingRunnerTackBloc({
-    required Tack tack,
+    required RunnerTack runnerTack,
     required AppRouterDelegate appRouter,
     required ObserveRunnerTackIntentUseCase observeRunnerTackIntentUseCase,
     required FetchHasRunningTackUseCase fetchHasRunningTackUseCase,
@@ -45,10 +45,10 @@ class OngoingRunnerTackBloc
         _startTackUseCase = startTackUseCase,
         super(
           OngoingRunnerTackState(
-            tack: tack,
+            runnerTack: runnerTack,
             stepsCount:
                 OngoingTackToStepIndexViewExtension.runnerTackStepsCount,
-            currentStep: tack.currentStepIndex(isTacker: false),
+            currentStep: runnerTack.tack.currentStepIndex(isTacker: false),
             runningTackData: const RunningTackData(
               isLoading: true,
             ),
@@ -106,7 +106,7 @@ class OngoingRunnerTackBloc
     try {
       final UserContacts userContacts = await _fetchUserContactsUseCase.execute(
         FetchUserContactsPayload(
-          tackId: state.tack.id,
+          tackId: state.runnerTack.tack.id,
         ),
       );
       emit(
@@ -121,7 +121,7 @@ class OngoingRunnerTackBloc
     ActionPressed event,
     Emitter<OngoingRunnerTackState> emit,
   ) async {
-    switch (state.tack.status) {
+    switch (state.runnerTack.tack.status) {
       case TackStatus.pendingStart:
         return __onStartTack();
       case TackStatus.inProgress:
@@ -135,7 +135,7 @@ class OngoingRunnerTackBloc
     try {
       _appRouter.push(ProgressDialog.page());
       await _startTackUseCase.execute(
-        StartTackPayload(tack: state.tack),
+        StartTackPayload(tack: state.runnerTack.tack),
       );
       _appRouter.pop();
     } catch (e) {
@@ -154,18 +154,18 @@ class OngoingRunnerTackBloc
     try {
       _appRouter.push(ProgressDialog.page());
       await _completeTackUseCase.execute(
-        CompleteTackPayload(tack: state.tack),
+        CompleteTackPayload(tack: state.runnerTack.tack),
       );
       _appRouter.pop();
 
       await _appRouter.pushForResult(
         RateTackUser.page(
-          tack: state.tack,
+          tack: state.runnerTack.tack,
           isRateTacker: true,
         ),
       );
 
-      _appRouter.popWithResult(OngoingRunnerScreenResult.complete);
+      _appRouter.removeNamed(OngoingRunnerTackFeature.routeName);
     } catch (e) {
       _appRouter.pop();
       _appRouter.pushForResult(
@@ -197,7 +197,9 @@ class OngoingRunnerTackBloc
         DestructiveAlert(
           contentKey: 'destructiveAlert.cancelTackRunner',
           translationParams: <AlertPropertyKey, Map<String, String>>{
-            AlertPropertyKey.message: {'tackName': state.tack.title},
+            AlertPropertyKey.message: <String, String>{
+              'tackName': state.runnerTack.tack.title,
+            },
           },
         ),
       ),
@@ -208,10 +210,17 @@ class OngoingRunnerTackBloc
     try {
       _appRouter.push(ProgressDialog.page());
       await _cancelTackUseCase.execute(
-        CancelTackPayload(tack: state.tack),
+        CancelTackPayload(tack: state.runnerTack.tack),
       );
       _appRouter.pop();
-      _appRouter.popWithResult(OngoingRunnerScreenResult.cancel);
+      _appRouter.removeNamed(OngoingRunnerTackFeature.routeName);
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            contentKey: 'errorAlert.tackCancel',
+          ),
+        ),
+      );
     } catch (e) {
       _appRouter.pop();
       _appRouter.pushForResult(
@@ -230,21 +239,22 @@ class OngoingRunnerTackBloc
   ) async {
     final WebSocketIntent<RunnerTack> intent = event.tackIntent;
 
+    if (intent.objectId != state.runnerTack.id) return;
+
     switch (intent.action) {
       case WebSocketAction.create:
         return;
       case WebSocketAction.update:
-        final Tack newTack = intent.object!.tack;
-        if (newTack.id != state.tack.id) return;
+        final RunnerTack newTack = intent.object!;
 
         return emit(
           state.copyWith(
-            tack: newTack,
-            currentStep: newTack.currentStepIndex(isTacker: false),
+            runnerTack: newTack,
+            currentStep: newTack.tack.currentStepIndex(isTacker: false),
           ),
         );
       case WebSocketAction.delete:
-        return;
+        return _appRouter.removeNamed(OngoingRunnerTackFeature.routeName);
     }
   }
 

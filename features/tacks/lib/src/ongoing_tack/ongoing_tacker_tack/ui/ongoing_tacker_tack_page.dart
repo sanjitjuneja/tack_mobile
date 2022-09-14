@@ -3,33 +3,32 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
-import '../../models/ongoing_tacker_screen_result.dart';
 import '../bloc/ongoing_tacker_tack_bloc.dart';
 import 'ongoing_tacker_tack_screen.dart';
 
-class OngoingTackerTack {
+class OngoingTackerTackFeature {
   static const String routeName = '/ongoingTack';
 
-  static Page<OngoingTackerScreenResult> page({
+  static Page<void> page({
     required Tack tack,
   }) {
     return _OngoingTackerTackPage(tack: tack);
   }
 }
 
-class _OngoingTackerTackPage extends Page<OngoingTackerScreenResult> {
+class _OngoingTackerTackPage extends Page<void> {
   final Tack tack;
 
   @override
-  String get name => OngoingTackerTack.routeName;
+  String get name => OngoingTackerTackFeature.routeName;
 
   const _OngoingTackerTackPage({
     required this.tack,
   });
 
   @override
-  Route<OngoingTackerScreenResult> createRoute(BuildContext context) {
-    return CupertinoPageRoute<OngoingTackerScreenResult>(
+  Route<void> createRoute(BuildContext context) {
+    return CupertinoPageRoute<void>(
       settings: this,
       builder: (_) => BlocProvider<OngoingTackerTackBloc>(
         create: (_) {

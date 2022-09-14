@@ -3,7 +3,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:tacks/src/tacks_screen/bloc/tacks_bloc.dart';
+import '../../../bloc/tacks_bloc.dart';
 
 class RunnerTackActions extends StatelessWidget {
   final RunnerTack runnerTack;
@@ -17,7 +17,8 @@ class RunnerTackActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String labelKey;
+    final String labelKey =
+        'tacksScreen.statusButtons.runner.${runnerTack.tack.status.name}';
     AppIcon? icon;
 
     switch (runnerTack.tack.status) {
@@ -56,6 +57,8 @@ class RunnerTackActions extends StatelessWidget {
                         alignment: PlaceholderAlignment.middle,
                         child: TimeLeftWidget(
                           tillTime: runnerTack.offer!.expiredAt,
+                          onExpire: (BuildContext context) =>
+                              _onRunnerTackOfferExpired(context, runnerTack),
                           builder: (_, String content) {
                             return SizedBox(
                               width: 40,
@@ -77,16 +80,13 @@ class RunnerTackActions extends StatelessWidget {
           ],
         );
       case TackStatus.pendingStart:
-        labelKey = 'tacksScreen.beginTackButton';
-        icon = AppIconsTheme.taskComplete;
+        icon = AppIconsTheme.edit;
         break;
       case TackStatus.inProgress:
-        labelKey = 'general.track';
-        icon = null;
+        icon = AppIconsTheme.taskComplete;
         break;
       case TackStatus.pendingReview:
-        labelKey = 'tacksScreen.pendingReview';
-        icon = AppIconsTheme.taskComplete;
+        icon = AppIconsTheme.clock;
         break;
       default:
         return const SizedBox.shrink();
@@ -117,6 +117,14 @@ class RunnerTackActions extends StatelessWidget {
           onTap: onTap,
         ),
       ],
+    );
+  }
+
+  void _onRunnerTackOfferExpired(BuildContext context, RunnerTack runnerTack) {
+    BlocProvider.of<TacksBloc>(context).add(
+      RunnerTackOfferExpired(
+        runnerTack: runnerTack,
+      ),
     );
   }
 

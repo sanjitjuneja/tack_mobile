@@ -6,7 +6,6 @@ class Offer extends Equatable with IdentifiableMixin {
   final TackUser runner;
   final double? price;
   final OfferType type;
-  final bool isAccepted;
   final DateTime createdAt;
   final Duration lifetime;
 
@@ -18,7 +17,6 @@ class Offer extends Equatable with IdentifiableMixin {
     required this.runner,
     required this.price,
     required this.type,
-    required this.isAccepted,
     required this.createdAt,
     required this.lifetime,
   });
@@ -30,7 +28,6 @@ class Offer extends Equatable with IdentifiableMixin {
         runner,
         price,
         type,
-        isAccepted,
         createdAt,
         lifetime,
       ];

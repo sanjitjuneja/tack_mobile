@@ -2,9 +2,9 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
-import 'package:tacks/src/rate_tack_user/bloc/rate_tack_user_bloc.dart';
-import 'package:tacks/src/rate_tack_user/ui/widgets/comment_field.dart';
-import 'package:tacks/src/rate_tack_user/ui/widgets/rating_section.dart';
+import '../bloc/rate_tack_user_bloc.dart';
+import 'widgets/comment_field.dart';
+import 'widgets/rating_section.dart';
 
 class RateTackUserForm extends StatelessWidget {
   const RateTackUserForm({

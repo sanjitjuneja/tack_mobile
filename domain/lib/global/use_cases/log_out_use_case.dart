@@ -13,7 +13,7 @@ class LogOutUseCase extends FutureUseCase<void, NoParams> {
   @override
   Future<void> execute(NoParams params) async {
     await dataDI.unregisterPostLoginAppLocator();
-    await _authRepository.logout();
+    _authRepository.logout();
     _globalAppRouter.replace(
       OnboardingFeature.page(withSlideAnimation: true),
     );

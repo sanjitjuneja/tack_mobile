@@ -7,7 +7,11 @@ abstract class TacksRepository {
 
   Stream<WebSocketIntent<RunnerTack>> get runnerTackIntentStream;
 
+  Stream<WebSocketIntent<Tack>> get completedTacksRunnerIntentStream;
+
   Stream<WebSocketIntent<Offer>> get offerIntentStream;
+
+  Stream<WebSocketIntent<Tack>> get cancelTackerTackRunnerStream;
 
   Future<bool> fetchHasRunningTack(FetchHasRunningTackPayload payload);
 

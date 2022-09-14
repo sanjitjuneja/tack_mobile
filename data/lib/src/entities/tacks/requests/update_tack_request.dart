@@ -11,6 +11,7 @@ class UpdateTackRequest extends JsonSerializable {
   final int? estimationTimeSeconds;
   @JsonKey(name: 'allow_counter_offer')
   final bool allowCounterOffer;
+  final int group;
   final String type;
 
   const UpdateTackRequest({
@@ -20,6 +21,7 @@ class UpdateTackRequest extends JsonSerializable {
     required this.description,
     required this.estimationTimeSeconds,
     required this.allowCounterOffer,
+    required this.group,
     this.type = 'groups'
   });
 

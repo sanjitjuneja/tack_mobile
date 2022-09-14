@@ -44,13 +44,10 @@ class SignUpForm extends StatelessWidget {
                   PhoneNumberSection(state: state),
                   const SizedBox(height: 12),
                   PasswordsSection(state: state),
+                  const SizedBox(height: 8),
+                  TermsConditionsResolver(state: state),
                 ],
               ),
-            ),
-            const SizedBox(height: 6),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: TermsConditionsResolver(state: state),
             ),
             const SizedBox(height: 8),
             KeyboardVisibilityWidget(
@@ -58,6 +55,7 @@ class SignUpForm extends StatelessWidget {
               child: AppCircleButton(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 labelKey: 'signUpScreen.nextButton',
+                isDisabled: !state.isReadyToProceed,
                 onTap: () => _onSubmitButtonPressed(context),
               ),
             ),

@@ -17,6 +17,14 @@ class FirstRouteForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final BackButtonDispatcher? parentDispatcher =
+        Router.of(context).backButtonDispatcher;
+
+    final BackButtonDispatcher? childDispatcher =
+        parentDispatcher?.createChildBackButtonDispatcher();
+    // Tells the parent dispatcher to delegate the back button intend to this child.
+    childDispatcher?.takePriority();
+
     return MultiBlocProvider(
       providers: <BlocProvider<dynamic>>[
         BlocProvider<DeeplinkBloc>(
@@ -45,6 +53,10 @@ class FirstRouteForm extends StatelessWidget {
                   appLocator.get<ObserveCurrentGroupUseCase>(),
               observeGroupsCountUseCase:
                   appLocator.get<ObserveGroupsCountUseCase>(),
+              observeCompletedTackRunnerIntentUseCase:
+                  appLocator.get<ObserveCompletedTackRunnerIntentUseCase>(),
+              observeCancelTackerTackRunnerIntentUseCase:
+                  appLocator.get<ObserveCancelTackerTackRunnerIntentUseCase>(),
               fetchGroupUseCase: appLocator.get<FetchGroupUseCase>(),
               selectGroupUseCase: appLocator.get<SelectGroupUseCase>(),
             );
@@ -52,6 +64,7 @@ class FirstRouteForm extends StatelessWidget {
         ),
       ],
       child: Router(
+        backButtonDispatcher: childDispatcher,
         routeInformationProvider: PlatformRouteInformationProvider(
           initialRouteInformation: const RouteInformation(
             location: HomeFeature.routeName,

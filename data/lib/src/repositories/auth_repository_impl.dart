@@ -135,11 +135,9 @@ class AuthRepositoryImpl implements domain.AuthRepository {
   @override
   Future<void> logout() async {
     try {
+      await _sharedPreferencesProvider.clearSessionInfo();
       await _notificationsRepository.deactivateToken();
       await _sessionProvider.endSession();
-    } catch (_) {
-    } finally {
-      await _sharedPreferencesProvider.clearSessionInfo();
-    }
+    } catch (_) {}
   }
 }

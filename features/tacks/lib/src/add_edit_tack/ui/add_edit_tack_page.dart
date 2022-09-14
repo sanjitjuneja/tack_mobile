@@ -3,10 +3,10 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
-import 'package:tacks/src/add_edit_tack/bloc/add_edit_tack_bloc.dart';
-import 'package:tacks/src/add_edit_tack/ui/add_edit_tack_screen.dart';
+import '../bloc/add_edit_tack_bloc.dart';
+import 'add_edit_tack_screen.dart';
 
-class AddEditTack {
+class AddEditTackFeature {
   static const String routeName = '/addEditTack';
 
   static Page<Tack?> addPage({TemplateTack? templateTack}) {
@@ -24,7 +24,7 @@ class _AddEditTackPage extends Page<Tack?> {
   final Tack? tack;
 
   @override
-  String get name => AddEditTack.routeName;
+  String get name => AddEditTackFeature.routeName;
 
   const _AddEditTackPage({
     required this.isAdd,

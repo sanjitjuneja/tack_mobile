@@ -48,6 +48,14 @@ class TackerTackIntentAction extends TacksEvent {
   });
 }
 
+class RunnerTackOfferExpired extends TacksEvent {
+  final RunnerTack runnerTack;
+
+  const RunnerTackOfferExpired({
+    required this.runnerTack,
+  });
+}
+
 class CancelTackOffer extends TacksEvent {
   final RunnerTack runnerTack;
 
@@ -65,9 +73,9 @@ class OpenTackerTack extends TacksEvent {
 }
 
 class OpenRunnerTack extends TacksEvent {
-  final Tack tack;
+  final RunnerTack runnerTack;
 
   const OpenRunnerTack({
-    required this.tack,
+    required this.runnerTack,
   });
 }

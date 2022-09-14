@@ -5,12 +5,12 @@ import 'package:domain/use_case.dart';
 import 'package:groups/groups.dart';
 import 'package:navigation/navigation.dart';
 
-import 'package:tacks/src/add_edit_tack/models/counter_offer_option_data.dart';
-import 'package:tacks/src/add_edit_tack/models/description_data.dart';
-import 'package:tacks/src/add_edit_tack/models/group_data.dart';
-import 'package:tacks/src/add_edit_tack/models/price_data.dart';
-import 'package:tacks/src/add_edit_tack/models/time_estimation_data.dart';
-import 'package:tacks/src/add_edit_tack/models/title_data.dart';
+import '../models/counter_offer_option_data.dart';
+import '../models/description_data.dart';
+import '../models/group_data.dart';
+import '../models/price_data.dart';
+import '../models/time_estimation_data.dart';
+import '../models/title_data.dart';
 
 part 'add_edit_tack_event.dart';
 
@@ -109,6 +109,7 @@ class AddEditTackBloc extends Bloc<AddEditTackEvent, AddEditTackState> {
           description: state.descriptionData.description,
           estimatedTime: state.timeEstimationData.timeInSeconds,
           shouldAllowCounterOffers: state.counterOfferData.allow,
+          groupId: state.groupData.group!.id,
         ),
       );
       _appRouter.pop();

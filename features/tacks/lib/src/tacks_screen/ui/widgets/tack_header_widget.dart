@@ -9,11 +9,13 @@ import 'package:tacks/src/tacks_screen/view_extensions/tacker_task_to_view_exten
 class TackHeaderWidget extends StatelessWidget {
   final Tack tack;
   final bool isRunner;
+  final double? counterOfferPrice;
 
   const TackHeaderWidget({
     super.key,
     required this.tack,
     required this.isRunner,
+    this.counterOfferPrice,
   });
 
   @override
@@ -37,7 +39,8 @@ class TackHeaderWidget extends StatelessWidget {
             ),
             const SizedBox(width: 6),
             Text(
-              CurrencyUtility.dollarFormat.format(tack.price),
+              CurrencyUtility.dollarFormat
+                  .format(counterOfferPrice ?? tack.price),
               style: AppTextTheme.manrope24Bold
                   .copyWith(color: AppTheme.textSecondaryColor),
             ),

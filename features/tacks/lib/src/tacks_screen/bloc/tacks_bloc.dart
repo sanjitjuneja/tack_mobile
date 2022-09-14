@@ -52,6 +52,7 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
     on<RunnerTackIntentAction>(_onRunnerTackIntentAction);
     on<TackerTackIntentAction>(_onTackerTackIntentAction);
 
+    on<RunnerTackOfferExpired>(_onRunnerTackOfferExpired);
     on<CancelTackOffer>(_onCancelTackOffer);
     on<OpenTackerTack>(_onOpenTackerTack);
     on<OpenRunnerTack>(_onOpenRunnerTack);
@@ -208,6 +209,19 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
     );
   }
 
+  Future<void> _onRunnerTackOfferExpired(
+    RunnerTackOfferExpired event,
+    Emitter<TacksState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        runnerTacksData: state.runnerTacksData.removeItem(
+          itemId: event.runnerTack.id,
+        ),
+      ),
+    );
+  }
+
   Future<void> _onCancelTackOffer(
     CancelTackOffer event,
     Emitter<TacksState> emit,
@@ -248,8 +262,8 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
     OpenTackerTack event,
     Emitter<TacksState> emit,
   ) async {
-    _appRouter.pushForResult(
-      OngoingTackerTack.page(tack: event.tack),
+    _appRouter.push(
+      OngoingTackerTackFeature.page(tack: event.tack),
     );
   }
 
@@ -257,8 +271,8 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
     OpenRunnerTack event,
     Emitter<TacksState> emit,
   ) async {
-    _appRouter.pushForResult(
-      OngoingRunnerTack.page(tack: event.tack),
+    _appRouter.push(
+      OngoingRunnerTackFeature.page(runnerTack: event.runnerTack),
     );
   }
 

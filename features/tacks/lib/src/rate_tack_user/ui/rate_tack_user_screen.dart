@@ -19,7 +19,7 @@ class RateTackUserScreen extends StatelessWidget {
           actions: <Widget>[
             CupertinoButton(
               padding: const EdgeInsets.all(12.0),
-              onPressed: AppRouter.of(context).pop,
+              onPressed: () => AppRouter.of(context).popWithResult(null),
               child: AppIconsTheme.cross(color: AppTheme.iconHintColor),
             )
           ],

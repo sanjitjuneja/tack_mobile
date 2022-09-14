@@ -51,3 +51,11 @@ class MoveToCreateTackTab extends PreviousTacksEvent {
 class MoveToHomeTab extends PreviousTacksEvent {
   const MoveToHomeTab();
 }
+
+class CompletedTackTackIntentAction extends PreviousTacksEvent {
+  final WebSocketIntent<Tack> tackIntent;
+
+  const CompletedTackTackIntentAction({
+    required this.tackIntent,
+  });
+}

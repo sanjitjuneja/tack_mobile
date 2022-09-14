@@ -31,14 +31,11 @@ class _RefreshHeader extends StatelessWidget {
             ),
           );
         } else {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: AppProgressIndicator(
-              backgroundColor: AppTheme.transparentColor,
-              indicatorSize: indicatorSize,
-              indicatorColor: indicatorColor,
-              expand: false,
-            ),
+          return AppProgressIndicator(
+            backgroundColor: AppTheme.transparentColor,
+            indicatorSize: indicatorSize,
+            indicatorColor: indicatorColor,
+            expand: false,
           );
         }
       },
