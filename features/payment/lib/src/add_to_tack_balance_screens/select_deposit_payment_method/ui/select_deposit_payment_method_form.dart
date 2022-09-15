@@ -177,7 +177,22 @@ class SelectDepositPaymentMethodForm extends StatelessWidget {
               isSentenceCase: false,
               onTap: () => _onAddPaymentMethod(context),
             ),
-            const SizedBox(height: 10)
+            const SizedBox(height: 30),
+            Row(
+              children: <Widget>[
+                const Spacer(),
+                Expanded(
+                  flex: 4,
+                  child: AppCircleButton(
+                    labelKey: 'selectPaymentMethodScreen.continue',
+                    expanded: false,
+                    onTap: () => _onContinuePress(context),
+                  ),
+                ),
+                const Spacer(),
+              ],
+            ),
+            const SizedBox(height: 10),
           ],
         );
       },
@@ -202,6 +217,12 @@ class SelectDepositPaymentMethodForm extends StatelessWidget {
   void _onAddPaymentMethod(BuildContext context) {
     BlocProvider.of<SelectDepositPaymentMethodBloc>(context).add(
       const AddPaymentMethodAction(),
+    );
+  }
+
+  void _onContinuePress(BuildContext context) {
+    BlocProvider.of<SelectDepositPaymentMethodBloc>(context).add(
+      const ContinueAction(),
     );
   }
 }

@@ -50,15 +50,14 @@ class AddToTackBalanceState {
     }
   }
 
-  double amountInDollarFormatWithFee({
-    required double feePercent,
-    required double feeMinAmount,
-    required double feeMaxAmount,
-  }) {
-    double feeAmount = (feePercent / 100) * amount;
-    if (feeAmount > feeMaxAmount.toDollarFormat) {
-      feeAmount = feeMaxAmount;
-    } else if (feeAmount < feeMinAmount.toDollarFormat) {
+  double get amountInDollarFormatWithFee {
+    double feeAmount = (currentFeePercent / 100) * amount;
+    final double feeMinAmount = currentMinFeeAmount.toDouble().toDollarFormat;
+    final double feeMaxAmount = currentMaxFeeAmount.toDouble().toDollarFormat;
+
+    if (feeAmount > feeMaxAmount) {
+      feeAmount = feeMinAmount;
+    } else if (feeAmount < feeMinAmount) {
       feeAmount = feeMinAmount;
     }
 

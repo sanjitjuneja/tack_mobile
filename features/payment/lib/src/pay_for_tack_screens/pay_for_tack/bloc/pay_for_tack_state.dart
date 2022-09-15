@@ -33,19 +33,38 @@ class PayForTackState {
 
   bool get hasEnoughTackBalance => userBalance.usdBalance >= tackOfferPrice;
 
-  double amountInDollarFormatWithFee({
-    required double feePercent,
-    required double feeMinAmount,
-    required double feeMaxAmount,
-  }) {
-    double feeAmount = (feePercent / 100) * tackOfferPrice;
-    if (feeAmount > feeMaxAmount.toDollarFormat) {
-      feeAmount = feeMaxAmount;
-    } else if (feeAmount < feeMinAmount.toDollarFormat) {
+  double get amountInDollarFormatWithFee {
+    double feeAmount = (currentFeePercent / 100) * tackOfferPrice;
+    final double feeMinAmount = currentMinFeeAmount.toDouble().toDollarFormat;
+    final double feeMaxAmount = currentMaxFeeAmount.toDouble().toDollarFormat;
+
+    if (feeAmount > feeMaxAmount) {
+      feeAmount = feeMinAmount;
+    } else if (feeAmount < feeMinAmount) {
       feeAmount = feeMinAmount;
     }
 
     return tackOfferPrice + feeAmount;
+  }
+
+  int get currentMinFeeAmount {
+    if (selectedPaymentMethod.isTackBalance) {
+      return 0;
+    } else if (selectedPaymentMethod.bankAccount != null) {
+      return fee?.dwollaFeeData.feeMin ?? 0;
+    } else {
+      return fee?.stripeFeeData.feeMin ?? 0;
+    }
+  }
+
+  int get currentMaxFeeAmount {
+    if (selectedPaymentMethod.isTackBalance) {
+      return 0;
+    } else if (selectedPaymentMethod.bankAccount != null) {
+      return fee?.dwollaFeeData.feeMax ?? 0;
+    } else {
+      return fee?.stripeFeeData.feeMax ?? 0;
+    }
   }
 
   double get currentFeePercent {
@@ -74,7 +93,9 @@ class PayForTackState {
     return null;
   }
 
-  bool get isReadyToProceed => isExistSelectedPaymentMethod;
+  bool get isReadyToProceed =>
+      isExistSelectedPaymentMethod &&
+      offer.expiredAt.difference(DateTime.now()).inSeconds > 0;
 
   PayForTackState copyWith({
     double? amount,

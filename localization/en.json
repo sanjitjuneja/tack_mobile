@@ -569,13 +569,14 @@
     "bankOrCard": "Bank or Card",
     "noTransactionFee": "No Deposit Fee",
     "feeLabel": " will be charged in accordance with our {fee_percent}% deposit fee",
-    "feeLabelWithMinAndMax": " will be charged in accordance with our {fee_percent}% deposit fee(min: ${min_fee}, max: ${max_fee})",
-    "feeLabelWithMin": " will be charged in accordance with our {fee_percent}% deposit fee(min: ${min_fee})",
-    "feeLabelWithMax": " will be charged in accordance with our {fee_percent}% deposit fee(max: ${max_fee})"
+    "feeLabelWithMinAndMax": " will be charged in accordance with our {fee_percent}% deposit fee (Min: ${min_fee}, Max: ${max_fee})",
+    "feeLabelWithMin": " will be charged in accordance with our {fee_percent}% deposit fee (Min: ${min_fee})",
+    "feeLabelWithMax": " will be charged in accordance with our {fee_percent}% deposit fee (Max: ${max_fee})"
   },
   "selectPaymentMethodScreen": {
     "fee": "{feePercent}% fee",
-    "noFee": "No Fee"
+    "noFee": "No Fee",
+    "continue": "Continue"
   },
   "addToTackBalanceSuccessfulScreen": {
     "newTackBalance": "New Tack Balance: {amount}",
@@ -631,6 +632,13 @@
     "untilOfferExpires": " Until Offer Expires",
     "enoughTackBalance": "We will always use your Tack balance when you have enough to cover Tack Price.",
     "notEnoughTackBalance": "Your Tack Balance can’t cover the Tack price. Select from the following payment methods.",
+    "selectPaymentMethod": "Select Payment Method",
+    "bankOrCard": "Bank or Card",
+    "applePay": "Apple Pay",
+    "googlePay": "Google Pay",
+    "feeLabelWithMinAndMax": " will be charged in accordance with our {fee_percent}% deposit fee (Min: ${min_fee}, Max: ${max_fee})",
+    "feeLabelWithMin": " will be charged in accordance with our {fee_percent}% deposit fee (Min: ${min_fee})",
+    "feeLabelWithMax": " will be charged in accordance with our {fee_percent}% deposit fee (Max: ${max_fee})",
     "beginTack": "Begin Tack"
   },
   "withdrawScreen": {
@@ -639,6 +647,7 @@
     "selectBankAccount": "Select Bank Account",
     "minWithdrawLimitErrorMessage": "Minimum withdraw must be ${min_range}",
     "maxWithdrawLimitErrorMessage": "Withdraw must be less than ${max_range}",
+    "noCurrentBalanceToWithdraw": "No Current Balance To Withdraw",
     "currentTackBalance": "Current Tack Balance: ",
     "newTackBalance": "New Tack Balance: ",
     "withdraw": "Withdraw"

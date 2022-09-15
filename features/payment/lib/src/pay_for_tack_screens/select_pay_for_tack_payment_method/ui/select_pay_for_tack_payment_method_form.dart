@@ -144,7 +144,8 @@ class SelectPayForTackPaymentMethodForm extends StatelessWidget {
                             subtitle: '****${card.cardData.last4}',
                             isSelectable: true,
                             isDisabled: state.hasEnoughTackBalance,
-                            isSelected: state.selectedPaymentMethodId == card.id,
+                            isSelected:
+                                state.selectedPaymentMethodId == card.id,
                             feePercent: state.fee?.stripeFeeData.feePercent,
                             onTap: () {
                               _onPaymentMethodTileTap(
@@ -224,6 +225,21 @@ class SelectPayForTackPaymentMethodForm extends StatelessWidget {
                         isSentenceCase: false,
                         onTap: () => _onAddPaymentMethod(context),
                       ),
+                      const SizedBox(height: 30),
+                      Row(
+                        children: <Widget>[
+                          const Spacer(),
+                          Expanded(
+                            flex: 4,
+                            child: AppCircleButton(
+                              labelKey: 'selectPaymentMethodScreen.continue',
+                              expanded: false,
+                              onTap: () => _onContinuePress(context),
+                            ),
+                          ),
+                          const Spacer(),
+                        ],
+                      ),
                       const SizedBox(height: 10),
                     ],
                   ),
@@ -248,6 +264,12 @@ class SelectPayForTackPaymentMethodForm extends StatelessWidget {
   void _onReloadButtonPressed(BuildContext context) {
     BlocProvider.of<SelectPayForTackPaymentMethodBloc>(context).add(
       const InitialLoad(),
+    );
+  }
+
+  void _onContinuePress(BuildContext context) {
+    BlocProvider.of<SelectPayForTackPaymentMethodBloc>(context).add(
+      const ContinueAction(),
     );
   }
 

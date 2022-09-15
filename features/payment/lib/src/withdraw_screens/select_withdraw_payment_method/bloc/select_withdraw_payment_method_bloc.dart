@@ -40,6 +40,7 @@ class SelectWithdrawPaymentMethodBloc extends Bloc<
 
     on<SelectWithdrawPaymentMethodAction>(_onSelectWithdrawPaymentMethodAction);
     on<AddBankAccountAction>(_onAddBankAccountAction);
+    on<ContinueAction>(_onContinueAction);
 
     add(const InitialLoad());
   }
@@ -130,5 +131,14 @@ class SelectWithdrawPaymentMethodBloc extends Bloc<
         ),
       );
     }
+  }
+
+  Future<void> _onContinueAction(
+    ContinueAction event,
+    Emitter<SelectWithdrawPaymentMethodState> emit,
+  ) async {
+    _appRouter.popWithResult(
+      state.selectedBankAccount,
+    );
   }
 }

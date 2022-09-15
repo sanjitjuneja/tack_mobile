@@ -121,7 +121,7 @@ class PaymentMethodTile extends StatelessWidget {
                   ] else ...<Widget>[
                     AppIconsTheme.add(
                       size: 30,
-                      color: isDisabled ? AppTheme.textHeavyHintColor : null,
+                      color: isDisabled ? AppTheme.textDisabledColor30 : null,
                     ),
                   ],
                 ] else if (hasTrailingArrow) ...<Widget>[

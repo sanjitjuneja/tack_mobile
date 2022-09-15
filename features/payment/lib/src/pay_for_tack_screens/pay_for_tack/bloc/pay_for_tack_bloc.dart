@@ -188,14 +188,15 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
     Emitter<PayForTackState> emit,
   ) async {
     try {
+      _appRouter.push(ProgressDialog.page());
       if (state.selectedPaymentMethod.isTackBalance) {
         await _acceptOfferUseCase.execute(
           AcceptOfferPayload(offer: state.offer),
         );
         _appRouter.pop();
+        _appRouter.pop();
         return;
       }
-      _appRouter.push(ProgressDialog.page());
       if (state.selectedPaymentMethod.card != null) {
         await _handleStripeDepositUseCase.execute(
           HandleStripeDepositPayload(
@@ -216,13 +217,7 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
         await _handleStripeDepositUseCase.execute(
           HandleStripeDepositPayload(
             paymentMethodId: Constants.applePayId,
-            amountInCents: state
-                .amountInDollarFormatWithFee(
-                  feePercent: state.fee?.stripeFeeData.feePercent ?? 0,
-                  feeMinAmount: state.fee?.stripeFeeData.feeMin.toDouble() ?? 0,
-                  feeMaxAmount: state.fee?.stripeFeeData.feeMax.toDouble() ?? 0,
-                )
-                .toCentsFormat,
+            amountInCents: state.amountInDollarFormatWithFee.toCentsFormat,
             currency: Constants.usd,
           ),
         );

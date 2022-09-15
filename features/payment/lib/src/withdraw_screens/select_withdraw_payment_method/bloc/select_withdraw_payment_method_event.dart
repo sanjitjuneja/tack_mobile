@@ -8,6 +8,10 @@ class InitialLoad extends SelectWithdrawPaymentMethodEvent {
   const InitialLoad();
 }
 
+class ContinueAction extends SelectWithdrawPaymentMethodEvent {
+  const ContinueAction();
+}
+
 class SelectWithdrawPaymentMethodAction
     extends SelectWithdrawPaymentMethodEvent {
   final ConnectedBankAccount? bankAccount;

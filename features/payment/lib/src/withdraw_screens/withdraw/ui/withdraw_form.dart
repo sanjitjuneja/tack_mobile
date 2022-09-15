@@ -99,7 +99,9 @@ class WithdrawForm extends StatelessWidget {
               feeMinAmount: state.fee?.dwollaFeeData.feeMin ?? 0,
               feeMaxAmount: state.fee?.dwollaFeeData.feeMax ?? 0,
               minErrorKey: 'withdrawScreen.minWithdrawLimitErrorMessage',
-              maxErrorKey: 'withdrawScreen.maxWithdrawLimitErrorMessage',
+              maxErrorKey: state.maxWithdrawLimit == 0
+                  ? 'withdrawScreen.noCurrentBalanceToWithdraw'
+                  : 'withdrawScreen.maxWithdrawLimitErrorMessage',
               amount: state.userBalance.usdBalance - state.withdrawAmount,
               onChanged: (double amount) {
                 _onUpdateWithdrawAmountAction(

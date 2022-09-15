@@ -21,6 +21,7 @@ class AppColors {
   static const Color aluminium = Color.fromRGBO(131, 132, 138, 1);
   static const Color waterloo = Color.fromRGBO(133, 136, 150, 1);
   static const Color athensGrey = Color.fromRGBO(212, 213, 215, 1);
+  static const Color athensGrey30 = Color.fromRGBO(212, 213, 215, 0.3);
   static const Color solitude = Color.fromRGBO(237, 239, 244, 1);
   static const Color ghost = Color.fromRGBO(198, 202, 215, 1);
   static const Color athensGray = Color.fromRGBO(237, 239, 244, 1);

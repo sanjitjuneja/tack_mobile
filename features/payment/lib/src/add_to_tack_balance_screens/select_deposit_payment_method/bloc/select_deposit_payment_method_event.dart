@@ -19,3 +19,7 @@ class SelectDepositPaymentMethodAction extends SelectDepositPaymentMethodEvent {
 class AddPaymentMethodAction extends SelectDepositPaymentMethodEvent {
   const AddPaymentMethodAction();
 }
+
+class ContinueAction extends SelectDepositPaymentMethodEvent {
+  const ContinueAction();
+}

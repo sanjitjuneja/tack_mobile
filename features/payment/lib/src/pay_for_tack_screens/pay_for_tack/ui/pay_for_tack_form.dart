@@ -72,13 +72,96 @@ class PayForTackForm extends StatelessWidget {
                 ),
               ),
             ] else ...<Widget>[
-              Text(
-                FlutterI18n.translate(
-                  context,
-                  'payForTack.listedTackPrice',
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
                 ),
-                style: AppTextTheme.manrope14Regular.copyWith(
-                  color: AppTheme.textHeavyHintColor,
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    text: CurrencyUtility.dollarFormat.format(
+                      state.amountInDollarFormatWithFee,
+                    ),
+                    style: AppTextTheme.manrope12Medium.copyWith(
+                      color: AppTheme.grassColor,
+                    ),
+                    children: <TextSpan>[
+                      if (state.currentMinFeeAmount > 0 &&
+                          state.currentMaxFeeAmount > 0) ...<TextSpan>[
+                        TextSpan(
+                          text: FlutterI18n.translate(
+                            context,
+                            'payForTack.feeLabelWithMinAndMax',
+                            translationParams: <String, String>{
+                              'fee_percent':
+                                  state.currentFeePercent.toStringAsFixed(0),
+                              'min_fee': state.currentMinFeeAmount
+                                  .toDouble()
+                                  .toDollarFormat
+                                  .toStringAsFixed(2),
+                              'max_fee': state.currentMaxFeeAmount
+                                  .toDouble()
+                                  .toDollarFormat
+                                  .toStringAsFixed(2),
+                            },
+                          ),
+                          style: AppTextTheme.manrope14Regular.copyWith(
+                            color: AppTheme.textHeavyHintColor,
+                          ),
+                        ),
+                      ] else if (state.currentMinFeeAmount > 0) ...<TextSpan>[
+                        TextSpan(
+                          text: FlutterI18n.translate(
+                            context,
+                            'payForTack.feeLabelWithMin',
+                            translationParams: <String, String>{
+                              'fee_percent':
+                                  state.currentFeePercent.toStringAsFixed(0),
+                              'min_fee': state.currentMinFeeAmount
+                                  .toDouble()
+                                  .toDollarFormat
+                                  .toStringAsFixed(2),
+                            },
+                          ),
+                          style: AppTextTheme.manrope14Regular.copyWith(
+                            color: AppTheme.textHeavyHintColor,
+                          ),
+                        ),
+                      ] else if (state.currentMaxFeeAmount > 0) ...<TextSpan>[
+                        TextSpan(
+                          text: FlutterI18n.translate(
+                            context,
+                            'payForTack.feeLabelWithMax',
+                            translationParams: <String, String>{
+                              'fee_percent':
+                                  state.currentFeePercent.toStringAsFixed(0),
+                              'max_fee': state.currentMaxFeeAmount
+                                  .toDouble()
+                                  .toDollarFormat
+                                  .toStringAsFixed(2),
+                            },
+                          ),
+                          style: AppTextTheme.manrope14Regular.copyWith(
+                            color: AppTheme.textHeavyHintColor,
+                          ),
+                        ),
+                      ] else ...<TextSpan>[
+                        TextSpan(
+                          text: FlutterI18n.translate(
+                            context,
+                            'payForTack.feeLabel',
+                            translationParams: <String, String>{
+                              'fee_percent':
+                                  state.currentFeePercent.toStringAsFixed(0),
+                            },
+                          ),
+                          style: AppTextTheme.manrope14Regular.copyWith(
+                            color: AppTheme.textHeavyHintColor,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -210,12 +293,12 @@ class PayForTackForm extends StatelessWidget {
                     onTap: () => _onSelectPaymentMethod(context),
                     title: FlutterI18n.translate(
                       context,
-                      'addToTackBalanceScreen.selectPaymentMethod',
+                      'payForTack.selectPaymentMethod',
                     ),
                     isSentenceCase: false,
                     subtitle: FlutterI18n.translate(
                       context,
-                      'addToTackBalanceScreen.bankOrCard',
+                      'payForTack.bankOrCard',
                     ),
                     isColored: true,
                   ),
@@ -228,11 +311,16 @@ class PayForTackForm extends StatelessWidget {
                 const Spacer(),
                 Expanded(
                   flex: 4,
-                  child: AppCircleButton(
-                    labelKey: 'payForTack.beginTack',
-                    expanded: false,
-                    isDisabled: !state.isReadyToProceed,
-                    onTap: () => _onPayForTackTap(context),
+                  child: TimeLeftWidget(
+                    builder: (_, __) {
+                      return AppCircleButton(
+                        labelKey: 'payForTack.beginTack',
+                        expanded: false,
+                        isDisabled: !state.isReadyToProceed,
+                        onTap: () => _onPayForTackTap(context),
+                      );
+                    },
+                    tillTime: state.offer.expiredAt,
                   ),
                 ),
                 const Spacer(),
