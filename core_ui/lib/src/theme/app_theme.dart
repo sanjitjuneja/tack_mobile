@@ -72,6 +72,7 @@ class AppTheme {
   static Color get textHeavyHintColor => AppColors.shuttleGray;
   static Color get textDescriptionColor => AppColors.midGrey;
   static Color get textDisabledColor => AppColors.athensGrey;
+  static Color get textDisabledColor30 => AppColors.athensGrey30;
 
   static Color get selectedListItemColor => AppColors.fern;
   static Color get unselectedListItemColor => AppColors.blackRussian;
