@@ -155,7 +155,7 @@ class WithdrawBloc extends Bloc<WithdrawEvent, WithdrawState> {
         ),
       );
       _appRouter.pop();
-      _appRouter.push(
+      _appRouter.replace(
         WithdrawSuccessfulFeature.page(
           newTackBalance: state.userBalance.usdBalance,
         ),

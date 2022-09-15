@@ -96,6 +96,22 @@ class SelectWithdrawPaymentMethodForm extends StatelessWidget {
                 isSentenceCase: false,
                 onTap: () => _onAddBankAccount(context),
               ),
+              const SizedBox(height: 30),
+              Row(
+                children: <Widget>[
+                  const Spacer(),
+                  Expanded(
+                    flex: 4,
+                    child: AppCircleButton(
+                      labelKey: 'selectPaymentMethodScreen.continue',
+                      expanded: false,
+                      onTap: () => _onContinuePress(context),
+                    ),
+                  ),
+                  const Spacer(),
+                ],
+              ),
+              const SizedBox(height: 10),
             ],
           ],
         );
@@ -117,6 +133,12 @@ class SelectWithdrawPaymentMethodForm extends StatelessWidget {
   void _onReloadButtonPressed(BuildContext context) {
     BlocProvider.of<SelectWithdrawPaymentMethodBloc>(context).add(
       const InitialLoad(),
+    );
+  }
+
+  void _onContinuePress(BuildContext context) {
+    BlocProvider.of<SelectWithdrawPaymentMethodBloc>(context).add(
+      const ContinueAction(),
     );
   }
 

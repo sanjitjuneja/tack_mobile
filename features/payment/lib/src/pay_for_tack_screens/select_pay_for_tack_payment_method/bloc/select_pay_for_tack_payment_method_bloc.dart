@@ -58,8 +58,10 @@ class SelectPayForTackPaymentMethodBloc extends Bloc<
     on<InitialLoad>(_onInitialLoad);
 
     on<SelectPayForTackPaymentMethodAction>(
-        _onSelectPayForTackPaymentMethodAction);
+      _onSelectPayForTackPaymentMethodAction,
+    );
     on<AddPaymentMethodAction>(_onAddPaymentMethodAction);
+    on<ContinueAction>(_onContinueAction);
 
     on<UserBalanceUpdate>(_onUserBalanceUpdate);
 
@@ -145,6 +147,15 @@ class SelectPayForTackPaymentMethodBloc extends Bloc<
     if (result != null) {
       add(const InitialLoad());
     }
+  }
+
+  Future<void> _onContinueAction(
+    ContinueAction event,
+    Emitter<SelectPayForTackPaymentMethodState> emit,
+  ) async {
+    _appRouter.popWithResult(
+      state.selectedPaymentMethod,
+    );
   }
 
   Future<void> _onUserBalanceUpdate(

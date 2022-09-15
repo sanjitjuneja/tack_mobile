@@ -10,8 +10,8 @@ part 'select_deposit_payment_method_event.dart';
 
 part 'select_deposit_payment_method_state.dart';
 
-class SelectDepositPaymentMethodBloc
-    extends Bloc<SelectDepositPaymentMethodEvent, SelectDepositPaymentMethodState> {
+class SelectDepositPaymentMethodBloc extends Bloc<
+    SelectDepositPaymentMethodEvent, SelectDepositPaymentMethodState> {
   final AppRouterDelegate _appRouter;
   final FetchConnectedBankAccountsUseCase _fetchConnectedBankAccountsUseCase;
   final FetchConnectedCardsUseCase _fetchConnectedCardsUseCase;
@@ -46,6 +46,7 @@ class SelectDepositPaymentMethodBloc
 
     on<SelectDepositPaymentMethodAction>(_onSelectDepositPaymentMethodAction);
     on<AddPaymentMethodAction>(_onAddPaymentMethodAction);
+    on<ContinueAction>(_onContinueAction);
 
     add(const InitialLoad());
   }
@@ -117,5 +118,14 @@ class SelectDepositPaymentMethodBloc
     if (result != null) {
       add(const InitialLoad());
     }
+  }
+
+  Future<void> _onContinueAction(
+    ContinueAction event,
+    Emitter<SelectDepositPaymentMethodState> emit,
+  ) async {
+    _appRouter.popWithResult(
+      state.selectedPaymentMethod,
+    );
   }
 }

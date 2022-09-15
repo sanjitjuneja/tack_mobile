@@ -21,6 +21,10 @@ class AddPaymentMethodAction extends SelectPayForTackPaymentMethodEvent {
   const AddPaymentMethodAction();
 }
 
+class ContinueAction extends SelectPayForTackPaymentMethodEvent {
+  const ContinueAction();
+}
+
 class UserBalanceUpdate extends SelectPayForTackPaymentMethodEvent {
   final UserBankAccount userBalance;
 

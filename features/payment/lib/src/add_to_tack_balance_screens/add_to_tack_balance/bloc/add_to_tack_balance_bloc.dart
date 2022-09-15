@@ -203,13 +203,7 @@ class AddToTackBalanceBloc
         await _handleStripeDepositUseCase.execute(
           HandleStripeDepositPayload(
             paymentMethodId: Constants.applePayId,
-            amountInCents: state
-                .amountInDollarFormatWithFee(
-                  feePercent: state.fee?.stripeFeeData.feePercent ?? 0,
-                  feeMinAmount: state.fee?.stripeFeeData.feeMin.toDouble() ?? 0,
-                  feeMaxAmount: state.fee?.stripeFeeData.feeMax.toDouble() ?? 0,
-                )
-                .toCentsFormat,
+            amountInCents: state.amountInDollarFormatWithFee.toCentsFormat,
             currency: Constants.usd,
           ),
         );
@@ -223,7 +217,7 @@ class AddToTackBalanceBloc
         );
       }
       _appRouter.pop();
-      _appRouter.push(
+      _appRouter.replace(
         AddToTackBalanceSuccessfulFeature.page(
           newTackBalance: state.userBalance.usdBalance,
         ),
