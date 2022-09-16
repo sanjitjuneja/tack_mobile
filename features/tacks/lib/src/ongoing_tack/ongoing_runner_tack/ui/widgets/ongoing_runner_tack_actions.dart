@@ -3,9 +3,9 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:tacks/src/ongoing_tack/ongoing_runner_tack/bloc/ongoing_runner_tack_bloc.dart';
-import 'package:tacks/src/ongoing_tack/view_extensions/ongoing_tack_to_view_extension.dart';
-import 'package:tacks/src/ongoing_tack/widgets/note_widget.dart';
+import '../../bloc/ongoing_runner_tack_bloc.dart';
+import '../../../view_extensions/ongoing_tack_to_view_extension.dart';
+import '../../../widgets/note_widget.dart';
 
 class OngoingRunnerTackActions extends StatelessWidget {
   final OngoingRunnerTackState state;
@@ -17,7 +17,7 @@ class OngoingRunnerTackActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Tack tack = state.tack;
+    final Tack tack = state.runnerTack.tack;
 
     switch (tack.status) {
       case TackStatus.created:

@@ -14,29 +14,25 @@ class TackerTackActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String labelKey;
+    final String labelKey =
+        'tacksScreen.statusButtons.tacker.${tack.status.name}';
     final AppIcon? icon;
 
     switch (tack.status) {
       case TackStatus.created:
-        labelKey = 'general.track';
-        icon = null;
+        icon = AppIconsTheme.clock;
         break;
       case TackStatus.pendingAccept:
-        labelKey = 'tacksScreen.chooseRunnerButton';
         icon = AppIconsTheme.person;
         break;
       case TackStatus.pendingStart:
-        labelKey = 'general.track';
-        icon = null;
+        icon = AppIconsTheme.clock;
         break;
       case TackStatus.inProgress:
-        labelKey = 'general.track';
-        icon = null;
+        icon = AppIconsTheme.clock;
         break;
       case TackStatus.pendingReview:
-        labelKey = 'general.review';
-        icon = AppIconsTheme.edit;
+        icon = AppIconsTheme.taskComplete;
         break;
 
       default:

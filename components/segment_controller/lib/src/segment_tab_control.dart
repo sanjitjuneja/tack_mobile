@@ -89,7 +89,7 @@ class SegmentedTabControl<T> extends StatefulWidget
 
 class _SegmentedTabControlState<T> extends State<SegmentedTabControl<T>>
     with SingleTickerProviderStateMixin {
-  Alignment _currentIndicatorAlignment = Alignment.centerLeft;
+  Alignment? _currentIndicatorAlignment;
   late AnimationController _internalAnimationController;
   late Animation<Alignment> _internalAnimation;
   TabController? _controller;
@@ -145,6 +145,7 @@ class _SegmentedTabControlState<T> extends State<SegmentedTabControl<T>>
   void _updateTabController() {
     final TabController? newController =
         widget.controller ?? DefaultTabController.of(context);
+
     assert(() {
       if (newController == null) {
         throw FlutterError(
@@ -166,6 +167,9 @@ class _SegmentedTabControlState<T> extends State<SegmentedTabControl<T>>
       _controller!.animation!.removeListener(_handleTabControllerAnimationTick);
     }
     _controller = newController;
+    _currentIndicatorAlignment ??=
+        _animationValueToAlignment(newController!.animation!.value);
+
     if (_controller != null) {
       _controller!.animation!.addListener(_handleTabControllerAnimationTick);
     }
@@ -245,7 +249,7 @@ class _SegmentedTabControlState<T> extends State<SegmentedTabControl<T>>
     return Alignment(x, 0);
   }
 
-  int get _internalIndex => _alignmentToIndex(_currentIndicatorAlignment);
+  int get _internalIndex => _alignmentToIndex(_currentIndicatorAlignment!);
 
   int _alignmentToIndex(Alignment alignment) {
     final currentPosition =
@@ -321,7 +325,7 @@ class _SegmentedTabControlState<T> extends State<SegmentedTabControl<T>>
                 ),
               ),
               Align(
-                alignment: _currentIndicatorAlignment,
+                alignment: _currentIndicatorAlignment!,
                 child: GestureDetector(
                   onPanDown: _onPanDown(),
                   onPanUpdate: _onPanUpdate(constraints),
@@ -347,7 +351,7 @@ class _SegmentedTabControlState<T> extends State<SegmentedTabControl<T>>
                     widget.height - widget.indicatorPadding.vertical,
                   ),
                   offset: Offset(
-                    _xToPercentsCoefficient(_currentIndicatorAlignment) *
+                    _xToPercentsCoefficient(_currentIndicatorAlignment!) *
                         (constraints.maxWidth - indicatorWidth),
                     0,
                   ),
@@ -400,7 +404,7 @@ class _SegmentedTabControlState<T> extends State<SegmentedTabControl<T>>
       return null;
     }
     return (details) {
-      double x = _currentIndicatorAlignment.x +
+      double x = _currentIndicatorAlignment!.x +
           details.delta.dx / (constraints.maxWidth / 2);
       x = x.clamp(-1, 1);
 

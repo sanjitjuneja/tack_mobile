@@ -36,4 +36,10 @@ class _TimeTickerWidgetState extends State<TimeTickerWidget> {
       },
     );
   }
+
+  @override
+  void dispose() {
+
+    super.dispose();
+  }
 }

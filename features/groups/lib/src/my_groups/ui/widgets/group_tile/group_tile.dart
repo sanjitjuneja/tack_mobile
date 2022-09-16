@@ -40,6 +40,7 @@ class GroupTile extends StatelessWidget {
           children: <Widget>[
             AppNetworkImageWidget(
               groupDetails.group.imageUrl,
+              placeholderIcon: null,
               isShadowBorder: false,
             ),
             const SizedBox(width: 12),

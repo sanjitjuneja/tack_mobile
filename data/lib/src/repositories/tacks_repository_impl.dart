@@ -28,8 +28,16 @@ class TacksRepositoryImpl implements domain.TacksRepository {
       _webSocketsProvider.runnerTacksStream;
 
   @override
+  WebSocketStream<domain.Tack> get completedTacksRunnerIntentStream =>
+      _webSocketsProvider.completedTacksRunnerStream;
+
+  @override
   WebSocketStream<domain.Offer> get offerIntentStream =>
       _webSocketsProvider.offersStream;
+
+  @override
+  WebSocketStream<domain.Tack> get cancelTackerTackRunnerStream =>
+      _webSocketsProvider.cancelTackerTacksRunnerStream;
 
   @override
   Future<bool> fetchHasRunningTack(
@@ -62,8 +70,7 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   Future<List<domain.RunnerTack>> fetchRunnerTacks(
     domain.FetchRunnerTacksPayload payload,
   ) async {
-    final List<domain.RunnerTack> tacks =
-        await _apiProvider.fetchRunnerTacks(
+    final List<domain.RunnerTack> tacks = await _apiProvider.fetchRunnerTacks(
       FetchRunnerTacksRequest(
         lastObjectId: payload.lastObjectId,
         queryParameters: payload.queryParameters,
@@ -77,8 +84,7 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   Future<List<domain.Tack>> fetchTackerTacks(
     domain.FetchTackerTacksPayload payload,
   ) async {
-    final List<domain.Tack> tacks =
-        await _apiProvider.fetchTackerTacks(
+    final List<domain.Tack> tacks = await _apiProvider.fetchTackerTacks(
       FetchTackerTacksRequest(
         lastObjectId: payload.lastObjectId,
         queryParameters: payload.queryParameters,
@@ -149,6 +155,7 @@ class TacksRepositoryImpl implements domain.TacksRepository {
         description: payload.description,
         estimationTimeSeconds: payload.estimatedTime,
         allowCounterOffer: payload.shouldAllowCounterOffers,
+        group: payload.groupId,
       ),
     );
   }

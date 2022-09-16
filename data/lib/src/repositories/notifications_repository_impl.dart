@@ -1,16 +1,23 @@
+import 'dart:io';
+import 'dart:ui';
+
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 
 class NotificationsRepositoryImpl extends NotificationsRepository {
-  static const AndroidNotificationChannel _androidChannel =
-      AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    importance: Importance.max,
+  static final NotificationChannel _androidChannel = NotificationChannel(
+    channelKey: 'high_importance_channel',
+    // id
+    channelName: 'High Importance Notifications',
+    // title
+    channelDescription: 'Tack notifications',
+    playSound: true,
+    importance: NotificationImportance.Max,
+    defaultColor: const Color(0xFF54BCA0),
   );
 
   FirebaseMessaging? _fcm;
-  FlutterLocalNotificationsPlugin? _flutterLocalNotificationsPlugin;
+  AwesomeNotifications? _flutterLocalNotificationsPlugin;
 
   Future<bool> get _isFCMSupported => _fcm!.isSupported();
 
@@ -20,7 +27,7 @@ class NotificationsRepositoryImpl extends NotificationsRepository {
   }
 
   Future<void> _initializeRemoteNotifications() async {
-    _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    _flutterLocalNotificationsPlugin = AwesomeNotifications();
     _fcm = FirebaseMessaging.instance;
 
     if (!await _isFCMSupported) return;
@@ -31,15 +38,18 @@ class NotificationsRepositoryImpl extends NotificationsRepository {
       sound: true,
     );
 
-    await _flutterLocalNotificationsPlugin!
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(_androidChannel);
+    await _flutterLocalNotificationsPlugin!.initialize(
+      'resource://drawable/ic_notification',
+      <NotificationChannel>[
+        _androidChannel,
+      ],
+    );
 
     FirebaseMessaging.onMessage.listen(
       (RemoteMessage message) {
-        final RemoteNotification? notification = message.notification;
+        if (Platform.isIOS) return;
 
+        final RemoteNotification? notification = message.notification;
         if (notification != null) {
           _showNotification(notification);
         }
@@ -49,10 +59,13 @@ class NotificationsRepositoryImpl extends NotificationsRepository {
 
   @override
   Future<void> requestPermissions() async {
-    assert(_fcm != null, 'NotificationsRepository.initialize() should be called before using FCM');
+    assert(_fcm != null,
+        'NotificationsRepository.initialize() should be called before using FCM');
 
     if (!await _isFCMSupported) return;
 
+    await _flutterLocalNotificationsPlugin!
+        .requestPermissionToSendNotifications();
     await _fcm!.requestPermission(
       alert: true,
       announcement: false,
@@ -66,7 +79,8 @@ class NotificationsRepositoryImpl extends NotificationsRepository {
 
   @override
   Future<String?> getToken() async {
-    assert(_fcm != null, 'NotificationsRepository.initialize() should be called before using FCM');
+    assert(_fcm != null,
+        'NotificationsRepository.initialize() should be called before using FCM');
 
     if (!await _isFCMSupported) return null;
 
@@ -75,34 +89,34 @@ class NotificationsRepositoryImpl extends NotificationsRepository {
 
   @override
   Future<void> deactivateToken() async {
-    assert(_fcm != null, 'NotificationsRepository.initialize() should be called before using FCM');
+    assert(_fcm != null,
+        'NotificationsRepository.initialize() should be called before using FCM');
 
     if (!await _isFCMSupported) return;
 
     await _fcm!.deleteToken();
   }
 
-  Future<void> _showNotification(RemoteNotification notification) async {
+  Future<bool> _showNotification(RemoteNotification notification) async {
     final String? title = notification.title;
     final String? body = notification.body;
-    if (title == null || body == null) return;
+    if (title == null || body == null) return false;
 
-    final AndroidNotification? android = notification.android;
+    String? imageUrl;
+    imageUrl ??= notification.android?.imageUrl;
+    imageUrl ??= notification.apple?.imageUrl;
 
-    if (android != null) {
-      _flutterLocalNotificationsPlugin!.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-            _androidChannel.id,
-            _androidChannel.name,
-            icon: android.smallIcon,
-            // other properties...
-          ),
-        ),
-      );
-    }
+    return AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 0,
+        channelKey: _androidChannel.channelKey!,
+        title: notification.title,
+        body: notification.body,
+        notificationLayout: AwesomeStringUtils.isNullOrEmpty(imageUrl)
+            ? NotificationLayout.Default
+            : NotificationLayout.BigPicture,
+        bigPicture: imageUrl,
+      ),
+    );
   }
 }

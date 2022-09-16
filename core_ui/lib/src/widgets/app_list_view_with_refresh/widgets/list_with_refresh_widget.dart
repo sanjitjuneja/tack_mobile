@@ -69,7 +69,7 @@ class _AppListViewWithRefreshState extends State<AppListViewWithRefresh> {
 
   @override
   Widget build(BuildContext context) {
-    final double headerTriggerDistance = widget.refreshIndicatorSize.size * 3;
+    final double headerTriggerDistance = widget.refreshIndicatorSize.size * 2.3;
     final double footerTriggerDistance = widget.refreshIndicatorSize.size * 2;
 
     return RefreshConfiguration(

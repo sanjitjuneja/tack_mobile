@@ -33,7 +33,7 @@ class RateTackUserBloc extends Bloc<RateTackUserEvent, RateTackUserState> {
             isRateTacker: isRateTacker,
             commentData: const CommentData(
               maxWords: _commentMaxWordsLength,
-              isRequired: true,
+              isRequired: false,
             ),
             rateData: const RateData(
               minRate: _rateMinimalValue,

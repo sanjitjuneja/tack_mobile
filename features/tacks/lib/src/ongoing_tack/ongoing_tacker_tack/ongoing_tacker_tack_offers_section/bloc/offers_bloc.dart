@@ -31,6 +31,7 @@ class OffersBloc extends Bloc<OffersEvent, OffersState> {
     on<RefreshAction>(_onRefreshAction);
     on<LoadMoreAction>(_onLoadMoreAction);
 
+    on<OfferExpiredAction>(_onOfferExpiredAction);
     on<OfferIntentAction>(_onOfferIntentAction);
 
     _offerIntentSubscription = _observeOfferIntentUseCase
@@ -38,6 +39,7 @@ class OffersBloc extends Bloc<OffersEvent, OffersState> {
         .listen((WebSocketIntent<Offer> offerIntent) {
       add(OfferIntentAction(offerIntent: offerIntent));
     });
+
     add(const InitialLoad());
   }
 
@@ -101,6 +103,19 @@ class OffersBloc extends Bloc<OffersEvent, OffersState> {
     } catch (e) {
       event.completer.complete(LoadingStatus.failed);
     }
+  }
+
+  Future<void> _onOfferExpiredAction(
+    OfferExpiredAction event,
+    Emitter<OffersState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        offersData: state.offersData.removeItem(
+          itemId: event.offerId,
+        ),
+      ),
+    );
   }
 
   Future<void> _onOfferIntentAction(

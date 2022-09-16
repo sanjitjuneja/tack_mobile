@@ -27,6 +27,8 @@ class _PreviousTacksPage extends Page<void> {
           fetchCompletedTacksUseCase:
               appLocator.get<FetchCompletedTacksUseCase>(),
           fetchCreatedTacksUseCase: appLocator.get<FetchCreatedTacksUseCase>(),
+          observeCompletedTackRunnerIntentUseCase:
+              appLocator.get<ObserveCompletedTackRunnerIntentUseCase>(),
         ),
         child: const PreviousTacksScreen(),
       ),

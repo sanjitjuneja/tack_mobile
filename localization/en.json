@@ -60,6 +60,10 @@
     "tackCancel": {
       "title": "Tack Cancelled",
       "message": ""
+    },
+    "tackerTackRunnerCancel": {
+      "title": "You Have Been Fully Refunded",
+      "message": "Sorry, your Runner <colored>Cancelled</colored>\n <highlight>{tackName}</highlight>"
     }
   },
   "destructiveAlert": {
@@ -155,6 +159,13 @@
     "newGroupRequested": {
       "title": "New Group Requested...",
       "message": "We will notify you via text if the new group is accepted (1-2 days)"
+    },
+    "tackerTackCompleted": {
+      "title": "Tack Complete"
+    },
+    "runnerTackCompleted": {
+      "title": "Tack Complete",
+      "message": "You have received <colored>${tackPrice}</colored>\n<highlight>{tackName}</highlight>"
     }
   },
   "toast": {
@@ -328,11 +339,6 @@
     "runner": {
       "subtitle": "Currently Completing"
     },
-    "chooseRunnerButton": "Choose",
-    "beginTackButton": "Begin",
-    "pendingReview": "Review",
-    "cancelOfferButton": "Cancel Offer",
-    "offerExpiresIn": "Offer Expires In",
     "empty": {
       "tackerTacks": {
         "description": "Looks like you haven't created any currently ongoing Tacks. Go to the Create Tack page to create your next Tack.",
@@ -348,6 +354,26 @@
       "accepted": "Accepted"
     },
     "runnerStatus": {
+    },
+    "cancelOfferButton": "Cancel Offer",
+    "offerExpiresIn": "Offer Expires In",
+    "statusButtons": {
+      "tacker": {
+        "created": "Created",
+        "pendingAccept": "Choose",
+        "pendingStart": "In Progress",
+        "inProgress": "In Progress",
+        "pendingReview": "Review",
+        "completed": ""
+      },
+      "runner": {
+        "created": "",
+        "pendingAccept": "",
+        "pendingStart": "Begin",
+        "inProgress": "Complete",
+        "pendingReview": "Pending",
+        "completed": ""
+      }
     }
   },
   "groupsScreen": {

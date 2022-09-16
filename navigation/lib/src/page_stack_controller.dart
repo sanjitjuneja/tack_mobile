@@ -134,6 +134,15 @@ mixin PageStackController on ChangeNotifier {
     notifyListeners();
   }
 
+  void autoPop() {
+    if (_pageCompleters.isNotEmpty &&
+        pages.last.hashCode == _pageCompleters.last.pageId) {
+      popWithResult(null);
+    } else {
+      pop();
+    }
+  }
+
   @override
   void notifyListeners() {
     super.notifyListeners();

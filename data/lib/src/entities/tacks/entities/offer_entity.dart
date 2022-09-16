@@ -11,8 +11,6 @@ class OfferEntity extends JsonSerializable {
   final int? price;
   @JsonKey(name: 'offer_type')
   final String offerType;
-  @JsonKey(name: 'is_accepted')
-  final bool isAccepted;
   final TackUserEntity runner;
   @JsonKey(name: 'creation_time')
   final DateTime creationTime;
@@ -24,7 +22,6 @@ class OfferEntity extends JsonSerializable {
     required this.tack,
     required this.price,
     required this.offerType,
-    required this.isAccepted,
     required this.runner,
     required this.creationTime,
     required this.lifeTime,

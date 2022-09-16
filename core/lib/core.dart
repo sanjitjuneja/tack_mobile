@@ -50,4 +50,4 @@ export 'package:shared_preferences/shared_preferences.dart';
 export 'package:flutter_stripe/flutter_stripe.dart';
 export 'package:plaid_flutter/plaid_flutter.dart';
 export 'package:firebase_messaging/firebase_messaging.dart';
-export 'package:flutter_local_notifications/flutter_local_notifications.dart';
+export 'package:awesome_notifications/awesome_notifications.dart';

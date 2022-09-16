@@ -136,8 +136,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     Emitter<DashboardState> emit,
   ) async {
     final WebSocketIntent<GroupTack> intent = event.groupTackIntent;
-
     final PaginationModel<GroupTack> tacksData;
+
+    final bool isNotSameGroup = intent.object?.tack.group.id != state.group.id;
+
+    if (isNotSameGroup) return;
 
     switch (intent.action) {
       case WebSocketAction.create:
@@ -174,8 +177,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     OpenOwnCreatedOngoingTack event,
     Emitter<DashboardState> emit,
   ) async {
-    _appRouter.pushForResult(
-      OngoingTackerTack.page(
+    _appRouter.push(
+      OngoingTackerTackFeature.page(
         tack: event.groupTack.tack,
       ),
     );

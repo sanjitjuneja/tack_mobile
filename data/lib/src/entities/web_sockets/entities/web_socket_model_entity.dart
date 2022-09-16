@@ -11,6 +11,10 @@ enum WebSocketModelEntity {
   tack,
   @JsonValue('RunnerTack')
   runnerTack,
+  @JsonValue('CompletedTackRunner')
+  completedTackRunner,
+  @JsonValue('CancelTackerTackRunner')
+  cancelTackerTackRunner,
   @JsonValue('Offer')
   offer,
   @JsonValue('GroupDetails')

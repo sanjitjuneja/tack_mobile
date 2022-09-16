@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:create_tack/src/models/group_tacks_state.dart';
-import 'package:create_tack/src/models/nearby_tacks_state.dart';
+import '../models/group_tacks_state.dart';
+import '../models/nearby_tacks_state.dart';
 import 'package:domain/domain.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
@@ -146,7 +146,22 @@ class CreateTackBloc extends Bloc<CreateTackEvent, CreateTackState> {
     CreateTackAction event,
     Emitter<CreateTackState> emit,
   ) async {
-    _appRouter.pushForResult(AddEditTack.addPage(templateTack: event.tack));
+    final Tack? newTack = await _appRouter.pushForResult(
+      AddEditTackFeature.addPage(
+        templateTack: event.tack,
+      ),
+    );
+
+    if (newTack == null) return;
+
+    _appRouter.push(
+      OngoingTackerTackFeature.page(
+        tack: newTack,
+      ),
+    );
+
+    _appRouter.navigationTabState.changeInnerTabIndex(HomeScreenTab.tacks, 0);
+    _appRouter.navigationTabState.changeTabIndex(HomeScreenTab.tacks);
   }
 
   @override
