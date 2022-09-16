@@ -9,8 +9,7 @@ class AppConfig {
   static const String stagingUrl = 'https://backend.tackapp.net/api/v1/';
   static const String productionUrl = 'https://backend.tackapp.net/api/v1/';
 
-  static const String developmentWebSocketsUrl =
-      'wss://backend.tackapp.net/ws/';
+  static const String developmentWebSocketsUrl = 'wss://backend.tackapp.net/ws/';
   static const String stagingWebSocketsUrl = 'wss://backend.tackapp.net/ws/';
   static const String productionWebSocketsUrl = 'wss://backend.tackapp.net/ws/';
 
