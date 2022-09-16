@@ -56,6 +56,8 @@ part 'use_cases/fetch_runner_tacks_use_case.dart';
 part 'use_cases/fetch_tack_offers_use_case.dart';
 part 'use_cases/fetch_tacker_tacks_use_case.dart';
 part 'use_cases/make_offer_use_case.dart';
+part 'use_cases/observe_cancel_tacker_tack_runner_intent_use_case.dart';
+part 'use_cases/observe_completed_tack_runner_intent_use_case.dart';
 part 'use_cases/observe_group_tack_intent_use_case.dart';
 part 'use_cases/observe_offer_intent_use_case.dart';
 part 'use_cases/observe_runner_tack_intent_use_case.dart';

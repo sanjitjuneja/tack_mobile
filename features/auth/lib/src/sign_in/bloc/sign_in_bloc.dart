@@ -26,7 +26,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         super(
           const SignInState(
             loginData: LoginData(),
-            passwordData: PasswordData(),
+            passwordData: OldPasswordData(),
           ),
         ) {
     on<LoginChanged>(_onLoginChanged);

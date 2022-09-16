@@ -7,6 +7,7 @@ class UpdateTackPayload extends Equatable {
   final String description;
   final int? estimatedTime;
   final bool shouldAllowCounterOffers;
+  final int groupId;
 
   UpdateTackPayload({
     required this.tackId,
@@ -15,6 +16,7 @@ class UpdateTackPayload extends Equatable {
     required this.description,
     required this.estimatedTime,
     required this.shouldAllowCounterOffers,
+    required this.groupId,
   }) : price = (price * 100).toInt();
 
   @override
@@ -25,5 +27,6 @@ class UpdateTackPayload extends Equatable {
         description,
         estimatedTime,
         shouldAllowCounterOffers,
+        groupId,
       ];
 }

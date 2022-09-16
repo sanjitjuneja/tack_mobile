@@ -141,6 +141,10 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
         image: payload.image,
       ),
     );
+
+    final int newGroupsCount = groupsCount + 1;
+    _groupsCountStreamController.add(newGroupsCount);
+
     await selectGroup(
       domain.SelectGroupPayload(group: group),
     );
@@ -261,7 +265,8 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
       ),
     );
 
-    _groupsCountStreamController.add(groupsCount + 1);
+    final int newGroupsCount = groupsCount + 1;
+    _groupsCountStreamController.add(newGroupsCount);
 
     await selectGroup(
       domain.SelectGroupPayload(

@@ -3,38 +3,37 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
-import '../../models/ongoing_runner_screen_result.dart';
 import '../bloc/ongoing_runner_tack_bloc.dart';
 import 'ongoing_runner_tack_screen.dart';
 
-class OngoingRunnerTack {
+class OngoingRunnerTackFeature {
   static const String routeName = '/ongoingTack';
 
-  static Page<OngoingRunnerScreenResult> page({
-    required Tack tack,
+  static Page<void> page({
+    required RunnerTack runnerTack,
   }) {
-    return _OngoingRunnerTackPage(tack: tack);
+    return _OngoingRunnerTackPage(runnerTack: runnerTack);
   }
 }
 
-class _OngoingRunnerTackPage extends Page<OngoingRunnerScreenResult> {
-  final Tack tack;
+class _OngoingRunnerTackPage extends Page<void> {
+  final RunnerTack runnerTack;
 
   @override
-  String get name => OngoingRunnerTack.routeName;
+  String get name => OngoingRunnerTackFeature.routeName;
 
   const _OngoingRunnerTackPage({
-    required this.tack,
+    required this.runnerTack,
   });
 
   @override
-  Route<OngoingRunnerScreenResult> createRoute(BuildContext context) {
-    return CupertinoPageRoute<OngoingRunnerScreenResult>(
+  Route<void> createRoute(BuildContext context) {
+    return CupertinoPageRoute<void>(
       settings: this,
       builder: (_) => BlocProvider<OngoingRunnerTackBloc>(
         create: (_) {
           return OngoingRunnerTackBloc(
-            tack: tack,
+            runnerTack: runnerTack,
             appRouter: AppRouter.of(context),
             observeRunnerTackIntentUseCase:
                 appLocator.get<ObserveRunnerTackIntentUseCase>(),

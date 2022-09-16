@@ -13,7 +13,8 @@ import 'session_provider.dart';
 import 'web_sockets_handlers.dart';
 
 class WebSocketsProvider with WebSocketHandlers, WidgetsBindingObserver {
-  static const Duration autoReconnectDuration = Duration(milliseconds: 10000);
+  static const String _deviceInfoHeader = 'device-info';
+  static const Duration autoReconnectDuration = Duration(milliseconds: 3000);
 
   final AppConfig _appConfig;
   final SessionProvider _sessionProvider;
@@ -66,6 +67,16 @@ class WebSocketsProvider with WebSocketHandlers, WidgetsBindingObserver {
           json: webSocketMessage.message,
           streamController: runnerTacksController,
         );
+      case WebSocketModelEntity.completedTackRunner:
+        return _parseDataAndAddToStream<TackEntity, domain.Tack>(
+          json: webSocketMessage.message,
+          streamController: competedTacksRunnerController,
+        );
+      case WebSocketModelEntity.cancelTackerTackRunner:
+        return _parseDataAndAddToStream<TackEntity, domain.Tack>(
+          json: webSocketMessage.message,
+          streamController: cancelTackerTacksRunnerController,
+        );
       case WebSocketModelEntity.offer:
         return _parseDataAndAddToStream<OfferEntity, domain.Offer>(
           json: webSocketMessage.message,
@@ -87,14 +98,22 @@ class WebSocketsProvider with WebSocketHandlers, WidgetsBindingObserver {
   }
 
   Future<void> connect() async {
+    if (socketChannel?.readyState == WebSocket.open) return;
+
     try {
       final Session? session = await _sessionProvider.getCurrentSession();
-      if (session == null) return;
+      if (session == null) throw Exception('no session found');
+
+      final String deviceInfo = <String?>{
+        await PlatformInfoManager.getDeviceModel(),
+        await PlatformInfoManager.getDeviceId(),
+      }.join(' - ');
 
       socketChannel = await WebSocket.connect(
         _appConfig.webSocketsUrl,
         headers: <String, dynamic>{
           HttpHeaders.authorizationHeader: session.accessToken,
+          _deviceInfoHeader: deviceInfo,
         },
       );
       listener = socketChannel!.listen(
@@ -139,13 +158,10 @@ class WebSocketsProvider with WebSocketHandlers, WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
+    if (state == AppLifecycleState.detached) {
+      _disconnect();
+    } else if (state == AppLifecycleState.resumed) {
       connect();
-    } else if (state == AppLifecycleState.paused) {
-      _disconnect();
-    } else if (state == AppLifecycleState.detached) {
-      _disconnect();
-      close();
     }
 
     super.didChangeAppLifecycleState(state);

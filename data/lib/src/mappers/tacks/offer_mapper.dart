@@ -17,7 +17,6 @@ class OfferMapper extends Mapper<OfferEntity, domain.Offer> {
       runner: tackUserMapper.fromEntity(entity.runner),
       price: entity.price != null ? entity.price! / 100 : null,
       type: offerTypeMapper.fromEntity(entity.offerType),
-      isAccepted: entity.isAccepted,
       createdAt: entity.creationTime,
       lifetime: entity.lifeTime,
     );
@@ -31,7 +30,6 @@ class OfferMapper extends Mapper<OfferEntity, domain.Offer> {
       runner: tackUserMapper.toEntity(item.runner),
       price: item.price != null ? (item.price! * 100).toInt() : null,
       offerType: offerTypeMapper.toEntity(item.type),
-      isAccepted: item.isAccepted,
       creationTime: item.createdAt,
       lifeTime: item.lifetime,
     );

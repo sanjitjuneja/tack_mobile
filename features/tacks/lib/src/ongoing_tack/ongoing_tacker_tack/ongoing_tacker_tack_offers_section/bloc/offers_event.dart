@@ -24,6 +24,14 @@ class LoadMoreAction extends OffersEvent {
   });
 }
 
+class OfferExpiredAction extends OffersEvent {
+  final int offerId;
+
+  const OfferExpiredAction({
+    required this.offerId,
+  });
+}
+
 class OfferIntentAction extends OffersEvent {
   final WebSocketIntent<Offer> offerIntent;
 

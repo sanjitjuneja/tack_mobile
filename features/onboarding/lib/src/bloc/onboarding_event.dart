@@ -4,6 +4,10 @@ abstract class OnboardingEvent {
   const OnboardingEvent();
 }
 
+class RequestNotificationsPermissions extends OnboardingEvent {
+  const RequestNotificationsPermissions();
+}
+
 class SignUpAction extends OnboardingEvent {
   const SignUpAction();
 }

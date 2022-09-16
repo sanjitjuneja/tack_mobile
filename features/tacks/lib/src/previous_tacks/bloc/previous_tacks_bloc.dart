@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
+import 'package:domain/use_case.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
 
@@ -16,14 +17,23 @@ class PreviousTacksBloc extends Bloc<PreviousTacksEvent, PreviousTacksState> {
   final AppRouterDelegate _appRouter;
   final FetchCreatedTacksUseCase _fetchCreatedTacksUseCase;
   final FetchCompletedTacksUseCase _fetchCompletedTacksUseCase;
+  final ObserveCompletedTackRunnerIntentUseCase
+      _observeCompletedTackRunnerIntentUseCase;
+
+  late StreamSubscription<WebSocketIntent<Tack>>
+      _completedTackRunnerIntentSubscription;
 
   PreviousTacksBloc({
     required AppRouterDelegate appRouter,
     required FetchCreatedTacksUseCase fetchCreatedTacksUseCase,
     required FetchCompletedTacksUseCase fetchCompletedTacksUseCase,
+    required ObserveCompletedTackRunnerIntentUseCase
+        observeCompletedTackRunnerIntentUseCase,
   })  : _appRouter = appRouter,
         _fetchCreatedTacksUseCase = fetchCreatedTacksUseCase,
         _fetchCompletedTacksUseCase = fetchCompletedTacksUseCase,
+        _observeCompletedTackRunnerIntentUseCase =
+            observeCompletedTackRunnerIntentUseCase,
         super(
           PreviousTacksState(
             isLoading: true,
@@ -35,10 +45,19 @@ class PreviousTacksBloc extends Bloc<PreviousTacksEvent, PreviousTacksState> {
     on<RefreshCompletedTacks>(_onRefreshCompletedTacks);
     on<LoadCompletedTacks>(_onLoadCompletedTacks);
 
+    on<CompletedTackTackIntentAction>(_onCompletedTackTackIntentAction);
+
     on<OpenOptions>(_onOpenOptions);
 
     on<MoveToCreateTackTab>(_onMoveToCreateTackTab);
     on<MoveToHomeTab>(_onMoveToHomeTab);
+
+    _completedTackRunnerIntentSubscription =
+        _observeCompletedTackRunnerIntentUseCase
+            .execute(NoParams())
+            .listen((WebSocketIntent<Tack> tackIntent) {
+      add(CompletedTackTackIntentAction(tackIntent: tackIntent));
+    });
 
     add(const InitialLoad());
   }
@@ -182,5 +201,43 @@ class PreviousTacksBloc extends Bloc<PreviousTacksEvent, PreviousTacksState> {
     _appRouter.navigationTabState.changeTabIndex(HomeScreenTab.dashboard);
     _appRouter.removeNamed(AppDrawer.routeName);
     _appRouter.pop();
+  }
+
+  Future<void> _onCompletedTackTackIntentAction(
+    CompletedTackTackIntentAction event,
+    Emitter<PreviousTacksState> emit,
+  ) async {
+    final WebSocketIntent<Tack> intent = event.tackIntent;
+
+    final PaginationModel<Tack> completedTacksData;
+
+    switch (intent.action) {
+      case WebSocketAction.create:
+        completedTacksData = state.completedTacksData.addItem(
+          item: intent.object!,
+        );
+        break;
+      case WebSocketAction.update:
+        completedTacksData = state.completedTacksData.updateItem(
+          item: intent.object!,
+        );
+        break;
+      case WebSocketAction.delete:
+        completedTacksData = state.completedTacksData.removeItem(
+          itemId: intent.objectId,
+        );
+        break;
+    }
+
+    emit(
+      state.copyWith(completedTacksData: completedTacksData),
+    );
+  }
+
+  @override
+  Future<void> close() async {
+    _completedTackRunnerIntentSubscription.cancel();
+
+    return super.close();
   }
 }

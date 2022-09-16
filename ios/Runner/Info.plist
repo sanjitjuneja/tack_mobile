@@ -74,9 +74,16 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>We need this</string>
+	<string>Tack uses your device’s camera to do things like help you take photos for group profile pictures.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need this</string>
+	<string>Tack uses access to your camera roll to do things like help you choose photos for group profile pics.</string>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>Notifications may include alerts, sounds, and icon badges. These can be configured in Settings.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

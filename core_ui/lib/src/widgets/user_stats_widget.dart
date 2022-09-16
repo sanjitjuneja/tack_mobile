@@ -58,7 +58,7 @@ class UserStatsWidget extends StatelessWidget {
           TextSpan(
             text: rating.toStringAsFixed(2),
           ),
-          const TextSpan(text: '\t\t|\t'),
+          const TextSpan(text: '  | '),
           WidgetSpan(
             alignment: ui.PlaceholderAlignment.middle,
             child: AppIconsTheme.tack(size: 16),

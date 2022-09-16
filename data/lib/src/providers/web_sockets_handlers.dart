@@ -16,7 +16,10 @@ class WebSocketHandlers {
   late WebSocketStreamController<domain.GroupTack> groupTacksController;
   late WebSocketStreamController<domain.Tack> tacksController;
   late WebSocketStreamController<domain.RunnerTack> runnerTacksController;
+  late WebSocketStreamController<domain.Tack> competedTacksRunnerController;
   late WebSocketStreamController<domain.Offer> offersController;
+
+  late WebSocketStreamController<domain.Tack> cancelTackerTacksRunnerController;
 
   late StreamController<domain.WebSocketIntent<domain.GroupDetails>> groupsController;
   late StreamController<domain.WebSocketIntent<domain.GroupInvitation>> groupInvitationsController;
@@ -28,7 +31,10 @@ class WebSocketHandlers {
   WebSocketStream<domain.GroupTack> get groupTacksStream => groupTacksController.stream;
   WebSocketStream<domain.Tack> get tacksStream => tacksController.stream;
   WebSocketStream<domain.RunnerTack> get runnerTacksStream => runnerTacksController.stream;
+  WebSocketStream<domain.Tack> get completedTacksRunnerStream => competedTacksRunnerController.stream;
   WebSocketStream<domain.Offer> get offersStream => offersController.stream;
+
+  WebSocketStream<domain.Tack> get cancelTackerTacksRunnerStream => cancelTackerTacksRunnerController.stream;
 
   WebSocketStream<domain.GroupDetails> get groupsStream => groupsController.stream;
   WebSocketStream<domain.GroupInvitation> get groupInvitationsStream => groupInvitationsController.stream;
@@ -40,7 +46,10 @@ class WebSocketHandlers {
     groupTacksController = WebSocketStreamController<domain.GroupTack>.broadcast();
     tacksController = WebSocketStreamController<domain.Tack>.broadcast();
     runnerTacksController = WebSocketStreamController<domain.RunnerTack>.broadcast();
+    competedTacksRunnerController = WebSocketStreamController<domain.Tack>.broadcast();
     offersController = WebSocketStreamController<domain.Offer>.broadcast();
+
+    cancelTackerTacksRunnerController = WebSocketStreamController<domain.Tack>.broadcast();
 
     groupsController = WebSocketStreamController<domain.GroupDetails>.broadcast();
     groupInvitationsController =WebSocketStreamController<domain.GroupInvitation>.broadcast();
@@ -53,7 +62,10 @@ class WebSocketHandlers {
     groupTacksController.close();
     tacksController.close();
     runnerTacksController.close();
+    competedTacksRunnerController.close();
     offersController.close();
+
+    cancelTackerTacksRunnerController.close();
 
     groupsController.close();
     groupInvitationsController.close();

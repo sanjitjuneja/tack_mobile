@@ -20,6 +20,43 @@ class GlobalAppRouterDelegate extends RouterDelegate<RouteConfiguration>
   });
 
   @override
+  Future<bool> popRoute() async {
+    // check if we have pages in the stack to pop before
+    // attempting app exit
+    if (pages.length > 1) {
+      // handle popping the current page off of the stack
+      autoPop();
+      return Future.value(true);
+    }
+
+    // TODO: implement App designed exit dialog.
+    final bool? shouldPop = await showDialog<bool>(
+      // get the context from the navigatorKey defined
+      // in your RouterDelegate class
+      context: navigatorKey.currentContext!,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Exit App'),
+          content: const Text('Are you sure you want to exit the app?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () => Navigator.pop(context, true),
+            ),
+            TextButton(
+              child: const Text('Confirm'),
+              onPressed: () => Navigator.pop(context, false),
+            ),
+          ],
+        );
+      },
+    );
+    // if the dialog is dismissed by tapping outside of the barrier
+    // the result is null, so we return false
+    return shouldPop ?? false;
+  }
+
+  @override
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
   @override

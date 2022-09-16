@@ -66,7 +66,7 @@ class TackTileActions extends StatelessWidget {
 
   void _onCreatedByMeButtonPressed(BuildContext context) {
     BlocProvider.of<DashboardBloc>(context).add(
-      OpenOwnRunningOngoingTack(groupTack: groupTack),
+      OpenOwnCreatedOngoingTack(groupTack: groupTack),
     );
   }
 

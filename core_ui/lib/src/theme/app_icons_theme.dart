@@ -19,7 +19,6 @@ class AppIconsTheme {
   static const String _menuKey = '${_basePath}menu.png';
 
   static const String _searchKey = '${_basePath}search.png';
-  static const String _editKey = '${_basePath}edit.png';
   static const String _personKey = '${_basePath}person.png';
   static const String _messageKey = '${_basePath}message.png';
   static const String _taskCompleteKey = '${_basePath}task_complete.png';
@@ -64,6 +63,8 @@ class AppIconsTheme {
   static const String _supportKey = '${_svgPath}support.svg';
   static const String _bellKey = '${_svgPath}bell.svg';
   static const String _bellCrossedOutKey = '${_svgPath}bell_crossed_out.svg';
+  static const String _clockKey = '${_svgPath}clock.svg';
+  static const String _editKey = '${_svgPath}edit.svg';
 
   /// Bottom Navigation bar
   static const AppIcon dashboardsActive = AppIcon(_dashboardActiveKey);
@@ -79,7 +80,6 @@ class AppIconsTheme {
   static const AppIcon menu = AppIcon(_menuKey);
 
   static const AppIcon search = AppIcon(_searchKey);
-  static const AppIcon edit = AppIcon(_editKey);
   static const AppIcon person = AppIcon(_personKey);
   static const AppIcon message = AppIcon(_messageKey);
   static const AppIcon taskComplete = AppIcon(_taskCompleteKey);
@@ -124,4 +124,6 @@ class AppIconsTheme {
   static const AppIcon support = AppIcon(_supportKey);
   static const AppIcon bell = AppIcon(_bellKey);
   static const AppIcon bellCrossedOut = AppIcon(_bellCrossedOutKey);
+  static const AppIcon clock = AppIcon(_clockKey);
+  static const AppIcon edit = AppIcon(_editKey);
 }

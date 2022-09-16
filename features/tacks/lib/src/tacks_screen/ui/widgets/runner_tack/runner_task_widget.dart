@@ -43,6 +43,7 @@ class RunnerTackWidget extends StatelessWidget {
               child: TackHeaderWidget(
                 tack: runnerTack.tack,
                 isRunner: true,
+                counterOfferPrice: runnerTack.offer?.price,
               ),
             ),
             const SizedBox(height: 20),
@@ -60,6 +61,6 @@ class RunnerTackWidget extends StatelessWidget {
 
   void _onTap(BuildContext context) {
     BlocProvider.of<TacksBloc>(context)
-        .add(OpenRunnerTack(tack: runnerTack.tack));
+        .add(OpenRunnerTack(runnerTack: runnerTack));
   }
 }

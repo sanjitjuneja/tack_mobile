@@ -2,7 +2,7 @@ part of 'sign_in_bloc.dart';
 
 class SignInState {
   final LoginData loginData;
-  final PasswordData passwordData;
+  final OldPasswordData passwordData;
   final bool wrongCredentials;
 
   bool get isReadyToProceed => loginData.isValid && passwordData.isValid;

@@ -8,9 +8,9 @@ import 'package:navigation/navigation.dart';
 import 'package:payment/payment.dart';
 
 import '../../../add_edit_tack/ui/add_edit_tack_page.dart';
-import '../../models/ongoing_tacker_screen_result.dart';
 import '../../view_extensions/ongoing_tack_to_view_extension.dart';
 import '../../../rate_tack_user/ui/rate_tack_user_page.dart';
+import '../ui/ongoing_tacker_tack_page.dart';
 
 part 'ongoing_tacker_tack_event.dart';
 
@@ -100,7 +100,7 @@ class OngoingTackerTackBloc
 
   Future<void> __onEditTack(Emitter<OngoingTackerTackState> emit) async {
     final Tack? tack = await _appRouter.pushForResult(
-      AddEditTack.editPage(state.tack),
+      AddEditTackFeature.editPage(state.tack),
     );
 
     if (tack != null) emit(state.copyWith(tack: tack));
@@ -121,7 +121,14 @@ class OngoingTackerTackBloc
         ),
       );
 
-      _appRouter.popWithResult(OngoingTackerScreenResult.complete);
+      _appRouter.removeNamed(OngoingTackerTackFeature.routeName);
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          SuccessAlert(
+            contentKey: 'otherAlert.tackerTackCompleted',
+          ),
+        ),
+      );
     } catch (e) {
       _appRouter.pop();
       _appRouter.pushForResult(
@@ -159,7 +166,13 @@ class OngoingTackerTackBloc
         CancelTackPayload(tack: state.tack),
       );
       _appRouter.pop();
-      _appRouter.popWithResult(OngoingTackerScreenResult.cancel);
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            contentKey: 'errorAlert.tackCancel',
+          ),
+        ),
+      );
     } catch (e) {
       _appRouter.pop();
       _appRouter.pushForResult(
@@ -200,12 +213,12 @@ class OngoingTackerTackBloc
   ) async {
     final WebSocketIntent<Tack> intent = event.tackIntent;
 
+    if (intent.objectId != state.tack.id) return;
+
     switch (intent.action) {
       case WebSocketAction.create:
         return;
       case WebSocketAction.update:
-        if (intent.objectId != state.tack.id) return;
-
         final Tack newTack = intent.object!;
 
         if (newTack.canContactOther && !state.hasContactData) {
@@ -219,7 +232,7 @@ class OngoingTackerTackBloc
           ),
         );
       case WebSocketAction.delete:
-        return;
+        return _appRouter.removeNamed(OngoingTackerTackFeature.routeName);
     }
   }
 

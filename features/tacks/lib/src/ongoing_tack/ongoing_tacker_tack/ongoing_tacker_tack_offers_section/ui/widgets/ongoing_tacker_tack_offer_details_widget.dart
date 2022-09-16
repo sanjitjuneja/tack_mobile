@@ -3,6 +3,8 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../bloc/offers_bloc.dart';
+
 class OngoingTackerTackOfferDetailsWidget extends StatelessWidget {
   final Offer offer;
 
@@ -25,6 +27,7 @@ class OngoingTackerTackOfferDetailsWidget extends StatelessWidget {
         ],
         TimeLeftWidget(
           tillTime: offer.expiredAt,
+          onExpire: _onOfferExpired,
           builder: (_, String content) {
             return AppButton(
               shouldDisableTap: true,
@@ -48,6 +51,14 @@ class OngoingTackerTackOfferDetailsWidget extends StatelessWidget {
           },
         ),
       ],
+    );
+  }
+
+  void _onOfferExpired(BuildContext context) {
+    BlocProvider.of<OffersBloc>(context).add(
+      OfferExpiredAction(
+        offerId: offer.id,
+      ),
     );
   }
 }

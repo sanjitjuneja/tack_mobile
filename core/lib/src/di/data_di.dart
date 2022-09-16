@@ -1,11 +1,11 @@
-import 'package:core/src/config/app_config.dart';
-import 'package:core/src/config/firebase_config_helper.dart';
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:navigation/navigation.dart';
 
 import 'app_di.dart';
+import '../config/app_config.dart';
+import '../config/firebase_config_helper.dart';
 
 final DataDI dataDI = DataDI();
 
@@ -18,6 +18,17 @@ class DataDI {
 
     await Firebase.initializeApp(
       options: appLocator.get<FirebaseConfigHelper>().currentPlatformOptions,
+    );
+
+    final NotificationsRepository notificationsRepository =
+        NotificationsRepositoryImpl();
+    await notificationsRepository.initialize();
+    appLocator.registerSingleton(notificationsRepository);
+
+    appLocator.registerLazySingleton<RequestNotificationsPermissionsUseCase>(
+      () => RequestNotificationsPermissionsUseCase(
+        notificationsRepository: notificationsRepository,
+      ),
     );
 
     appLocator.registerLazySingleton<MapperFactory>(
@@ -62,6 +73,7 @@ class DataDI {
     appLocator.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(
         apiProvider: appLocator.get<ApiProvider>(),
+        notificationsRepository: notificationsRepository,
         sessionProvider: appLocator.get<SessionProvider>(),
         sharedPreferencesProvider: appLocator.get<SharedPreferencesProvider>(),
       ),
@@ -410,6 +422,16 @@ class DataDI {
         tacksRepository: appLocator.get<TacksRepository>(),
       ),
     );
+    appLocator.registerLazySingleton<ObserveCompletedTackRunnerIntentUseCase>(
+      () => ObserveCompletedTackRunnerIntentUseCase(
+        tacksRepository: appLocator.get<TacksRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<ObserveCancelTackerTackRunnerIntentUseCase>(
+          () => ObserveCancelTackerTackRunnerIntentUseCase(
+        tacksRepository: appLocator.get<TacksRepository>(),
+      ),
+    );
     appLocator.registerLazySingleton<ObserveTackerTackIntentUseCase>(
       () => ObserveTackerTackIntentUseCase(
         tacksRepository: appLocator.get<TacksRepository>(),
@@ -574,6 +596,8 @@ class DataDI {
     appLocator.unregister<ObserveGroupTackIntentUseCase>();
     appLocator.unregister<ObserveOfferIntentUseCase>();
     appLocator.unregister<ObserveRunnerTackIntentUseCase>();
+    appLocator.unregister<ObserveCompletedTackRunnerIntentUseCase>();
+    appLocator.unregister<ObserveCancelTackerTackRunnerIntentUseCase>();
     appLocator.unregister<ObserveTackerTackIntentUseCase>();
     appLocator.unregister<RateTackUseCase>();
     appLocator.unregister<StartTackRunnerUseCase>();

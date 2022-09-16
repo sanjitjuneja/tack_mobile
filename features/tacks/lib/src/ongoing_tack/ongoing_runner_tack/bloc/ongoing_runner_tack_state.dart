@@ -1,7 +1,7 @@
 part of 'ongoing_runner_tack_bloc.dart';
 
 class OngoingRunnerTackState {
-  final Tack tack;
+  final RunnerTack runnerTack;
   final int stepsCount;
   final int currentStep;
   final RunningTackData runningTackData;
@@ -10,7 +10,7 @@ class OngoingRunnerTackState {
   bool get hasContactData => userContacts != null;
 
   const OngoingRunnerTackState({
-    required this.tack,
+    required this.runnerTack,
     required this.stepsCount,
     required this.currentStep,
     required this.runningTackData,
@@ -18,14 +18,14 @@ class OngoingRunnerTackState {
   });
 
   OngoingRunnerTackState copyWith({
-    Tack? tack,
+    RunnerTack? runnerTack,
     int? stepsCount,
     int? currentStep,
     RunningTackData? runningTackData,
     UserContacts? userContacts,
   }) {
     return OngoingRunnerTackState(
-      tack: tack ?? this.tack,
+      runnerTack: runnerTack ?? this.runnerTack,
       stepsCount: stepsCount ?? this.stepsCount,
       currentStep: currentStep ?? this.currentStep,
       runningTackData: runningTackData ?? this.runningTackData,

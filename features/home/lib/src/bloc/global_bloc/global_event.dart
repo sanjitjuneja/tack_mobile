@@ -39,3 +39,19 @@ class GoToMyInvitations extends GlobalEvent {
 class GoToMyGroups extends GlobalEvent {
   const GoToMyGroups();
 }
+
+class CompletedTackTackIntentAction extends GlobalEvent {
+  final WebSocketIntent<Tack> tackIntent;
+
+  const CompletedTackTackIntentAction({
+    required this.tackIntent,
+  });
+}
+
+class CancelTackerTackRunnerIntentAction extends GlobalEvent {
+  final WebSocketIntent<Tack> tackIntent;
+
+  const CancelTackerTackRunnerIntentAction({
+    required this.tackIntent,
+  });
+}

@@ -31,3 +31,11 @@ class TackIntentAction extends OngoingRunnerTackEvent {
     required this.tackIntent,
   });
 }
+
+class CompletedTackTackIntentAction extends OngoingRunnerTackEvent {
+  final WebSocketIntent<Tack> tackIntent;
+
+  const CompletedTackTackIntentAction({
+    required this.tackIntent,
+  });
+}
