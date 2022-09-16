@@ -15,7 +15,7 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
   })  : _apiProvider = apiProvider,
         _appConfig = appConfig {
     Stripe.publishableKey = _appConfig.stripeKey;
-    Stripe.merchantIdentifier = Constants.merchantName;
+    Stripe.merchantIdentifier = _appConfig.merchantIdentifier;
   }
 
   @override

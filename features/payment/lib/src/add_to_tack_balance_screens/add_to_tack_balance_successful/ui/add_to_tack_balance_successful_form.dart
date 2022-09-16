@@ -1,14 +1,16 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:domain/use_case.dart';
+import 'package:domain/user/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
 class AddToTackBalanceSuccessfulForm extends StatelessWidget {
-  final double newTackBalance;
+  final GetUserBalanceUseCase getUserBalanceUseCase;
 
   const AddToTackBalanceSuccessfulForm({
     Key? key,
-    required this.newTackBalance,
+    required this.getUserBalanceUseCase,
   }) : super(key: key);
 
   @override
@@ -40,7 +42,7 @@ class AddToTackBalanceSuccessfulForm extends StatelessWidget {
                     'addToTackBalanceSuccessfulScreen.newTackBalance',
                     translationParams: {
                       'amount': CurrencyUtility.dollarFormat.format(
-                        newTackBalance,
+                        getUserBalanceUseCase.execute(NoParams()).usdBalance,
                       ),
                     },
                   ),
