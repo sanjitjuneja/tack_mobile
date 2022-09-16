@@ -113,11 +113,8 @@ class PaymentMethodTile extends StatelessWidget {
                   ),
                 ],
                 if (isSelectable) ...<Widget>[
-                  if (isSelected) ...<Widget>[
-                    GestureDetector(
-                      onTap: isDisabled ? null : onTap,
-                      child: AppIconsTheme.checkMarkFilled(size: 30),
-                    ),
+                  if (isSelected && !isDisabled) ...<Widget>[
+                    AppIconsTheme.checkMarkFilled(size: 30),
                   ] else ...<Widget>[
                     AppIconsTheme.add(
                       size: 30,
