@@ -1,14 +1,13 @@
+import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:domain/user/user.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'add_to_tack_balance_successful_form.dart';
 
 class AddToTackBalanceSuccessfulScreen extends StatelessWidget {
-  final double newTackBalance;
-
   const AddToTackBalanceSuccessfulScreen({
     Key? key,
-    required this.newTackBalance,
   }) : super(key: key);
 
   @override
@@ -22,7 +21,7 @@ class AddToTackBalanceSuccessfulScreen extends StatelessWidget {
       ),
       child: SafeArea(
         child: AddToTackBalanceSuccessfulForm(
-          newTackBalance: newTackBalance,
+          getUserBalanceUseCase: appLocator.get<GetUserBalanceUseCase>(),
         ),
       ),
     );

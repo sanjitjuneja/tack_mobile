@@ -5,32 +5,20 @@ import 'withdraw_successful_screen.dart';
 class WithdrawSuccessfulFeature {
   static const String routeName = '/withdrawSuccessful';
 
-  static Page<void> page({
-    required double? newTackBalance,
-  }) {
-    return WithdrawSuccessfulPage(
-      newTackBalance: newTackBalance,
-    );
-  }
+  static Page<void> page() => const WithdrawSuccessfulPage();
 }
 
 class WithdrawSuccessfulPage extends Page<void> {
-  final double? newTackBalance;
-
   @override
   String get name => WithdrawSuccessfulFeature.routeName;
 
-  const WithdrawSuccessfulPage({
-    required this.newTackBalance,
-  });
+  const WithdrawSuccessfulPage();
 
   @override
   Route<void> createRoute(BuildContext context) {
     return CupertinoPageRoute<void>(
       settings: this,
-      builder: (_) => WithdrawSuccessfulScreen(
-        newTackBalance: newTackBalance,
-      ),
+      builder: (_) => const WithdrawSuccessfulScreen(),
     );
   }
 }
