@@ -25,6 +25,8 @@ class Constants {
 
   static const String applePayId = 'applePay';
 
+  static const String visa = 'visa';
+
   static const String countryCode = 'US';
 
   static const String merchantName = 'Tack App';

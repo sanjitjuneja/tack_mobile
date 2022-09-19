@@ -210,9 +210,10 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
       );
     } else if (payload.paymentMethodId == Constants.googlePayId) {
       await Stripe.instance.initGooglePay(
-        const GooglePayInitParams(
+        GooglePayInitParams(
           merchantName: Constants.merchantName,
           countryCode: Constants.countryCode,
+          testEnv: _appConfig.flavor == Flavor.dev,
         ),
       );
       await Stripe.instance.presentGooglePay(

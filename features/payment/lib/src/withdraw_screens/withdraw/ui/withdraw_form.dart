@@ -71,7 +71,7 @@ class WithdrawForm extends StatelessWidget {
                     horizontal: 16.0,
                   ),
                   child: PaymentMethodTile(
-                    leadingIcon: AppIconsTheme.bank(size: 35),
+                    leadingIcon: AppIconsTheme.bank(),
                     onTap: () => _onSelectBankAccount(context),
                     title: FlutterI18n.translate(
                       context,

@@ -4,6 +4,7 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:domain/use_case.dart';
+import 'package:flutter/services.dart';
 import 'package:navigation/navigation.dart';
 
 import '../../../add_to_tack_balance_screens/add_to_tack_balance_failed/ui/add_to_tack_balance_failed_page.dart';
@@ -242,6 +243,14 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
           errorKey: 'addToTackBalanceFailedScreen.limitReached',
         ),
       );
+    } on StripeException catch (e) {
+      if (e.error.code == FailureCode.Canceled) {
+        _appRouter.pop();
+      }
+    } on PlatformException catch (e) {
+      if (e.code == FailureCode.Canceled.name) {
+        _appRouter.pop();
+      }
     } catch (e) {
       _appRouter.pop();
       _appRouter.push(

@@ -116,7 +116,7 @@ class PaymentSettingsForm extends StatelessWidget {
                 const SizedBox(height: 14),
                 if (state.isApplePaySupported)
                   PaymentMethodTile(
-                    leadingIcon: AppIconsTheme.applePay(size: 35),
+                    leadingIcon: AppIconsTheme.applePay(),
                     title: FlutterI18n.translate(
                       context,
                       'paymentSettingsScreen.applePay',
@@ -127,7 +127,7 @@ class PaymentSettingsForm extends StatelessWidget {
                   ),
                 if (state.isGooglePaySupported)
                   PaymentMethodTile(
-                    leadingIcon: AppIconsTheme.googlePay(size: 35),
+                    leadingIcon: AppIconsTheme.googlePay(),
                     title: FlutterI18n.translate(
                       context,
                       'paymentSettingsScreen.googlePay',
@@ -148,7 +148,7 @@ class PaymentSettingsForm extends StatelessWidget {
             ),
             const SizedBox(height: 14),
             PaymentMethodTile(
-              leadingIcon: AppIconsTheme.bank(size: 35),
+              leadingIcon: AppIconsTheme.bank(),
               title: FlutterI18n.translate(
                 context,
                 'paymentSettingsScreen.addPaymentMethod',

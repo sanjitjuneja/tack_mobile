@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:navigation/navigation.dart';
 import 'package:domain/domain.dart';
 
-import '../../../../payment.dart';
+import '../../../payment_settings_screens/add_credit_card/ui/add_credit_card_page.dart';
+import '../../../payment_settings_screens/add_payment_method_screens/add_payment_method_failed/ui/add_payment_method_failed_page.dart';
 import '../../models/deposit_selected_payment_method.dart';
 
 part 'select_deposit_payment_method_event.dart';
@@ -18,6 +20,7 @@ class SelectDepositPaymentMethodBloc extends Bloc<
   final FetchIsApplePaySupportedUseCase _fetchIsApplePaySupportedUseCase;
   final FetchIsGooglePaySupportedUseCase _fetchIsGooglePaySupportedUseCase;
   final FetchFeeUseCase _feeUseCase;
+  final AddBankAccountUseCase _addBankAccountUseCase;
 
   SelectDepositPaymentMethodBloc({
     required AppRouterDelegate appRouter,
@@ -28,12 +31,14 @@ class SelectDepositPaymentMethodBloc extends Bloc<
     required FetchIsGooglePaySupportedUseCase fetchIsGooglePaySupportedUseCase,
     required FetchFeeUseCase feeUseCase,
     required String? selectedPaymentMethodId,
+    required AddBankAccountUseCase addBankAccountUseCase,
   })  : _appRouter = appRouter,
         _fetchConnectedBankAccountsUseCase = fetchConnectedBankAccountsUseCase,
         _fetchConnectedCardsUseCase = fetchConnectedCardsUseCase,
         _fetchIsApplePaySupportedUseCase = fetchIsApplePaySupportedUseCase,
         _fetchIsGooglePaySupportedUseCase = fetchIsGooglePaySupportedUseCase,
         _feeUseCase = feeUseCase,
+        _addBankAccountUseCase = addBankAccountUseCase,
         super(
           SelectDepositPaymentMethodState(
             bankAccounts: <ConnectedBankAccount>[],
@@ -45,7 +50,8 @@ class SelectDepositPaymentMethodBloc extends Bloc<
     on<InitialLoad>(_onInitialLoad);
 
     on<SelectDepositPaymentMethodAction>(_onSelectDepositPaymentMethodAction);
-    on<AddPaymentMethodAction>(_onAddPaymentMethodAction);
+    on<AddBankAction>(_onAddBankAction);
+    on<AddCardAction>(_onAddCardAction);
     on<ContinueAction>(_onContinueAction);
 
     add(const InitialLoad());
@@ -106,16 +112,58 @@ class SelectDepositPaymentMethodBloc extends Bloc<
     emit(state.copyWith(selectedPaymentMethodId: event.paymentMethodId));
   }
 
-  Future<void> _onAddPaymentMethodAction(
-    AddPaymentMethodAction event,
+  Future<void> _onAddBankAction(
+    AddBankAction event,
     Emitter<SelectDepositPaymentMethodState> emit,
   ) async {
-    final AddPaymentMethodScreenResult? result = await _appRouter.pushForResult(
-      AddPaymentMethodFeature.page(
-        bankAccountsAmount: state.bankAccounts.length,
-      ),
+    try {
+      if (state.bankAccounts.length >= Constants.maxBankAccountsAmount) {
+        _appRouter.push(
+          AddPaymentMethodFailedFeature.page(
+            titleKey: 'addPaymentMethodFailedScreen.limitReached',
+            descriptionKey: 'addPaymentMethodFailedScreen.limitDescription',
+          ),
+        );
+      } else {
+        _appRouter.push(ProgressDialog.page());
+        final List<ConnectedBankAccount>? bankAccounts =
+            await _addBankAccountUseCase.execute(
+          const AddBankAccountPayload(),
+        );
+        _appRouter.pop();
+        if (bankAccounts != null) {
+          if (bankAccounts.isEmpty) {
+            _appRouter.push(
+              AddPaymentMethodFailedFeature.page(
+                titleKey: 'addPaymentMethodFailedScreen.unableToAdd',
+                descriptionKey:
+                    'addPaymentMethodFailedScreen.depositoryDescription',
+              ),
+            );
+          } else {
+            add(const InitialLoad());
+          }
+        }
+      }
+    } catch (e) {
+      _appRouter.pop();
+      _appRouter.push(
+        AddPaymentMethodFailedFeature.page(
+          titleKey: 'addPaymentMethodFailedScreen.unableToAdd',
+          descriptionKey: 'addPaymentMethodFailedScreen.description',
+        ),
+      );
+    }
+  }
+
+  Future<void> _onAddCardAction(
+    AddCardAction event,
+    Emitter<SelectDepositPaymentMethodState> emit,
+  ) async {
+    final bool? result = await _appRouter.pushForResult(
+      AddCreditCardFeature.page(),
     );
-    if (result != null) {
+    if (result == true) {
       add(const InitialLoad());
     }
   }

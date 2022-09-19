@@ -57,6 +57,7 @@ class SelectPayForTackPaymentMethodPage
             selectedPaymentMethodId: selectedPaymentMethodId,
             offerPrice: offerPrice,
             feeUseCase: appLocator.get<FetchFeeUseCase>(),
+            addBankAccountUseCase: appLocator.get<AddBankAccountUseCase>(),
           );
         },
         child: const SelectPayForTackPaymentMethodScreen(),
