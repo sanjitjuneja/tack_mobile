@@ -1,4 +1,4 @@
-part of app_list_view_with_refresh;
+part of app_refresh_widgets;
 
 class _LoadStateWidget extends StatelessWidget {
   final ProgressIndicatorSize indicatorSize;

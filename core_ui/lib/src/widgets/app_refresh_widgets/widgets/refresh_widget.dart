@@ -1,8 +1,9 @@
-part of app_list_view_with_refresh;
+part of app_refresh_widgets;
 
-class AppListViewWithRefresh extends StatefulWidget {
-  final IndexedWidgetBuilder itemBuilder;
-  final int itemCount;
+class _RefreshWidget extends StatefulWidget {
+  final Widget? contentWidget;
+  final IndexedWidgetBuilder? itemBuilder;
+  final int? itemCount;
   final IndexedWidgetBuilder? separatorBuilder;
   final bool isLoading;
   final bool hasData;
@@ -18,10 +19,11 @@ class AppListViewWithRefresh extends StatefulWidget {
   final Color? indicatorColor;
   final EdgeInsets? padding;
 
-  const AppListViewWithRefresh({
+  const _RefreshWidget({
     super.key,
-    required this.itemBuilder,
-    required this.itemCount,
+    this.contentWidget,
+    this.itemBuilder,
+    this.itemCount,
     this.separatorBuilder,
     this.isLoading = false,
     this.hasData = true,
@@ -39,10 +41,10 @@ class AppListViewWithRefresh extends StatefulWidget {
   });
 
   @override
-  State<AppListViewWithRefresh> createState() => _AppListViewWithRefreshState();
+  State<_RefreshWidget> createState() => _RefreshWidgetState();
 }
 
-class _AppListViewWithRefreshState extends State<AppListViewWithRefresh> {
+class _RefreshWidgetState extends State<_RefreshWidget> {
   static const Duration _hapticFeedbackDelay = Duration(milliseconds: 400);
 
   late RefreshController _refreshController;
@@ -93,6 +95,7 @@ class _AppListViewWithRefreshState extends State<AppListViewWithRefresh> {
           child: _ContentBuilder(
             isLoading: widget.isLoading,
             hasData: widget.hasData,
+            contentWidget: widget.contentWidget,
             separatorBuilder: widget.separatorBuilder,
             itemBuilder: widget.itemBuilder,
             itemCount: widget.itemCount,

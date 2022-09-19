@@ -136,12 +136,13 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     Emitter<DashboardState> emit,
   ) async {
     final WebSocketIntent<GroupTack> intent = event.groupTackIntent;
+
+    final bool hasGroupId = !intent.action.isDelete;
+    final bool isSameGroup = intent.object?.tack.group.id == state.group.id;
+
+    if (hasGroupId && !isSameGroup) return;
+
     final PaginationModel<GroupTack> tacksData;
-
-    final bool isNotSameGroup = intent.object?.tack.group.id != state.group.id;
-
-    if (isNotSameGroup) return;
-
     switch (intent.action) {
       case WebSocketAction.create:
         tacksData = state.tacksData.addItem(

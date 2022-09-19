@@ -1,4 +1,4 @@
-library app_list_view_with_refresh;
+library app_refresh_widgets;
 
 import 'dart:async';
 
@@ -13,7 +13,9 @@ part 'utils/refreshing_status.dart';
 part 'utils/typedefs.dart';
 
 part 'widgets/content_builder.dart';
-part 'widgets/list_with_refresh_widget.dart';
+part 'widgets/list_with_refresh.dart';
 part 'widgets/load_more_footer.dart';
 part 'widgets/load_state_widget.dart';
+part 'widgets/page_with_refresh.dart';
 part 'widgets/refresh_header.dart';
+part 'widgets/refresh_widget.dart';

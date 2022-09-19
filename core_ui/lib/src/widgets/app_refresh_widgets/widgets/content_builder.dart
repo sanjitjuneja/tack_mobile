@@ -1,12 +1,13 @@
-part of app_list_view_with_refresh;
+part of app_refresh_widgets;
 
 class _ContentBuilder extends StatelessWidget {
   final bool isLoading;
   final bool hasData;
-  final IndexedWidgetBuilder? separatorBuilder;
-  final IndexedWidgetBuilder itemBuilder;
-  final int itemCount;
   final ProgressIndicatorSize loadingIndicatorSize;
+  final Widget? contentWidget;
+  final IndexedWidgetBuilder? separatorBuilder;
+  final IndexedWidgetBuilder? itemBuilder;
+  final int? itemCount;
   final Color? indicatorColor;
   final Widget? emptyWidget;
   final Widget? headerWidget;
@@ -16,16 +17,17 @@ class _ContentBuilder extends StatelessWidget {
   const _ContentBuilder({
     required this.isLoading,
     required this.hasData,
-    required this.separatorBuilder,
-    required this.itemBuilder,
-    required this.itemCount,
     required this.loadingIndicatorSize,
+    this.contentWidget,
+    this.separatorBuilder,
+    this.itemBuilder,
+    this.itemCount,
     this.indicatorColor,
     this.emptyWidget,
     this.headerWidget,
     this.footerWidget,
     this.padding,
-  });
+  }) : assert(contentWidget != null || itemBuilder != null);
 
   @override
   Widget build(BuildContext context) {
@@ -85,17 +87,21 @@ class _ContentBuilder extends StatelessWidget {
     }
 
     if (hasData) {
-      content = SliverToBoxAdapter(
-        child: ListView.separated(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          padding: padding ?? const EdgeInsets.fromLTRB(16, 12, 16, 12),
-          itemBuilder: itemBuilder,
-          separatorBuilder:
-              separatorBuilder ?? (_, __) => const SizedBox(height: 12.0),
-          itemCount: itemCount,
-        ),
-      );
+      content = contentWidget != null
+          ? SliverFillRemaining(
+              child: contentWidget,
+            )
+          : SliverToBoxAdapter(
+              child: ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: padding ?? const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                itemBuilder: itemBuilder!,
+                separatorBuilder:
+                    separatorBuilder ?? (_, __) => const SizedBox(height: 12.0),
+                itemCount: itemCount!,
+              ),
+            );
     } else {
       content = SliverFillRemaining(
         child: emptyWidget ?? const SizedBox.shrink(),

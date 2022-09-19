@@ -58,7 +58,8 @@ class OngoingRunnerTackBloc
     on<FetchUserContactsAction>(_onFetchUserContactsAction);
 
     on<ActionPressed>(_onActionPressed);
-    on<ContactTacker>(_onContactTacker);
+    on<MessageTacker>(_onMessageTacker);
+    on<CallTacker>(_onCallTacker);
     on<CancelTack>(_onCancelTack);
 
     on<TackIntentAction>(_onTackIntentAction);
@@ -104,6 +105,7 @@ class OngoingRunnerTackBloc
     Emitter<OngoingRunnerTackState> emit,
   ) async {
     try {
+      emit(state.copyWith(isContactsLoading: true));
       final UserContacts userContacts = await _fetchUserContactsUseCase.execute(
         FetchUserContactsPayload(
           tackId: state.runnerTack.tack.id,
@@ -114,7 +116,10 @@ class OngoingRunnerTackBloc
           userContacts: userContacts,
         ),
       );
-    } catch (_) {}
+    } catch (_) {
+    } finally {
+      emit(state.copyWith(isContactsLoading: false));
+    }
   }
 
   Future<void> _onActionPressed(
@@ -157,6 +162,7 @@ class OngoingRunnerTackBloc
         CompleteTackPayload(tack: state.runnerTack.tack),
       );
       _appRouter.pop();
+      _appRouter.removeNamed(OngoingRunnerTackFeature.routeName);
 
       await _appRouter.pushForResult(
         RateTackUser.page(
@@ -164,8 +170,6 @@ class OngoingRunnerTackBloc
           isRateTacker: true,
         ),
       );
-
-      _appRouter.removeNamed(OngoingRunnerTackFeature.routeName);
     } catch (e) {
       _appRouter.pop();
       _appRouter.pushForResult(
@@ -178,21 +182,31 @@ class OngoingRunnerTackBloc
     }
   }
 
-  Future<void> _onContactTacker(
-    ContactTacker event,
+  Future<void> _onMessageTacker(
+    MessageTacker event,
     Emitter<OngoingRunnerTackState> emit,
   ) async {
     if (!state.hasContactData) return;
 
     final String phoneNumber = state.userContacts!.phoneNumber;
-    PhoneCallUtility.callNumber(phoneNumber);
+    PhoneUtility.sendSMS(phoneNumber);
+  }
+
+  Future<void> _onCallTacker(
+    CallTacker event,
+    Emitter<OngoingRunnerTackState> emit,
+  ) async {
+    if (!state.hasContactData) return;
+
+    final String phoneNumber = state.userContacts!.phoneNumber;
+    PhoneUtility.callNumber(phoneNumber);
   }
 
   Future<void> _onCancelTack(
     CancelTack event,
     Emitter<OngoingRunnerTackState> emit,
   ) async {
-    final bool result = await _appRouter.pushForResult(
+    final bool? result = await _appRouter.pushForResult(
       DestructiveDialog.page(
         DestructiveAlert(
           contentKey: 'destructiveAlert.cancelTackRunner',
@@ -205,7 +219,7 @@ class OngoingRunnerTackBloc
       ),
     );
 
-    if (!result) return;
+    if (result != true) return;
 
     try {
       _appRouter.push(ProgressDialog.page());

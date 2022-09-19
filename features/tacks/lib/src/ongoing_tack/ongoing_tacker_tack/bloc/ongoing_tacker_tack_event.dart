@@ -16,8 +16,12 @@ class CancelTack extends OngoingTackerTackEvent {
   const CancelTack();
 }
 
-class ContactRunner extends OngoingTackerTackEvent {
-  const ContactRunner();
+class MessageRunner extends OngoingTackerTackEvent {
+  const MessageRunner();
+}
+
+class CallRunner extends OngoingTackerTackEvent {
+  const CallRunner();
 }
 
 class SelectOffer extends OngoingTackerTackEvent {

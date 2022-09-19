@@ -139,8 +139,13 @@
     },
     "offerAccepted": {
       "title": "Offer Accepted",
-      "message": "Need someone to Re-string my Fender Strat...",
+      "message": "{tackName}",
       "mainButtonLabel": "Begin Tack"
+    },
+    "tackWaitingReview": {
+      "title": "Runner Completed",
+      "message": "{tackName}",
+      "mainButtonLabel": "Review Completion"
     },
     "declineGroupInvite": {
       "message": "Declined request to join \n<highlight>{groupName}</highlight>"
@@ -434,8 +439,8 @@
     "title": "Create Tack",
     "description": "Create custom Tack or select a popular template or frequent Tacks within your current group.",
     "tabs": {
-      "first": "Popular Nearby",
-      "second": "Popular In Group"
+      "first": "Tack Templates",
+      "second": "Group Templates"
     },
     "nearbyPopular": {
       "subtitle": "Popular Tacks Nearby",

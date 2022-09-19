@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../widgets/contact_tack_user_widget.dart';
 import '../bloc/ongoing_runner_tack_bloc.dart';
 import 'ongoing_runner_tack_form.dart';
 
@@ -18,15 +19,12 @@ class OngoingRunnerTackScreen extends StatelessWidget {
           BlocBuilder<OngoingRunnerTackBloc, OngoingRunnerTackState>(
             bloc: BlocProvider.of<OngoingRunnerTackBloc>(context),
             builder: (_, OngoingRunnerTackState state) {
-              if (state.hasContactData) {
-                return NavigationBarActionButton(
-                  labelKey: 'ongoingTackScreen.contactTackerButton',
-                  icon: AppIconsTheme.phone,
-                  onTap: _onContactButtonPressed,
-                );
-              } else {
-                return const SizedBox.shrink();
-              }
+              return ContactTackUserWidget(
+                isLoading: state.isContactsLoading,
+                hasData: state.hasContactData,
+                onCallPressed: _onContactPhoneButtonPressed,
+                onChatPressed: _onContactMessageButtonPressed,
+              );
             },
           ),
         ],
@@ -37,7 +35,11 @@ class OngoingRunnerTackScreen extends StatelessWidget {
     );
   }
 
-  void _onContactButtonPressed(BuildContext context) {
-    BlocProvider.of<OngoingRunnerTackBloc>(context).add(const ContactTacker());
+  void _onContactMessageButtonPressed(BuildContext context) {
+    BlocProvider.of<OngoingRunnerTackBloc>(context).add(const MessageTacker());
+  }
+
+  void _onContactPhoneButtonPressed(BuildContext context) {
+    BlocProvider.of<OngoingRunnerTackBloc>(context).add(const CallTacker());
   }
 }

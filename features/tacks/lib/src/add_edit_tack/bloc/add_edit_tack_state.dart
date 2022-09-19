@@ -63,7 +63,7 @@ class AddEditTackState {
       priceData: PriceData(
         maxValue: 1000,
         isRequired: true,
-        price: templateTack?.price.toString() ?? tack?.price.toString(),
+        price: (templateTack?.price ?? tack?.price)?.toStringAsFixed(2),
       ),
       descriptionData: DescriptionData(
         maxWords: 30,

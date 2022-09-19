@@ -5,6 +5,7 @@ class OngoingRunnerTackState {
   final int stepsCount;
   final int currentStep;
   final RunningTackData runningTackData;
+  final bool isContactsLoading;
   final UserContacts? userContacts;
 
   bool get hasContactData => userContacts != null;
@@ -14,6 +15,7 @@ class OngoingRunnerTackState {
     required this.stepsCount,
     required this.currentStep,
     required this.runningTackData,
+    this.isContactsLoading = true,
     this.userContacts,
   });
 
@@ -22,6 +24,7 @@ class OngoingRunnerTackState {
     int? stepsCount,
     int? currentStep,
     RunningTackData? runningTackData,
+    bool? isContactsLoading,
     UserContacts? userContacts,
   }) {
     return OngoingRunnerTackState(
@@ -29,6 +32,7 @@ class OngoingRunnerTackState {
       stepsCount: stepsCount ?? this.stepsCount,
       currentStep: currentStep ?? this.currentStep,
       runningTackData: runningTackData ?? this.runningTackData,
+      isContactsLoading: isContactsLoading ?? this.isContactsLoading,
       userContacts: userContacts ?? this.userContacts,
     );
   }

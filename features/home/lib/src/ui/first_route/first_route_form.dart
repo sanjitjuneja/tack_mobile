@@ -57,6 +57,10 @@ class FirstRouteForm extends StatelessWidget {
                   appLocator.get<ObserveCompletedTackRunnerIntentUseCase>(),
               observeCancelTackerTackRunnerIntentUseCase:
                   appLocator.get<ObserveCancelTackerTackRunnerIntentUseCase>(),
+              observeRunnerTackIntentUseCase:
+                  appLocator.get<ObserveRunnerTackIntentUseCase>(),
+              observeTackerTackIntentUseCase:
+                  appLocator.get<ObserveTackerTackIntentUseCase>(),
               fetchGroupUseCase: appLocator.get<FetchGroupUseCase>(),
               selectGroupUseCase: appLocator.get<SelectGroupUseCase>(),
             );
