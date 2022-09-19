@@ -21,7 +21,7 @@ class AddToTackBalanceSuccessfulScreen extends StatelessWidget {
       ),
       child: SafeArea(
         child: AddToTackBalanceSuccessfulForm(
-          getUserBalanceUseCase: appLocator.get<GetUserBalanceUseCase>(),
+         observeUserBalanceUseCase: appLocator.get<ObserveUserBalanceUseCase>(),
         ),
       ),
     );

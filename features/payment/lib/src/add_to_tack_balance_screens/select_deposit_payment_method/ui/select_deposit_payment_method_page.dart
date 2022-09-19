@@ -48,6 +48,7 @@ class SelectDepositPaymentMethodPage
                 appLocator.get<FetchIsGooglePaySupportedUseCase>(),
             selectedPaymentMethodId: selectedPaymentMethodId,
             feeUseCase: appLocator.get<FetchFeeUseCase>(),
+            addBankAccountUseCase: appLocator.get<AddBankAccountUseCase>(),
           );
         },
         child: const SelectDepositPaymentMethodScreen(),

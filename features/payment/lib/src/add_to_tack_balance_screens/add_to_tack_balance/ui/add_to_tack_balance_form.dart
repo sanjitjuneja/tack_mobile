@@ -94,7 +94,7 @@ class AddToTackBalanceForm extends StatelessWidget {
                       horizontal: 16.0,
                     ),
                     child: PaymentMethodTile(
-                      leadingIcon: AppIconsTheme.applePay(size: 35),
+                      leadingIcon: AppIconsTheme.applePay(),
                       isSentenceCase: false,
                       onTap: () => _onSelectPaymentMethod(context),
                       title: FlutterI18n.translate(
@@ -110,7 +110,7 @@ class AddToTackBalanceForm extends StatelessWidget {
                       horizontal: 16.0,
                     ),
                     child: PaymentMethodTile(
-                      leadingIcon: AppIconsTheme.googlePay(size: 35),
+                      leadingIcon: AppIconsTheme.googlePay(),
                       isSentenceCase: false,
                       onTap: () => _onSelectPaymentMethod(context),
                       title: FlutterI18n.translate(
@@ -126,7 +126,7 @@ class AddToTackBalanceForm extends StatelessWidget {
                       horizontal: 16.0,
                     ),
                     child: PaymentMethodTile(
-                      leadingIcon: AppIconsTheme.bank(size: 35),
+                      leadingIcon: AppIconsTheme.bank(),
                       onTap: () => _onSelectPaymentMethod(context),
                       title: FlutterI18n.translate(
                         context,

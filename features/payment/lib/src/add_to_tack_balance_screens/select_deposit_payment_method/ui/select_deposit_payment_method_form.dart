@@ -20,7 +20,7 @@ class SelectDepositPaymentMethodForm extends StatelessWidget {
               child: Text(
                 FlutterI18n.translate(
                   context,
-                  'paymentSettingsScreen.title',
+                  'selectPaymentMethodScreen.title',
                 ),
                 style: AppTextTheme.manrope24SemiBold,
               ),
@@ -46,15 +46,15 @@ class SelectDepositPaymentMethodForm extends StatelessWidget {
                 ),
               ),
             ] else ...<Widget>[
-              if (state.bankAccounts.isNotEmpty) ...<Widget>[
-                Text(
-                  FlutterI18n.translate(
-                    context,
-                    'paymentSettingsScreen.banks',
-                  ),
-                  style: AppTextTheme.manrope20Bold,
+              Text(
+                FlutterI18n.translate(
+                  context,
+                  'paymentSettingsScreen.banks',
                 ),
-                const SizedBox(height: 14),
+                style: AppTextTheme.manrope20Bold,
+              ),
+              const SizedBox(height: 14),
+              if (state.bankAccounts.isNotEmpty) ...<Widget>[
                 ...state.bankAccounts.map(
                   (bankAccount) => PaymentMethodTile(
                     leadingIcon: AppNetworkImageWidget(
@@ -76,17 +76,31 @@ class SelectDepositPaymentMethodForm extends StatelessWidget {
                     },
                   ),
                 ),
-                const SizedBox(height: 30),
               ],
-              if (state.cards.isNotEmpty) ...<Widget>[
-                Text(
-                  FlutterI18n.translate(
-                    context,
-                    'paymentSettingsScreen.cards',
-                  ),
-                  style: AppTextTheme.manrope20Bold,
+              PaymentMethodTile(
+                leadingIcon: AppIconsTheme.bank(),
+                title: FlutterI18n.translate(
+                  context,
+                  'selectPaymentMethodScreen.addBank',
                 ),
-                const SizedBox(height: 14),
+                trailingIcon: AppIconsTheme.chevronRightRounded(
+                  color: AppTheme.grassColor,
+                  size: 30,
+                ),
+                feePercent: state.fee?.dwollaFeeData.feePercent,
+                isSentenceCase: false,
+                onTap: () => _onAddBankTap(context),
+              ),
+              const SizedBox(height: 30),
+              Text(
+                FlutterI18n.translate(
+                  context,
+                  'paymentSettingsScreen.cards',
+                ),
+                style: AppTextTheme.manrope20Bold,
+              ),
+              const SizedBox(height: 14),
+              if (state.cards.isNotEmpty) ...<Widget>[
                 ...state.cards.map(
                   (card) => PaymentMethodTile(
                     leadingIcon: AppNetworkImageWidget(
@@ -108,8 +122,22 @@ class SelectDepositPaymentMethodForm extends StatelessWidget {
                     },
                   ),
                 ),
-                const SizedBox(height: 30),
               ],
+              PaymentMethodTile(
+                leadingIcon: AppIconsTheme.card(),
+                title: FlutterI18n.translate(
+                  context,
+                  'selectPaymentMethodScreen.addCard',
+                ),
+                trailingIcon: AppIconsTheme.chevronRightRounded(
+                  color: AppTheme.grassColor,
+                  size: 30,
+                ),
+                feePercent: state.fee?.stripeFeeData.feePercent,
+                isSentenceCase: false,
+                onTap: () => _onAddCardTap(context),
+              ),
+              const SizedBox(height: 30),
               if (state.digitalWalletsSupported) ...<Widget>[
                 Text(
                   FlutterI18n.translate(
@@ -121,7 +149,7 @@ class SelectDepositPaymentMethodForm extends StatelessWidget {
                 const SizedBox(height: 14),
                 if (state.isApplePaySupported)
                   PaymentMethodTile(
-                    leadingIcon: AppIconsTheme.applePay(size: 35),
+                    leadingIcon: AppIconsTheme.applePay(),
                     title: FlutterI18n.translate(
                       context,
                       'paymentSettingsScreen.applePay',
@@ -140,7 +168,7 @@ class SelectDepositPaymentMethodForm extends StatelessWidget {
                   ),
                 if (state.isGooglePaySupported)
                   PaymentMethodTile(
-                    leadingIcon: AppIconsTheme.googlePay(size: 35),
+                    leadingIcon: AppIconsTheme.googlePay(),
                     title: FlutterI18n.translate(
                       context,
                       'paymentSettingsScreen.googlePay',
@@ -160,23 +188,6 @@ class SelectDepositPaymentMethodForm extends StatelessWidget {
                 const SizedBox(height: 30),
               ],
             ],
-            Text(
-              FlutterI18n.translate(
-                context,
-                'paymentSettingsScreen.add',
-              ),
-              style: AppTextTheme.manrope20Bold,
-            ),
-            const SizedBox(height: 14),
-            PaymentMethodTile(
-              leadingIcon: AppIconsTheme.bank(size: 35),
-              title: FlutterI18n.translate(
-                context,
-                'paymentSettingsScreen.addPaymentMethod',
-              ),
-              isSentenceCase: false,
-              onTap: () => _onAddPaymentMethod(context),
-            ),
             const SizedBox(height: 30),
             Row(
               children: <Widget>[
@@ -214,9 +225,15 @@ class SelectDepositPaymentMethodForm extends StatelessWidget {
     );
   }
 
-  void _onAddPaymentMethod(BuildContext context) {
+  void _onAddBankTap(BuildContext context) {
     BlocProvider.of<SelectDepositPaymentMethodBloc>(context).add(
-      const AddPaymentMethodAction(),
+      const AddBankAction(),
+    );
+  }
+
+  void _onAddCardTap(BuildContext context) {
+    BlocProvider.of<SelectDepositPaymentMethodBloc>(context).add(
+      const AddCardAction(),
     );
   }
 

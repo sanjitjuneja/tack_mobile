@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
 import 'package:domain/domain.dart';
 
-import '../../../../payment.dart';
+import '../../../payment_settings_screens/add_credit_card/ui/add_credit_card_page.dart';
+import '../../../payment_settings_screens/add_payment_method_screens/add_payment_method_failed/ui/add_payment_method_failed_page.dart';
 import '../../models/pay_for_tack_selected_payment_method.dart';
 
 part 'select_pay_for_tack_payment_method_event.dart';
@@ -21,6 +23,7 @@ class SelectPayForTackPaymentMethodBloc extends Bloc<
   final ObserveUserBalanceUseCase _observeUserBalanceUseCase;
   final FetchUserBalanceUseCase _fetchUserBalanceUseCase;
   final FetchFeeUseCase _feeUseCase;
+  final AddBankAccountUseCase _addBankAccountUseCase;
 
   late StreamSubscription<UserBankAccount> _userBalanceSubscription;
 
@@ -37,6 +40,7 @@ class SelectPayForTackPaymentMethodBloc extends Bloc<
     required FetchFeeUseCase feeUseCase,
     required String? selectedPaymentMethodId,
     required double offerPrice,
+    required AddBankAccountUseCase addBankAccountUseCase,
   })  : _appRouter = appRouter,
         _fetchConnectedBankAccountsUseCase = fetchConnectedBankAccountsUseCase,
         _fetchConnectedCardsUseCase = fetchConnectedCardsUseCase,
@@ -45,6 +49,7 @@ class SelectPayForTackPaymentMethodBloc extends Bloc<
         _fetchIsApplePaySupportedUseCase = fetchIsApplePaySupportedUseCase,
         _fetchIsGooglePaySupportedUseCase = fetchIsGooglePaySupportedUseCase,
         _feeUseCase = feeUseCase,
+        _addBankAccountUseCase = addBankAccountUseCase,
         super(
           SelectPayForTackPaymentMethodState(
             bankAccounts: <ConnectedBankAccount>[],
@@ -60,7 +65,8 @@ class SelectPayForTackPaymentMethodBloc extends Bloc<
     on<SelectPayForTackPaymentMethodAction>(
       _onSelectPayForTackPaymentMethodAction,
     );
-    on<AddPaymentMethodAction>(_onAddPaymentMethodAction);
+    on<AddBankAction>(_onAddBankAction);
+    on<AddCardAction>(_onAddCardAction);
     on<ContinueAction>(_onContinueAction);
 
     on<UserBalanceUpdate>(_onUserBalanceUpdate);
@@ -135,16 +141,58 @@ class SelectPayForTackPaymentMethodBloc extends Bloc<
     emit(state.copyWith(selectedPaymentMethodId: event.paymentMethodId));
   }
 
-  Future<void> _onAddPaymentMethodAction(
-    AddPaymentMethodAction event,
+  Future<void> _onAddBankAction(
+    AddBankAction event,
     Emitter<SelectPayForTackPaymentMethodState> emit,
   ) async {
-    final AddPaymentMethodScreenResult? result = await _appRouter.pushForResult(
-      AddPaymentMethodFeature.page(
-        bankAccountsAmount: state.bankAccounts.length,
-      ),
+    try {
+      if (state.bankAccounts.length >= Constants.maxBankAccountsAmount) {
+        _appRouter.push(
+          AddPaymentMethodFailedFeature.page(
+            titleKey: 'addPaymentMethodFailedScreen.limitReached',
+            descriptionKey: 'addPaymentMethodFailedScreen.limitDescription',
+          ),
+        );
+      } else {
+        _appRouter.push(ProgressDialog.page());
+        final List<ConnectedBankAccount>? bankAccounts =
+            await _addBankAccountUseCase.execute(
+          const AddBankAccountPayload(),
+        );
+        _appRouter.pop();
+        if (bankAccounts != null) {
+          if (bankAccounts.isEmpty) {
+            _appRouter.push(
+              AddPaymentMethodFailedFeature.page(
+                titleKey: 'addPaymentMethodFailedScreen.unableToAdd',
+                descriptionKey:
+                    'addPaymentMethodFailedScreen.depositoryDescription',
+              ),
+            );
+          } else {
+            add(const InitialLoad());
+          }
+        }
+      }
+    } catch (e) {
+      _appRouter.pop();
+      _appRouter.push(
+        AddPaymentMethodFailedFeature.page(
+          titleKey: 'addPaymentMethodFailedScreen.unableToAdd',
+          descriptionKey: 'addPaymentMethodFailedScreen.description',
+        ),
+      );
+    }
+  }
+
+  Future<void> _onAddCardAction(
+    AddCardAction event,
+    Emitter<SelectPayForTackPaymentMethodState> emit,
+  ) async {
+    final bool? result = await _appRouter.pushForResult(
+      AddCreditCardFeature.page(),
     );
-    if (result != null) {
+    if (result == true) {
       add(const InitialLoad());
     }
   }

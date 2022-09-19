@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class PaymentMethodTile extends StatelessWidget {
   final Widget leadingIcon;
+  final Widget? trailingIcon;
   final String title;
   final String? subtitle;
   final VoidCallback? onTap;
@@ -19,6 +20,7 @@ class PaymentMethodTile extends StatelessWidget {
   const PaymentMethodTile({
     Key? key,
     required this.leadingIcon,
+    this.trailingIcon,
     required this.title,
     this.subtitle,
     this.onTap,
@@ -64,13 +66,21 @@ class PaymentMethodTile extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                leadingIcon,
+                SizedBox(
+                  height: 40,
+                  width: 40,
+                  child: leadingIcon,
+                ),
                 const SizedBox(width: 26.0),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      isSentenceCase ? title.toSentenceCase() : title,
+                      title == Constants.visa
+                          ? title.toUpperCase()
+                          : isSentenceCase
+                              ? title.toSentenceCase()
+                              : title,
                       style: AppTextTheme.poppins18Medium,
                     ),
                     if (subtitle != null)
@@ -122,10 +132,11 @@ class PaymentMethodTile extends StatelessWidget {
                     ),
                   ],
                 ] else if (hasTrailingArrow) ...<Widget>[
-                  AppIconsTheme.chevronRight(
-                    color: AppTheme.iconPrimaryColor,
-                    size: 20,
-                  ),
+                  trailingIcon ??
+                      AppIconsTheme.chevronRight(
+                        color: AppTheme.iconPrimaryColor,
+                        size: 20,
+                      ),
                 ],
               ],
             ),

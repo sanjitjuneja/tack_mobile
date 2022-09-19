@@ -77,22 +77,18 @@ class SelectWithdrawPaymentMethodForm extends StatelessWidget {
                     },
                   ),
                 ),
-                const SizedBox(height: 30),
               ],
-              Text(
-                FlutterI18n.translate(
-                  context,
-                  'paymentSettingsScreen.add',
-                ),
-                style: AppTextTheme.manrope20Bold,
-              ),
-              const SizedBox(height: 14),
               PaymentMethodTile(
-                leadingIcon: AppIconsTheme.bank(size: 35),
+                leadingIcon: AppIconsTheme.bank(),
                 title: FlutterI18n.translate(
                   context,
-                  'paymentSettingsScreen.addPaymentMethod',
+                  'selectPaymentMethodScreen.addBank',
                 ),
+                trailingIcon: AppIconsTheme.chevronRightRounded(
+                  color: AppTheme.grassColor,
+                  size: 30,
+                ),
+                feePercent: state.fee?.dwollaFeeData.feePercent,
                 isSentenceCase: false,
                 onTap: () => _onAddBankAccount(context),
               ),

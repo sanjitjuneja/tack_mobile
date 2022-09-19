@@ -600,9 +600,12 @@
     "feeLabelWithMax": " will be charged in accordance with our {fee_percent}% deposit fee (Max: ${max_fee})"
   },
   "selectPaymentMethodScreen": {
+    "title": "Payment Methods",
     "fee": "{feePercent}% fee",
     "noFee": "No Fee",
-    "continue": "Continue"
+    "continue": "Continue",
+    "addCard": "Add Card",
+    "addBank": "Add Bank"
   },
   "addToTackBalanceSuccessfulScreen": {
     "newTackBalance": "New Tack Balance: {amount}",

@@ -21,7 +21,8 @@ class WithdrawSuccessfulScreen extends StatelessWidget {
       ),
       child: SafeArea(
         child: WithdrawSuccessfulForm(
-          getUserBalanceUseCase: appLocator.get<GetUserBalanceUseCase>(),
+          observeUserBalanceUseCase:
+              appLocator.get<ObserveUserBalanceUseCase>(),
         ),
       ),
     );

@@ -6,11 +6,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
 class AddToTackBalanceSuccessfulForm extends StatelessWidget {
-  final GetUserBalanceUseCase getUserBalanceUseCase;
+  final ObserveUserBalanceUseCase observeUserBalanceUseCase;
 
   const AddToTackBalanceSuccessfulForm({
     Key? key,
-    required this.getUserBalanceUseCase,
+    required this.observeUserBalanceUseCase,
   }) : super(key: key);
 
   @override
@@ -36,19 +36,24 @@ class AddToTackBalanceSuccessfulForm extends StatelessWidget {
                   style: AppTextTheme.manrope24SemiBold,
                 ),
                 const SizedBox(height: 30),
-                Text(
-                  FlutterI18n.translate(
-                    context,
-                    'addToTackBalanceSuccessfulScreen.newTackBalance',
-                    translationParams: {
-                      'amount': CurrencyUtility.dollarFormat.format(
-                        getUserBalanceUseCase.execute(NoParams()).usdBalance,
+                StreamBuilder(
+                  stream: observeUserBalanceUseCase.execute(NoParams()),
+                  builder: (_, AsyncSnapshot<UserBankAccount> snapshot) {
+                    return Text(
+                      FlutterI18n.translate(
+                        context,
+                        'addToTackBalanceSuccessfulScreen.newTackBalance',
+                        translationParams: {
+                          'amount': CurrencyUtility.dollarFormat.format(
+                            snapshot.data?.usdBalance ?? 0.0,
+                          ),
+                        },
                       ),
-                    },
-                  ),
-                  style: AppTextTheme.manrope20Bold.copyWith(
-                    color: AppTheme.grassColor,
-                  ),
+                      style: AppTextTheme.manrope20Bold.copyWith(
+                        color: AppTheme.grassColor,
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

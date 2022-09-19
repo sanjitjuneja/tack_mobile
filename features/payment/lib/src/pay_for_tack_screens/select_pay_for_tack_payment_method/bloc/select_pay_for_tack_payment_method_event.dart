@@ -17,8 +17,12 @@ class SelectPayForTackPaymentMethodAction
   });
 }
 
-class AddPaymentMethodAction extends SelectPayForTackPaymentMethodEvent {
-  const AddPaymentMethodAction();
+class AddBankAction extends SelectPayForTackPaymentMethodEvent {
+  const AddBankAction();
+}
+
+class AddCardAction extends SelectPayForTackPaymentMethodEvent {
+  const AddCardAction();
 }
 
 class ContinueAction extends SelectPayForTackPaymentMethodEvent {

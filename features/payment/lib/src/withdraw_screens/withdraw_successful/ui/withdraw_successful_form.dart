@@ -6,11 +6,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:navigation/navigation.dart';
 
 class WithdrawSuccessfulForm extends StatelessWidget {
-  final GetUserBalanceUseCase getUserBalanceUseCase;
+  final ObserveUserBalanceUseCase observeUserBalanceUseCase;
 
   const WithdrawSuccessfulForm({
     Key? key,
-    required this.getUserBalanceUseCase,
+    required this.observeUserBalanceUseCase,
   }) : super(key: key);
 
   @override
@@ -46,19 +46,24 @@ class WithdrawSuccessfulForm extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 36),
-                Text(
-                  FlutterI18n.translate(
-                    context,
-                    'withdrawSuccessfulScreen.newTackBalance',
-                    translationParams: {
-                      'amount': CurrencyUtility.dollarFormat.format(
-                        getUserBalanceUseCase.execute(NoParams()).usdBalance,
+                StreamBuilder(
+                  stream: observeUserBalanceUseCase.execute(NoParams()),
+                  builder: (_, AsyncSnapshot<UserBankAccount> snapshot) {
+                    return Text(
+                      FlutterI18n.translate(
+                        context,
+                        'withdrawSuccessfulScreen.newTackBalance',
+                        translationParams: {
+                          'amount': CurrencyUtility.dollarFormat.format(
+                            snapshot.data?.usdBalance ?? 0.0,
+                          ),
+                        },
                       ),
-                    },
-                  ),
-                  style: AppTextTheme.manrope20Bold.copyWith(
-                    color: AppTheme.grassColor,
-                  ),
+                      style: AppTextTheme.manrope20Bold.copyWith(
+                        color: AppTheme.grassColor,
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

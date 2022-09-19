@@ -12,7 +12,7 @@ class AddCreditCardScreen extends StatelessWidget {
       backgroundColor: AppTheme.secondaryBackgroundColor,
       navigationBar: AppNavigationBar(
         backgroundColor: AppTheme.secondaryBackgroundColor,
-        withResult: false,
+        withResult: true,
       ),
       child: const SafeArea(
         child: AddCreditCardForm(),
