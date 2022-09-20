@@ -65,7 +65,7 @@ class RateTackUserBloc extends Bloc<RateTackUserEvent, RateTackUserState> {
     SendRating event,
     Emitter<RateTackUserState> emit,
   ) async {
-    _appRouter.push(ProgressDialog.page());
+    _appRouter.pushProgress();
     try {
       await _rateTackUseCase.execute(
         RateTackPayload(
@@ -74,10 +74,11 @@ class RateTackUserBloc extends Bloc<RateTackUserEvent, RateTackUserState> {
           rating: state.rateData.rate.toInt(),
         ),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.popWithResult(true);
     } catch (e) {
-      _appRouter.replace(
+      _appRouter.popProgress();
+      _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
             contentKey: 'errorAlert.rateTack',

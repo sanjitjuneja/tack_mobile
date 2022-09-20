@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:core/core.dart';
-import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:domain/use_case.dart';
 import 'package:flutter/services.dart';
@@ -183,7 +182,7 @@ class AddToTackBalanceBloc
     Emitter<AddToTackBalanceState> emit,
   ) async {
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       if (state.selectedPaymentMethod.card != null) {
         await _handleStripeDepositUseCase.execute(
           HandleStripeDepositPayload(
@@ -217,12 +216,12 @@ class AddToTackBalanceBloc
           ),
         );
       }
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.replace(
         AddToTackBalanceSuccessfulFeature.page(),
       );
     } on TransactionsLimitException {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.push(
         AddToTackBalanceFailedFeature.page(
           errorKey: 'addToTackBalanceFailedScreen.limitReached',
@@ -230,14 +229,14 @@ class AddToTackBalanceBloc
       );
     } on StripeException catch (e) {
       if (e.error.code == FailureCode.Canceled) {
-        _appRouter.pop();
+        _appRouter.popProgress();
       }
     } on PlatformException catch (e) {
       if (e.code == FailureCode.Canceled.name) {
-        _appRouter.pop();
+        _appRouter.popProgress();
       }
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.push(
         AddToTackBalanceFailedFeature.page(
           errorKey: 'addToTackBalanceFailedScreen.unableToAdd',

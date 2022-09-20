@@ -81,13 +81,13 @@ class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
     Emitter<DeeplinkState> emit,
   ) async {
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       final GroupInvite groupInvite = await _fetchGroupInviteUseCase.execute(
         FetchGroupInvitePayload(
           uri: intent.link,
         ),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
       final GroupDetailsScreenResult? result;
 
       if (groupInvite.groupDetails != null) {
@@ -109,7 +109,7 @@ class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
         group: groupInvite.groupDetails?.group ?? groupInvite.invitation!.group,
       );
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(

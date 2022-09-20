@@ -113,12 +113,16 @@ class OngoingTackerTackBloc
 
   Future<void> __onCompleteTack() async {
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       await _completeTackUseCase.execute(
         CompleteTackPayload(tack: state.tack),
       );
-      _appRouter.pop();
-      _appRouter.removeNamed(OngoingTackerTackFeature.routeName);
+      _appRouter.popProgress();
+      _appRouter.removeNamed(
+        OngoingTackerTackFeature.routeName(
+          id: state.tack.id,
+        ),
+      );
 
       await _appRouter.pushForResult(
         RateTackUser.page(
@@ -135,7 +139,7 @@ class OngoingTackerTackBloc
         ),
       );
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -166,12 +170,16 @@ class OngoingTackerTackBloc
     if (!result) return;
 
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       await _cancelTackUseCase.execute(
         CancelTackPayload(tack: state.tack),
       );
-      _appRouter.pop();
-      _appRouter.removeNamed(OngoingTackerTackFeature.routeName);
+      _appRouter.popProgress();
+      _appRouter.removeNamed(
+        OngoingTackerTackFeature.routeName(
+          id: state.tack.id,
+        ),
+      );
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -180,7 +188,7 @@ class OngoingTackerTackBloc
         ),
       );
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -248,7 +256,11 @@ class OngoingTackerTackBloc
           ),
         );
       case WebSocketAction.delete:
-        return _appRouter.removeNamed(OngoingTackerTackFeature.routeName);
+        return _appRouter.removeNamed(
+          OngoingTackerTackFeature.routeName(
+            id: state.tack.id,
+          ),
+        );
     }
   }
 

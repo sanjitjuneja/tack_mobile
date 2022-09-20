@@ -3,7 +3,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:navigation/navigation.dart';
 
-import 'package:dashboard/src/counter_offer_screen/models/counter_offer_data.dart';
+import '../models/counter_offer_data.dart';
 
 part 'counter_offer_event.dart';
 
@@ -60,17 +60,17 @@ class CounterOfferBloc extends Bloc<CounterOfferEvent, CounterOfferState> {
     }
 
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       await _makeOfferUseCase.execute(
         MakeOfferPayload(
           tackId: state.groupTack.tack.id,
           price: state.counterOfferData.parsedPrice,
         ),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.popWithResult(true);
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(

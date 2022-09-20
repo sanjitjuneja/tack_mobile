@@ -7,7 +7,7 @@ import '../bloc/ongoing_tacker_tack_bloc.dart';
 import 'ongoing_tacker_tack_screen.dart';
 
 class OngoingTackerTackFeature {
-  static const String routeName = '/ongoingTack';
+  static String routeName({required int id}) => '/ongoingTack/$id';
 
   static Page<void> page({
     required Tack tack,
@@ -20,7 +20,7 @@ class _OngoingTackerTackPage extends Page<void> {
   final Tack tack;
 
   @override
-  String get name => OngoingTackerTackFeature.routeName;
+  String get name => OngoingTackerTackFeature.routeName(id: tack.id);
 
   const _OngoingTackerTackPage({
     required this.tack,

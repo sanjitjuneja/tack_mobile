@@ -63,7 +63,7 @@
     },
     "smsRequestAttemptsExceeded": {
       "title": "Too Many Attempts",
-      "message": "You have made too many sign up attempts. Please try again in an hour."
+      "message": "You have made too many SMS verification attempts. Please try again in an hour."
     },
     "phoneNumberNotFound": {
       "title": "Not Registered",

@@ -3,12 +3,12 @@ import 'dart:io';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
-import 'package:groups/src/create_group/models/description_data.dart';
-import 'package:groups/src/create_group/models/group_photo_data.dart';
-import 'package:groups/src/create_group/models/name_data.dart';
 import 'package:navigation/navigation.dart';
 
-import 'package:groups/src/create_group/ui/widgets/image_pick_option_drawer.dart';
+import '../ui/widgets/image_pick_option_drawer.dart';
+import '../models/description_data.dart';
+import '../models/group_photo_data.dart';
+import '../models/name_data.dart';
 
 part 'create_group_state.dart';
 
@@ -55,7 +55,7 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
     CreateGroupRequest event,
     Emitter<CreateGroupState> emit,
   ) async {
-    _appRouter.push(ProgressDialog.page());
+    _appRouter.pushProgress();
 
     final String groupName = state.nameData.name.eachWordToSentenceCase();
 
@@ -67,10 +67,10 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
           image: state.groupPhotoData.imageFile!,
         ),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.popWithResult(group);
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -114,7 +114,7 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
       ImagePickOptionDrawer.page(),
     );
     if (imageSource == null) return;
-    _appRouter.push(ProgressDialog.page());
+    _appRouter.pushProgress();
 
     final XFile? xFile = await FileManager.pickImage(
       imageSource,
@@ -139,7 +139,7 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
       }
     }
 
-    _appRouter.pop();
+    _appRouter.popProgress();
   }
 
   Future<void> _onCreateGroupDeletePhoto(

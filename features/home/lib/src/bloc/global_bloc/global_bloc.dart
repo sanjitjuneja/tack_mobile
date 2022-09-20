@@ -261,6 +261,11 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
           );
 
           if (result) {
+            _appRouter.removeNamed(
+              OngoingRunnerTackFeature.routeName(
+                id: runnerTack.id,
+              ),
+            );
             _appRouter.push(
               OngoingRunnerTackFeature.page(runnerTack: runnerTack),
             );
@@ -294,6 +299,11 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
             ),
           );
           if (result) {
+            _appRouter.removeNamed(
+              OngoingTackerTackFeature.routeName(
+                id: tack.id,
+              ),
+            );
             _appRouter.push(
               OngoingTackerTackFeature.page(tack: tack),
             );
