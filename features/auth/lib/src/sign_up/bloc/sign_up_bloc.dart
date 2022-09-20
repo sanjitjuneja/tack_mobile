@@ -132,7 +132,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     }
 
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       await _signUpUseCase.execute(
         SignUpByPhonePayload(
           email: state.emailData.email,
@@ -149,13 +149,13 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           login: state.phoneVerificationData.phoneNumber,
         ),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.popWithResult(true);
     } on EmailAlreadyExistException catch (_) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       emit(state.copyWith(isEmailAlreadyUsed: true));
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(

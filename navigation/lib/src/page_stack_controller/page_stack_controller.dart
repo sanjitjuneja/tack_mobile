@@ -1,10 +1,14 @@
+library page_stack_controller;
+
 import 'dart:async';
 
 import 'package:app_dialog/app_dialog.dart';
 import 'package:flutter/material.dart';
 
-import 'exception/navigation_exception.dart';
-import 'page_completer.dart';
+import '../exception/navigation_exception.dart';
+import '../page_completer.dart';
+
+part 'page_stack_progress_dialog_controller.dart';
 
 mixin PageStackController on ChangeNotifier {
   final List<Page<dynamic>> _pages = <Page<dynamic>>[];
@@ -60,7 +64,7 @@ mixin PageStackController on ChangeNotifier {
   }
 
   void removeNamed(String routeName) {
-    _pages.removeWhere((element) => element.name == routeName);
+    _pages.removeWhere((Page element) => element.name == routeName);
     notifyListeners();
   }
 

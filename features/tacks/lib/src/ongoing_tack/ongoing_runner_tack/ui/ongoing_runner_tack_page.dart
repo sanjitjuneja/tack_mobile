@@ -7,7 +7,7 @@ import '../bloc/ongoing_runner_tack_bloc.dart';
 import 'ongoing_runner_tack_screen.dart';
 
 class OngoingRunnerTackFeature {
-  static const String routeName = '/ongoingTack';
+  static String routeName({required int id}) => '/ongoingTack/$id';
 
   static Page<void> page({
     required RunnerTack runnerTack,
@@ -20,7 +20,7 @@ class _OngoingRunnerTackPage extends Page<void> {
   final RunnerTack runnerTack;
 
   @override
-  String get name => OngoingRunnerTackFeature.routeName;
+  String get name => OngoingRunnerTackFeature.routeName(id: runnerTack.id);
 
   const _OngoingRunnerTackPage({
     required this.runnerTack,

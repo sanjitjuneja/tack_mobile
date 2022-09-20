@@ -115,7 +115,7 @@ class AccountInformationBloc
     if (result != true) return;
 
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       await _deleteAccountUseCase.execute(
         const DeleteAccountPayload(),
       );
@@ -127,7 +127,7 @@ class AccountInformationBloc
         ),
       );
     } on HasActiveTacksException catch (_) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -136,7 +136,7 @@ class AccountInformationBloc
         ),
       );
     } on HasNotEmptyBalanceException catch (_) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -145,7 +145,7 @@ class AccountInformationBloc
         ),
       );
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(

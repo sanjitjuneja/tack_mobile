@@ -206,16 +206,16 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     String? error;
 
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       await _makeOfferUseCase.execute(
         MakeOfferPayload(
           tackId: event.groupTack.tack.id,
         ),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
       result = true;
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       error = e.toString();
     }
 

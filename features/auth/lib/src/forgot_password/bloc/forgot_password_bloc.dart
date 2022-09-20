@@ -78,17 +78,17 @@ class ForgotPasswordBloc
     }
 
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       await _changePasswordRecoveryUseCase.execute(
         RecoveryChangePasswordPayload(
           uuid: state.phoneVerificationData.udid,
           password: state.passwordData.password,
         ),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.popWithResult(true);
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(

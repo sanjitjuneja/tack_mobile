@@ -57,7 +57,7 @@ class PhoneVerificationBloc
     Emitter<PhoneVerificationState> emit,
   ) async {
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       final SmsCodeResult result;
 
       final String phoneNumber = state.phoneData.formattedData;
@@ -84,7 +84,7 @@ class PhoneVerificationBloc
         state.copyWith(phone: ''),
       );
 
-      _appRouter.pop();
+      _appRouter.popProgress();
       final PhoneVerificationData? verificationResult =
           await _appRouter.pushForResult(
         SmsVerificationFeature.page(
@@ -100,7 +100,7 @@ class PhoneVerificationBloc
         );
       }
     } on PhoneNumberNotFoundException catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       final bool result = await _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -115,7 +115,7 @@ class PhoneVerificationBloc
         );
       }
     } on PhoneNumberAlreadyExistException catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       final bool result = await _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -130,7 +130,7 @@ class PhoneVerificationBloc
         );
       }
     } on SmsRequestAttemptsExceededException catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -140,7 +140,7 @@ class PhoneVerificationBloc
         ),
       );
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
