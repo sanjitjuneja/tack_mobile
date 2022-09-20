@@ -15,6 +15,14 @@ class GroupPopularTacksWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        Text(
+          FlutterI18n.translate(
+            context,
+            'createTackScreen.groupPopular.subtitle',
+          ),
+          style: AppTextTheme.manrope13Medium
+              .copyWith(color: AppTheme.textHeavyHintColor),
+        ),
         const SizedBox(height: 10),
         Expanded(
           child: BlocBuilder<CreateTackBloc, CreateTackState>(

@@ -21,5 +21,7 @@ abstract class UserRepository {
 
   Future<void> changePassword(ChangePasswordPayload payload);
 
+  Future<void> deleteAccount(DeleteAccountPayload payload);
+
   void dispose();
 }

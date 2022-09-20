@@ -60,7 +60,7 @@ class SmsVerificationBloc
     Emitter<SmsVerificationState> emit,
   ) async {
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       final SmsCodeResult result;
 
       final String phoneNumber = state.phoneVerificationData.phoneNumber;
@@ -78,7 +78,7 @@ class SmsVerificationBloc
           break;
       }
 
-      _appRouter.pop();
+      _appRouter.popProgress();
       emit(
         state.copyWith(
           phoneVerificationData: PhoneVerificationData(
@@ -88,8 +88,18 @@ class SmsVerificationBloc
           ),
         ),
       );
+    } on SmsRequestAttemptsExceededException catch (e) {
+      _appRouter.popProgress();
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            contentKey: e.errorDialogContentKey,
+          ),
+          fullScreen: true,
+        ),
+      );
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -105,8 +115,8 @@ class SmsVerificationBloc
     Emitter<SmsVerificationState> emit,
   ) async {
     try {
-      _appRouter.push(
-        ProgressDialog.page(messageKey: 'smsVerificationScreen.loadingTitle'),
+      _appRouter.pushProgress(
+        messageKey: 'smsVerificationScreen.loadingTitle',
       );
 
       await _verifyPhoneNumberUseCase.execute(
@@ -116,10 +126,10 @@ class SmsVerificationBloc
         ),
       );
 
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.popWithResult(state.phoneVerificationData);
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(

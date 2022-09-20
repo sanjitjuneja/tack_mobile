@@ -247,7 +247,7 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
 
       switch (runnerTack.tack.status) {
         case TackStatus.pendingStart:
-          final bool? result = await _appRouter.pushForResult(
+          final bool result = await _appRouter.pushForResult(
             AppAlertDialog.page(
               SuccessAlert(
                 contentKey: 'otherAlert.offerAccepted',
@@ -260,7 +260,12 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
             ),
           );
 
-          if (result == true) {
+          if (result) {
+            _appRouter.removeNamed(
+              OngoingRunnerTackFeature.routeName(
+                id: runnerTack.id,
+              ),
+            );
             _appRouter.push(
               OngoingRunnerTackFeature.page(runnerTack: runnerTack),
             );
@@ -281,7 +286,7 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
 
       switch (tack.status) {
         case TackStatus.pendingReview:
-          final bool? result = await _appRouter.pushForResult(
+          final bool result = await _appRouter.pushForResult(
             AppAlertDialog.page(
               SuccessAlert(
                 contentKey: 'otherAlert.tackWaitingReview',
@@ -293,7 +298,12 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
               ),
             ),
           );
-          if (result == true) {
+          if (result) {
+            _appRouter.removeNamed(
+              OngoingTackerTackFeature.routeName(
+                id: tack.id,
+              ),
+            );
             _appRouter.push(
               OngoingTackerTackFeature.page(tack: tack),
             );

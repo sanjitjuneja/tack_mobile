@@ -1,5 +1,4 @@
 import 'package:core/core.dart';
-import 'package:core_ui/core_ui.dart';
 import 'package:domain/payment/payment.dart';
 import 'package:navigation/navigation.dart';
 
@@ -39,12 +38,12 @@ class AddCreditCardBloc extends Bloc<AddCreditCardEvent, AddCreditCardState> {
     Emitter<AddCreditCardState> emit,
   ) async {
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       await _addCardUseCase.execute(const AddCardPayload());
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.popWithResult(true);
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.replace(
         AddPaymentMethodFailedFeature.page(
           titleKey: 'addPaymentMethodFailedScreen.unableToAdd',

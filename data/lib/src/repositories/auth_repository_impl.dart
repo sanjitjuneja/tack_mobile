@@ -38,9 +38,12 @@ class AuthRepositoryImpl implements domain.AuthRepository {
   Future<domain.SmsCodeResult> requestSignUpSmsCode({
     required domain.RequestSmsCodePayload payload,
   }) async {
+    final String? fingerprint = await PlatformInfoManager.getDeviceId();
+
     return _apiProvider.requestSighUpSmsCode(
       request: SmsCodeRequest(
         phoneNumber: payload.phoneNumber,
+        deviceId: fingerprint,
       ),
     );
   }
@@ -49,9 +52,12 @@ class AuthRepositoryImpl implements domain.AuthRepository {
   Future<domain.SmsCodeResult> requestRecoverySmsCode({
     required domain.RequestSmsCodePayload payload,
   }) async {
+    final String? fingerprint = await PlatformInfoManager.getDeviceId();
+
     return _apiProvider.requestResetPasswordSmsCode(
       request: SmsCodeRequest(
         phoneNumber: payload.phoneNumber,
+        deviceId: fingerprint,
       ),
     );
   }

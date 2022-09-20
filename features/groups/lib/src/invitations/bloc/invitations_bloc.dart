@@ -167,20 +167,20 @@ class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState> {
     JoinGroup event,
     Emitter<InvitationsState> emit,
   ) async {
-    _appRouter.push(ProgressDialog.page());
+    _appRouter.pushProgress();
     try {
       await _acceptGroupInvitationUseCase.execute(
         AcceptGroupInvitationPayload(
           invitation: event.invitation,
         ),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
       __onResult(
         result: GroupDetailsScreenResult.joinGroup,
         groupName: event.invitation.group.name,
       );
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(

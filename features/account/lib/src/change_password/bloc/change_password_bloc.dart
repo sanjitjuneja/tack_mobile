@@ -95,22 +95,22 @@ class ChangePasswordBloc
     }
 
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       await _changePasswordUseCase.execute(
         ChangePasswordPayload(
           oldPassword: state.oldPasswordData.password,
           newPassword: state.passwordData.password,
         ),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.popWithResult(true);
-    } on IncorrectPasswordException catch (_) {
-      _appRouter.pop();
+    } on WrongPasswordException catch (_) {
+      _appRouter.popProgress();
       emit(
         state.copyWith(isOldPasswordInvalid: true),
       );
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(

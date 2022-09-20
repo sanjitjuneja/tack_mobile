@@ -15,6 +15,8 @@ part 'src/models/request_alert.dart';
 part 'src/models/success_alert.dart';
 
 part 'src/widgets/alert_dialog/app_alert_dialog_widget.dart';
+part 'src/widgets/alert_dialog/app_full_alert_dialog_form.dart';
+part 'src/widgets/alert_dialog/app_full_alert_dialog_screen.dart';
 part 'src/widgets/destructive_dialog/destructive_dialog_widget.dart';
 part 'src/widgets/progress_dialog/circular_progress_bar.dart';
 part 'src/widgets/progress_dialog/circular_progress_bar_painter.dart';

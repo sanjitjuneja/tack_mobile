@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:core/core.dart';
-import 'package:core_ui/core_ui.dart';
 import 'package:domain/payment/payment.dart';
 import 'package:navigation/navigation.dart';
 
@@ -60,12 +59,12 @@ class AddPaymentMethodBloc
           ),
         );
       } else {
-        _appRouter.push(ProgressDialog.page());
+        _appRouter.pushProgress();
         final List<ConnectedBankAccount>? bankAccounts =
             await _addBankAccountUseCase.execute(
           const AddBankAccountPayload(),
         );
-        _appRouter.pop();
+        _appRouter.popProgress();
         if (bankAccounts != null) {
           if (bankAccounts.isEmpty) {
             _appRouter.push(
@@ -81,7 +80,7 @@ class AddPaymentMethodBloc
         }
       }
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.push(
         AddPaymentMethodFailedFeature.page(
           titleKey: 'addPaymentMethodFailedScreen.unableToAdd',

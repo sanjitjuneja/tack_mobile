@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:core/core.dart';
-import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
@@ -146,7 +145,7 @@ class WithdrawBloc extends Bloc<WithdrawEvent, WithdrawState> {
     Emitter<WithdrawState> emit,
   ) async {
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       await _handleDwollaWithdrawUseCase.execute(
         HandleDwollaWithdrawPayload(
           paymentMethodId: state.selectedBankAccount!.id,
@@ -154,19 +153,19 @@ class WithdrawBloc extends Bloc<WithdrawEvent, WithdrawState> {
           currency: Constants.usd,
         ),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.replace(
         WithdrawSuccessfulFeature.page(),
       );
     } on TransactionsLimitException {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.push(
         WithdrawFailedFeature.page(
           errorKey: 'withdrawFailedScreen.limitReached',
         ),
       );
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.push(
         WithdrawFailedFeature.page(
           errorKey: 'withdrawFailedScreen.unableToProcess',

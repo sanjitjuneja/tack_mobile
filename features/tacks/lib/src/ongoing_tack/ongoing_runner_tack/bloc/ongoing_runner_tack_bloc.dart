@@ -138,13 +138,13 @@ class OngoingRunnerTackBloc
 
   Future<void> __onStartTack() async {
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       await _startTackUseCase.execute(
         StartTackPayload(tack: state.runnerTack.tack),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -157,12 +157,16 @@ class OngoingRunnerTackBloc
 
   Future<void> __onCompleteTack() async {
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       await _completeTackUseCase.execute(
         CompleteTackPayload(tack: state.runnerTack.tack),
       );
-      _appRouter.pop();
-      _appRouter.removeNamed(OngoingRunnerTackFeature.routeName);
+      _appRouter.popProgress();
+      _appRouter.removeNamed(
+        OngoingRunnerTackFeature.routeName(
+          id: state.runnerTack.id,
+        ),
+      );
 
       await _appRouter.pushForResult(
         RateTackUser.page(
@@ -171,7 +175,7 @@ class OngoingRunnerTackBloc
         ),
       );
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -222,12 +226,16 @@ class OngoingRunnerTackBloc
     if (result != true) return;
 
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       await _cancelTackUseCase.execute(
         CancelTackPayload(tack: state.runnerTack.tack),
       );
-      _appRouter.pop();
-      _appRouter.removeNamed(OngoingRunnerTackFeature.routeName);
+      _appRouter.popProgress();
+      _appRouter.removeNamed(
+        OngoingRunnerTackFeature.routeName(
+          id: state.runnerTack.id,
+        ),
+      );
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -236,7 +244,7 @@ class OngoingRunnerTackBloc
         ),
       );
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -268,7 +276,11 @@ class OngoingRunnerTackBloc
           ),
         );
       case WebSocketAction.delete:
-        return _appRouter.removeNamed(OngoingRunnerTackFeature.routeName);
+        return _appRouter.removeNamed(
+          OngoingRunnerTackFeature.routeName(
+            id: state.runnerTack.id,
+          ),
+        );
     }
   }
 
