@@ -208,6 +208,10 @@ class SelectDepositPaymentMethodForm extends StatelessWidget {
                   context,
                   'paymentSettingsScreen.addPaymentMethod',
                 ),
+                trailingIcon: AppIconsTheme.chevronRightRounded(
+                  color: AppTheme.grassColor,
+                  size: 30,
+                ),
                 isSentenceCase: false,
                 onTap: () => _onAddPaymentMethod(context),
               ),
