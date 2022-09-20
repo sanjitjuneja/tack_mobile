@@ -188,6 +188,8 @@ class AddToTackBalanceBloc
         await _handleStripeDepositUseCase.execute(
           HandleStripeDepositPayload(
             paymentMethodId: state.selectedPaymentMethod.card!.id,
+            amountWithFeeInCents:
+                state.amountInDollarFormatWithFee.toCentsFormat,
             amountInCents: state.amount.toCentsFormat,
             currency: Constants.usd,
           ),
@@ -204,7 +206,9 @@ class AddToTackBalanceBloc
         await _handleStripeDepositUseCase.execute(
           HandleStripeDepositPayload(
             paymentMethodId: Constants.applePayId,
-            amountInCents: state.amountInDollarFormatWithFee.toCentsFormat,
+            amountWithFeeInCents:
+                state.amountInDollarFormatWithFee.toCentsFormat,
+            amountInCents: state.amount.toCentsFormat,
             currency: Constants.usd,
           ),
         );
@@ -212,6 +216,8 @@ class AddToTackBalanceBloc
         await _handleStripeDepositUseCase.execute(
           HandleStripeDepositPayload(
             paymentMethodId: Constants.googlePayId,
+            amountWithFeeInCents:
+                state.amountInDollarFormatWithFee.toCentsFormat,
             amountInCents: state.amount.toCentsFormat,
             currency: Constants.usd,
           ),

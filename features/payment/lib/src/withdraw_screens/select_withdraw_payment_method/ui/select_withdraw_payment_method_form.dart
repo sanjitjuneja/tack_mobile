@@ -47,15 +47,15 @@ class SelectWithdrawPaymentMethodForm extends StatelessWidget {
                 ),
               ),
             ] else ...<Widget>[
-              if (state.bankAccounts.isNotEmpty) ...<Widget>[
-                Text(
-                  FlutterI18n.translate(
-                    context,
-                    'paymentSettingsScreen.banks',
-                  ),
-                  style: AppTextTheme.manrope20Bold,
+              Text(
+                FlutterI18n.translate(
+                  context,
+                  'paymentSettingsScreen.banks',
                 ),
-                const SizedBox(height: 14),
+                style: AppTextTheme.manrope20Bold,
+              ),
+              const SizedBox(height: 14),
+              if (state.bankAccounts.isNotEmpty) ...<Widget>[
                 ...state.bankAccounts.map(
                   (bankAccount) => PaymentMethodTile(
                     leadingIcon: AppNetworkImageWidget(
@@ -77,21 +77,45 @@ class SelectWithdrawPaymentMethodForm extends StatelessWidget {
                     },
                   ),
                 ),
+                const SizedBox(height: 30),
+                Text(
+                  FlutterI18n.translate(
+                    context,
+                    'paymentSettingsScreen.add',
+                  ),
+                  style: AppTextTheme.manrope20Bold,
+                ),
+                const SizedBox(height: 14),
+                PaymentMethodTile(
+                  leadingIcon: AppIconsTheme.bank(),
+                  title: FlutterI18n.translate(
+                    context,
+                    'selectPaymentMethodScreen.addBank',
+                  ),
+                  trailingIcon: AppIconsTheme.chevronRightRounded(
+                    color: AppTheme.grassColor,
+                    size: 30,
+                  ),
+                  feePercent: state.fee?.dwollaFeeData.feePercent,
+                  isSentenceCase: false,
+                  onTap: () => _onAddBankAccount(context),
+                ),
+              ] else ...<Widget>[
+                PaymentMethodTile(
+                  leadingIcon: AppIconsTheme.bank(),
+                  title: FlutterI18n.translate(
+                    context,
+                    'selectPaymentMethodScreen.addBank',
+                  ),
+                  trailingIcon: AppIconsTheme.chevronRightRounded(
+                    color: AppTheme.grassColor,
+                    size: 30,
+                  ),
+                  feePercent: state.fee?.dwollaFeeData.feePercent,
+                  isSentenceCase: false,
+                  onTap: () => _onAddBankAccount(context),
+                ),
               ],
-              PaymentMethodTile(
-                leadingIcon: AppIconsTheme.bank(),
-                title: FlutterI18n.translate(
-                  context,
-                  'selectPaymentMethodScreen.addBank',
-                ),
-                trailingIcon: AppIconsTheme.chevronRightRounded(
-                  color: AppTheme.grassColor,
-                  size: 30,
-                ),
-                feePercent: state.fee?.dwollaFeeData.feePercent,
-                isSentenceCase: false,
-                onTap: () => _onAddBankAccount(context),
-              ),
               const SizedBox(height: 30),
               Row(
                 children: <Widget>[

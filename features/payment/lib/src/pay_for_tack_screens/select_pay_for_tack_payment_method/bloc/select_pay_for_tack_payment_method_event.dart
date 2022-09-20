@@ -25,6 +25,10 @@ class AddCardAction extends SelectPayForTackPaymentMethodEvent {
   const AddCardAction();
 }
 
+class AddPaymentMethodAction extends SelectPayForTackPaymentMethodEvent {
+  const AddPaymentMethodAction();
+}
+
 class ContinueAction extends SelectPayForTackPaymentMethodEvent {
   const ContinueAction();
 }

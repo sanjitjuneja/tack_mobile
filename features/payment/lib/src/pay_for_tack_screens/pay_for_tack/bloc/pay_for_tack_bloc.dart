@@ -202,6 +202,8 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
         await _handleStripeDepositUseCase.execute(
           HandleStripeDepositPayload(
             paymentMethodId: state.selectedPaymentMethod.card!.id,
+            amountWithFeeInCents:
+                state.amountInDollarFormatWithFee.toCentsFormat,
             amountInCents: state.tackOfferPrice.toCentsFormat,
             currency: Constants.usd,
           ),
@@ -218,7 +220,9 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
         await _handleStripeDepositUseCase.execute(
           HandleStripeDepositPayload(
             paymentMethodId: Constants.applePayId,
-            amountInCents: state.amountInDollarFormatWithFee.toCentsFormat,
+            amountWithFeeInCents:
+                state.amountInDollarFormatWithFee.toCentsFormat,
+            amountInCents: state.tackOfferPrice.toCentsFormat,
             currency: Constants.usd,
           ),
         );
@@ -226,6 +230,8 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
         await _handleStripeDepositUseCase.execute(
           HandleStripeDepositPayload(
             paymentMethodId: Constants.googlePayId,
+            amountWithFeeInCents:
+                state.amountInDollarFormatWithFee.toCentsFormat,
             amountInCents: state.tackOfferPrice.toCentsFormat,
             currency: Constants.usd,
           ),

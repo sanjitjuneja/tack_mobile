@@ -5,6 +5,8 @@ import 'package:navigation/navigation.dart';
 import 'package:domain/domain.dart';
 
 import '../../../payment_settings_screens/add_credit_card/ui/add_credit_card_page.dart';
+import '../../../payment_settings_screens/add_payment_method_screens/add_payment_method/models/add_payment_method_screen_result.dart';
+import '../../../payment_settings_screens/add_payment_method_screens/add_payment_method/ui/add_payment_method_page.dart';
 import '../../../payment_settings_screens/add_payment_method_screens/add_payment_method_failed/ui/add_payment_method_failed_page.dart';
 import '../../models/deposit_selected_payment_method.dart';
 
@@ -50,6 +52,7 @@ class SelectDepositPaymentMethodBloc extends Bloc<
     on<InitialLoad>(_onInitialLoad);
 
     on<SelectDepositPaymentMethodAction>(_onSelectDepositPaymentMethodAction);
+    on<AddPaymentMethodAction>(_onAddPaymentMethodAction);
     on<AddBankAction>(_onAddBankAction);
     on<AddCardAction>(_onAddCardAction);
     on<ContinueAction>(_onContinueAction);
@@ -110,6 +113,20 @@ class SelectDepositPaymentMethodBloc extends Bloc<
     Emitter<SelectDepositPaymentMethodState> emit,
   ) async {
     emit(state.copyWith(selectedPaymentMethodId: event.paymentMethodId));
+  }
+
+  Future<void> _onAddPaymentMethodAction(
+    AddPaymentMethodAction event,
+    Emitter<SelectDepositPaymentMethodState> emit,
+  ) async {
+    final AddPaymentMethodScreenResult? result = await _appRouter.pushForResult(
+      AddPaymentMethodFeature.page(
+        bankAccountsAmount: state.bankAccounts.length,
+      ),
+    );
+    if (result != null) {
+      add(const InitialLoad());
+    }
   }
 
   Future<void> _onAddBankAction(

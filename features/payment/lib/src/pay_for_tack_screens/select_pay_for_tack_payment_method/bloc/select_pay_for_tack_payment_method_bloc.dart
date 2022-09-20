@@ -6,6 +6,8 @@ import 'package:navigation/navigation.dart';
 import 'package:domain/domain.dart';
 
 import '../../../payment_settings_screens/add_credit_card/ui/add_credit_card_page.dart';
+import '../../../payment_settings_screens/add_payment_method_screens/add_payment_method/models/add_payment_method_screen_result.dart';
+import '../../../payment_settings_screens/add_payment_method_screens/add_payment_method/ui/add_payment_method_page.dart';
 import '../../../payment_settings_screens/add_payment_method_screens/add_payment_method_failed/ui/add_payment_method_failed_page.dart';
 import '../../models/pay_for_tack_selected_payment_method.dart';
 
@@ -65,6 +67,7 @@ class SelectPayForTackPaymentMethodBloc extends Bloc<
     on<SelectPayForTackPaymentMethodAction>(
       _onSelectPayForTackPaymentMethodAction,
     );
+    on<AddPaymentMethodAction>(_onAddPaymentMethodAction);
     on<AddBankAction>(_onAddBankAction);
     on<AddCardAction>(_onAddCardAction);
     on<ContinueAction>(_onContinueAction);
@@ -193,6 +196,20 @@ class SelectPayForTackPaymentMethodBloc extends Bloc<
       AddCreditCardFeature.page(),
     );
     if (result == true) {
+      add(const InitialLoad());
+    }
+  }
+
+  Future<void> _onAddPaymentMethodAction(
+    AddPaymentMethodAction event,
+    Emitter<SelectPayForTackPaymentMethodState> emit,
+  ) async {
+    final AddPaymentMethodScreenResult? result = await _appRouter.pushForResult(
+      AddPaymentMethodFeature.page(
+        bankAccountsAmount: state.bankAccounts.length,
+      ),
+    );
+    if (result != null) {
       add(const InitialLoad());
     }
   }

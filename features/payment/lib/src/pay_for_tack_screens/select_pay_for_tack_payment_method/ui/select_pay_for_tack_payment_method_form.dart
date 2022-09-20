@@ -121,21 +121,22 @@ class SelectPayForTackPaymentMethodForm extends StatelessWidget {
                             },
                           ),
                         ),
+                      ] else ...<Widget>[
+                        PaymentMethodTile(
+                          leadingIcon: AppIconsTheme.bank(),
+                          title: FlutterI18n.translate(
+                            context,
+                            'selectPaymentMethodScreen.addBank',
+                          ),
+                          trailingIcon: AppIconsTheme.chevronRightRounded(
+                            color: AppTheme.grassColor,
+                            size: 30,
+                          ),
+                          feePercent: state.fee?.dwollaFeeData.feePercent,
+                          isSentenceCase: false,
+                          onTap: () => _onAddBankTap(context),
+                        ),
                       ],
-                      PaymentMethodTile(
-                        leadingIcon: AppIconsTheme.bank(),
-                        title: FlutterI18n.translate(
-                          context,
-                          'selectPaymentMethodScreen.addBank',
-                        ),
-                        trailingIcon: AppIconsTheme.chevronRightRounded(
-                          color: AppTheme.grassColor,
-                          size: 30,
-                        ),
-                        feePercent: state.fee?.dwollaFeeData.feePercent,
-                        isSentenceCase: false,
-                        onTap: () => _onAddBankTap(context),
-                      ),
                       const SizedBox(height: 30),
                       Text(
                         FlutterI18n.translate(
@@ -169,21 +170,22 @@ class SelectPayForTackPaymentMethodForm extends StatelessWidget {
                             },
                           ),
                         ),
+                      ] else ...<Widget>[
+                        PaymentMethodTile(
+                          leadingIcon: AppIconsTheme.card(),
+                          title: FlutterI18n.translate(
+                            context,
+                            'selectPaymentMethodScreen.addCard',
+                          ),
+                          trailingIcon: AppIconsTheme.chevronRightRounded(
+                            color: AppTheme.grassColor,
+                            size: 30,
+                          ),
+                          feePercent: state.fee?.stripeFeeData.feePercent,
+                          isSentenceCase: false,
+                          onTap: () => _onAddCardTap(context),
+                        ),
                       ],
-                      PaymentMethodTile(
-                        leadingIcon: AppIconsTheme.card(),
-                        title: FlutterI18n.translate(
-                          context,
-                          'selectPaymentMethodScreen.addCard',
-                        ),
-                        trailingIcon: AppIconsTheme.chevronRightRounded(
-                          color: AppTheme.grassColor,
-                          size: 30,
-                        ),
-                        feePercent: state.fee?.stripeFeeData.feePercent,
-                        isSentenceCase: false,
-                        onTap: () => _onAddCardTap(context),
-                      ),
                       const SizedBox(height: 30),
                       if (state.digitalWalletsSupported) ...<Widget>[
                         Text(
@@ -194,7 +196,7 @@ class SelectPayForTackPaymentMethodForm extends StatelessWidget {
                           style: AppTextTheme.manrope20Bold,
                         ),
                         const SizedBox(height: 14),
-                        if (state.isApplePaySupported)
+                        if (state.isApplePaySupported) ...<Widget>[
                           PaymentMethodTile(
                             leadingIcon: AppIconsTheme.applePay(),
                             title: FlutterI18n.translate(
@@ -214,7 +216,8 @@ class SelectPayForTackPaymentMethodForm extends StatelessWidget {
                               );
                             },
                           ),
-                        if (state.isGooglePaySupported)
+                        ],
+                        if (state.isGooglePaySupported) ...<Widget>[
                           PaymentMethodTile(
                             leadingIcon: AppIconsTheme.googlePay(),
                             title: FlutterI18n.translate(
@@ -234,27 +237,54 @@ class SelectPayForTackPaymentMethodForm extends StatelessWidget {
                               );
                             },
                           ),
+                        ],
                         const SizedBox(height: 30),
                       ],
-                      Row(
-                        children: <Widget>[
-                          const Spacer(),
-                          Expanded(
-                            flex: 4,
-                            child: AppCircleButton(
-                              labelKey: 'selectPaymentMethodScreen.continue',
-                              expanded: false,
-                              onTap: () => _onContinuePress(context),
-                            ),
+                      if (state.bankAccounts.isNotEmpty ||
+                          state.cards.isNotEmpty) ...<Widget>[
+                        Text(
+                          FlutterI18n.translate(
+                            context,
+                            'paymentSettingsScreen.add',
                           ),
-                          const Spacer(),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
+                          style: AppTextTheme.manrope20Bold,
+                        ),
+                        const SizedBox(height: 14),
+                        PaymentMethodTile(
+                          leadingIcon: AppIconsTheme.bank(),
+                          title: FlutterI18n.translate(
+                            context,
+                            'paymentSettingsScreen.addPaymentMethod',
+                          ),
+                          trailingIcon: AppIconsTheme.chevronRightRounded(
+                            color: AppTheme.grassColor,
+                            size: 30,
+                          ),
+                          isSentenceCase: false,
+                          onTap: () => _onAddPaymentMethod(context),
+                        ),
+                        const SizedBox(height: 30),
+                      ],
                     ],
                   ),
                 ),
               ],
+              const SizedBox(height: 10),
+              Row(
+                children: <Widget>[
+                  const Spacer(),
+                  Expanded(
+                    flex: 4,
+                    child: AppCircleButton(
+                      labelKey: 'selectPaymentMethodScreen.continue',
+                      expanded: false,
+                      onTap: () => _onContinuePress(context),
+                    ),
+                  ),
+                  const Spacer(),
+                ],
+              ),
+              const SizedBox(height: 10),
             ],
           ),
         );
@@ -292,6 +322,12 @@ class SelectPayForTackPaymentMethodForm extends StatelessWidget {
   void _onAddCardTap(BuildContext context) {
     BlocProvider.of<SelectPayForTackPaymentMethodBloc>(context).add(
       const AddCardAction(),
+    );
+  }
+
+  void _onAddPaymentMethod(BuildContext context) {
+    BlocProvider.of<SelectPayForTackPaymentMethodBloc>(context).add(
+      const AddPaymentMethodAction(),
     );
   }
 }
