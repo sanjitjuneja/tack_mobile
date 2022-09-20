@@ -17,6 +17,10 @@ dependencies:
   splash:
     path: ../features/splash
 
+  # Components
+  app_dialog:
+    path: ../components/app_dialog
+
   rxdart: ^0.27.0
 
 dev_dependencies:

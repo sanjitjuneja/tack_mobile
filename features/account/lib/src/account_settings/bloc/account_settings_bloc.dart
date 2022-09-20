@@ -89,7 +89,7 @@ class AccountSettingsBloc
       );
       _appRouter.pop();
       _appRouter.popWithResult(true);
-    } on EmailAlreadyUsedException catch (_) {
+    } on EmailAlreadyExistException catch (_) {
       _appRouter.pop();
       emit(state.copyWith(isEmailAlreadyUsed: true));
     } catch (e) {

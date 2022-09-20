@@ -1,10 +1,11 @@
 import 'dart:io';
 
-import 'package:data/src/helpers/entity_helper/entities_helpers.dart';
-import 'package:data/src/errors/error_handler.dart';
-import 'package:data/src/query/api_query.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+
+import '../helpers/entity_helper/entities_helpers.dart';
+import '../errors/error_handler.dart';
+import '../query/api_query.dart';
 
 abstract class ApiProviderCore {
   final ErrorHandler _errorHandler;
@@ -124,7 +125,7 @@ abstract class ApiProviderCore {
         /// TODO: fix. String is not Map<String, dynamic> for response with 204 code (DELETE).
         return parser(<String, dynamic>{});
       }
-    } on DioError catch (e) {
+    } catch (e) {
       return _errorHandler.handleError(e);
     }
   }

@@ -147,6 +147,26 @@ class DataDI {
   }
 
   Future<void> setupPostLoginAppLocator() async {
+    appLocator.registerLazySingleton<LogOutUseCase>(
+      () => LogOutUseCase(
+        globalAppRouter: appLocator.get<GlobalAppRouterDelegate>(),
+        authRepository: appLocator.get<AuthRepository>(),
+      ),
+    );
+
+    /// Error Handler
+    final PostLoginLayerErrorHandler postLoginLayerErrorHandler =
+        PostLoginLayerErrorHandler(
+      globalAppRouter: appLocator.get<GlobalAppRouterDelegate>(),
+      logOutUseCase: appLocator.get<LogOutUseCase>(),
+    );
+    appLocator.registerSingleton<PostLoginLayerErrorHandler>(
+      postLoginLayerErrorHandler,
+    );
+    appLocator.get<ErrorHandler>().addLayerHandler(postLoginLayerErrorHandler);
+
+    ///
+
     appLocator.registerLazySingleton<WebSocketsProvider>(
       () => WebSocketsProvider(
         appConfig: appLocator.get<AppConfig>(),
@@ -202,6 +222,11 @@ class DataDI {
     );
     appLocator.registerLazySingleton<FetchUserContactsUseCase>(
       () => FetchUserContactsUseCase(
+        userRepository: appLocator.get<UserRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<DeleteAccountUseCase>(
+      () => DeleteAccountUseCase(
         userRepository: appLocator.get<UserRepository>(),
       ),
     );
@@ -427,8 +452,9 @@ class DataDI {
         tacksRepository: appLocator.get<TacksRepository>(),
       ),
     );
-    appLocator.registerLazySingleton<ObserveCancelTackerTackRunnerIntentUseCase>(
-          () => ObserveCancelTackerTackRunnerIntentUseCase(
+    appLocator
+        .registerLazySingleton<ObserveCancelTackerTackRunnerIntentUseCase>(
+      () => ObserveCancelTackerTackRunnerIntentUseCase(
         tacksRepository: appLocator.get<TacksRepository>(),
       ),
     );
@@ -524,16 +550,19 @@ class DataDI {
         paymentRepository: appLocator.get<PaymentRepository>(),
       ),
     );
-
-    appLocator.registerLazySingleton<LogOutUseCase>(
-      () => LogOutUseCase(
-        globalAppRouter: appLocator.get<GlobalAppRouterDelegate>(),
-        authRepository: appLocator.get<AuthRepository>(),
-      ),
-    );
   }
 
   Future<void> unregisterPostLoginAppLocator() async {
+    appLocator.unregister<LogOutUseCase>();
+
+    /// Error Handler
+    appLocator
+        .get<ErrorHandler>()
+        .removeLayerHandler<PostLoginLayerErrorHandler>();
+    appLocator.unregister<PostLoginLayerErrorHandler>();
+
+    ///
+
     appLocator.unregister<WebSocketsProvider>(
       disposingFunction: (WebSocketsProvider webSocketsProvider) =>
           webSocketsProvider.dispose(),
@@ -550,6 +579,7 @@ class DataDI {
     appLocator.unregister<GetUserBalanceUseCase>();
     appLocator.unregister<ObserveUserBalanceUseCase>();
     appLocator.unregister<FetchUserContactsUseCase>();
+    appLocator.unregister<DeleteAccountUseCase>();
 
     appLocator.unregister<GroupsRepository>(
       disposingFunction: (GroupsRepository repository) => repository.dispose(),
@@ -615,7 +645,5 @@ class DataDI {
     appLocator.unregister<HandleStripeDepositUseCase>();
     appLocator.unregister<HandleDwollaDepositUseCase>();
     appLocator.unregister<HandleDwollaWithdrawUseCase>();
-
-    appLocator.unregister<LogOutUseCase>();
   }
 }

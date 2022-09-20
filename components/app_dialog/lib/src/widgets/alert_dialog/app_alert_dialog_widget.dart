@@ -3,13 +3,13 @@ part of app_dialog;
 class AppAlertDialogWidget extends StatelessWidget {
   final Alert alert;
   final bool shouldUseDefaultContent;
-  final ButtonCallback? onTap;
+  final bool showNavigation;
 
   const AppAlertDialogWidget({
     super.key,
     required this.alert,
     required this.shouldUseDefaultContent,
-    this.onTap,
+    required this.showNavigation,
   });
 
   @override
@@ -34,7 +34,7 @@ class AppAlertDialogWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               Visibility(
-                visible: onTap == null,
+                visible: showNavigation,
                 replacement: CupertinoButton(
                   minSize: 24,
                   padding: const EdgeInsets.all(10.0),
@@ -85,7 +85,6 @@ class AppAlertDialogWidget extends StatelessWidget {
   }
 
   void _onButtonTap(BuildContext context) {
-    onTap?.call();
     GlobalAppRouter.of(context).popWithResult(true);
   }
 }

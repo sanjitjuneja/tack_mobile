@@ -1,4 +1,0 @@
-enum AuthErrorType {
-  notRegistered,
-  alreadyRegistered,
-}

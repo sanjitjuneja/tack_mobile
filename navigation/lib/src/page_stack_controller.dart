@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app_dialog/app_dialog.dart';
 import 'package:flutter/material.dart';
 
 import 'exception/navigation_exception.dart';
@@ -42,7 +43,12 @@ mixin PageStackController on ChangeNotifier {
 
     if (pages.last.hashCode == _pageCompleters.last.pageId) {
       if (!_pageCompleters.last.completer.isCompleted) {
-        _pageCompleters.last.completer.complete(null);
+        // TODO: refactor name check to page return type check.
+        if (pages.last.name == AppAlertDialog.routeName) {
+          _pageCompleters.last.completer.complete(false);
+        } else {
+          _pageCompleters.last.completer.complete(null);
+        }
       }
       _pageCompleters.removeLast();
     }

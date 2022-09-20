@@ -100,6 +100,16 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       emit(
         state.copyWith(wrongCredentials: true),
       );
+    } on LogInAttemptsExceededException catch (e) {
+      _appRouter.pop();
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            contentKey: e.errorDialogContentKey,
+          ),
+          fullScreen: true,
+        ),
+      );
     } catch (e) {
       _appRouter.pop();
       _appRouter.pushForResult(

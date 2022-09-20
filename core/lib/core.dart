@@ -51,3 +51,4 @@ export 'package:flutter_stripe/flutter_stripe.dart';
 export 'package:plaid_flutter/plaid_flutter.dart';
 export 'package:firebase_messaging/firebase_messaging.dart';
 export 'package:awesome_notifications/awesome_notifications.dart';
+export 'package:fluttertoast/fluttertoast.dart';

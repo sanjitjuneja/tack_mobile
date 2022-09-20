@@ -106,6 +106,7 @@ class WebSocketsProvider with WebSocketHandlers, WidgetsBindingObserver {
 
   Future<void> connect() async {
     if (socketChannel?.innerWebSocket?.readyState == WebSocket.open) return;
+    listener?.cancel();
 
     try {
       final Session? session = await _sessionProvider.getCurrentSession();
@@ -143,7 +144,7 @@ class WebSocketsProvider with WebSocketHandlers, WidgetsBindingObserver {
 
   Future<void> _disconnect() async {
     socketChannel?.sink.add('Web socket is Disconnecting -- ${DateTime.now()}');
-    _removeAutReconnect();
+    _removeAutoReconnect();
 
     await listener?.cancel();
     listener = null;
@@ -185,8 +186,8 @@ class WebSocketsProvider with WebSocketHandlers, WidgetsBindingObserver {
       socketChannel?.sink.add(
         jsonEncode(
           <String, dynamic>{
-            'entity': D,
-            'error': e,
+            'entity': D.toString(),
+            'error': e.toString(),
           },
         ),
       );
@@ -211,7 +212,7 @@ class WebSocketsProvider with WebSocketHandlers, WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
   }
 
-  void _removeAutReconnect() {
+  void _removeAutoReconnect() {
     _reconnectTimer?.cancel();
     _reconnectTimer = null;
   }
@@ -226,7 +227,7 @@ class WebSocketsProvider with WebSocketHandlers, WidgetsBindingObserver {
       'Web socket Dispose on Log out -- ${DateTime.now()}',
     );
     _removeAutoDisconnect();
-    _removeAutReconnect();
+    _removeAutoReconnect();
     await _disconnect();
     close();
   }

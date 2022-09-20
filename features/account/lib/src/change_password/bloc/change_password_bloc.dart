@@ -104,7 +104,7 @@ class ChangePasswordBloc
       );
       _appRouter.pop();
       _appRouter.popWithResult(true);
-    } on IncorrectPasswordException catch (_) {
+    } on WrongPasswordException catch (_) {
       _appRouter.pop();
       emit(
         state.copyWith(isOldPasswordInvalid: true),

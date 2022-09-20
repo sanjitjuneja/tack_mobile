@@ -11,6 +11,7 @@ part 'entities/user_contacts_entity.dart';
 part 'entities/user_entity.dart';
 
 part 'requests/change_password_request.dart';
+part 'requests/delete_account_request.dart';
 part 'requests/fetch_user_balance_request.dart';
 part 'requests/fetch_user_contacts_request.dart';
 part 'requests/recovery_change_password_request.dart';

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:auth/auth.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
@@ -100,27 +99,46 @@ class PhoneVerificationBloc
           ),
         );
       }
-    } on UserNotRegisteredException catch (_) {
+    } on PhoneNumberNotFoundException catch (e) {
       _appRouter.pop();
-      final bool? result =
-          await _appRouter.pushForResult(AuthErrorFeature.pageNotRegistered());
-      if (result == true) {
-        emit(
-          state.copyWith(phone: ''),
-        );
+      final bool result = await _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            contentKey: e.errorDialogContentKey,
+          ),
+          fullScreen: true,
+        ),
+      );
+      if (result) {
         _appRouter.popWithResult(
           const PhoneVerificationScreenResult(shouldOpenSignUp: true),
         );
       }
-    } on ExistedUserException catch (_) {
+    } on PhoneNumberAlreadyExistException catch (e) {
       _appRouter.pop();
-      final bool? result = await _appRouter
-          .pushForResult(AuthErrorFeature.pageAlreadyRegistered());
-      if (result == true) {
+      final bool result = await _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            contentKey: e.errorDialogContentKey,
+          ),
+          fullScreen: true,
+        ),
+      );
+      if (result) {
         _appRouter.popWithResult(
           const PhoneVerificationScreenResult(shouldOpenSignIn: true),
         );
       }
+    } on SmsRequestAttemptsExceededException catch (e) {
+      _appRouter.pop();
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            contentKey: e.errorDialogContentKey,
+          ),
+          fullScreen: true,
+        ),
+      );
     } catch (e) {
       _appRouter.pop();
       _appRouter.pushForResult(

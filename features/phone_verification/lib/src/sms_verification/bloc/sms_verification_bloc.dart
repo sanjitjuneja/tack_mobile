@@ -88,6 +88,16 @@ class SmsVerificationBloc
           ),
         ),
       );
+    } on SmsRequestAttemptsExceededException catch (e) {
+      _appRouter.pop();
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            contentKey: e.errorDialogContentKey,
+          ),
+          fullScreen: true,
+        ),
+      );
     } catch (e) {
       _appRouter.pop();
       _appRouter.pushForResult(
