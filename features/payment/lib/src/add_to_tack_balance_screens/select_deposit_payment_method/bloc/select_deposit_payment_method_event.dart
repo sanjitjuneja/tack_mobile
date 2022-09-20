@@ -16,6 +16,10 @@ class SelectDepositPaymentMethodAction extends SelectDepositPaymentMethodEvent {
   });
 }
 
+class AddPaymentMethodAction extends SelectDepositPaymentMethodEvent{
+  const AddPaymentMethodAction();
+}
+
 class AddBankAction extends SelectDepositPaymentMethodEvent {
   const AddBankAction();
 }
