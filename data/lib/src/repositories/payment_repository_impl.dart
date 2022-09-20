@@ -198,7 +198,7 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
           cartItems: <ApplePayCartSummaryItem>[
             ApplePayCartSummaryItem.immediate(
               label: Constants.merchantName,
-              amount: payload.amountInCents.toDollarFormat.toString(),
+              amount: payload.amountWithFeeInCents.toDollarFormat.toString(),
             ),
           ],
           country: Constants.countryCode,
@@ -213,6 +213,7 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
         GooglePayInitParams(
           merchantName: Constants.merchantName,
           countryCode: Constants.countryCode,
+          existingPaymentMethodRequired: false,
           testEnv: _appConfig.flavor == Flavor.dev,
         ),
       );
