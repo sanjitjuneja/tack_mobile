@@ -34,7 +34,7 @@ export 'src/utils/duration_utility.dart';
 export 'src/utils/field_validator.dart';
 export 'src/utils/internet_connectivity_service.dart';
 export 'src/utils/iterable_utility.dart';
-export 'src/utils/phone_call_utility.dart';
+export 'src/utils/phone_utility.dart';
 export 'src/utils/text_utility.dart';
 
 export 'package:equatable/equatable.dart';
@@ -51,3 +51,4 @@ export 'package:flutter_stripe/flutter_stripe.dart';
 export 'package:plaid_flutter/plaid_flutter.dart';
 export 'package:firebase_messaging/firebase_messaging.dart';
 export 'package:awesome_notifications/awesome_notifications.dart';
+export 'package:fluttertoast/fluttertoast.dart';

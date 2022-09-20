@@ -790,14 +790,16 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
-// Future<void> logOut() {
-//   return get<void>(
-//     ApiQuery(
-//       endpointPostfix: BaseUrlConstants.logOutPath,
-//       body: null,
-//       params: null,
-//     ),
-//     parser: (_) {},
-//   );
-// }
+  Future<void> deleteAccount({
+    required DeleteAccountRequest request,
+  }) async {
+    return post<void>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.userDeleteAccountPath,
+        body: request.toJson(),
+        params: null,
+      ),
+      parser: (_) {},
+    );
+  }
 }

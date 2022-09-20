@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:core/core.dart';
-import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:domain/use_case.dart';
 import 'package:flutter/services.dart';
@@ -189,12 +188,12 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
     Emitter<PayForTackState> emit,
   ) async {
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       if (state.selectedPaymentMethod.isTackBalance) {
         await _acceptOfferUseCase.execute(
           AcceptOfferPayload(offer: state.offer),
         );
-        _appRouter.pop();
+        _appRouter.popProgress();
         _appRouter.pop();
         return;
       }
@@ -237,13 +236,13 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
           ),
         );
       }
-      _appRouter.pop();
       await _acceptOfferUseCase.execute(
         AcceptOfferPayload(offer: state.offer),
       );
+      _appRouter.popProgress();
       _appRouter.pop();
     } on TransactionsLimitException {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.push(
         AddToTackBalanceFailedFeature.page(
           errorKey: 'addToTackBalanceFailedScreen.limitReached',
@@ -251,14 +250,14 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
       );
     } on StripeException catch (e) {
       if (e.error.code == FailureCode.Canceled) {
-        _appRouter.pop();
+        _appRouter.popProgress();
       }
     } on PlatformException catch (e) {
       if (e.code == FailureCode.Canceled.name) {
-        _appRouter.pop();
+        _appRouter.popProgress();
       }
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.push(
         AddToTackBalanceFailedFeature.page(
           errorKey: 'addToTackBalanceFailedScreen.unableToAdd',

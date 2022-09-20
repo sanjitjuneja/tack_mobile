@@ -20,6 +20,8 @@ class OnboardingFeature {
 }
 
 class _OnboardingPage extends Page<void> {
+  static const Duration _slideAnimationDuration = Duration(milliseconds: 220);
+
   final bool withSlideAnimation;
 
   const _OnboardingPage({
@@ -42,6 +44,7 @@ class _OnboardingPage extends Page<void> {
 
     if (withSlideAnimation) {
       return PageRouteBuilder<void>(
+        transitionDuration: _slideAnimationDuration,
         transitionsBuilder: (
           BuildContext context,
           Animation<double> animation,

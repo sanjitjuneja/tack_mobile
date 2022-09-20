@@ -14,13 +14,9 @@ class AppIconsTheme {
   static const String _tacksInactiveKey = '${_navigationPath}tacks_inactive.svg';
   ///
 
-  static const String _chatKey = '${_basePath}chat.png';
-  static const String _notificationKey = '${_basePath}notification.png';
   static const String _menuKey = '${_basePath}menu.png';
 
-  static const String _searchKey = '${_basePath}search.png';
   static const String _personKey = '${_basePath}person.png';
-  static const String _messageKey = '${_basePath}message.png';
   static const String _taskCompleteKey = '${_basePath}task_complete.png';
   static const String _cameraKey = '${_basePath}camera.png';
   static const String _trashKey = '${_basePath}trash.png';
@@ -40,6 +36,7 @@ class AppIconsTheme {
   static const String _tacksListKey = '${_svgPath}tacks_list.svg';
   static const String _peopleKey = '${_svgPath}people.svg';
   static const String _phoneKey = '${_svgPath}phone.svg';
+  static const String _messageKey = '${_svgPath}message.svg';
   static const String _moreKey = '${_svgPath}more.svg';
   static const String _starKey = '${_svgPath}star.svg';
   static const String _tackKey = '${_svgPath}tack.svg';
@@ -75,13 +72,9 @@ class AppIconsTheme {
   static const AppIcon tacksInactive = AppIcon(_tacksInactiveKey);
   ///
 
-  static const AppIcon chat = AppIcon(_chatKey);
-  static const AppIcon notification = AppIcon(_notificationKey);
   static const AppIcon menu = AppIcon(_menuKey);
 
-  static const AppIcon search = AppIcon(_searchKey);
   static const AppIcon person = AppIcon(_personKey);
-  static const AppIcon message = AppIcon(_messageKey);
   static const AppIcon taskComplete = AppIcon(_taskCompleteKey);
   static const AppIcon camera = AppIcon(_cameraKey);
   static const AppIcon trash = AppIcon(_trashKey);
@@ -101,6 +94,7 @@ class AppIconsTheme {
   static const AppIcon tacksList = AppIcon(_tacksListKey);
   static const AppIcon people = AppIcon(_peopleKey);
   static const AppIcon phone = AppIcon(_phoneKey);
+  static const AppIcon message = AppIcon(_messageKey);
   static const AppIcon more = AppIcon(_moreKey);
   static const AppIcon star = AppIcon(_starKey);
   static const AppIcon tack = AppIcon(_tackKey);

@@ -4,9 +4,12 @@ part of phone_verification_entities;
 class SmsCodeRequest extends JsonSerializable {
   @JsonKey(name: 'phone_number')
   final String phoneNumber;
+  @JsonKey(name: 'device_id')
+  final String? deviceId;
 
   const SmsCodeRequest({
     required this.phoneNumber,
+    required this.deviceId,
   });
 
   @override

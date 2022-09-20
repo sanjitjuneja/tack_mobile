@@ -26,7 +26,7 @@ class TacksForm extends StatelessWidget {
         ),
         const SizedBox(height: 17),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 45.0),
+          padding: const EdgeInsets.symmetric(horizontal: 42.0),
           child: AppSegmentController(
             controller: tabController,
             tabs: <int, String>{

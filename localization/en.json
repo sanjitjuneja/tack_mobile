@@ -6,9 +6,24 @@
     "dwollaPrivacyPolicy": "https://www.dwolla.com/legal/privacy/"
   },
   "errors": {
+    "unknown": "Something went wrong",
+    "internalServer": "The server has encountered a situation it does not know how to handle.",
+    "logInAttemptsExceeded": "To many unsuccessful Log In attempts within last hour.",
+    "smsRequestAttemptsExceeded": "To many sms request within last hour.",
+    "noInternet": "No internet connection",
+    "serverNotResponding": "The server is not responding.",
+    "notAbleToConnectToServer": "Not able to connect to the server.",
+    "wrongCredentials": "No active account found with the given credentials",
+    "phoneNumberAlreadyExist": "Given phone number is already exist.",
+    "phoneNumberNotFound": "Given phone number not found.",
+    "emailNumberAlreadyExist": "Given email is already exist.",
+    "unauthorized": "You are not authorized.",
+    "transactionsLimitReached": "You’ve initiated too many transactions in the last 24 hrs. Please try again soon.",
     "couldNotLaunchURL": "Could not launch URL",
     "tackIsNotAvailable": "Sorry, this Tack is no longer available",
-    "hasOngoingTacksInGroup": "You can't leave this group. You have ongoing Tacks"
+    "hasOngoingTacksInGroup": "You can't leave this group. You have ongoing Tacks",
+    "hasActiveTacks": "Cannot proceed. You have ongoing Tacks.",
+    "hasNotEmptyBalance": "Cannot proceed. You have not empty Tack Balance."
   },
   "validationErrors": {
     "fieldRequired": "Field Required",
@@ -42,6 +57,24 @@
       "message": "Sorry, smth went wrong, try again.",
       "mainButtonLabel": "Close"
     },
+    "logInAttemptsExceeded": {
+      "title": "Too Many Attempts",
+      "message": "You have made too many unsuccessful log in attempts in the last hour, Please try again soon."
+    },
+    "smsRequestAttemptsExceeded": {
+      "title": "Too Many Attempts",
+      "message": "You have made too many SMS verification attempts. Please try again in an hour."
+    },
+    "phoneNumberNotFound": {
+      "title": "Not Registered",
+      "description": "Your phone number is not registered within our system. Please re-try or Sign Up by clicking below.",
+      "mainButtonLabel": "Sign Up"
+    },
+    "phoneNumberAlreadyExist": {
+      "title": "Already Registered",
+      "description": "Your phone number is already registered within our system. Please Sign In by clicking below.",
+      "mainButtonLabel": "Sign In"
+    },
     "offerSending": {
       "title": "Offer Not Sent"
     },
@@ -64,6 +97,14 @@
     "tackerTackRunnerCancel": {
       "title": "You Have Been Fully Refunded",
       "message": "Sorry, your Runner <colored>Cancelled</colored>\n <highlight>{tackName}</highlight>"
+    },
+    "accountDeleteHasActiveTacks": {
+      "title": "Unable to Delete Account\n(Ongoing Tacks)",
+      "message": "Please complete any ongoing Tacks\nbefore deleting account."
+    },
+    "accountDeleteHasNotEmptyBalance": {
+      "title": "Unable to Delete Account\n(Tack Balance)",
+      "message": "You must withdraw your entire Tack\nBalance before deleting account."
     }
   },
   "destructiveAlert": {
@@ -139,8 +180,13 @@
     },
     "offerAccepted": {
       "title": "Offer Accepted",
-      "message": "Need someone to Re-string my Fender Strat...",
+      "message": "{tackName}",
       "mainButtonLabel": "Begin Tack"
+    },
+    "tackWaitingReview": {
+      "title": "Runner Completed",
+      "message": "{tackName}",
+      "mainButtonLabel": "Review Completion"
     },
     "declineGroupInvite": {
       "message": "Declined request to join \n<highlight>{groupName}</highlight>"
@@ -166,9 +212,14 @@
     "runnerTackCompleted": {
       "title": "Tack Complete",
       "message": "You have received <colored>${tackPrice}</colored>\n<highlight>{tackName}</highlight>"
+    },
+    "accountDeleted": {
+      "title": "Account Deleted",
+      "message": "Your account has been successfully\ndeleted"
     }
   },
   "toast": {
+    "sessionExpired": "Session expired",
     "copiedToClipboard": "Copied to Clipboard"
   },
   "time": {
@@ -268,18 +319,6 @@
     },
     "loadingTitle": "Verifying Code",
     "resendCode": "Resend Code"
-  },
-  "authErrorScreen": {
-    "notRegistered": {
-      "title": "Not Registered",
-      "description": "Your phone number is not registered within our system. Please re-try or Sign Up by clicking below.",
-      "button": "Sign Up"
-    },
-    "alreadyRegistered": {
-      "title": "Already Registered",
-      "description": "Your phone number is already registered within our system. Please Sign In by clicking below.",
-      "button": "Sign In"
-    }
   },
   "drawer": {
     "options": {
@@ -434,8 +473,8 @@
     "title": "Create Tack",
     "description": "Create custom Tack or select a popular template or frequent Tacks within your current group.",
     "tabs": {
-      "first": "Popular Nearby",
-      "second": "Popular In Group"
+      "first": "Tack Templates",
+      "second": "Group Templates"
     },
     "nearbyPopular": {
       "subtitle": "Popular Tacks Nearby",

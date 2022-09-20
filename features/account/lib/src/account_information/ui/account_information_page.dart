@@ -27,9 +27,12 @@ class _AccountInformationPage extends Page<void> {
       builder: (_) => BlocProvider<AccountInformationBloc>(
         create: (_) {
           return AccountInformationBloc(
+            globalAppRouterDelegate: appLocator.get<GlobalAppRouterDelegate>(),
             appRouter: AppRouter.of(context),
             getCurrentUserUseCase: appLocator.get<GetCurrentUserUseCase>(),
             observeUserUseCase: appLocator.get<ObserveUserUseCase>(),
+            deleteAccountUseCase: appLocator.get<DeleteAccountUseCase>(),
+            logOutUseCase: appLocator.get<LogOutUseCase>(),
           );
         },
         child: const AccountInformationScreen(),

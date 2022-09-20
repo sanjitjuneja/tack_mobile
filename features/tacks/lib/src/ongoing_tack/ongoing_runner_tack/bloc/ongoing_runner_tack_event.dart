@@ -16,8 +16,12 @@ class ActionPressed extends OngoingRunnerTackEvent {
   const ActionPressed();
 }
 
-class ContactTacker extends OngoingRunnerTackEvent {
-  const ContactTacker();
+class MessageTacker extends OngoingRunnerTackEvent {
+  const MessageTacker();
+}
+
+class CallTacker extends OngoingRunnerTackEvent {
+  const CallTacker();
 }
 
 class CancelTack extends OngoingRunnerTackEvent {

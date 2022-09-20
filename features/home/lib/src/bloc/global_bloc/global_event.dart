@@ -55,3 +55,19 @@ class CancelTackerTackRunnerIntentAction extends GlobalEvent {
     required this.tackIntent,
   });
 }
+
+class RunnerTackIntentAction extends GlobalEvent {
+  final WebSocketIntent<RunnerTack> tackIntent;
+
+  const RunnerTackIntentAction({
+    required this.tackIntent,
+  });
+}
+
+class TackerTackIntentAction extends GlobalEvent {
+  final WebSocketIntent<Tack> tackIntent;
+
+  const TackerTackIntentAction({
+    required this.tackIntent,
+  });
+}

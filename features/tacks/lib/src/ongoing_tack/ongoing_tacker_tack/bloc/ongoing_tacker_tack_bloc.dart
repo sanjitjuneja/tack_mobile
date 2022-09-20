@@ -50,7 +50,8 @@ class OngoingTackerTackBloc
 
     on<ActionPressed>(_onActionPressed);
     on<CancelTack>(_onCancelTack);
-    on<ContactRunner>(_onContactRunner);
+    on<MessageRunner>(_onMessageRunner);
+    on<CallRunner>(_onCallRunner);
     on<SelectOffer>(_onSelectOffer);
 
     on<TackIntentAction>(_onTackIntentAction);
@@ -71,6 +72,7 @@ class OngoingTackerTackBloc
     Emitter<OngoingTackerTackState> emit,
   ) async {
     try {
+      emit(state.copyWith(isContactsLoading: true));
       final UserContacts userContacts = await _fetchUserContactsUseCase.execute(
         FetchUserContactsPayload(
           tackId: state.tack.id,
@@ -81,7 +83,10 @@ class OngoingTackerTackBloc
           userContacts: userContacts,
         ),
       );
-    } catch (_) {}
+    } catch (_) {
+    } finally {
+      emit(state.copyWith(isContactsLoading: false));
+    }
   }
 
   Future<void> _onActionPressed(
@@ -108,11 +113,16 @@ class OngoingTackerTackBloc
 
   Future<void> __onCompleteTack() async {
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       await _completeTackUseCase.execute(
         CompleteTackPayload(tack: state.tack),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
+      _appRouter.removeNamed(
+        OngoingTackerTackFeature.routeName(
+          id: state.tack.id,
+        ),
+      );
 
       await _appRouter.pushForResult(
         RateTackUser.page(
@@ -121,7 +131,6 @@ class OngoingTackerTackBloc
         ),
       );
 
-      _appRouter.removeNamed(OngoingTackerTackFeature.routeName);
       _appRouter.pushForResult(
         AppAlertDialog.page(
           SuccessAlert(
@@ -130,7 +139,7 @@ class OngoingTackerTackBloc
         ),
       );
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -161,11 +170,16 @@ class OngoingTackerTackBloc
     if (!result) return;
 
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       await _cancelTackUseCase.execute(
         CancelTackPayload(tack: state.tack),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
+      _appRouter.removeNamed(
+        OngoingTackerTackFeature.routeName(
+          id: state.tack.id,
+        ),
+      );
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -174,7 +188,7 @@ class OngoingTackerTackBloc
         ),
       );
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -185,14 +199,24 @@ class OngoingTackerTackBloc
     }
   }
 
-  Future<void> _onContactRunner(
-    ContactRunner event,
+  Future<void> _onMessageRunner(
+    MessageRunner event,
     Emitter<OngoingTackerTackState> emit,
   ) async {
     if (!state.hasContactData) return;
 
     final String phoneNumber = state.userContacts!.phoneNumber;
-    PhoneCallUtility.callNumber(phoneNumber);
+    PhoneUtility.sendSMS(phoneNumber);
+  }
+
+  Future<void> _onCallRunner(
+    CallRunner event,
+    Emitter<OngoingTackerTackState> emit,
+  ) async {
+    if (!state.hasContactData) return;
+
+    final String phoneNumber = state.userContacts!.phoneNumber;
+    PhoneUtility.callNumber(phoneNumber);
   }
 
   Future<void> _onSelectOffer(
@@ -232,7 +256,11 @@ class OngoingTackerTackBloc
           ),
         );
       case WebSocketAction.delete:
-        return _appRouter.removeNamed(OngoingTackerTackFeature.routeName);
+        return _appRouter.removeNamed(
+          OngoingTackerTackFeature.routeName(
+            id: state.tack.id,
+          ),
+        );
     }
   }
 

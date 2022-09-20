@@ -16,6 +16,7 @@ class BaseUrlConstants {
   static const String userBalancePath = '/users/me/balance/';
   static const String userChangeBioPath = '/users/me/change_bio/';
   static const String userPasswordChangePath = '/users/me/password-change/';
+  static const String userDeleteAccountPath = '/users/me/delete_account/';
 
   static const String userContactsPath = '/tacks/${ApiQuery.idKey}/get_contacts/';
 

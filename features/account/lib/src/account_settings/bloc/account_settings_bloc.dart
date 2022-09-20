@@ -79,7 +79,7 @@ class AccountSettingsBloc
     }
 
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       await _updateUserInfoUseCase.execute(
         UpdateUserInfoPayload(
           firstName: state.changedFirstName,
@@ -87,13 +87,13 @@ class AccountSettingsBloc
           email: state.changedEmail,
         ),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.popWithResult(true);
-    } on EmailAlreadyUsedException catch (_) {
-      _appRouter.pop();
+    } on EmailAlreadyExistException catch (_) {
+      _appRouter.popProgress();
       emit(state.copyWith(isEmailAlreadyUsed: true));
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(

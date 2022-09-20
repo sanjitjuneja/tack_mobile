@@ -241,13 +241,13 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
     if (!result) return;
 
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       await _cancelOfferUseCase.execute(
         CancelOfferPayload(offer: event.runnerTack.offer!),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(

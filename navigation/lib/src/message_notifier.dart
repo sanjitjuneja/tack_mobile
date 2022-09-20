@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:navigation/src/global_app_router_delegate.dart';
 
+import 'global_app_router_delegate.dart';
 
 class AppMessageNotifier extends NavigatorObserver {
   late GlobalAppRouterDelegate? appRouter;

@@ -15,15 +15,24 @@ part 'account_information_state.dart';
 
 class AccountInformationBloc
     extends Bloc<AccountInformationEvent, AccountInformationState> {
+  final GlobalAppRouterDelegate _globalAppRouterDelegate;
   final AppRouterDelegate _appRouter;
+  final DeleteAccountUseCase _deleteAccountUseCase;
+  final LogOutUseCase _logOutUseCase;
 
   late StreamSubscription<User> _userSubscription;
 
   AccountInformationBloc({
+    required GlobalAppRouterDelegate globalAppRouterDelegate,
     required AppRouterDelegate appRouter,
     required GetCurrentUserUseCase getCurrentUserUseCase,
     required ObserveUserUseCase observeUserUseCase,
-  })  : _appRouter = appRouter,
+    required DeleteAccountUseCase deleteAccountUseCase,
+    required LogOutUseCase logOutUseCase,
+  })  : _globalAppRouterDelegate = globalAppRouterDelegate,
+        _appRouter = appRouter,
+        _deleteAccountUseCase = deleteAccountUseCase,
+        _logOutUseCase = logOutUseCase,
         super(
           AccountInformationState(
             user: getCurrentUserUseCase.execute(NoParams()),
@@ -95,7 +104,7 @@ class AccountInformationBloc
     DeleteAccountAction event,
     Emitter<AccountInformationState> emit,
   ) async {
-   final bool? result = await _appRouter.pushForResult(
+    final bool? result = await _appRouter.pushForResult(
       DestructiveDialog.page(
         DestructiveAlert(
           contentKey: 'destructiveAlert.deleteAccount',
@@ -103,9 +112,48 @@ class AccountInformationBloc
       ),
     );
 
-   if (result == true) {
-     // TODO: call delete account use case.
-   }
+    if (result != true) return;
+
+    try {
+      _appRouter.pushProgress();
+      await _deleteAccountUseCase.execute(
+        const DeleteAccountPayload(),
+      );
+
+      await _logOutUseCase.execute(NoParams());
+      _globalAppRouterDelegate.pushForResult(
+        AppAlertDialog.page(
+          SuccessAlert(contentKey: 'otherAlert.accountDeleted'),
+        ),
+      );
+    } on HasActiveTacksException catch (_) {
+      _appRouter.popProgress();
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            contentKey: 'errorAlert.accountDeleteHasActiveTacks',
+          ),
+        ),
+      );
+    } on HasNotEmptyBalanceException catch (_) {
+      _appRouter.popProgress();
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            contentKey: 'errorAlert.accountDeleteHasNotEmptyBalance',
+          ),
+        ),
+      );
+    } catch (e) {
+      _appRouter.popProgress();
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            messageKey: e.toString(),
+          ),
+        ),
+      );
+    }
   }
 
   @override

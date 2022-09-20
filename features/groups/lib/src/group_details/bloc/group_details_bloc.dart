@@ -129,17 +129,17 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
   ) async {
     if (!state.isInvitation) return;
 
-    _appRouter.push(ProgressDialog.page());
+    _appRouter.pushProgress();
     try {
       await _acceptGroupInvitationUseCase.execute(
         AcceptGroupInvitationPayload(
           invitation: state.invitation!,
         ),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.popWithResult(GroupDetailsScreenResult.joinGroup);
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -171,17 +171,17 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
 
     if (!result) return;
 
-    _appRouter.push(ProgressDialog.page());
+    _appRouter.pushProgress();
     try {
       await _declineGroupInvitationUseCase.execute(
         DeclineGroupInvitationPayload(
           invitation: state.invitation!,
         ),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.popWithResult(GroupDetailsScreenResult.declineInvitation);
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -213,26 +213,26 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
 
     if (!result) return;
 
-    _appRouter.push(ProgressDialog.page());
+    _appRouter.pushProgress();
     try {
       await _leaveGroupUseCase.execute(
         LeaveGroupPayload(
           group: state.group,
         ),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.popWithResult(GroupDetailsScreenResult.leaveGroup);
-    } on HasOngoingGroupTacksException catch (_) {
-      _appRouter.pop();
+    } on HasOngoingGroupTacksException catch (e) {
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
-            messageKey: 'errors.hasOngoingTacksInGroup',
+            messageKey: e.messageKey,
           ),
         ),
       );
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -249,7 +249,7 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
   ) async {
     if (state.isInvitation) return;
 
-    _appRouter.push(ProgressDialog.page());
+    _appRouter.pushProgress();
     try {
       final GroupDetails groupDetails;
 
@@ -262,7 +262,7 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
           MuteGroupPayload(group: state.group),
         );
       }
-      _appRouter.pop();
+      _appRouter.popProgress();
 
       emit(
         state.copyWith(
@@ -270,7 +270,7 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
         ),
       );
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(

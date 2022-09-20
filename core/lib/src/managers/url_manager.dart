@@ -1,7 +1,9 @@
-import 'package:core/core.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'toast_manager.dart';
 
 class UrlManager {
   static bool isValidUrl(String? url) {

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:auth/auth.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
@@ -58,7 +57,7 @@ class PhoneVerificationBloc
     Emitter<PhoneVerificationState> emit,
   ) async {
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       final SmsCodeResult result;
 
       final String phoneNumber = state.phoneData.formattedData;
@@ -85,7 +84,7 @@ class PhoneVerificationBloc
         state.copyWith(phone: ''),
       );
 
-      _appRouter.pop();
+      _appRouter.popProgress();
       final PhoneVerificationData? verificationResult =
           await _appRouter.pushForResult(
         SmsVerificationFeature.page(
@@ -100,29 +99,48 @@ class PhoneVerificationBloc
           ),
         );
       }
-    } on UserNotRegisteredException catch (_) {
-      _appRouter.pop();
-      final bool? result =
-          await _appRouter.pushForResult(AuthErrorFeature.pageNotRegistered());
-      if (result == true) {
-        emit(
-          state.copyWith(phone: ''),
-        );
+    } on PhoneNumberNotFoundException catch (e) {
+      _appRouter.popProgress();
+      final bool result = await _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            contentKey: e.errorDialogContentKey,
+          ),
+          fullScreen: true,
+        ),
+      );
+      if (result) {
         _appRouter.popWithResult(
           const PhoneVerificationScreenResult(shouldOpenSignUp: true),
         );
       }
-    } on ExistedUserException catch (_) {
-      _appRouter.pop();
-      final bool? result = await _appRouter
-          .pushForResult(AuthErrorFeature.pageAlreadyRegistered());
-      if (result == true) {
+    } on PhoneNumberAlreadyExistException catch (e) {
+      _appRouter.popProgress();
+      final bool result = await _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            contentKey: e.errorDialogContentKey,
+          ),
+          fullScreen: true,
+        ),
+      );
+      if (result) {
         _appRouter.popWithResult(
           const PhoneVerificationScreenResult(shouldOpenSignIn: true),
         );
       }
+    } on SmsRequestAttemptsExceededException catch (e) {
+      _appRouter.popProgress();
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            contentKey: e.errorDialogContentKey,
+          ),
+          fullScreen: true,
+        ),
+      );
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(

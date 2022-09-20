@@ -63,7 +63,7 @@ class AddEditTackBloc extends Bloc<AddEditTackEvent, AddEditTackState> {
     }
 
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       final Tack newTack = await _createTackUseCase.execute(
         CreateTackPayload(
           title: state.titleData.title,
@@ -74,10 +74,10 @@ class AddEditTackBloc extends Bloc<AddEditTackEvent, AddEditTackState> {
           groupId: state.groupData.group!.id,
         ),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.popWithResult(newTack);
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(
@@ -100,7 +100,7 @@ class AddEditTackBloc extends Bloc<AddEditTackEvent, AddEditTackState> {
     }
 
     try {
-      _appRouter.push(ProgressDialog.page());
+      _appRouter.pushProgress();
       final Tack newTack = await _editTackUseCase.execute(
         UpdateTackPayload(
           tackId: state.tack!.id,
@@ -112,10 +112,10 @@ class AddEditTackBloc extends Bloc<AddEditTackEvent, AddEditTackState> {
           groupId: state.groupData.group!.id,
         ),
       );
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.popWithResult(newTack);
     } catch (e) {
-      _appRouter.pop();
+      _appRouter.popProgress();
       _appRouter.pushForResult(
         AppAlertDialog.page(
           ErrorAlert(

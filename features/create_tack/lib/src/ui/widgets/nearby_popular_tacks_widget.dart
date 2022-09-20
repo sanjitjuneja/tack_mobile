@@ -14,6 +14,14 @@ class NearbyPopularTacksWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        Text(
+          FlutterI18n.translate(
+            context,
+            'createTackScreen.nearbyPopular.subtitle',
+          ),
+          style: AppTextTheme.manrope13Medium
+              .copyWith(color: AppTheme.textHeavyHintColor),
+        ),
         const SizedBox(height: 10),
         Expanded(
           child: BlocBuilder<CreateTackBloc, CreateTackState>(

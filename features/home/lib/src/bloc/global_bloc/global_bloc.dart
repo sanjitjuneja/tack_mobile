@@ -6,6 +6,7 @@ import 'package:domain/domain.dart';
 import 'package:domain/use_case.dart';
 import 'package:groups/groups.dart';
 import 'package:navigation/navigation.dart';
+import 'package:tacks/tacks.dart';
 
 part 'global_event.dart';
 
@@ -20,6 +21,8 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
       _observeCompletedTackRunnerIntentUseCase;
   final ObserveCancelTackerTackRunnerIntentUseCase
       _observeCancelTackerTackRunnerIntentUseCase;
+  final ObserveRunnerTackIntentUseCase _observeRunnerTackIntentUseCase;
+  final ObserveTackerTackIntentUseCase _observeTackerTackIntentUseCase;
   final FetchGroupUseCase _fetchGroupUseCase;
   final SelectGroupUseCase _selectGroupUseCase;
 
@@ -31,6 +34,9 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
       _completedRackRunnerIntentSubscription;
   late StreamSubscription<WebSocketIntent<Tack>>
       _cancelTackerTackRunnerIntentSubscription;
+  late StreamSubscription<WebSocketIntent<RunnerTack>>
+      _runnerTackIntentSubscription;
+  late StreamSubscription<WebSocketIntent<Tack>> _tackerTackIntentSubscription;
 
   GlobalBloc({
     required AppRouterDelegate appRouter,
@@ -44,6 +50,8 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
         observeCompletedTackRunnerIntentUseCase,
     required ObserveCancelTackerTackRunnerIntentUseCase
         observeCancelTackerTackRunnerIntentUseCase,
+    required ObserveRunnerTackIntentUseCase observeRunnerTackIntentUseCase,
+    required ObserveTackerTackIntentUseCase observeTackerTackIntentUseCase,
     required FetchGroupUseCase fetchGroupUseCase,
     required SelectGroupUseCase selectGroupUseCase,
   })  : _appRouter = appRouter,
@@ -54,6 +62,8 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
             observeCompletedTackRunnerIntentUseCase,
         _observeCancelTackerTackRunnerIntentUseCase =
             observeCancelTackerTackRunnerIntentUseCase,
+        _observeRunnerTackIntentUseCase = observeRunnerTackIntentUseCase,
+        _observeTackerTackIntentUseCase = observeTackerTackIntentUseCase,
         _fetchGroupUseCase = fetchGroupUseCase,
         _selectGroupUseCase = selectGroupUseCase,
         super(
@@ -75,6 +85,8 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
     on<CancelTackerTackRunnerIntentAction>(
       _onCancelTackerTackRunnerIntentAction,
     );
+    on<RunnerTackIntentAction>(_onRunnerTackIntentAction);
+    on<TackerTackIntentAction>(_onTackerTackIntentAction);
 
     _userSubscription =
         _observeUserUseCase.execute(NoParams()).listen((User event) {
@@ -100,6 +112,16 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
             .execute(NoParams())
             .listen((WebSocketIntent<Tack> tackIntent) {
       add(CancelTackerTackRunnerIntentAction(tackIntent: tackIntent));
+    });
+    _runnerTackIntentSubscription = _observeRunnerTackIntentUseCase
+        .execute(NoParams())
+        .listen((WebSocketIntent<RunnerTack> tackIntent) {
+      add(RunnerTackIntentAction(tackIntent: tackIntent));
+    });
+    _tackerTackIntentSubscription = _observeTackerTackIntentUseCase
+        .execute(NoParams())
+        .listen((WebSocketIntent<Tack> tackIntent) {
+      add(TackerTackIntentAction(tackIntent: tackIntent));
     });
   }
 
@@ -216,6 +238,83 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
     }
   }
 
+  Future<void> _onRunnerTackIntentAction(
+    RunnerTackIntentAction event,
+    Emitter<GlobalState> emit,
+  ) async {
+    if (event.tackIntent.action.isUpdate) {
+      final RunnerTack runnerTack = event.tackIntent.object!;
+
+      switch (runnerTack.tack.status) {
+        case TackStatus.pendingStart:
+          final bool result = await _appRouter.pushForResult(
+            AppAlertDialog.page(
+              SuccessAlert(
+                contentKey: 'otherAlert.offerAccepted',
+                translationParams: <AlertPropertyKey, Map<String, String>>{
+                  AlertPropertyKey.message: <String, String>{
+                    'tackName': runnerTack.tack.title,
+                  },
+                },
+              ),
+            ),
+          );
+
+          if (result) {
+            _appRouter.removeNamed(
+              OngoingRunnerTackFeature.routeName(
+                id: runnerTack.id,
+              ),
+            );
+            _appRouter.push(
+              OngoingRunnerTackFeature.page(runnerTack: runnerTack),
+            );
+          }
+          break;
+        default:
+          return;
+      }
+    }
+  }
+
+  Future<void> _onTackerTackIntentAction(
+    TackerTackIntentAction event,
+    Emitter<GlobalState> emit,
+  ) async {
+    if (event.tackIntent.action.isUpdate) {
+      final Tack tack = event.tackIntent.object!;
+
+      switch (tack.status) {
+        case TackStatus.pendingReview:
+          final bool result = await _appRouter.pushForResult(
+            AppAlertDialog.page(
+              SuccessAlert(
+                contentKey: 'otherAlert.tackWaitingReview',
+                translationParams: <AlertPropertyKey, Map<String, String>>{
+                  AlertPropertyKey.message: <String, String>{
+                    'tackName': tack.title,
+                  },
+                },
+              ),
+            ),
+          );
+          if (result) {
+            _appRouter.removeNamed(
+              OngoingTackerTackFeature.routeName(
+                id: tack.id,
+              ),
+            );
+            _appRouter.push(
+              OngoingTackerTackFeature.page(tack: tack),
+            );
+          }
+          break;
+        default:
+          return;
+      }
+    }
+  }
+
   @override
   Future<void> close() async {
     _userSubscription.cancel();
@@ -224,6 +323,8 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
 
     _completedRackRunnerIntentSubscription.cancel();
     _cancelTackerTackRunnerIntentSubscription.cancel();
+    _runnerTackIntentSubscription.cancel();
+    _tackerTackIntentSubscription.cancel();
 
     return super.close();
   }

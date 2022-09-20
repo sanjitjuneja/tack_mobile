@@ -1,10 +1,10 @@
 import 'package:core/core.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:tacks/src/ongoing_tack/ongoing_tacker_tack/bloc/ongoing_tacker_tack_bloc.dart';
-import 'package:tacks/src/ongoing_tack/ongoing_tacker_tack/ui/widgets/ongoing_tacker_tack_actions.dart';
-import 'package:tacks/src/ongoing_tack/ongoing_tacker_tack/ui/widgets/ongoing_tacker_tack_body.dart';
-import 'package:tacks/src/ongoing_tack/widgets/header_widget.dart';
+import '../bloc/ongoing_tacker_tack_bloc.dart';
+import 'widgets/ongoing_tacker_tack_actions.dart';
+import 'widgets/ongoing_tacker_tack_body.dart';
+import '../../widgets/header_widget.dart';
 
 class OngoingTackerTackForm extends StatelessWidget {
   const OngoingTackerTackForm({super.key});
