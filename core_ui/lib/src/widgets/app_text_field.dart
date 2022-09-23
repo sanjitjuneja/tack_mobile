@@ -138,11 +138,9 @@ class _AppTextFieldState extends State<AppTextField> {
   void didUpdateWidget(AppTextField oldWidget) {
     final bool didUpdateInitialText =
         oldWidget.initialText != widget.initialText;
-    final bool isInitialTextEmpty =
-        widget.initialText == null || widget.initialText!.isEmpty;
 
-    final bool shouldUpdateInitialText = didUpdateInitialText &&
-        (widget.shouldUpdateInitialText || isInitialTextEmpty);
+    final bool shouldUpdateInitialText =
+        didUpdateInitialText && widget.shouldUpdateInitialText;
 
     if (shouldUpdateInitialText) {
       _controller.text = widget.initialText ?? '';

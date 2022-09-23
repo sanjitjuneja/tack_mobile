@@ -62,6 +62,7 @@ class AppIconsTheme {
   static const String _bellCrossedOutKey = '${_svgPath}bell_crossed_out.svg';
   static const String _clockKey = '${_svgPath}clock.svg';
   static const String _editKey = '${_svgPath}edit.svg';
+  static const String _offlineKey = '${_svgPath}offline.svg';
 
   /// Bottom Navigation bar
   static const AppIcon dashboardsActive = AppIcon(_dashboardActiveKey);
@@ -120,4 +121,5 @@ class AppIconsTheme {
   static const AppIcon bellCrossedOut = AppIcon(_bellCrossedOutKey);
   static const AppIcon clock = AppIcon(_clockKey);
   static const AppIcon edit = AppIcon(_editKey);
+  static const AppIcon offline = AppIcon(_offlineKey);
 }

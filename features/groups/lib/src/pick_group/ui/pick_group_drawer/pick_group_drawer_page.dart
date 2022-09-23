@@ -31,6 +31,7 @@ class _PickGroupDrawerPage extends Page<Group> {
         return BlocProvider<GroupsBloc>(
           create: (_) {
             return GroupsBloc(
+              appLifeCycleProvider: appLocator.get<AppLifeCycleProvider>(),
               loadGroupsUseCase: appLocator.get<LoadGroupsUseCase>(),
               observeGroupIntentUseCase:
                   appLocator.get<ObserveGroupIntentUseCase>(),

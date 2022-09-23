@@ -4,6 +4,10 @@ abstract class GlobalEvent {
   const GlobalEvent();
 }
 
+class AppRefreshAction extends GlobalEvent {
+  const AppRefreshAction();
+}
+
 class UserChanged extends GlobalEvent {
   final User user;
 

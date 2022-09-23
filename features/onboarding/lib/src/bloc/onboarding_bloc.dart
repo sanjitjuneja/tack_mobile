@@ -1,7 +1,6 @@
 import 'package:auth/auth.dart';
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
-import 'package:domain/use_case.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
 import 'package:phone_verification/phone_verification.dart';

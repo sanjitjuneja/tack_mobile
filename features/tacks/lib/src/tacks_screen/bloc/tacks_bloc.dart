@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
-import 'package:domain/use_case.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
 
@@ -16,8 +15,9 @@ part 'tacks_event.dart';
 
 part 'tacks_state.dart';
 
-class TacksBloc extends Bloc<TacksEvent, TacksState> {
+class TacksBloc extends Bloc<TacksEvent, TacksState> with AppLifeCycleObserver {
   final AppRouterDelegate _appRouter;
+  final AppLifeCycleProvider _appLifeCycleProvider;
   final FetchRunnerTacksUseCase _fetchRunnerTacksUseCase;
   final FetchTackerTacksUseCase _fetchTackerTacksUseCase;
   final ObserveRunnerTackIntentUseCase _observeRunnerTackIntentUseCase;
@@ -30,22 +30,27 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
 
   TacksBloc({
     required AppRouterDelegate appRouter,
+    required AppLifeCycleProvider appLifeCycleProvider,
     required FetchRunnerTacksUseCase fetchRunnerTacksUseCase,
     required FetchTackerTacksUseCase fetchTackerTacksUseCase,
     required ObserveRunnerTackIntentUseCase observeRunnerTackIntentUseCase,
     required ObserveTackerTackIntentUseCase observeTackerTackIntentUseCase,
     required CancelOfferUseCase cancelOfferUseCase,
   })  : _appRouter = appRouter,
+        _appLifeCycleProvider = appLifeCycleProvider,
         _fetchRunnerTacksUseCase = fetchRunnerTacksUseCase,
         _fetchTackerTacksUseCase = fetchTackerTacksUseCase,
         _observeRunnerTackIntentUseCase = observeRunnerTackIntentUseCase,
         _observeTackerTackIntentUseCase = observeTackerTackIntentUseCase,
         _cancelOfferUseCase = cancelOfferUseCase,
         super(const TacksState()) {
+    _appLifeCycleProvider.addObserver(this);
+
     on<MoveToAddTab>(_onMoveToAddTab);
     on<MoveToHomeTab>(_onMoveToHomeTab);
 
     on<InitialLoad>(_onInitialLoad);
+    on<AppRefreshAction>(_onAppRefreshAction);
     on<RefreshRunnerTacks>(_onRefreshRunnerTacks);
     on<RefreshTackerTacks>(_onRefreshTackerTacks);
 
@@ -118,6 +123,15 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
         );
       }
     }
+  }
+
+  Future<void> _onAppRefreshAction(
+    AppRefreshAction event,
+    Emitter<TacksState> emit,
+  ) async {
+    emit(state.copyWith(isLoading: true));
+    add(const RefreshTackerTacks());
+    add(const RefreshRunnerTacks());
   }
 
   Future<void> _onRefreshTackerTacks(
@@ -277,9 +291,15 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> {
   }
 
   @override
+  void onShouldRefresh() {
+    add(const AppRefreshAction());
+  }
+
+  @override
   Future<void> close() async {
     _runnerTackIntentSubscription.cancel();
     _tackerTackIntentSubscription.cancel();
+    _appLifeCycleProvider.removeObserver(this);
 
     return super.close();
   }

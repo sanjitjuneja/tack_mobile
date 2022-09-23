@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
-import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
 import 'package:payment/payment.dart';
 
@@ -17,9 +16,12 @@ part 'ongoing_tacker_tack_event.dart';
 part 'ongoing_tacker_tack_state.dart';
 
 class OngoingTackerTackBloc
-    extends Bloc<OngoingTackerTackEvent, OngoingTackerTackState> {
+    extends Bloc<OngoingTackerTackEvent, OngoingTackerTackState>
+    with AppLifeCycleObserver {
   final AppRouterDelegate _appRouter;
+  final AppLifeCycleProvider _appLifeCycleProvider;
   final ObserveTackerTackIntentUseCase _observeTackerTackIntentUseCase;
+  final FetchTackUseCase _fetchTackUseCase;
   final FetchUserContactsUseCase _fetchUserContactsUseCase;
   final CancelTackTackerUseCase _cancelTackUseCase;
   final CompleteTackTackerUseCase _completeTackUseCase;
@@ -29,12 +31,16 @@ class OngoingTackerTackBloc
   OngoingTackerTackBloc({
     required Tack tack,
     required AppRouterDelegate appRouter,
+    required AppLifeCycleProvider appLifeCycleProvider,
     required ObserveTackerTackIntentUseCase observeTackerTackIntentUseCase,
+    required FetchTackUseCase fetchTackUseCase,
     required FetchUserContactsUseCase fetchUserContactsUseCase,
     required CancelTackTackerUseCase cancelTackTackerUseCase,
     required CompleteTackTackerUseCase completeTackUseCase,
   })  : _appRouter = appRouter,
+        _appLifeCycleProvider = appLifeCycleProvider,
         _observeTackerTackIntentUseCase = observeTackerTackIntentUseCase,
+        _fetchTackUseCase = fetchTackUseCase,
         _fetchUserContactsUseCase = fetchUserContactsUseCase,
         _cancelTackUseCase = cancelTackTackerUseCase,
         _completeTackUseCase = completeTackUseCase,
@@ -46,6 +52,9 @@ class OngoingTackerTackBloc
             currentStep: tack.currentStepIndex(isTacker: true),
           ),
         ) {
+    _appLifeCycleProvider.addObserver(this);
+
+    on<RefreshAction>(_onRefreshAction);
     on<FetchUserContactsAction>(_onFetchUserContactsAction);
 
     on<ActionPressed>(_onActionPressed);
@@ -64,6 +73,41 @@ class OngoingTackerTackBloc
 
     if (tack.canContactOther) {
       add(const FetchUserContactsAction());
+    }
+  }
+
+  Future<void> _onRefreshAction(
+    RefreshAction event,
+    Emitter<OngoingTackerTackState> emit,
+  ) async {
+    try {
+      emit(state.copyWith(isLoading: true));
+      final Tack tack = await _fetchTackUseCase.execute(
+        FetchTackPayload(
+          id: state.tack.id,
+        ),
+      );
+      if (tack.isCanceled) {
+        _appRouter.removeNamed(
+          OngoingTackerTackFeature.routeName(
+            id: state.tack.id,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(tack: tack),
+        );
+      }
+    } catch (e) {
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            messageKey: e.toString(),
+          ),
+        ),
+      );
+    } finally {
+      emit(state.copyWith(isLoading: false));
     }
   }
 
@@ -265,8 +309,14 @@ class OngoingTackerTackBloc
   }
 
   @override
+  void onShouldRefresh() {
+    add(const RefreshAction());
+  }
+
+  @override
   Future<void> close() async {
     _tackIntentSubscription.cancel();
+    _appLifeCycleProvider.removeObserver(this);
 
     return super.close();
   }

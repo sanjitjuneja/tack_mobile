@@ -4,6 +4,10 @@ abstract class OngoingRunnerTackEvent {
   const OngoingRunnerTackEvent();
 }
 
+class RefreshAction extends OngoingRunnerTackEvent {
+  const RefreshAction();
+}
+
 class FetchHasRunningTackAction extends OngoingRunnerTackEvent {
   const FetchHasRunningTackAction();
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:core/core.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -13,19 +14,20 @@ abstract class ApiProviderCore {
   late Dio _dio;
 
   ApiProviderCore({
-    required String baseUrl,
+    required AppConfig appConfig,
     required ErrorHandler errorHandler,
     void Function(Dio)? additionalSetup,
   }) : _errorHandler = errorHandler {
-    _setup(baseUrl);
+    _setup(appConfig);
     additionalSetup?.call(_dio);
   }
 
-  void _setup(String baseUrl) {
+  void _setup(AppConfig appConfig) {
     _dio = Dio();
     _dio.options.responseType = ResponseType.json;
-    _dio.options.baseUrl = baseUrl;
+    _dio.options.baseUrl = appConfig.baseUrl;
     _dio.options.contentType = ContentType.json.value;
+    _dio.options.headers.addAll(appConfig.flavorHeader);
 
     if (kDebugMode) {
       _dio.interceptors.add(

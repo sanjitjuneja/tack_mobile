@@ -29,9 +29,18 @@ class _ProgressDialogPage extends Page<void> {
       context: context,
       barrierColor: AppTheme.progressBarrierColor,
       barrierDismissible: false,
-      builder: (_) => AppProgressIndicator(
-        messageKey: messageKey,
-        backgroundColor: AppTheme.transparentColor,
+      builder: (_) => AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle(
+          systemNavigationBarColor: AppTheme.accentColor,
+          systemNavigationBarIconBrightness: Brightness.light,
+        ),
+        child: WillPopScope(
+          onWillPop: () => Future.value(false),
+          child: AppProgressIndicator(
+            messageKey: messageKey,
+            backgroundColor: AppTheme.transparentColor,
+          ),
+        ),
       ),
     );
   }

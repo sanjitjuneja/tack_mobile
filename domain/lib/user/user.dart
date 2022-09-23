@@ -20,6 +20,7 @@ part 'use_cases/change_password_use_case.dart';
 part 'use_cases/delete_account_use_case.dart';
 part 'use_cases/fetch_user_balance_use_case.dart';
 part 'use_cases/fetch_user_contacts_use_case.dart';
+part 'use_cases/fetch_user_use_case.dart';
 part 'use_cases/get_current_user_use_case.dart';
 part 'use_cases/get_user_balance_use_case.dart';
 part 'use_cases/observe_user_balance_use_case.dart';

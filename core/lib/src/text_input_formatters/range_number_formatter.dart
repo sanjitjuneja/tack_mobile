@@ -17,6 +17,8 @@ class RangeNumberFormatter extends TextInputFormatter {
   ) {
     if (newValue.text == '') {
       return newValue;
+    } else if (int.tryParse(newValue.text) == null) {
+      return oldValue;
     } else if (int.parse(newValue.text) < min) {
       return TextEditingValue.empty.copyWith(text: min.toStringAsFixed(2));
     } else {

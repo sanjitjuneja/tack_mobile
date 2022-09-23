@@ -132,6 +132,15 @@ class TacksRepositoryImpl implements domain.TacksRepository {
   }
 
   @override
+  Future<domain.Tack> fetchTack(domain.FetchTackPayload payload) async {
+    return _apiProvider.fetchTack(
+      FetchTackRequest(
+        tackId: payload.id,
+      ),
+    );
+  }
+
+  @override
   Future<domain.Tack> createTack(domain.CreateTackPayload payload) async {
     return _apiProvider.createTack(
       CreateTackRequest(

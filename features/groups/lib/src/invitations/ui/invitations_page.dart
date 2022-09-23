@@ -28,6 +28,7 @@ class _InvitationsPage extends Page<void> {
         create: (_) {
           return InvitationsBloc(
             appRouter: AppRouter.of(context),
+            appLifeCycleProvider: appLocator.get<AppLifeCycleProvider>(),
             fetchGroupInvitationsUseCase:
                 appLocator.get<FetchGroupInvitationsUseCase>(),
             acceptGroupInvitationUseCase:

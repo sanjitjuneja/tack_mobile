@@ -25,6 +25,7 @@ part 'requests/fetch_created_tacks_request.dart';
 part 'requests/fetch_runner_tacks_request.dart';
 part 'requests/fetch_tacker_tacks_request.dart';
 part 'requests/fetch_tack_offers_request.dart';
+part 'requests/fetch_tack_request.dart';
 part 'requests/fetch_group_popular_tacks_request.dart';
 part 'requests/fetch_group_tacks_request.dart';
 part 'requests/fetch_has_running_tack_request.dart';

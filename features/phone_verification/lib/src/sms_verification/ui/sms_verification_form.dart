@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../bloc/sms_verification_bloc.dart';
 import '../view_extensions/phone_verification_to_view_sms_extension.dart';
+import 'widgets/resend_code_widget.dart';
 import 'widgets/verify_code_field_widget.dart';
 
 class SmsVerificationForm extends StatelessWidget {
@@ -36,21 +37,7 @@ class SmsVerificationForm extends StatelessWidget {
               const SizedBox(height: 22),
               const VerifyCodeFieldWidget(),
               const SizedBox(height: 22),
-              Center(
-                child: OpacityOnTapContainer(
-                  onTap: () => _onResendCodeButtonPressed(context),
-                  child: Text(
-                    FlutterI18n.translate(
-                      context,
-                      'smsVerificationScreen.resendCode',
-                    ),
-                    style: AppTextTheme.manrope19Medium.copyWith(
-                      color: AppTheme.textHeavyHintColor,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                ),
-              ),
+              ResendCodeWidget(state: state),
               const Spacer(),
               AppCircleButton(
                 labelKey: state.phoneVerificationData.getButtonLabel(context),
@@ -63,10 +50,6 @@ class SmsVerificationForm extends StatelessWidget {
         );
       },
     );
-  }
-
-  void _onResendCodeButtonPressed(BuildContext context) {
-    BlocProvider.of<SmsVerificationBloc>(context).add(const ResendCodeAction());
   }
 
   void _onNextButtonPressed(BuildContext context) {

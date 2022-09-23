@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
-import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
 
 import '../../group_details/models/group_details_screen_result.dart';
@@ -13,8 +12,10 @@ part 'invitations_event.dart';
 
 part 'invitations_state.dart';
 
-class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState> {
+class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState>
+    with AppLifeCycleObserver {
   final AppRouterDelegate _appRouter;
+  final AppLifeCycleProvider _appLifeCycleProvider;
   final FetchGroupInvitationsUseCase _fetchGroupInvitationsUseCase;
   final AcceptGroupInvitationUseCase _acceptGroupInvitationUseCase;
   final ObserveGroupInvitationIntentUseCase
@@ -25,11 +26,13 @@ class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState> {
 
   InvitationsBloc({
     required AppRouterDelegate appRouter,
+    required AppLifeCycleProvider appLifeCycleProvider,
     required FetchGroupInvitationsUseCase fetchGroupInvitationsUseCase,
     required AcceptGroupInvitationUseCase acceptGroupInvitationUseCase,
     required ObserveGroupInvitationIntentUseCase
         observeGroupInvitationIntentUseCase,
   })  : _appRouter = appRouter,
+        _appLifeCycleProvider = appLifeCycleProvider,
         _fetchGroupInvitationsUseCase = fetchGroupInvitationsUseCase,
         _acceptGroupInvitationUseCase = acceptGroupInvitationUseCase,
         _observeGroupInvitationIntentUseCase =
@@ -39,6 +42,9 @@ class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState> {
             isLoading: true,
           ),
         ) {
+    _appLifeCycleProvider.addObserver(this);
+
+    on<AppRefreshAction>(_onAppRefreshAction);
     on<InitialLoad>(_onInitialLoad);
     on<RefreshAction>(_onRefreshAction);
     on<LoadMoreAction>(_onLoadMoreAction);
@@ -55,6 +61,14 @@ class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState> {
     });
 
     add(const InitialLoad());
+  }
+
+  Future<void> _onAppRefreshAction(
+    AppRefreshAction event,
+    Emitter<InvitationsState> emit,
+  ) async {
+    emit(state.copyWith(isLoading: true));
+    add(const RefreshAction());
   }
 
   Future<void> _onInitialLoad(
@@ -229,8 +243,14 @@ class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState> {
   }
 
   @override
+  void onShouldRefresh() {
+    add(const AppRefreshAction());
+  }
+
+  @override
   Future<void> close() async {
     _groupInvitationIntentSubscription.cancel();
+    _appLifeCycleProvider.removeObserver(this);
 
     return super.close();
   }

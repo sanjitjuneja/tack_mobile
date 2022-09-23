@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
-import 'package:domain/use_case.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
 import 'package:tacks/tacks.dart';
@@ -14,8 +13,10 @@ part 'dashboard_event.dart';
 
 part 'dashboard_state.dart';
 
-class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
+class DashboardBloc extends Bloc<DashboardEvent, DashboardState>
+    with AppLifeCycleObserver {
   final AppRouterDelegate _appRouter;
+  final AppLifeCycleProvider _appLifeCycleProvider;
   final FetchGroupTacksUseCase _fetchGroupTacksUseCase;
   final ObserveGroupTackIntentUseCase _observeGroupTackIntentUseCase;
   final MakeOfferUseCase _makeOfferUseCase;
@@ -25,11 +26,13 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   DashboardBloc({
     required AppRouterDelegate appRouter,
+    required AppLifeCycleProvider appLifeCycleProvider,
     required FetchGroupTacksUseCase fetchGroupTacksUseCase,
     required ObserveGroupTackIntentUseCase observeGroupTackIntentUseCase,
     required MakeOfferUseCase makeOfferUseCase,
     required Group selectedGroup,
   })  : _appRouter = appRouter,
+        _appLifeCycleProvider = appLifeCycleProvider,
         _fetchGroupTacksUseCase = fetchGroupTacksUseCase,
         _observeGroupTackIntentUseCase = observeGroupTackIntentUseCase,
         _makeOfferUseCase = makeOfferUseCase,
@@ -39,8 +42,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
             isLoading: true,
           ),
         ) {
+    _appLifeCycleProvider.addObserver(this);
+
     on<GoToCreateTack>(_onGoToCreateTack);
 
+    on<AppRefreshAction>(_onAppRefreshAction);
     on<InitialLoad>(_onInitialLoad);
     on<RefreshAction>(_onRefreshAction);
     on<LoadMoreAction>(_onLoadMoreAction);
@@ -66,6 +72,14 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     Emitter<DashboardState> emit,
   ) async {
     _appRouter.navigationTabState.changeTabIndex(HomeScreenTab.add);
+  }
+
+  Future<void> _onAppRefreshAction(
+    AppRefreshAction event,
+    Emitter<DashboardState> emit,
+  ) async {
+    emit(state.copyWith(isLoading: true));
+    add(const RefreshAction());
   }
 
   Future<void> _onInitialLoad(
@@ -256,8 +270,14 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   }
 
   @override
+  void onShouldRefresh() {
+    add(const AppRefreshAction());
+  }
+
+  @override
   Future<void> close() async {
     _groupTackIntentSubscription.cancel();
+    _appLifeCycleProvider.removeObserver(this);
 
     return super.close();
   }

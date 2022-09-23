@@ -3,8 +3,8 @@ import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:tacks/src/add_edit_tack/bloc/add_edit_tack_bloc.dart';
-import 'package:tacks/src/add_edit_tack/models/time_estimation_data.dart';
+import '../../bloc/add_edit_tack_bloc.dart';
+import '../../models/time_estimation_data.dart';
 
 class TimeSection extends StatelessWidget {
   static const String _localizationPath = 'addEditTackScreen.timeSection.';
@@ -40,14 +40,14 @@ class TimeSection extends StatelessWidget {
                     vertical: 10.0,
                   ),
                   hasShadow: false,
+                  scrollPadding: 60,
                   backgroundColor: AppTheme.textFieldSecondaryBackgroundColor,
                   maxLines: 1,
                   textAlign: TextAlign.center,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: false,
-                  ),
+                  keyboardType: const TextInputType.numberWithOptions(),
                   inputFormatters: <TextInputFormatter>[
-                    RangeNumberFormatter(max: state.timeEstimationData.maxValue),
+                    RangeNumberFormatter(
+                        max: state.timeEstimationData.maxValue),
                   ],
                   onTextChange: (String value) => _onTimeChange(context, value),
                 ),

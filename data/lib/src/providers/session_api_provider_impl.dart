@@ -1,10 +1,10 @@
-import 'package:data/src/providers/session_api_provider.dart';
-import 'package:data/src/query/api_query.dart';
-import 'package:data/src/entities/entities.dart';
+import 'session_api_provider.dart';
+import '../query/api_query.dart';
+import '../entities/entities.dart';
 
 class SessionApiProviderImpl extends SessionApiProvider {
   SessionApiProviderImpl({
-    required super.baseUrl,
+    required super.appConfig,
     required super.errorHandler,
   });
 

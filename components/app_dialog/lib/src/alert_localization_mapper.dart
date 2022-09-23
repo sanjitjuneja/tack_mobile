@@ -65,13 +65,13 @@ class _AlertLocalizationMapper {
     final Map<String, String> fieldTranslationParams =
         alert.translationParams[fieldKey] ?? {};
 
-    String __translateWithInnerParams(String value) {
+    String translateWithInnerParams(String value) {
       return _translate(value, translationParams: fieldTranslationParams);
     }
 
     final String? propertyValue = alert.getProperty(fieldKey);
     if (propertyValue != null) {
-      return __translateWithInnerParams(propertyValue);
+      return translateWithInnerParams(propertyValue);
     }
 
     final String keyStringRepresentation = fieldKey.toString();
@@ -80,7 +80,7 @@ class _AlertLocalizationMapper {
         alert.contentKey!,
         keyStringRepresentation,
       );
-      final String fieldTranslation = __translateWithInnerParams(fullFieldKey);
+      final String fieldTranslation = translateWithInnerParams(fullFieldKey);
 
       if (fieldTranslation != fullFieldKey) return fieldTranslation;
     }
@@ -91,7 +91,7 @@ class _AlertLocalizationMapper {
         keyStringRepresentation,
       );
       final String defaultTranslation =
-          __translateWithInnerParams(defaultFieldKey);
+          translateWithInnerParams(defaultFieldKey);
 
       if (defaultTranslation != defaultFieldKey) return defaultTranslation;
     }

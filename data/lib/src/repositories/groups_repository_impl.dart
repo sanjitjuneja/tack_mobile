@@ -28,7 +28,9 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
         _sharedPreferencesProvider = sharedPreferencesProvider,
         _webSocketsProvider = webSocketsProvider {
     _groupsCountStreamController = BehaviorSubject<int>.seeded(0);
-    _groupStreamController = BehaviorSubject<domain.Group?>.seeded(null);
+    final domain.Group? activeGroup =
+        _sharedPreferencesProvider.getActiveGroup();
+    _groupStreamController = BehaviorSubject<domain.Group?>.seeded(activeGroup);
 
     _webSocketGroupIntentSubscription = _webSocketsProvider.groupsStream.listen(
       (domain.WebSocketIntent<domain.GroupDetails> intent) {
@@ -75,16 +77,21 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
   Future<void> _initialSetActiveGroup(
     domain.PaginationModel<domain.GroupDetails> groups,
   ) async {
-    final int? activeGroupId = _sharedPreferencesProvider.getActiveGroupId();
+    final domain.Group? activeGroup = currentGroup;
+    final int? activeGroupId =
+        _sharedPreferencesProvider.getUser()?.activeGroup;
 
-    if (activeGroupId == null) {
+    if (activeGroup != null && activeGroup.id == activeGroupId) return;
+
+    if (activeGroupId != null) {
+      final domain.GroupDetails groupDetails = await fetchGroup(
+        domain.FetchGroupPayload(id: activeGroupId),
+      );
+      _groupStreamController.add(groupDetails.group);
+      _sharedPreferencesProvider.setActiveGroup(groupDetails.group);
+    } else {
       return _selectRandomGroup(groups: groups);
     }
-
-    final domain.GroupDetails groupDetails = await fetchGroup(
-      domain.FetchGroupPayload(id: activeGroupId),
-    );
-    _groupStreamController.add(groupDetails.group);
   }
 
   @override
@@ -120,7 +127,7 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
     if (payload.group?.id == currentGroup?.id) return;
 
     _groupStreamController.add(payload.group);
-    _sharedPreferencesProvider.setActiveGroupId(payload.group?.id);
+    _sharedPreferencesProvider.setActiveGroup(payload.group);
     if (payload.group == null) return;
 
     try {
@@ -162,7 +169,7 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
 
     final int newGroupsCount = max(0, groupsCount - 1);
     _groupsCountStreamController.add(newGroupsCount);
-    final int? currentGroupId = _sharedPreferencesProvider.getActiveGroupId();
+    final int? currentGroupId = currentGroup?.id;
 
     if (payload.group.id != currentGroupId) return;
 
@@ -177,6 +184,7 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
 
     if (groupsData.count == 0) {
       _groupStreamController.add(null);
+      _sharedPreferencesProvider.setActiveGroup(null);
     } else {
       await selectGroup(
         domain.SelectGroupPayload(

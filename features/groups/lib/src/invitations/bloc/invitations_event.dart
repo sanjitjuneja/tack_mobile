@@ -4,6 +4,10 @@ abstract class InvitationsEvent {
   const InvitationsEvent();
 }
 
+class AppRefreshAction extends InvitationsEvent {
+  const AppRefreshAction();
+}
+
 class InitialLoad extends InvitationsEvent {
   const InitialLoad();
 }

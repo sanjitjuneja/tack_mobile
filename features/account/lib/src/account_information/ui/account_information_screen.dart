@@ -1,6 +1,7 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
 import '../bloc/account_information_bloc.dart';
 import 'account_information_form.dart';
@@ -10,21 +11,27 @@ class AccountInformationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      backgroundColor: AppTheme.secondaryBackgroundColor,
-      navigationBar: AppNavigationBar(
-        backgroundColor: AppTheme.secondaryBackgroundColor,
-        actions: <Widget>[
-          OpacityOnTapContainer(
-            onTap: () => _onEditButtonPressed(context),
-            child: AppIconsTheme.editPencil(
-              color: AppTheme.iconPrimaryColor,
-            ),
-          ),
-        ],
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        systemNavigationBarColor: AppTheme.secondaryBackgroundColor,
+        systemNavigationBarIconBrightness: Brightness.dark,
       ),
-      child: const SafeArea(
-        child: AccountInformationForm(),
+      child: CupertinoPageScaffold(
+        backgroundColor: AppTheme.secondaryBackgroundColor,
+        navigationBar: AppNavigationBar(
+          backgroundColor: AppTheme.secondaryBackgroundColor,
+          actions: <Widget>[
+            OpacityOnTapContainer(
+              onTap: () => _onEditButtonPressed(context),
+              child: AppIconsTheme.editPencil(
+                color: AppTheme.iconPrimaryColor,
+              ),
+            ),
+          ],
+        ),
+        child: const SafeArea(
+          child: AccountInformationForm(),
+        ),
       ),
     );
   }

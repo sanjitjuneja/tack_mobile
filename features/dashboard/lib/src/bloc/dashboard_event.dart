@@ -8,6 +8,10 @@ class GoToCreateTack extends DashboardEvent {
   const GoToCreateTack();
 }
 
+class AppRefreshAction extends DashboardEvent {
+  const AppRefreshAction();
+}
+
 class InitialLoad extends DashboardEvent {
   const InitialLoad();
 }

@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
-import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
 
 import '../../withdraw_failed/ui/withdraw_failed_page.dart';

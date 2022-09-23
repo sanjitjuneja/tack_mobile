@@ -1,5 +1,6 @@
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
 import 'onboarding_form.dart';
 
@@ -8,17 +9,23 @@ class OnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: AppTheme.secondaryBackgroundColor,
-      navigationBar: AppNavigationBar(
-        backgroundColor: AppTheme.secondaryBackgroundColor,
-        automaticallyImplyLeading: false,
-        withTransition: false,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        systemNavigationBarColor: AppTheme.secondaryBackgroundColor,
+        systemNavigationBarIconBrightness: Brightness.dark,
       ),
-      child: const SafeArea(
-        maintainBottomViewPadding: true,
-        child: OnboardingForm(),
+      child: CupertinoPageScaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: AppTheme.secondaryBackgroundColor,
+        navigationBar: AppNavigationBar(
+          backgroundColor: AppTheme.secondaryBackgroundColor,
+          automaticallyImplyLeading: false,
+          withTransition: false,
+        ),
+        child: const SafeArea(
+          maintainBottomViewPadding: true,
+          child: OnboardingForm(),
+        ),
       ),
     );
   }

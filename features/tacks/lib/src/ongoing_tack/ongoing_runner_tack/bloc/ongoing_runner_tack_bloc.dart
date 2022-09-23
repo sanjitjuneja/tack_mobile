@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
-import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
 
 import '../../models/running_tack_data.dart';
@@ -16,9 +15,12 @@ part 'ongoing_runner_tack_event.dart';
 part 'ongoing_runner_tack_state.dart';
 
 class OngoingRunnerTackBloc
-    extends Bloc<OngoingRunnerTackEvent, OngoingRunnerTackState> {
+    extends Bloc<OngoingRunnerTackEvent, OngoingRunnerTackState>
+    with AppLifeCycleObserver {
   final AppRouterDelegate _appRouter;
+  final AppLifeCycleProvider _appLifeCycleProvider;
   final ObserveRunnerTackIntentUseCase _observeRunnerTackIntentUseCase;
+  final FetchTackUseCase _fetchTackUseCase;
   final FetchHasRunningTackUseCase _fetchHasRunningTackUseCase;
   final FetchUserContactsUseCase _fetchUserContactsUseCase;
   final CancelTackRunnerUseCase _cancelTackUseCase;
@@ -29,15 +31,19 @@ class OngoingRunnerTackBloc
 
   OngoingRunnerTackBloc({
     required RunnerTack runnerTack,
+    required AppLifeCycleProvider appLifeCycleProvider,
     required AppRouterDelegate appRouter,
     required ObserveRunnerTackIntentUseCase observeRunnerTackIntentUseCase,
+    required FetchTackUseCase fetchTackUseCase,
     required FetchHasRunningTackUseCase fetchHasRunningTackUseCase,
     required FetchUserContactsUseCase fetchUserContactsUseCase,
     required CancelTackRunnerUseCase cancelTackRunnerUseCase,
     required CompleteTackRunnerUseCase completeTackUseCase,
     required StartTackRunnerUseCase startTackUseCase,
   })  : _appRouter = appRouter,
+        _appLifeCycleProvider = appLifeCycleProvider,
         _observeRunnerTackIntentUseCase = observeRunnerTackIntentUseCase,
+        _fetchTackUseCase = fetchTackUseCase,
         _fetchHasRunningTackUseCase = fetchHasRunningTackUseCase,
         _fetchUserContactsUseCase = fetchUserContactsUseCase,
         _cancelTackUseCase = cancelTackRunnerUseCase,
@@ -54,6 +60,10 @@ class OngoingRunnerTackBloc
             ),
           ),
         ) {
+    appLifeCycleProvider.addObserver(this);
+
+    on<RefreshAction>(_onRefreshAction);
+
     on<FetchHasRunningTackAction>(_onFetchHasRunningTackAction);
     on<FetchUserContactsAction>(_onFetchUserContactsAction);
 
@@ -72,6 +82,37 @@ class OngoingRunnerTackBloc
 
     add(const FetchHasRunningTackAction());
     add(const FetchUserContactsAction());
+  }
+
+  Future<void> _onRefreshAction(
+    RefreshAction event,
+    Emitter<OngoingRunnerTackState> emit,
+  ) async {
+    try {
+      emit(state.copyWith(isLoading: true));
+      final Tack tack = await _fetchTackUseCase.execute(
+        FetchTackPayload(
+          id: state.runnerTack.tack.id,
+        ),
+      );
+      if (tack.isCanceled || tack.status == TackStatus.completed) {
+        _appRouter.removeNamed(
+          OngoingRunnerTackFeature.routeName(
+            id: state.runnerTack.id,
+          ),
+        );
+      }
+    } catch (e) {
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          ErrorAlert(
+            messageKey: e.toString(),
+          ),
+        ),
+      );
+    } finally {
+      emit(state.copyWith(isLoading: false));
+    }
   }
 
   Future<void> _onFetchHasRunningTackAction(
@@ -285,8 +326,14 @@ class OngoingRunnerTackBloc
   }
 
   @override
+  void onShouldRefresh() {
+    add(const RefreshAction());
+  }
+
+  @override
   Future<void> close() async {
     _tackIntentSubscription.cancel();
+    _appLifeCycleProvider.removeObserver(this);
 
     return super.close();
   }

@@ -50,7 +50,7 @@ class DataDI {
 
     appLocator.registerSingleton<SessionApiProvider>(
       SessionApiProviderImpl(
-        baseUrl: appLocator.get<AppConfig>().baseUrl,
+        appConfig: appLocator.get<AppConfig>(),
         errorHandler: appLocator.get<ErrorHandler>(),
       ),
     );
@@ -64,7 +64,7 @@ class DataDI {
 
     appLocator.registerLazySingleton<ApiProvider>(
       () => ApiProvider(
-        baseUrl: appLocator.get<AppConfig>().baseUrl,
+        appConfig: appLocator.get<AppConfig>(),
         errorHandler: appLocator.get<ErrorHandler>(),
         sessionProvider: appLocator.get<SessionProvider>(),
         mapper: appLocator.get<MapperFactory>(),
@@ -147,6 +147,11 @@ class DataDI {
   }
 
   Future<void> setupPostLoginAppLocator() async {
+    final AppLifeCycleProvider appLifeCycleProvider = AppLifeCycleProvider(
+      globalAppRouter: appLocator.get<GlobalAppRouterDelegate>(),
+    );
+    appLocator.registerSingleton(appLifeCycleProvider);
+
     appLocator.registerLazySingleton<LogOutUseCase>(
       () => LogOutUseCase(
         globalAppRouter: appLocator.get<GlobalAppRouterDelegate>(),
@@ -172,6 +177,7 @@ class DataDI {
         appConfig: appLocator.get<AppConfig>(),
         sessionProvider: appLocator.get<SessionProvider>(),
         mapper: appLocator.get<MapperFactory>(),
+        appLifeCycleProvider: appLifeCycleProvider,
       ),
     );
 
@@ -207,6 +213,11 @@ class DataDI {
     );
     appLocator.registerLazySingleton<FetchUserBalanceUseCase>(
       () => FetchUserBalanceUseCase(
+        userRepository: appLocator.get<UserRepository>(),
+      ),
+    );
+    appLocator.registerLazySingleton<FetchUserUseCase>(
+      () => FetchUserUseCase(
         userRepository: appLocator.get<UserRepository>(),
       ),
     );
@@ -417,6 +428,11 @@ class DataDI {
         tacksRepository: appLocator.get<TacksRepository>(),
       ),
     );
+    appLocator.registerLazySingleton<FetchTackUseCase>(
+      () => FetchTackUseCase(
+        tacksRepository: appLocator.get<TacksRepository>(),
+      ),
+    );
     appLocator.registerLazySingleton<FetchCompletedTacksUseCase>(
       () => FetchCompletedTacksUseCase(
         tacksRepository: appLocator.get<TacksRepository>(),
@@ -576,6 +592,7 @@ class DataDI {
     appLocator.unregister<UpdateUserInfoUseCase>();
     appLocator.unregister<ChangePasswordUseCase>();
     appLocator.unregister<FetchUserBalanceUseCase>();
+    appLocator.unregister<FetchUserUseCase>();
     appLocator.unregister<GetUserBalanceUseCase>();
     appLocator.unregister<ObserveUserBalanceUseCase>();
     appLocator.unregister<FetchUserContactsUseCase>();
@@ -620,6 +637,7 @@ class DataDI {
     appLocator.unregister<FetchRunnerTacksUseCase>();
     appLocator.unregister<FetchTackOffersUseCase>();
     appLocator.unregister<FetchTackerTacksUseCase>();
+    appLocator.unregister<FetchTackUseCase>();
     appLocator.unregister<FetchCompletedTacksUseCase>();
     appLocator.unregister<FetchCreatedTacksUseCase>();
     appLocator.unregister<MakeOfferUseCase>();
@@ -645,5 +663,7 @@ class DataDI {
     appLocator.unregister<HandleStripeDepositUseCase>();
     appLocator.unregister<HandleDwollaDepositUseCase>();
     appLocator.unregister<HandleDwollaWithdrawUseCase>();
+
+    appLocator.unregister<AppLifeCycleProvider>();
   }
 }

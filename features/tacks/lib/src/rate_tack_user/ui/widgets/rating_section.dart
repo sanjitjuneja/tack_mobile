@@ -18,9 +18,7 @@ class RatingSection extends StatelessWidget {
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.3,
       ),
-      decoration: BoxDecoration(
-        color: AppTheme.ratingBackgroundColor,
-      ),
+      color: AppTheme.ratingBackgroundColor,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,

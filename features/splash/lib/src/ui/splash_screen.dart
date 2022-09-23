@@ -1,5 +1,7 @@
 import 'package:core_ui/core_ui.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+
 import 'splash_form.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -7,9 +9,15 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppTheme.backgroundColor,
-      body: const SplashForm(),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        systemNavigationBarColor: AppTheme.backgroundColor,
+        systemNavigationBarIconBrightness: Brightness.dark,
+      ),
+      child: CupertinoPageScaffold(
+        backgroundColor: AppTheme.backgroundColor,
+        child: const SplashForm(),
+      ),
     );
   }
 }

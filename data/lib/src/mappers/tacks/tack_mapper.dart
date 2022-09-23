@@ -21,6 +21,7 @@ class TackMapper implements Mapper<TackEntity, domain.Tack> {
       estimatedTime: entity.estimationTime,
       allowCounterOffers: entity.allowCounterOffer,
       status: tackStatusMapper.fromEntity(entity.status),
+      isCanceled: entity.isCanceled,
       tacker: tackUserMapper.fromEntity(entity.tacker),
       runner: entity.runner != null
           ? tackUserMapper.fromEntity(entity.runner!)
@@ -41,6 +42,7 @@ class TackMapper implements Mapper<TackEntity, domain.Tack> {
       estimationTime: item.estimatedTime,
       allowCounterOffer: item.allowCounterOffers,
       status: tackStatusMapper.toEntity(item.status),
+      isCanceled: item.isCanceled,
       tacker: tackUserMapper.toEntity(item.tacker),
       runner:
           item.runner != null ? tackUserMapper.toEntity(item.runner!) : null,

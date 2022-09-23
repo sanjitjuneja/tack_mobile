@@ -1,10 +1,10 @@
 import 'package:domain/tacks/tacks.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:tacks/src/ongoing_tack/ongoing_tacker_tack/bloc/ongoing_tacker_tack_bloc.dart';
-import 'package:tacks/src/ongoing_tack/ongoing_tacker_tack/ongoing_tacker_tack_offers_section/ui/ongoing_tacker_tack_offers_section.dart';
-import 'package:tacks/src/ongoing_tack/ongoing_tacker_tack/ui/widgets/ongoing_tacker_tack_runner_widget.dart';
-import 'package:tacks/src/ongoing_tack/widgets/tack_details_section.dart';
+import '../../bloc/ongoing_tacker_tack_bloc.dart';
+import '../../ongoing_tacker_tack_offers_section/ui/ongoing_tacker_tack_offers_section.dart';
+import 'ongoing_tacker_tack_runner_widget.dart';
+import '../../../widgets/tack_details_section.dart';
 
 class OngoingTackerTackBody extends StatelessWidget {
   final OngoingTackerTackState state;
@@ -31,7 +31,7 @@ class OngoingTackerTackBody extends StatelessWidget {
         break;
       case TackStatus.pendingAccept:
         return OngoingTackerTackOffersSection(
-          state: state,
+          tack: state.tack,
           padding: padding,
         );
       case TackStatus.pendingStart:

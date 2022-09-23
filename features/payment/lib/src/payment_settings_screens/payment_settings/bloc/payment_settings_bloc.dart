@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:domain/use_case.dart';
 import 'package:navigation/navigation.dart';
 import 'package:payment/payment.dart';
 import 'package:domain/domain.dart';

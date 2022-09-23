@@ -24,7 +24,7 @@ class AppRouteInformationParser
       uri = initialUri;
       isStartUp = false;
     } else {
-      uri = Uri?.tryParse(routeInformation.location.toString());
+      uri = Uri.tryParse(routeInformation.location.toString());
     }
     late Page<dynamic> page;
 

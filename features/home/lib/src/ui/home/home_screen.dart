@@ -4,6 +4,7 @@ import 'package:dashboard/dashboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:tacks/tacks.dart';
 
@@ -99,40 +100,46 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-      resizeToAvoidBottomInset: false,
-      controller: _tabController,
-      tabBar: CupertinoTabBar(
-        items: _getNavigationItems(context),
-        backgroundColor: AppTheme.navBarBackgroundColor,
-        activeColor: AppTheme.navBarActiveIconColor,
-        inactiveColor: AppTheme.navBarInactiveIconColor,
-        height: 55,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        systemNavigationBarColor: AppTheme.navBarBackgroundColor,
+        systemNavigationBarIconBrightness: Brightness.dark,
       ),
-      tabBuilder: (_, int index) {
-        switch (index) {
-          case HomeScreenTab.dashboardTabIndex:
-            return CupertinoTabView(
-              builder: (_) {
-                return const DashboardScreen();
-              },
-            );
-          case HomeScreenTab.addTabIndex:
-            return CupertinoTabView(
-              builder: (_) {
-                return const CreateTackScreen();
-              },
-            );
-          case HomeScreenTab.tacksTabIndex:
-            return CupertinoTabView(
-              builder: (_) {
-                return const TacksScreen();
-              },
-            );
-          default:
-            return const CupertinoTabView();
-        }
-      },
+      child: CupertinoTabScaffold(
+        resizeToAvoidBottomInset: false,
+        controller: _tabController,
+        tabBar: CupertinoTabBar(
+          items: _getNavigationItems(context),
+          backgroundColor: AppTheme.navBarBackgroundColor,
+          activeColor: AppTheme.navBarActiveIconColor,
+          inactiveColor: AppTheme.navBarInactiveIconColor,
+          height: 55,
+        ),
+        tabBuilder: (_, int index) {
+          switch (index) {
+            case HomeScreenTab.dashboardTabIndex:
+              return CupertinoTabView(
+                builder: (_) {
+                  return const DashboardScreen();
+                },
+              );
+            case HomeScreenTab.addTabIndex:
+              return CupertinoTabView(
+                builder: (_) {
+                  return const CreateTackScreen();
+                },
+              );
+            case HomeScreenTab.tacksTabIndex:
+              return CupertinoTabView(
+                builder: (_) {
+                  return const TacksScreen();
+                },
+              );
+            default:
+              return const CupertinoTabView();
+          }
+        },
+      ),
     );
   }
 }

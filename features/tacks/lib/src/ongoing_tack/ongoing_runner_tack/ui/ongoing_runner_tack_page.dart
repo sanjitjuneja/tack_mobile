@@ -35,15 +35,17 @@ class _OngoingRunnerTackPage extends Page<void> {
           return OngoingRunnerTackBloc(
             runnerTack: runnerTack,
             appRouter: AppRouter.of(context),
+            appLifeCycleProvider: appLocator.get<AppLifeCycleProvider>(),
             observeRunnerTackIntentUseCase:
                 appLocator.get<ObserveRunnerTackIntentUseCase>(),
+            fetchTackUseCase: appLocator.get<FetchTackUseCase>(),
             fetchUserContactsUseCase:
                 appLocator.get<FetchUserContactsUseCase>(),
+            fetchHasRunningTackUseCase:
+                appLocator.get<FetchHasRunningTackUseCase>(),
             cancelTackRunnerUseCase: appLocator.get<CancelTackRunnerUseCase>(),
             completeTackUseCase: appLocator.get<CompleteTackRunnerUseCase>(),
             startTackUseCase: appLocator.get<StartTackRunnerUseCase>(),
-            fetchHasRunningTackUseCase:
-                appLocator.get<FetchHasRunningTackUseCase>(),
           );
         },
         child: const OngoingRunnerTackScreen(),

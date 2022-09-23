@@ -8,6 +8,7 @@ class Tack extends Equatable with IdentifiableMixin, Comparable {
   final Duration? estimatedTime;
   final bool allowCounterOffers;
   final TackStatus status;
+  final bool isCanceled;
   final TackUser tacker;
   final TackUser? runner;
   final Group group;
@@ -30,6 +31,7 @@ class Tack extends Equatable with IdentifiableMixin, Comparable {
     required this.estimatedTime,
     required this.allowCounterOffers,
     required this.status,
+    required this.isCanceled,
     required this.tacker,
     required this.runner,
     required this.group,
@@ -46,6 +48,7 @@ class Tack extends Equatable with IdentifiableMixin, Comparable {
         estimatedTime,
         allowCounterOffers,
         status,
+        isCanceled,
         tacker,
         runner,
         group,

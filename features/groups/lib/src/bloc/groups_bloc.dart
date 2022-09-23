@@ -3,13 +3,14 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
-import 'package:domain/use_case.dart';
 
 part 'groups_event.dart';
 
 part 'groups_state.dart';
 
-class GroupsBloc extends Bloc<GroupsEvent, GroupsState> {
+class GroupsBloc extends Bloc<GroupsEvent, GroupsState>
+    with AppLifeCycleObserver {
+  final AppLifeCycleProvider _appLifeCycleProvider;
   final LoadGroupsUseCase _loadGroupsUseCase;
   final ObserveGroupIntentUseCase _observeGroupIntentUseCase;
 
@@ -17,15 +18,20 @@ class GroupsBloc extends Bloc<GroupsEvent, GroupsState> {
       _groupIntentSubscription;
 
   GroupsBloc({
+    required AppLifeCycleProvider appLifeCycleProvider,
     required LoadGroupsUseCase loadGroupsUseCase,
     required ObserveGroupIntentUseCase observeGroupIntentUseCase,
-  })  : _loadGroupsUseCase = loadGroupsUseCase,
+  })  : _appLifeCycleProvider = appLifeCycleProvider,
+        _loadGroupsUseCase = loadGroupsUseCase,
         _observeGroupIntentUseCase = observeGroupIntentUseCase,
         super(
           GroupsState(
             isLoading: true,
           ),
         ) {
+    _appLifeCycleProvider.addObserver(this);
+
+    on<AppRefreshAction>(_onAppRefreshAction);
     on<InitialLoad>(_onInitialLoad);
     on<RefreshAction>(_onRefreshAction);
     on<LoadMoreAction>(_onLoadMoreAction);
@@ -39,6 +45,14 @@ class GroupsBloc extends Bloc<GroupsEvent, GroupsState> {
     });
 
     add(const InitialLoad());
+  }
+
+  Future<void> _onAppRefreshAction(
+    AppRefreshAction event,
+    Emitter<GroupsState> emit,
+  ) async {
+    emit(state.copyWith(isLoading: true));
+    add(const RefreshAction());
   }
 
   Future<void> _onInitialLoad(
@@ -130,8 +144,14 @@ class GroupsBloc extends Bloc<GroupsEvent, GroupsState> {
   }
 
   @override
+  void onShouldRefresh() {
+    add(const AppRefreshAction());
+  }
+
+  @override
   Future<void> close() async {
     _groupIntentSubscription.cancel();
+    _appLifeCycleProvider.removeObserver(this);
 
     return super.close();
   }

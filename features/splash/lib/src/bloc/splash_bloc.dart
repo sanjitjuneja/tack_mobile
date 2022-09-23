@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
-import 'package:domain/use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
@@ -40,6 +39,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
           withSlideAnimation: false,
         ),
       );
+      appLocator.get<AppLifeCycleProvider>().checkConnection();
     } else {
       _globalAppRouter.replace(OnboardingFeature.page());
     }
