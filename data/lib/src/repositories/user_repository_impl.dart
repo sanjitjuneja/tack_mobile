@@ -150,7 +150,6 @@ class UserRepositoryImpl implements domain.UserRepository {
 
   Future<void> _onUserUpdated(domain.User user) async {
     await _sharedPreferencesProvider.setUser(user);
-    await _sharedPreferencesProvider.setActiveGroupId(user.activeGroup);
 
     _userStreamController.add(user);
   }

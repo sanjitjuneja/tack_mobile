@@ -4,7 +4,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 
 class PageHeaderWithGroupWidget extends StatelessWidget {
-  final String subtitleKey;
+  final String? subtitleKey;
   final String? titleKey;
   final Group? group;
   final AppIcon? image;
@@ -13,7 +13,7 @@ class PageHeaderWithGroupWidget extends StatelessWidget {
 
   const PageHeaderWithGroupWidget({
     super.key,
-    required this.subtitleKey,
+    this.subtitleKey,
     this.titleKey,
     this.group,
     this.image,
@@ -38,7 +38,9 @@ class PageHeaderWithGroupWidget extends StatelessWidget {
             const SizedBox(width: 14),
             Column(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: subtitleKey != null
+                  ? CrossAxisAlignment.start
+                  : CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
                   group?.name ?? FlutterI18n.translate(context, titleKey!),
@@ -46,12 +48,14 @@ class PageHeaderWithGroupWidget extends StatelessWidget {
                     color: AppTheme.textPrimaryColor,
                   ),
                 ),
-                Text(
-                  FlutterI18n.translate(context, subtitleKey),
-                  style: AppTextTheme.manrope11Regular.copyWith(
-                    color: AppTheme.textHintColor,
+                if (subtitleKey != null) ...<Widget>[
+                  Text(
+                    FlutterI18n.translate(context, subtitleKey!),
+                    style: AppTextTheme.manrope11Regular.copyWith(
+                      color: AppTheme.textHintColor,
+                    ),
                   ),
-                ),
+                ],
               ],
             ),
           ],

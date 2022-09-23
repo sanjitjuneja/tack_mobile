@@ -9,15 +9,21 @@ class _PickGroupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      backgroundColor: AppTheme.secondaryBackgroundColor,
-      navigationBar: AppNavigationBar(
-        backgroundColor: AppTheme.secondaryBackgroundColor,
-        withResult: true,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        systemNavigationBarColor: AppTheme.secondaryBackgroundColor,
+        systemNavigationBarIconBrightness: Brightness.dark,
       ),
-      child: SafeArea(
-        child: _PickGroupForm(
-          selectedGroup: selectedGroup,
+      child: CupertinoPageScaffold(
+        backgroundColor: AppTheme.secondaryBackgroundColor,
+        navigationBar: AppNavigationBar(
+          backgroundColor: AppTheme.secondaryBackgroundColor,
+          withResult: true,
+        ),
+        child: SafeArea(
+          child: _PickGroupForm(
+            selectedGroup: selectedGroup,
+          ),
         ),
       ),
     );

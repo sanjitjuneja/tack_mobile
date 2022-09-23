@@ -1,5 +1,8 @@
 library domain;
 
+export 'use_case.dart';
+
+export 'app_life_cycle/app_life_cycle.dart';
 export 'global/global.dart';
 export 'authorization/authorization.dart';
 export 'groups/groups.dart';

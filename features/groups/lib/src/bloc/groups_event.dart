@@ -4,6 +4,10 @@ abstract class GroupsEvent {
   const GroupsEvent();
 }
 
+class AppRefreshAction extends GroupsEvent {
+  const AppRefreshAction();
+}
+
 class InitialLoad extends GroupsEvent {
   const InitialLoad();
 }

@@ -17,6 +17,8 @@ dependencies:
     path: ../navigation
 
  # Features
+  offline:
+    path: ../features/offline
   onboarding:
     path: ../features/onboarding
 

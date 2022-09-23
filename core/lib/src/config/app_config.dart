@@ -9,7 +9,8 @@ class AppConfig {
   static const String stagingUrl = 'https://backend.tackapp.net/api/v1/';
   static const String productionUrl = 'https://backend.tackapp.net/api/v1/';
 
-  static const String developmentWebSocketsUrl = 'wss://backend.tackapp.net/ws/';
+  static const String developmentWebSocketsUrl =
+      'wss://backend.tackapp.net/ws/';
   static const String stagingWebSocketsUrl = 'wss://backend.tackapp.net/ws/';
   static const String productionWebSocketsUrl = 'wss://backend.tackapp.net/ws/';
 
@@ -20,8 +21,10 @@ class AppConfig {
   static const String stripeProductionKey =
       'pk_live_51KYDDWHUDqRuKWfqP9RhiTx6ZQitCGuLj0XJDwn6VA8NYQfdUgg8nd0mtNO8x1ZW3aEaKAzLGl5ZHEJx7UtYvBqV000LqPBbZu';
 
-  static const String merchantIdentifierDevelopment = 'merchant.com.tackApp.ios.dev';
-  static const String merchantIdentifierStaging = 'merchant.com.tackApp.ios.stage';
+  static const String merchantIdentifierDevelopment =
+      'merchant.com.tackApp.ios.dev';
+  static const String merchantIdentifierStaging =
+      'merchant.com.tackApp.ios.stage';
   static const String merchantIdentifierProduction = 'merchant.com.tackApp.ios';
 
   final Flavor flavor;
@@ -29,6 +32,10 @@ class AppConfig {
   final String webSocketsUrl;
   final String stripeKey;
   final String merchantIdentifier;
+
+  Map<String, dynamic> get flavorHeader => <String, dynamic>{
+        'flavor': flavor.index,
+      };
 
   AppConfig._(
     this.flavor,

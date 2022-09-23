@@ -1,9 +1,9 @@
 import 'dart:async';
+
 import 'package:account/account.dart';
 import 'package:core/core.dart';
 import 'package:customer_support/customer_support.dart';
 import 'package:domain/domain.dart';
-import 'package:domain/use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:groups/groups.dart';
 import 'package:navigation/navigation.dart';

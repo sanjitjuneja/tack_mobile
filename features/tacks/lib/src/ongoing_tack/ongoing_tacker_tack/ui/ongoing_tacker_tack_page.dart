@@ -35,8 +35,10 @@ class _OngoingTackerTackPage extends Page<void> {
           return OngoingTackerTackBloc(
             tack: tack,
             appRouter: AppRouter.of(context),
+            appLifeCycleProvider: appLocator.get<AppLifeCycleProvider>(),
             observeTackerTackIntentUseCase:
                 appLocator.get<ObserveTackerTackIntentUseCase>(),
+            fetchTackUseCase: appLocator.get<FetchTackUseCase>(),
             fetchUserContactsUseCase:
                 appLocator.get<FetchUserContactsUseCase>(),
             cancelTackTackerUseCase: appLocator.get<CancelTackTackerUseCase>(),

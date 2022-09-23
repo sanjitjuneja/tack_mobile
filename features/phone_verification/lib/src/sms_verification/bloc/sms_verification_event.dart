@@ -16,6 +16,10 @@ class ResendCodeAction extends SmsVerificationEvent {
   const ResendCodeAction();
 }
 
+class ResendCodeTimerExpired extends SmsVerificationEvent {
+  const ResendCodeTimerExpired();
+}
+
 class VerifyNumberAction extends SmsVerificationEvent {
   const VerifyNumberAction();
 }

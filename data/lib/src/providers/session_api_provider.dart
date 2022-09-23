@@ -1,9 +1,9 @@
-import 'package:data/src/entities/entities.dart';
-import 'package:data/src/providers/api_provider_core.dart';
+import 'api_provider_core.dart';
+import '../entities/entities.dart';
 
 abstract class SessionApiProvider extends ApiProviderCore {
   SessionApiProvider({
-    required super.baseUrl,
+    required super.appConfig,
     required super.errorHandler,
   });
 

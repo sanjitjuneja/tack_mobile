@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
-import 'package:domain/use_case.dart';
 import 'package:groups/groups.dart';
 import 'package:navigation/navigation.dart';
 import 'package:tacks/tacks.dart';
@@ -12,8 +11,10 @@ part 'global_event.dart';
 
 part 'global_state.dart';
 
-class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
+class GlobalBloc extends Bloc<GlobalEvent, GlobalState>
+    with AppLifeCycleObserver {
   final AppRouterDelegate _appRouter;
+  final AppLifeCycleProvider _appLifeCycleProvider;
   final ObserveUserUseCase _observeUserUseCase;
   final ObserveCurrentGroupUseCase _observeCurrentGroupUseCase;
   final ObserveGroupsCountUseCase _observeGroupsCountUseCase;
@@ -23,6 +24,8 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
       _observeCancelTackerTackRunnerIntentUseCase;
   final ObserveRunnerTackIntentUseCase _observeRunnerTackIntentUseCase;
   final ObserveTackerTackIntentUseCase _observeTackerTackIntentUseCase;
+  final FetchUserUseCase _fetchUserUseCase;
+  final FetchUserBalanceUseCase _fetchUserBalanceUseCase;
   final FetchGroupUseCase _fetchGroupUseCase;
   final SelectGroupUseCase _selectGroupUseCase;
 
@@ -40,6 +43,7 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
 
   GlobalBloc({
     required AppRouterDelegate appRouter,
+    required AppLifeCycleProvider appLifeCycleProvider,
     required GetCurrentUserUseCase getCurrentUserUseCase,
     required ObserveUserUseCase observeUserUseCase,
     required GetCurrentGroupUseCase getCurrentGroupUseCase,
@@ -52,9 +56,12 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
         observeCancelTackerTackRunnerIntentUseCase,
     required ObserveRunnerTackIntentUseCase observeRunnerTackIntentUseCase,
     required ObserveTackerTackIntentUseCase observeTackerTackIntentUseCase,
+    required FetchUserUseCase fetchUserUseCase,
+    required FetchUserBalanceUseCase fetchUserBalanceUseCase,
     required FetchGroupUseCase fetchGroupUseCase,
     required SelectGroupUseCase selectGroupUseCase,
   })  : _appRouter = appRouter,
+        _appLifeCycleProvider = appLifeCycleProvider,
         _observeUserUseCase = observeUserUseCase,
         _observeCurrentGroupUseCase = observeCurrentGroupUseCase,
         _observeGroupsCountUseCase = observeGroupsCountUseCase,
@@ -64,6 +71,8 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
             observeCancelTackerTackRunnerIntentUseCase,
         _observeRunnerTackIntentUseCase = observeRunnerTackIntentUseCase,
         _observeTackerTackIntentUseCase = observeTackerTackIntentUseCase,
+        _fetchUserUseCase = fetchUserUseCase,
+        _fetchUserBalanceUseCase = fetchUserBalanceUseCase,
         _fetchGroupUseCase = fetchGroupUseCase,
         _selectGroupUseCase = selectGroupUseCase,
         super(
@@ -73,6 +82,10 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
             currentGroup: getCurrentGroupUseCase.execute(NoParams()),
           ),
         ) {
+    _appLifeCycleProvider.addObserver(this);
+
+    on<AppRefreshAction>(_onAppRefreshAction);
+
     on<UserChanged>(_onUserChanged);
     on<CurrentGroupChanged>(_onCurrentGroupChanged);
     on<GroupsCountChanged>(_onGroupsCountChanged);
@@ -123,6 +136,16 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
         .listen((WebSocketIntent<Tack> tackIntent) {
       add(TackerTackIntentAction(tackIntent: tackIntent));
     });
+  }
+
+  Future<void> _onAppRefreshAction(
+    AppRefreshAction event,
+    Emitter<GlobalState> emit,
+  ) async {
+    try {
+      await _fetchUserBalanceUseCase.execute(const FetchUserBalancePayload());
+      await _fetchUserUseCase.execute(NoParams());
+    } catch (_) {}
   }
 
   Future<void> _onUserChanged(
@@ -316,6 +339,11 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
   }
 
   @override
+  void onShouldRefresh() {
+    add(const AppRefreshAction());
+  }
+
+  @override
   Future<void> close() async {
     _userSubscription.cancel();
     _currentGroupSubscription.cancel();
@@ -325,6 +353,8 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
     _cancelTackerTackRunnerIntentSubscription.cancel();
     _runnerTackIntentSubscription.cancel();
     _tackerTackIntentSubscription.cancel();
+
+    _appLifeCycleProvider.removeObserver(this);
 
     return super.close();
   }

@@ -37,6 +37,7 @@ class _MyGroupsPage extends Page<void> {
           BlocProvider<GroupsBloc>(
             create: (_) {
               return GroupsBloc(
+                appLifeCycleProvider: appLocator.get<AppLifeCycleProvider>(),
                 loadGroupsUseCase: appLocator.get<LoadGroupsUseCase>(),
                 observeGroupIntentUseCase:
                     appLocator.get<ObserveGroupIntentUseCase>(),

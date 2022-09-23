@@ -16,21 +16,27 @@ class AppFullAlertDialogScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: showNavigation ? null : () => Future<bool>.value(false),
-      child: CupertinoPageScaffold(
-        backgroundColor: AppTheme.primaryColor,
-        navigationBar: AppNavigationBar(
-          backgroundColor: AppTheme.primaryColor,
-          leading: showNavigation
-              ? AppBackButton(
-                  onPressed: () =>
-                      GlobalAppRouter.of(context).popWithResult(false),
-                )
-              : null,
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle(
+          systemNavigationBarColor: AppTheme.secondaryBackgroundColor,
+          systemNavigationBarIconBrightness: Brightness.dark,
         ),
-        child: SafeArea(
-          child: AppFullAlertDialogForm(
-            alert: alert,
-            shouldUseDefaultContent: shouldUseDefaultContent,
+        child: CupertinoPageScaffold(
+          backgroundColor: AppTheme.secondaryBackgroundColor,
+          navigationBar: AppNavigationBar(
+            backgroundColor: AppTheme.secondaryBackgroundColor,
+            leading: showNavigation
+                ? AppBackButton(
+                    onPressed: () =>
+                        GlobalAppRouter.of(context).popWithResult(false),
+                  )
+                : null,
+          ),
+          child: SafeArea(
+            child: AppFullAlertDialogForm(
+              alert: alert,
+              shouldUseDefaultContent: shouldUseDefaultContent,
+            ),
           ),
         ),
       ),

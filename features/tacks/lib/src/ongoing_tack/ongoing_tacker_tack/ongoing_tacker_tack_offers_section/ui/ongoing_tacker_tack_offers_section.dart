@@ -6,18 +6,17 @@ import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../bloc/ongoing_tacker_tack_bloc.dart';
 import '../bloc/offers_bloc.dart';
 import '../../../widgets/tack_details_section.dart';
 import 'widgets/ongoing_tacker_tack_offer_tile.dart';
 
 class OngoingTackerTackOffersSection extends StatelessWidget {
-  final OngoingTackerTackState state;
+  final Tack tack;
   final EdgeInsets padding;
 
   const OngoingTackerTackOffersSection({
     super.key,
-    required this.state,
+    required this.tack,
     required this.padding,
   });
 
@@ -26,7 +25,7 @@ class OngoingTackerTackOffersSection extends StatelessWidget {
     return BlocProvider<OffersBloc>(
       create: (_) {
         return OffersBloc(
-          tack: state.tack,
+          tack: tack,
           fetchTacksOffersUseCase: appLocator.get<FetchTackOffersUseCase>(),
           observeOfferIntentUseCase:
               appLocator.get<ObserveOfferIntentUseCase>(),
@@ -52,7 +51,7 @@ class OngoingTackerTackOffersSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   TackDetailSection(
-                    tack: state.tack,
+                    tack: tack,
                     hasDeleteAction: false,
                   ),
                   if (!blocState.isLoading) ...<Widget>[

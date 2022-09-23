@@ -16,13 +16,13 @@ class HomePage extends PageWithScaffoldKey<dynamic> {
   @override
   Route<dynamic> createRoute(BuildContext context) {
     return MaterialPageRoute<dynamic>(
+      settings: this,
       builder: (BuildContext context) => ScaffoldMessenger(
         key: scaffoldKey,
         child: HomeScreen(
           key: AppRouter.of(context).navigationTabKey,
         ),
       ),
-      settings: this,
     );
   }
 }

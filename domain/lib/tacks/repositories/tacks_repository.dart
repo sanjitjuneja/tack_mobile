@@ -43,6 +43,8 @@ abstract class TacksRepository {
     FetchCreatedTacksPayload payload,
   );
 
+  Future<Tack> fetchTack(FetchTackPayload payload);
+
   Future<Tack> createTack(CreateTackPayload payload);
 
   Future<Tack> updateTack(UpdateTackPayload payload);

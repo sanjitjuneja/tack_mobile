@@ -4,39 +4,39 @@ import 'dart:io';
 
 import 'package:core/core.dart';
 import 'package:domain/domain.dart' as domain;
-import 'package:flutter/cupertino.dart';
 import 'package:web_socket_channel/io.dart' as ws;
 import 'package:web_socket_channel/status.dart' as status;
 
-import '../entities/entities.dart';
-import '../mappers/mappers.dart';
 import 'session_provider.dart';
 import 'web_sockets_handlers.dart';
+import '../entities/entities.dart';
+import '../mappers/mappers.dart';
 
-class WebSocketsProvider with WebSocketHandlers, WidgetsBindingObserver {
+class WebSocketsProvider with WebSocketHandlers, domain.AppLifeCycleObserver {
   static const String _deviceInfoHeader = 'device-info';
   static const Duration _pingIntervalDuration = Duration(seconds: 30);
   static const Duration _autoReconnectDuration = Duration(milliseconds: 3000);
-  static const Duration _autoDisconnectDuration = Duration(seconds: 120);
 
   final AppConfig _appConfig;
   final SessionProvider _sessionProvider;
   final MapperFactory _mapper;
+  final domain.AppLifeCycleProvider _appLifeCycleProvider;
 
   ws.IOWebSocketChannel? socketChannel;
   StreamSubscription? listener;
 
   Timer? _reconnectTimer;
-  Timer? _autoDisconnectTimer;
 
   WebSocketsProvider({
     required AppConfig appConfig,
     required SessionProvider sessionProvider,
     required MapperFactory mapper,
+    required domain.AppLifeCycleProvider appLifeCycleProvider,
   })  : _appConfig = appConfig,
         _sessionProvider = sessionProvider,
-        _mapper = mapper {
-    WidgetsBinding.instance.addObserver(this);
+        _mapper = mapper,
+        _appLifeCycleProvider = appLifeCycleProvider {
+    _appLifeCycleProvider.addObserver(this);
     initStreams();
     connect();
   }
@@ -105,7 +105,11 @@ class WebSocketsProvider with WebSocketHandlers, WidgetsBindingObserver {
   }
 
   Future<void> connect() async {
-    if (socketChannel?.innerWebSocket?.readyState == WebSocket.open) return;
+    final int? webSocketState = socketChannel?.innerWebSocket?.readyState;
+    if (webSocketState == WebSocket.open ||
+        webSocketState == WebSocket.connecting) {
+      return;
+    }
     listener?.cancel();
 
     try {
@@ -123,7 +127,7 @@ class WebSocketsProvider with WebSocketHandlers, WidgetsBindingObserver {
         headers: <String, dynamic>{
           HttpHeaders.authorizationHeader: session.accessToken,
           _deviceInfoHeader: deviceInfo,
-        },
+        }..addAll(_appConfig.flavorHeader),
       );
       listener = socketChannel!.stream.listen(
         _onMessageReceived,
@@ -135,15 +139,19 @@ class WebSocketsProvider with WebSocketHandlers, WidgetsBindingObserver {
         },
       );
 
-      socketChannel!.sink.add('Web socket is Connected -- ${DateTime.now()}');
+      socketChannel!.sink.add(
+        'Web socket is Connected -- ${DateTime.now().toUtc()}',
+      );
     } catch (e) {
       await Future.delayed(_autoReconnectDuration);
-      connect();
+      reconnect();
     }
   }
 
   Future<void> _disconnect() async {
-    socketChannel?.sink.add('Web socket is Disconnecting -- ${DateTime.now()}');
+    socketChannel?.sink.add(
+      'Web socket is Disconnecting -- ${DateTime.now().toUtc()}',
+    );
     _removeAutoReconnect();
 
     await listener?.cancel();
@@ -166,10 +174,10 @@ class WebSocketsProvider with WebSocketHandlers, WidgetsBindingObserver {
   }) {
     try {
       final WebSocketIntentEntity<T> intentEntity =
-      WebSocketIntentEntity<T>.fromJson(json);
+          WebSocketIntentEntity<T>.fromJson(json);
 
       final domain.WebSocketIntent<D> intent =
-      _mapper.webSocketIntentMapper<T, D>().fromEntity(intentEntity);
+          _mapper.webSocketIntentMapper<T, D>().fromEntity(intentEntity);
       streamController.add(intent);
 
       socketChannel?.sink.add(
@@ -194,41 +202,33 @@ class WebSocketsProvider with WebSocketHandlers, WidgetsBindingObserver {
     }
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.detached) {
-      _removeAutoDisconnect();
-      _disconnect();
-    } else if (state == AppLifecycleState.resumed) {
-      _removeAutoDisconnect();
-      connect();
-    } else if (state == AppLifecycleState.paused) {
-      _autoDisconnectTimer = Timer(
-        _autoDisconnectDuration,
-        _disconnect,
-      );
-    }
-
-    super.didChangeAppLifecycleState(state);
-  }
-
   void _removeAutoReconnect() {
     _reconnectTimer?.cancel();
     _reconnectTimer = null;
   }
 
-  void _removeAutoDisconnect() {
-    _autoDisconnectTimer?.cancel();
-    _autoDisconnectTimer = null;
+  @override
+  void onShouldRefresh() {
+    connect();
+  }
+
+  @override
+  void onShouldSleep() {
+    _disconnect();
+  }
+
+  @override
+  void onShouldDispose() {
+    dispose();
   }
 
   Future<void> dispose() async {
     socketChannel?.sink.add(
-      'Web socket Dispose on Log out -- ${DateTime.now()}',
+      'Web socket Dispose on Log out -- ${DateTime.now().toUtc()}',
     );
-    _removeAutoDisconnect();
     _removeAutoReconnect();
     await _disconnect();
     close();
+    _appLifeCycleProvider.removeObserver(this);
   }
 }

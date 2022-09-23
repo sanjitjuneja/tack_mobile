@@ -9,7 +9,7 @@ class SharedPreferencesKeys {
   static const String session = 'session';
   static const String isAuthorized = 'isAuthorized';
   static const String user = 'user';
-  static const String activeGroupId = 'activeGroupId';
+  static const String activeGroup = 'activeGroup';
 }
 
 class SharedPreferencesProvider {
@@ -74,17 +74,29 @@ class SharedPreferencesProvider {
     return mapper.userMapper.fromEntity(userEntity);
   }
 
-  Future<bool> setActiveGroupId(int? groupId) async {
-    if (groupId == null) return true;
+  Future<bool> setActiveGroup(domain.Group? group) async {
+    if (group == null) {
+      return _sharedPreferences.remove(SharedPreferencesKeys.activeGroup);
+    } else {
+      final GroupEntity groupEntity = mapper.groupMapper.toEntity(group);
 
-    return _sharedPreferences.setInt(
-      SharedPreferencesKeys.activeGroupId,
-      groupId,
-    );
+      return _sharedPreferences.setString(
+        SharedPreferencesKeys.activeGroup,
+        jsonEncode(groupEntity),
+      );
+    }
   }
 
-  int? getActiveGroupId() {
-    return _sharedPreferences.getInt(SharedPreferencesKeys.activeGroupId);
+  domain.Group? getActiveGroup() {
+    final String? data = _sharedPreferences.getString(
+      SharedPreferencesKeys.activeGroup,
+    );
+
+    if (data == null) return null;
+
+    final GroupEntity groupEntity = GroupEntity.fromJson(jsonDecode(data));
+
+    return mapper.groupMapper.fromEntity(groupEntity);
   }
 
   bool isAllSetForLogin() {
@@ -101,7 +113,7 @@ class SharedPreferencesProvider {
 
   Future<void> clearSessionInfo() async {
     await _sharedPreferences.remove(SharedPreferencesKeys.user);
-    await _sharedPreferences.remove(SharedPreferencesKeys.activeGroupId);
+    await _sharedPreferences.remove(SharedPreferencesKeys.activeGroup);
     await _sharedPreferences.remove(SharedPreferencesKeys.session);
     await _sharedPreferences.setBool(SharedPreferencesKeys.isAuthorized, false);
   }

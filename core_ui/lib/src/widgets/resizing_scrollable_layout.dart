@@ -21,7 +21,7 @@ class ResizingScrollableLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints viewportConstraints) {
+      builder: (_, BoxConstraints viewportConstraints) {
         return CupertinoScrollbar(
           child: SingleChildScrollView(
             physics: physics,

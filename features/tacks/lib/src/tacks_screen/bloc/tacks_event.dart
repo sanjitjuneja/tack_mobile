@@ -4,6 +4,10 @@ abstract class TacksEvent {
   const TacksEvent();
 }
 
+class AppRefreshAction extends TacksEvent {
+  const AppRefreshAction();
+}
+
 class MoveToHomeTab extends TacksEvent {
   const MoveToHomeTab();
 }

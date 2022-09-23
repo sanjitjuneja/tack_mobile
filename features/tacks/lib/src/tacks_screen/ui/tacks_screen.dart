@@ -15,6 +15,7 @@ class TacksScreen extends StatelessWidget {
     return BlocProvider<TacksBloc>(
       create: (_) => TacksBloc(
         appRouter: appLocator.get<AppRouterDelegate>(),
+        appLifeCycleProvider: appLocator.get<AppLifeCycleProvider>(),
         fetchRunnerTacksUseCase: appLocator.get<FetchRunnerTacksUseCase>(),
         fetchTackerTacksUseCase: appLocator.get<FetchTackerTacksUseCase>(),
         observeRunnerTackIntentUseCase:

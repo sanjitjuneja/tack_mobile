@@ -15,6 +15,7 @@ part 'sms_verification_state.dart';
 
 class SmsVerificationBloc
     extends Bloc<SmsVerificationEvent, SmsVerificationState> {
+  static const Duration _resendCodeInterval = Duration(seconds: 30);
   static const int _verificationCodeLength = 6;
 
   final GlobalAppRouterDelegate _appRouter;
@@ -38,12 +39,18 @@ class SmsVerificationBloc
             codeData: const SmsCodeData(
               validator: __isCodeValid,
             ),
+            nextCodeResendAvailableTime: _calculateNextResendCodeTime,
           ),
         ) {
     on<CodeChanged>(_onCodeChanged);
 
     on<ResendCodeAction>(_onResendCodeAction);
+    on<ResendCodeTimerExpired>(_onResendCodeTimerExpired);
     on<VerifyNumberAction>(_onVerifyNumberAction);
+  }
+
+  static DateTime get _calculateNextResendCodeTime {
+    return DateTime.now().add(_resendCodeInterval);
   }
 
   Future<void> _onCodeChanged(
@@ -86,6 +93,7 @@ class SmsVerificationBloc
             udid: result.uuid,
             phoneNumber: state.phoneVerificationData.phoneNumber,
           ),
+          nextCodeResendAvailableTime: Optional(_calculateNextResendCodeTime),
         ),
       );
     } on SmsRequestAttemptsExceededException catch (e) {
@@ -108,6 +116,17 @@ class SmsVerificationBloc
         ),
       );
     }
+  }
+
+  Future<void> _onResendCodeTimerExpired(
+    ResendCodeTimerExpired event,
+    Emitter<SmsVerificationState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        nextCodeResendAvailableTime: const Optional(null),
+      ),
+    );
   }
 
   Future<void> _onVerifyNumberAction(

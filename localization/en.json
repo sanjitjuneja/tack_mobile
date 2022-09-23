@@ -318,7 +318,12 @@
       "buttonLabel": "Next"
     },
     "loadingTitle": "Verifying Code",
-    "resendCode": "Resend Code"
+    "resendCode": "Resend Code",
+    "availableIn": "In {time}"
+  },
+  "offlineScreen": {
+    "title": "Offline",
+    "description": "Looks like you are currently offline. Please reconnect in order to view, complete, and create Tacks within the app. "
   },
   "drawer": {
     "options": {

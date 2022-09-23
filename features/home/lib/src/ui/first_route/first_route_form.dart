@@ -42,9 +42,11 @@ class FirstRouteForm extends StatelessWidget {
           },
         ),
         BlocProvider<GlobalBloc>(
+          lazy: false,
           create: (_) {
             return GlobalBloc(
               appRouter: _appRouter,
+              appLifeCycleProvider: appLocator.get<AppLifeCycleProvider>(),
               getCurrentUserUseCase: appLocator.get<GetCurrentUserUseCase>(),
               observeUserUseCase: appLocator.get<ObserveUserUseCase>(),
               getCurrentGroupUseCase: appLocator.get<GetCurrentGroupUseCase>(),
@@ -61,6 +63,9 @@ class FirstRouteForm extends StatelessWidget {
                   appLocator.get<ObserveRunnerTackIntentUseCase>(),
               observeTackerTackIntentUseCase:
                   appLocator.get<ObserveTackerTackIntentUseCase>(),
+              fetchUserUseCase: appLocator.get<FetchUserUseCase>(),
+              fetchUserBalanceUseCase:
+                  appLocator.get<FetchUserBalanceUseCase>(),
               fetchGroupUseCase: appLocator.get<FetchGroupUseCase>(),
               selectGroupUseCase: appLocator.get<SelectGroupUseCase>(),
             );

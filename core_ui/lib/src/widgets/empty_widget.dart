@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 class EmptyWidget extends StatelessWidget {
   final AppIcon svgIcon;
+  final Color? iconColor;
   final String? titleKey;
   final String? descriptionKey;
   final Widget? footer;
@@ -16,6 +17,7 @@ class EmptyWidget extends StatelessWidget {
   const EmptyWidget({
     super.key,
     required this.svgIcon,
+    this.iconColor,
     this.titleKey,
     this.descriptionKey,
     this.footer,
@@ -31,38 +33,36 @@ class EmptyWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              if (titleKey != null) ...<Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                  child: Text(
-                    FlutterI18n.translate(context, titleKey!),
-                    style: AppTextTheme.manrope24SemiBold,
-                  ),
+        const Spacer(flex: 1),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            if (titleKey != null) ...<Widget>[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                child: Text(
+                  FlutterI18n.translate(context, titleKey!),
+                  style: AppTextTheme.manrope24SemiBold,
                 ),
-                const SizedBox(height: 12),
-              ],
+              ),
+              const SizedBox(height: 20),
             ],
-          ),
+          ],
         ),
         LayoutBuilder(
           builder: (_, BoxConstraints constraints) {
             return Container(
               width: constraints.maxWidth,
               margin: const EdgeInsets.symmetric(horizontal: 48.0),
-              padding: const EdgeInsets.symmetric(vertical: 24.0),
+              padding: const EdgeInsets.symmetric(vertical: 30.0),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: AppTheme.primaryColor,
                 borderRadius: BorderRadius.circular(18),
               ),
               child: svgIcon.svg(
-                color: AppTheme.iconSecondaryColor,
+                color: iconColor ?? AppTheme.iconSecondaryColor,
                 fit: BoxFit.fitHeight,
                 size: constraints.maxWidth * 0.37,
               ),
@@ -105,7 +105,7 @@ class EmptyWidget extends StatelessWidget {
             ),
           ],
         ],
-        const Spacer(flex: 2),
+        const Spacer(flex: 5),
       ],
     );
   }

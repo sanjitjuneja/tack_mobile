@@ -14,7 +14,7 @@ class ApiProvider extends ApiProviderCore {
   final MapperFactory mapper;
 
   ApiProvider({
-    required super.baseUrl,
+    required super.appConfig,
     required super.errorHandler,
     required SessionProvider sessionProvider,
     required this.mapper,
@@ -489,6 +489,18 @@ class ApiProvider extends ApiProviderCore {
     );
   }
 
+  Future<domain.Tack> fetchTack(FetchTackRequest request) async {
+    return get<TackEntity>(
+      ApiQuery(
+        endpoint: BaseUrlConstants.tackById,
+        id: request.tackId,
+        body: null,
+        params: null,
+      ),
+      parser: TackEntity.fromJson,
+    ).then(mapper.tackMapper.fromEntity);
+  }
+
   Future<domain.Tack> createTack(CreateTackRequest request) async {
     return post<TackEntity>(
       ApiQuery(
@@ -503,7 +515,7 @@ class ApiProvider extends ApiProviderCore {
   Future<domain.Tack> updateTack(UpdateTackRequest request) async {
     return put<TackEntity>(
       ApiQuery(
-        endpoint: BaseUrlConstants.tacksWithId,
+        endpoint: BaseUrlConstants.tackById,
         id: request.id,
         body: request.toJson(),
         params: null,
@@ -589,7 +601,7 @@ class ApiProvider extends ApiProviderCore {
   Future<void> cancelTackByTacker(CancelTackRequest request) async {
     return delete(
       ApiQuery(
-        endpoint: BaseUrlConstants.tacksWithId,
+        endpoint: BaseUrlConstants.tackById,
         id: request.tackId,
         body: null,
         params: null,

@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -15,30 +16,37 @@ class OngoingRunnerTackForm extends StatelessWidget {
     return BlocBuilder<OngoingRunnerTackBloc, OngoingRunnerTackState>(
       builder: (_, OngoingRunnerTackState state) {
         final Tack tack = state.runnerTack.tack;
-
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            children: <Widget>[
-              HeaderWidget(
-                tack: tack,
-                stepsCount: state.stepsCount,
-                currentStep: state.currentStep,
-                isTacker: false,
-              ),
-              const SizedBox(height: 30),
-              TackDetailSection(
-                tack: tack,
-                hasDeleteAction: tack.canRunnerCancel,
-                onDeletePressed: () => _onCancelTackPressed(context),
-              ),
-              const SizedBox(height: 10),
-              const Spacer(),
-              OngoingRunnerTackActions(state: state),
-              const SizedBox(height: 12),
-            ],
-          ),
-        );
+        if (state.isLoading) {
+          return Center(
+            child: AppProgressIndicator(
+              backgroundColor: AppTheme.transparentColor,
+            ),
+          );
+        } else {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              children: <Widget>[
+                HeaderWidget(
+                  tack: tack,
+                  stepsCount: state.stepsCount,
+                  currentStep: state.currentStep,
+                  isTacker: false,
+                ),
+                const SizedBox(height: 30),
+                TackDetailSection(
+                  tack: tack,
+                  hasDeleteAction: tack.canRunnerCancel,
+                  onDeletePressed: () => _onCancelTackPressed(context),
+                ),
+                const SizedBox(height: 10),
+                const Spacer(),
+                OngoingRunnerTackActions(state: state),
+                const SizedBox(height: 12),
+              ],
+            ),
+          );
+        }
       },
     );
   }

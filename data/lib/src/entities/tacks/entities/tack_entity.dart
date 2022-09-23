@@ -13,6 +13,8 @@ class TackEntity extends JsonSerializable with ListParserMixin {
   @JsonKey(name: 'allow_counter_offer')
   final bool allowCounterOffer;
   final String status;
+  @JsonKey(name: 'is_canceled')
+  final bool isCanceled;
   final TackUserEntity tacker;
   final TackUserEntity? runner;
   final GroupEntity group;
@@ -29,6 +31,7 @@ class TackEntity extends JsonSerializable with ListParserMixin {
     required this.estimationTime,
     required this.allowCounterOffer,
     required this.status,
+    required this.isCanceled,
     required this.tacker,
     required this.runner,
     required this.group,

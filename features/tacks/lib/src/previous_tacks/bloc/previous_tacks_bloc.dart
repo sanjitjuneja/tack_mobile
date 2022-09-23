@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
-import 'package:domain/use_case.dart';
 import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
 
@@ -13,8 +12,10 @@ part 'previous_tacks_event.dart';
 
 part 'previous_tacks_state.dart';
 
-class PreviousTacksBloc extends Bloc<PreviousTacksEvent, PreviousTacksState> {
+class PreviousTacksBloc extends Bloc<PreviousTacksEvent, PreviousTacksState>
+    with AppLifeCycleObserver {
   final AppRouterDelegate _appRouter;
+  final AppLifeCycleProvider _appLifeCycleProvider;
   final FetchCreatedTacksUseCase _fetchCreatedTacksUseCase;
   final FetchCompletedTacksUseCase _fetchCompletedTacksUseCase;
   final ObserveCompletedTackRunnerIntentUseCase
@@ -25,11 +26,13 @@ class PreviousTacksBloc extends Bloc<PreviousTacksEvent, PreviousTacksState> {
 
   PreviousTacksBloc({
     required AppRouterDelegate appRouter,
+    required AppLifeCycleProvider appLifeCycleProvider,
     required FetchCreatedTacksUseCase fetchCreatedTacksUseCase,
     required FetchCompletedTacksUseCase fetchCompletedTacksUseCase,
     required ObserveCompletedTackRunnerIntentUseCase
         observeCompletedTackRunnerIntentUseCase,
   })  : _appRouter = appRouter,
+        _appLifeCycleProvider = appLifeCycleProvider,
         _fetchCreatedTacksUseCase = fetchCreatedTacksUseCase,
         _fetchCompletedTacksUseCase = fetchCompletedTacksUseCase,
         _observeCompletedTackRunnerIntentUseCase =
@@ -39,6 +42,8 @@ class PreviousTacksBloc extends Bloc<PreviousTacksEvent, PreviousTacksState> {
             isLoading: true,
           ),
         ) {
+    _appLifeCycleProvider.addObserver(this);
+
     on<InitialLoad>(_onInitialLoad);
     on<RefreshCreatedTacks>(_onRefreshCreatedTacks);
     on<LoadCreatedTacks>(_onLoadCreatedTacks);
@@ -235,8 +240,15 @@ class PreviousTacksBloc extends Bloc<PreviousTacksEvent, PreviousTacksState> {
   }
 
   @override
+  void onShouldRefresh() {
+    add(const RefreshCreatedTacks());
+    add(const RefreshCompletedTacks());
+  }
+
+  @override
   Future<void> close() async {
     _completedTackRunnerIntentSubscription.cancel();
+    _appLifeCycleProvider.removeObserver(this);
 
     return super.close();
   }

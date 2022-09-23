@@ -24,6 +24,7 @@ class _PreviousTacksPage extends Page<void> {
       builder: (_) => BlocProvider<PreviousTacksBloc>(
         create: (_) => PreviousTacksBloc(
           appRouter: appLocator.get<AppRouterDelegate>(),
+          appLifeCycleProvider: appLocator.get<AppLifeCycleProvider>(),
           fetchCompletedTacksUseCase:
               appLocator.get<FetchCompletedTacksUseCase>(),
           fetchCreatedTacksUseCase: appLocator.get<FetchCreatedTacksUseCase>(),
