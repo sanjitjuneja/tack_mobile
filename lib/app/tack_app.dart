@@ -23,36 +23,36 @@ class _TackAppState extends State<TackApp> {
     globalAppRouter = appLocator.get<GlobalAppRouterDelegate>();
     routeInformationParser = appLocator.get<AppRouteInformationParser>();
 
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: AppTheme.transparentColor,
+      ),
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
-        statusBarColor: AppTheme.transparentColor,
-      ),
-      child: TimeTickerInheritedWidget(
-        child: CupertinoApp.router(
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: <LocalizationsDelegate<dynamic>>[
-            FlutterI18nDelegate(
-              translationLoader: FileTranslationLoader(
-                useCountryCode: false,
-                basePath: 'localization',
-                fallbackFile: 'en',
-                decodeStrategies: <BaseDecodeStrategy>[
-                  JsonDecodeStrategy(),
-                ],
-              ),
+    return TimeTickerInheritedWidget(
+      child: CupertinoApp.router(
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: <LocalizationsDelegate<dynamic>>[
+          FlutterI18nDelegate(
+            translationLoader: FileTranslationLoader(
+              useCountryCode: false,
+              basePath: 'localization',
+              fallbackFile: 'en',
+              decodeStrategies: <BaseDecodeStrategy>[
+                JsonDecodeStrategy(),
+              ],
             ),
-            GlobalMaterialLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate
-          ],
-          routerDelegate: globalAppRouter,
-          routeInformationParser: routeInformationParser,
-        ),
+          ),
+          GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate
+        ],
+        routerDelegate: globalAppRouter,
+        routeInformationParser: routeInformationParser,
       ),
     );
   }
