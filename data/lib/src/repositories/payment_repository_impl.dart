@@ -161,20 +161,25 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
   }
 
   @override
-  Future<void> handleDwollaDeposit(
+  Future<domain.PaymentDetails> handleDwollaDeposit(
     domain.HandleDwollaDepositPayload payload,
   ) async {
-    await _apiProvider.fetchDwollaPaymentIntent(
+    final String transactionId = await _apiProvider.fetchDwollaPaymentIntent(
       request: HandleDwollaDepositRequest(
         paymentMethodId: payload.paymentMethodId,
         amountInCents: payload.amountInCents,
         currency: payload.currency,
       ),
     );
+
+    return domain.PaymentDetails(
+      paymentTransactionId: transactionId,
+      paymentMethod: domain.AppPaymentMethod.dwolla,
+    );
   }
 
   @override
-  Future<void> handleStripeDeposit(
+  Future<domain.PaymentDetails> handleStripeDeposit(
     domain.HandleStripeDepositPayload payload,
   ) async {
     final String? paymentMethodId =
@@ -232,6 +237,11 @@ class PaymentRepositoryImpl implements domain.PaymentRepository {
         ),
       );
     }
+
+    return domain.PaymentDetails(
+      paymentTransactionId: paymentIntent.transactionId,
+      paymentMethod: domain.AppPaymentMethod.stripe,
+    );
   }
 
   @override

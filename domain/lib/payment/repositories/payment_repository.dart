@@ -37,11 +37,11 @@ abstract class PaymentRepository {
     FetchFeePayload payload,
   );
 
-  Future<void> handleDwollaDeposit(
+  Future<PaymentDetails> handleDwollaDeposit(
     HandleDwollaDepositPayload payload,
   );
 
-  Future<void> handleStripeDeposit(
+  Future<PaymentDetails> handleStripeDeposit(
     HandleStripeDepositPayload payload,
   );
 

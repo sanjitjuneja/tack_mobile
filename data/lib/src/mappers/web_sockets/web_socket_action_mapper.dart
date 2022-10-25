@@ -13,6 +13,8 @@ class WebSocketActionMapper
         return domain.WebSocketAction.update;
       case WebSocketActionEntity.delete:
         return domain.WebSocketAction.delete;
+      case WebSocketActionEntity.unknown:
+        return domain.WebSocketAction.unknown;
     }
   }
 
@@ -25,6 +27,8 @@ class WebSocketActionMapper
         return WebSocketActionEntity.update;
       case domain.WebSocketAction.delete:
         return WebSocketActionEntity.delete;
+      case domain.WebSocketAction.unknown:
+        return WebSocketActionEntity.unknown;
     }
   }
 }

@@ -5,6 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 import '../../helpers/entity_helper/entities_helpers.dart';
 import '../global/global.dart';
 import '../groups/groups.dart';
+import '../payment/payment.dart';
 
 part 'entities/group_tack_entity.dart';
 part 'entities/has_running_tack_entity.dart';

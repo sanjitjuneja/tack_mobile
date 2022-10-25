@@ -2,6 +2,7 @@ part of web_sockets_entities;
 
 @JsonSerializable(createToJson: false)
 class WebSocketMessage extends JsonSerializable {
+  @JsonKey(unknownEnumValue: WebSocketModelEntity.unknown)
   final WebSocketModelEntity model;
   final Map<String, dynamic> message;
 

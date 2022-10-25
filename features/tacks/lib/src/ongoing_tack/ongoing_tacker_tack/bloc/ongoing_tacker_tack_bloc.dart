@@ -305,6 +305,8 @@ class OngoingTackerTackBloc
             id: state.tack.id,
           ),
         );
+      default:
+        return;
     }
   }
 

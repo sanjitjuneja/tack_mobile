@@ -1,6 +1,6 @@
 part of entities_helpers;
 
-class FileConverter implements JsonConverter<File, MultipartFile> {
+class FileConverter implements JsonConverter<File?, MultipartFile?> {
   const FileConverter();
 
   @override
@@ -13,7 +13,9 @@ class FileConverter implements JsonConverter<File, MultipartFile> {
   }
 
   @override
-  MultipartFile toJson(File file) {
+  MultipartFile? toJson(File? file) {
+    if (file == null) return null;
+
     return MultipartFile.fromBytes(
       file.readAsBytesSync(),
       filename: path.basename(file.path),

@@ -206,6 +206,12 @@
       "title": "New Group Requested...",
       "message": "We will notify you via text if the new group is accepted (1-2 days)"
     },
+    "groupNotificationsMuted": {
+      "message": "Group notifications muted for \n<highlight>{groupName}</highlight>"
+    },
+    "groupNotificationsUnMuted": {
+      "message": "Group notifications unmuted for \n<highlight>{groupName}</highlight>"
+    },
     "tackerTackCompleted": {
       "title": "Tack Complete"
     },
@@ -511,7 +517,7 @@
     "priceSection": {
       "title": "Price",
       "placeholder": "Price",
-      "suffix": "0 Transaction Fee"
+      "suffix": "0% Transaction Fee"
     },
     "descriptionSection": {
       "title": "Description",

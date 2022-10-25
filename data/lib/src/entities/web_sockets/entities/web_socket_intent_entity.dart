@@ -3,6 +3,7 @@ part of web_sockets_entities;
 @JsonSerializable(createToJson: false)
 @GenericConverter()
 class WebSocketIntentEntity<T> extends JsonSerializable {
+  @JsonKey(unknownEnumValue: WebSocketActionEntity.unknown)
   final WebSocketActionEntity action;
   @JsonKey(name: 'id')
   final int objectId;

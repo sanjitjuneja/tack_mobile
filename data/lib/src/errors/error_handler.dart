@@ -49,7 +49,7 @@ class ErrorHandler {
       if (statusCode == 401) {
         return const UnauthorizedException();
       } else if (statusCode == 403) {
-        return const UnauthorizedException();
+        return const NoPermissionsException();
       } else if (statusCode == 400) {
         final Map<String, dynamic> error =
             response!.data as Map<String, dynamic>;

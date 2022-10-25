@@ -13,6 +13,7 @@ part 'entities/phone_number_not_found.dart';
 part 'entities/sms_request_attempts_exceeded_exception.dart';
 part 'entities/wrong_password.dart';
 part 'entities/no_internet_exception.dart';
+part 'entities/no_permissions_exception.dart';
 part 'entities/unauthorized_exception.dart';
 part 'entities/wrong_credentials_exception.dart';
 part 'entities/transactions_limit_exception.dart';

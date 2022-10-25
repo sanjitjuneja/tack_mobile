@@ -144,6 +144,8 @@ class OffersBloc extends Bloc<OffersEvent, OffersState> {
           itemId: intent.objectId,
         );
         break;
+      default:
+        return;
     }
 
     emit(

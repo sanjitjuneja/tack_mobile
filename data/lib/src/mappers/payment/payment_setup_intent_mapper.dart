@@ -7,6 +7,7 @@ class PaymentSetupIntentMapper
   @override
   domain.PaymentSetupIntent fromEntity(PaymentSetupIntentEntity entity) {
     return domain.PaymentSetupIntent(
+      transactionId: entity.transactionId,
       clientSecret: entity.clientSecret,
     );
   }
@@ -14,6 +15,7 @@ class PaymentSetupIntentMapper
   @override
   PaymentSetupIntentEntity toEntity(domain.PaymentSetupIntent item) {
     return PaymentSetupIntentEntity(
+      transactionId: item.transactionId,
       clientSecret: item.clientSecret,
     );
   }

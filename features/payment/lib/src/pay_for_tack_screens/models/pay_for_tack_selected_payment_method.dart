@@ -7,6 +7,10 @@ class PayForTackSelectedPaymentMethod {
   final bool isGooglePay;
   final bool isTackBalance;
 
+  bool get isBankAccount => bankAccount != null;
+
+  bool get isCard => card != null;
+
   const PayForTackSelectedPaymentMethod({
     required this.bankAccount,
     required this.card,

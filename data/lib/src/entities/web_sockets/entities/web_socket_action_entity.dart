@@ -7,4 +7,5 @@ enum WebSocketActionEntity {
   update,
   @JsonValue('delete')
   delete,
+  unknown,
 }

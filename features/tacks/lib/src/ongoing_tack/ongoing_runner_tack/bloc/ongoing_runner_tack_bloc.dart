@@ -322,6 +322,8 @@ class OngoingRunnerTackBloc
             id: state.runnerTack.id,
           ),
         );
+      default:
+        return;
     }
   }
 

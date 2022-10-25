@@ -5,6 +5,7 @@ import 'package:domain/use_case.dart';
 
 import '../global/global.dart';
 import '../groups/groups.dart';
+import '../payment/payment.dart';
 import '../web_sockets/web_sockets.dart';
 
 part 'models/group_tack.dart';

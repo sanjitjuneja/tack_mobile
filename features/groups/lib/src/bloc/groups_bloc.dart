@@ -136,6 +136,8 @@ class GroupsBloc extends Bloc<GroupsEvent, GroupsState>
           itemId: intent.objectId,
         );
         break;
+      default:
+        return;
     }
 
     emit(

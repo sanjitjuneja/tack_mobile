@@ -81,6 +81,8 @@ class PaymentMethodTile extends StatelessWidget {
                           : isSentenceCase
                               ? title.toSentenceCase()
                               : title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTextTheme.poppins18Medium,
                     ),
                     if (subtitle != null)

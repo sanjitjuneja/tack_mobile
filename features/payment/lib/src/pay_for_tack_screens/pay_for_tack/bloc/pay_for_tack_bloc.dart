@@ -188,60 +188,61 @@ class PayForTackBloc extends Bloc<PayForTackEvent, PayForTackState> {
   ) async {
     try {
       _appRouter.pushProgress();
+
+      const String currency = Constants.usd;
+      final double amountWithFeeInCents =
+          state.amountInDollarFormatWithFee.toCentsFormat;
+      final double amountInCents = state.tackOfferPrice.toCentsFormat;
+
+      final PaymentDetails paymentDetails;
+
       if (state.selectedPaymentMethod.isTackBalance) {
-        await _acceptOfferUseCase.execute(
-          AcceptOfferPayload(offer: state.offer),
+        paymentDetails = const PaymentDetails(
+          paymentTransactionId: null,
+          paymentMethod: AppPaymentMethod.tackBalance,
         );
-        _appRouter.popProgress();
-        _appRouter.pop();
-        return;
-      }
-      if (state.selectedPaymentMethod.card != null) {
-        await _handleStripeDepositUseCase.execute(
-          HandleStripeDepositPayload(
-            paymentMethodId: state.selectedPaymentMethod.card!.id,
-            amountWithFeeInCents:
-                state.amountInDollarFormatWithFee.toCentsFormat,
-            amountInCents: state.tackOfferPrice.toCentsFormat,
-            currency: Constants.usd,
-          ),
-        );
-      } else if (state.selectedPaymentMethod.bankAccount != null) {
-        await _handleDwollaDepositUseCase.execute(
+      } else if (state.selectedPaymentMethod.isBankAccount) {
+        paymentDetails = await _handleDwollaDepositUseCase.execute(
           HandleDwollaDepositPayload(
             paymentMethodId: state.selectedPaymentMethod.bankAccount!.id,
-            amountInCents: state.tackOfferPrice.toCentsFormat,
-            currency: Constants.usd,
-          ),
-        );
-      } else if (state.selectedPaymentMethod.isApplePay) {
-        await _handleStripeDepositUseCase.execute(
-          HandleStripeDepositPayload(
-            paymentMethodId: Constants.applePayId,
-            amountWithFeeInCents:
-                state.amountInDollarFormatWithFee.toCentsFormat,
-            amountInCents: state.tackOfferPrice.toCentsFormat,
-            currency: Constants.usd,
+            amountInCents: amountInCents,
+            currency: currency,
           ),
         );
       } else {
-        await _handleStripeDepositUseCase.execute(
+        final String paymentMethodId;
+
+        if (state.selectedPaymentMethod.isCard) {
+          paymentMethodId = state.selectedPaymentMethod.card!.id;
+        } else if (state.selectedPaymentMethod.isApplePay) {
+          paymentMethodId = Constants.applePayId;
+        } else if (state.selectedPaymentMethod.isGooglePay) {
+          paymentMethodId = Constants.googlePayId;
+        } else {
+          throw Exception();
+        }
+
+        paymentDetails = await _handleStripeDepositUseCase.execute(
           HandleStripeDepositPayload(
-            paymentMethodId: Constants.googlePayId,
-            amountWithFeeInCents:
-                state.amountInDollarFormatWithFee.toCentsFormat,
-            amountInCents: state.tackOfferPrice.toCentsFormat,
-            currency: Constants.usd,
+            paymentMethodId: paymentMethodId,
+            amountWithFeeInCents: amountWithFeeInCents,
+            amountInCents: amountInCents,
+            currency: currency,
           ),
         );
       }
+
       await _acceptOfferUseCase.execute(
-        AcceptOfferPayload(offer: state.offer),
+        AcceptOfferPayload(
+          offer: state.offer,
+          paymentDetails: paymentDetails,
+        ),
       );
       _appRouter.popProgress();
       _appRouter.pop();
     } on TransactionsLimitException {
       _appRouter.popProgress();
+
       _appRouter.push(
         AddToTackBalanceFailedFeature.page(
           errorKey: 'addToTackBalanceFailedScreen.limitReached',

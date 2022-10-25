@@ -34,6 +34,6 @@ extension StringToSentenceCase on String {
   }
 
   String eachWordToSentenceCase() {
-    return split('\t').map((String word) => word.toSentenceCase()).join('\t');
+    return split(' ').map((String word) => word.toSentenceCase()).join(' ');
   }
 }

@@ -173,6 +173,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState>
           itemId: intent.objectId,
         );
         break;
+      default:
+        return;
     }
 
     emit(

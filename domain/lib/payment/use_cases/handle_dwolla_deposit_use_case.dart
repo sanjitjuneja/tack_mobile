@@ -1,7 +1,7 @@
 part of payment;
 
 class HandleDwollaDepositUseCase
-    extends FutureUseCase<void, HandleDwollaDepositPayload> {
+    extends FutureUseCase<PaymentDetails, HandleDwollaDepositPayload> {
   final PaymentRepository _paymentRepository;
 
   HandleDwollaDepositUseCase({
@@ -9,7 +9,7 @@ class HandleDwollaDepositUseCase
   }) : _paymentRepository = paymentRepository;
 
   @override
-  Future<void> execute(HandleDwollaDepositPayload params) async {
+  Future<PaymentDetails> execute(HandleDwollaDepositPayload params) async {
     return _paymentRepository.handleDwollaDeposit(params);
   }
 }

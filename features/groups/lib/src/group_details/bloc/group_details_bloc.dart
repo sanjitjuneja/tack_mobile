@@ -250,23 +250,40 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
     if (state.isInvitation) return;
 
     _appRouter.pushProgress();
+
     try {
       final GroupDetails groupDetails;
+      final String successDialogContentKey;
 
       if (state.groupDetails!.isMuted) {
         groupDetails = await _unMuteGroupUseCase.execute(
           UnMuteGroupPayload(group: state.group),
         );
+        successDialogContentKey = 'otherAlert.groupNotificationsUnMuted';
       } else {
         groupDetails = await _muteGroupUseCase.execute(
           MuteGroupPayload(group: state.group),
         );
+        successDialogContentKey = 'otherAlert.groupNotificationsMuted';
       }
       _appRouter.popProgress();
 
       emit(
         state.copyWith(
           groupDetails: groupDetails,
+        ),
+      );
+
+      _appRouter.pushForResult(
+        AppAlertDialog.page(
+          SuccessAlert(
+            contentKey: successDialogContentKey,
+            translationParams: <AlertPropertyKey, Map<String, String>>{
+              AlertPropertyKey.message: <String, String>{
+                'groupName': groupDetails.group.name,
+              }
+            },
+          ),
         ),
       );
     } catch (e) {
@@ -285,6 +302,10 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
     InviteMembers event,
     Emitter<GroupDetailsState> emit,
   ) async {
-    _appRouter.push(InviteMembersFeature.page(group: state.group));
+    _appRouter.push(
+      InviteMembersFeature.page(
+        group: state.group,
+      ),
+    );
   }
 }

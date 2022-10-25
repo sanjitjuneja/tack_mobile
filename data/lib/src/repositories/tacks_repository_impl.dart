@@ -1,18 +1,22 @@
 import 'package:domain/domain.dart' as domain;
 
 import '../entities/entities.dart';
+import '../mappers/mappers.dart';
 import '../providers/api_provider.dart';
 import '../providers/web_sockets_handlers.dart';
 import '../providers/web_sockets_provider.dart';
 
 class TacksRepositoryImpl implements domain.TacksRepository {
+  final MapperFactory _mapper;
   final ApiProvider _apiProvider;
   final WebSocketsProvider _webSocketsProvider;
 
   TacksRepositoryImpl({
+    required MapperFactory mapper,
     required ApiProvider apiProvider,
     required WebSocketsProvider webSocketsProvider,
-  })  : _apiProvider = apiProvider,
+  })  : _mapper = mapper,
+        _apiProvider = apiProvider,
         _webSocketsProvider = webSocketsProvider;
 
   @override
@@ -251,6 +255,9 @@ class TacksRepositoryImpl implements domain.TacksRepository {
     return _apiProvider.acceptOffer(
       AcceptOfferRequest(
         offerId: payload.offer.id,
+        paymentInfo: _mapper.paymentDetailsMapper.toEntity(
+          payload.paymentDetails,
+        ),
       ),
     );
   }

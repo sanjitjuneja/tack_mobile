@@ -2,6 +2,7 @@ part of errors;
 
 class ErrorCode {
   static const String noInternet = 'XXX';
+  static const String noPermissions = 'XX0';
 
   static const String unknown = 'X00';
   static const String socket = 'X01';

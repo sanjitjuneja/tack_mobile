@@ -37,10 +37,10 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
             ),
             descriptionData: DescriptionData(
               maxWords: _descriptionMaxWordsLength,
-              isRequired: true,
+              isRequired: false,
             ),
             groupPhotoData: GroupPhotoData(
-              isRequired: true,
+              isRequired: false,
             ),
           ),
         ) {
@@ -57,14 +57,14 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
   ) async {
     _appRouter.pushProgress();
 
-    final String groupName = state.nameData.name.eachWordToSentenceCase();
+    final String groupName = state.nameData.name;
 
     try {
       final Group group = await _createGroupUseCase.execute(
         CreateGroupPayload(
           name: groupName,
           description: state.descriptionData.description,
-          image: state.groupPhotoData.imageFile!,
+          image: state.groupPhotoData.imageFile,
         ),
       );
       _appRouter.popProgress();

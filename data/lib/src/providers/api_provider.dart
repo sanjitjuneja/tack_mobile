@@ -551,7 +551,7 @@ class ApiProvider extends ApiProviderCore {
       ApiQuery(
         endpoint: BaseUrlConstants.offerAcceptPath,
         id: request.offerId,
-        body: null,
+        body: request.toJson(),
         params: null,
       ),
       parser: (_) {},
@@ -763,16 +763,18 @@ class ApiProvider extends ApiProviderCore {
     ).then(mapper.feeMapper.fromEntity);
   }
 
-  Future<void> fetchDwollaPaymentIntent({
+  Future<String> fetchDwollaPaymentIntent({
     required HandleDwollaDepositRequest request,
   }) async {
-    return post<void>(
+    return post<DwollaDepositResponse>(
       ApiQuery(
         endpoint: BaseUrlConstants.dwollaDeposit,
         body: request.toJson(),
         params: null,
       ),
-      parser: (_) {},
+      parser: DwollaDepositResponse.fromJson,
+    ).then(
+      (DwollaDepositResponse response) => response.transactionId,
     );
   }
 

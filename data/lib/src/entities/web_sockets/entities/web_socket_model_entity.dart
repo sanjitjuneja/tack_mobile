@@ -21,4 +21,5 @@ enum WebSocketModelEntity {
   groupDetails,
   @JsonValue('GroupInvitation')
   groupInvitation,
+  unknown,
 }

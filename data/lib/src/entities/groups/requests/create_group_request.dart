@@ -1,11 +1,14 @@
 part of groups_entities;
 
-@JsonSerializable(createFactory: false)
+@JsonSerializable(
+  createFactory: false,
+  includeIfNull: false,
+)
 @FileConverter()
 class CreateGroupRequest extends JsonSerializable {
   final String name;
   final String description;
-  final File image;
+  final File? image;
   @JsonKey(name: 'is_public')
   final bool isPublic;
 

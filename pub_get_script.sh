@@ -1,71 +1,22 @@
 #!/usr/bin/env bash
+# run function in all dirs
+# expects a function name
+allDirs() {
+    dirs=()
+    while IFS='' read -r line; do dirs+=("$line"); done < <(find . -maxdepth 2 -type d)
+    for dir in "${dirs[@]}"; do
+        $1 "$dir"
+    done
+}
 
-printf "tackapp pub get\n"
-flutter clean && flutter clean cache && flutter pub get
-printf '\n\n'
+runGet() {
+    cd "$1" || return
+    if [ -f "pubspec.yaml" ]; then
+        flutter pub get
+    fi
+    cd - > /dev/null || return
+}
 
-printf "core pub get\n"
-cd core || exit
-flutter clean && flutter clean cache && flutter pub get
-cd ..
-printf '\n\n'
+flutter clean
 
-printf "core_ui pub get\n"
-cd core_ui || exit
-flutter clean && flutter clean cache && flutter pub get
-cd ..
-printf '\n\n'
-
-printf "data pub get\n"
-cd data || exit
-flutter clean && flutter clean cache && flutter pub get
-cd ..
-printf '\n\n'
-
-printf "domain pub get\n"
-cd domain || exit
-flutter clean && flutter clean cache && flutter pub get
-cd ..
-printf '\n\n'
-
-printf "splash pub get\n"
-cd features/splash || exit
-flutter clean && flutter clean cache && flutter pub get
-cd ../..
-printf '\n\n'
-
-printf "dashboard pub get\n"
-cd features/dashboard || exit
-flutter clean && flutter clean cache && flutter pub get
-cd ../..
-printf '\n\n'
-
-printf "groups pub get\n"
-cd features/groups || exit
-flutter clean && flutter clean cache && flutter pub get
-cd ../..
-printf '\n\n'
-
-printf "home pub get\n"
-cd features/home || exit
-flutter clean && flutter clean cache && flutter pub get
-cd ../..
-printf '\n\n'
-
-printf "phone_verification pub get\n"
-cd features/auth || exit
-flutter clean && flutter clean cache && flutter pub get
-cd ../..
-printf '\n\n'
-
-printf "auth pub get\n"
-cd features/auth || exit
-flutter clean && flutter clean cache && flutter pub get
-cd ../..
-printf '\n\n'
-
-printf "user_info_setup pub get\n"
-cd features/user_info_setup || exit
-flutter clean && flutter clean cache && flutter pub get
-cd ../..
-printf '\n\n'
+allDirs "runGet"

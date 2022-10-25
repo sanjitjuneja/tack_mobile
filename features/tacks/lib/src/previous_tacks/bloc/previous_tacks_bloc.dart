@@ -232,6 +232,8 @@ class PreviousTacksBloc extends Bloc<PreviousTacksEvent, PreviousTacksState>
           itemId: intent.objectId,
         );
         break;
+      default:
+        return;
     }
 
     emit(

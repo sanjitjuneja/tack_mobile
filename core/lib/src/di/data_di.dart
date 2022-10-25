@@ -349,6 +349,7 @@ class DataDI {
 
     appLocator.registerSingleton<TacksRepository>(
       TacksRepositoryImpl(
+        mapper: appLocator.get<MapperFactory>(),
         apiProvider: appLocator.get<ApiProvider>(),
         webSocketsProvider: appLocator.get<WebSocketsProvider>(),
       ),

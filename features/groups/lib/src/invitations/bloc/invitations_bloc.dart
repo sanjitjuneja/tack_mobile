@@ -156,6 +156,8 @@ class InvitationsBloc extends Bloc<InvitationsEvent, InvitationsState>
           itemId: intent.objectId,
         );
         break;
+      default:
+        return;
     }
 
     emit(

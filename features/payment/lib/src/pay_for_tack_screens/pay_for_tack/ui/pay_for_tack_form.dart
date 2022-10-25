@@ -249,6 +249,7 @@ class PayForTackForm extends StatelessWidget {
                     subtitle: state
                         .selectedPaymentMethod.bankAccount!.bankAccountType,
                     isColored: true,
+                    isSentenceCase: false,
                   ),
                 ),
               ] else if (state.selectedPaymentMethod.isApplePay) ...<Widget>[

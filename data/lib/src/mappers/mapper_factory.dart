@@ -67,6 +67,13 @@ class MapperFactory {
         feeDataMapper: FeeDataMapper(),
       );
 
+  PaymentDetailsMapper get paymentDetailsMapper => PaymentDetailsMapper(
+        appPaymentMethodMapper: appPaymentMethodMapper,
+      );
+
+  AppPaymentMethodMapper get appPaymentMethodMapper =>
+      const AppPaymentMethodMapper();
+
   ConnectedBankAccountMapper get connectedBankAccountMapper =>
       const ConnectedBankAccountMapper();
 

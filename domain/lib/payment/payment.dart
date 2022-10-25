@@ -5,7 +5,9 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:domain/use_case.dart';
 
+part 'models/app_payment_method.dart';
 part 'models/connected_bank_account.dart';
+part 'models/payment_details.dart';
 part 'models/plaid.dart';
 part 'models/payment_setup_intent.dart';
 part 'models/connected_card.dart';

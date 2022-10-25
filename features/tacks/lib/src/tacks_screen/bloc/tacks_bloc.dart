@@ -185,6 +185,8 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> with AppLifeCycleObserver {
           itemId: intent.objectId,
         );
         break;
+      default:
+        return;
     }
 
     emit(
@@ -216,6 +218,8 @@ class TacksBloc extends Bloc<TacksEvent, TacksState> with AppLifeCycleObserver {
           itemId: intent.objectId,
         );
         break;
+      default:
+        return;
     }
 
     emit(

@@ -101,6 +101,8 @@ class WebSocketsProvider with WebSocketHandlers, domain.AppLifeCycleObserver {
           json: webSocketMessage.message,
           streamController: groupInvitationsController,
         );
+      default:
+        return;
     }
   }
 

@@ -76,6 +76,7 @@ class PaymentSettingsForm extends StatelessWidget {
                     title: bankAccount.bankName,
                     subtitle: bankAccount.bankAccountType,
                     isPrimary: bankAccount.isPrimary,
+                    isSentenceCase: false,
                   ),
                 ),
                 const SizedBox(height: 30),
