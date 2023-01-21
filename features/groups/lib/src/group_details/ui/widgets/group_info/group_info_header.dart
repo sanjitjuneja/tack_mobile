@@ -27,6 +27,7 @@ class GroupInfoHeader extends StatelessWidget {
                 .copyWith(color: AppTheme.textPrimaryColor),
           ),
         ),
+        //TODO: Add group.isPublic check, print "Public" if so
       ],
     );
   }

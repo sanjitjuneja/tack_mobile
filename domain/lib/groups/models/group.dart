@@ -7,6 +7,8 @@ class Group extends Equatable {
   final String description;
   final String imageUrl;
   final bool isPublic;
+  final bool isAnonymous;
+  final int memberCount;
 
   const Group({
     required this.id,
@@ -15,6 +17,8 @@ class Group extends Equatable {
     required this.description,
     required this.imageUrl,
     required this.isPublic,
+    required this.isAnonymous,
+    required this.memberCount,
   });
 
   @override
@@ -25,5 +29,7 @@ class Group extends Equatable {
         description,
         imageUrl,
         isPublic,
+        isAnonymous,
+        memberCount,
       ];
 }

@@ -8,12 +8,17 @@ class CreateGroupRequest extends JsonSerializable {
   final File image;
   @JsonKey(name: 'is_public')
   final bool isPublic;
+  @JsonKey(name: 'is_anonymous')
+  final bool isAnonymous;
+  final int memberCount;
 
   const CreateGroupRequest({
     required this.name,
     required this.description,
     required this.image,
-    this.isPublic = true,
+    required this.isPublic,
+    required this.isAnonymous,
+    required this.memberCount,
   });
 
   @override

@@ -146,6 +146,9 @@ class GroupsRepositoryImpl implements domain.GroupsRepository {
         name: payload.name,
         description: payload.description,
         image: payload.image,
+        isPublic: payload.isPublic,
+        isAnonymous: payload.isAnonymous,
+        memberCount: payload.memberCount,
       ),
     );
 

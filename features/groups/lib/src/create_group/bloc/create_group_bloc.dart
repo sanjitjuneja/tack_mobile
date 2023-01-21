@@ -65,6 +65,9 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
           name: groupName,
           description: state.descriptionData.description,
           image: state.groupPhotoData.imageFile!,
+          isPublic: false,
+          isAnonymous: false,
+          memberCount: 1,
         ),
       );
       _appRouter.popProgress();

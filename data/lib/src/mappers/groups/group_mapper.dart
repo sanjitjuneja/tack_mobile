@@ -6,13 +6,14 @@ class GroupMapper implements Mapper<GroupEntity, domain.Group> {
   @override
   domain.Group fromEntity(GroupEntity entity) {
     return domain.Group(
-      id: entity.id,
-      ownerId: entity.ownerId,
-      name: entity.name,
-      description: entity.description,
-      imageUrl: entity.imageUrl ?? '',
-      isPublic: entity.isPublic,
-    );
+        id: entity.id,
+        ownerId: entity.ownerId,
+        name: entity.name,
+        description: entity.description,
+        imageUrl: entity.imageUrl ?? '',
+        isPublic: entity.isPublic,
+        isAnonymous: entity.isAnonymous,
+        memberCount: entity.memberCount);
   }
 
   @override
@@ -24,6 +25,8 @@ class GroupMapper implements Mapper<GroupEntity, domain.Group> {
       description: item.description,
       imageUrl: item.imageUrl,
       isPublic: item.isPublic,
+      isAnonymous: item.isAnonymous,
+      memberCount: item.memberCount,
     );
   }
 }

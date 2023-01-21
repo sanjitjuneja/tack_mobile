@@ -11,6 +11,8 @@ class GroupEntity extends JsonSerializable {
   final String? imageUrl;
   @JsonKey(name: 'is_public')
   final bool isPublic;
+  final bool isAnonymous;
+  final int memberCount;
 
   const GroupEntity({
     required this.id,
@@ -19,6 +21,8 @@ class GroupEntity extends JsonSerializable {
     required this.description,
     required this.imageUrl,
     required this.isPublic,
+    required this.isAnonymous,
+    required this.memberCount,
   });
 
   factory GroupEntity.fromJson(Map<String, dynamic> json) {
